@@ -1,6 +1,7 @@
 import React from 'react';
+import { X } from 'lucide-react';
 import seedsData from '../data/seeds.json';
-import { CropImage } from './shared';
+import { CropImage, GrowthPhases } from './shared';
 
 const seedsList = Array.isArray(seedsData) ? seedsData : (seedsData.rows || []);
 const IMG = (path: string) => `https://jsq.gptvip.chat/images/${path}`;
@@ -117,7 +118,16 @@ function RemoteImg({ src, name }: { src?: string; name: string }) {
 
 export default function ItemsTab() {
   const [cat, setCat] = React.useState('05');
+  const [goldDetail, setGoldDetail] = React.useState<any>(null);
   const info = catMeta.find(c => c.id === cat)!;
+
+  const goldSeedIds: Record<string, number> = {
+    '黄金·哈哈南瓜': 20416, '黄金·风信子': 20112, '黄金·银杏树苗': 20025, '黄金·蔷薇': 20121,
+    '黄金·蝴蝶兰': 20109, '黄金·昙花': 20224, '黄金·荷包牡丹': 20249, '黄金·艾草': 21135,
+    '黄金·卡特兰': 20184, '黄金·红云飞片': 20193, '黄金·石竹花': 20256, '黄金·针垫花': 20261,
+    '黄金·孔雀草': 20257, '黄金·欧石楠': 20258, '黄金·黄金果': 20304, '黄金·爱心果': 20046,
+    '黄金·哈哈小南瓜': 20416, '哈哈小南瓜': 20416,
+  };
 
   return (
     <div className="flex gap-3 h-full fade-in">
@@ -148,7 +158,9 @@ export default function ItemsTab() {
                 ))
               : categoryItems[cat]
                 ? categoryItems[cat].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] hover:bg-green-500/5 transition-colors">
+                    <div key={i}
+                      onClick={() => cat === '17' ? setGoldDetail(item) : undefined}
+                      className={`flex items-center gap-3 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] transition-colors ${cat === '17' ? 'cursor-pointer hover:shadow-md' : 'hover:bg-green-500/5'}`}>
                       <RemoteImg src={item.imgSrc} name={item.name} />
                       <div className="flex-1 min-w-0">
                         <div className="text-xs font-bold text-gray-900 dark:text-white">{item.name}</div>
@@ -162,6 +174,29 @@ export default function ItemsTab() {
           </div>
         </div>
       </div>
+
+      {goldDetail && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setGoldDetail(null)}>
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative glass-panel rounded-2xl p-5 max-w-sm w-full max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setGoldDetail(null)} className="absolute top-3 right-3 p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 z-10"><X size={18} /></button>
+            <div className="flex items-center gap-3 mb-4">
+              <RemoteImg src={goldDetail.imgSrc} name={goldDetail.name} />
+              <div>
+                <h3 className="text-lg font-black text-gray-900 dark:text-white">{goldDetail.name}</h3>
+                <div className="text-xs text-gray-500">{goldDetail.desc}</div>
+                {goldDetail.level && <div className="text-xs text-amber-600 font-bold mt-1">{goldDetail.level}</div>}
+              </div>
+            </div>
+            {goldSeedIds[goldDetail.name] && (
+              <div>
+                <div className="text-xs font-bold text-gray-500 dark:text-white/40 mb-2">✨ 成长阶段（黄金变异）</div>
+                <GrowthPhases seedId={goldSeedIds[goldDetail.name]} gold />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

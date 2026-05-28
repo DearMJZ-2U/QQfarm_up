@@ -2,7 +2,7 @@ import React from 'react';
 import { Search, X } from 'lucide-react';
 import seedsData from '../data/seeds.json';
 import plantData from '../data/Plant.json';
-import { CropImage } from './shared';
+import { CropImage, GrowthPhases } from './shared';
 
 const seedsList = Array.isArray(seedsData) ? seedsData : (seedsData.rows || []);
 
@@ -86,6 +86,12 @@ export default function CropAtlasTab() {
                 <h3 className="text-lg font-black text-gray-900 dark:text-white">{detail.name}</h3>
                 <div className="text-xs text-gray-500">Lv.{detail.requiredLevel} · {detail.seasons === 2 ? '双季作物' : '单季作物'} · {detail.growTimeStr}</div>
               </div>
+            </div>
+
+            {/* Growth Phase Images */}
+            <div className="mb-4">
+              <div className="text-xs font-bold text-gray-500 dark:text-white/40 mb-2">🌱 成长阶段</div>
+              <GrowthPhases seedId={detail.seedId} />
             </div>
 
             {/* Stats Grid */}

@@ -78,3 +78,30 @@ export const LAND_BUFFS = {
 
 export const NO_FERT_PLANT_SPEED = 9;
 export const NORMAL_FERT_PLANT_SPEED = 6;
+
+export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: boolean }) {
+  const base = gold ? `https://jsq.gptvip.chat/images/plant/model/v4/gold/Crop_${seedId % 10000}` : `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${seedId % 10000}`;
+  const stages = [
+    { label: '种子', src: `${base}_Seed.png` },
+    { label: '阶段2', src: `${base}_2.png` },
+    { label: '阶段3', src: `${base}_3.png` },
+    { label: '阶段4', src: `${base}_4.png` },
+    { label: '阶段5', src: `${base}_5.png` },
+    { label: '成熟', src: `${base}_6.png` },
+  ];
+  return (
+    <div className="flex items-center gap-1 overflow-x-auto pb-1">
+      {stages.map((s, i) => (
+        <React.Fragment key={i}>
+          <div className="flex-shrink-0 flex flex-col items-center gap-0.5">
+            <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 border border-black/5 dark:border-white/5 flex items-center justify-center overflow-hidden">
+              <img src={s.src} alt={s.label} className="w-8 h-8 object-contain" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+            </div>
+            <div className="text-[8px] text-gray-400">{s.label}</div>
+          </div>
+          {i < stages.length - 1 && <span className="text-gray-300 text-xs flex-shrink-0">→</span>}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import { CropImage } from './shared';
+import { CropImage, GrowthPhases } from './shared';
 
 const mutationTypes = [
   { name: '塔塔', desc: '产出哈哈南瓜塔', trigger: '种植哈哈南瓜有概率出现' },
@@ -126,9 +126,13 @@ export default function MutationAtlasTab() {
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-sm text-gray-900 dark:text-white">{c.name}</span>
                   <span className="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded">{c.rarity}</span>
+                  {c.note && <span className="text-[10px] bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 px-1.5 py-0.5 rounded">{c.note}</span>}
                 </div>
                 <div className="text-[10px] text-gray-500 dark:text-white/40">
                   经验:{c.exp} · 果实:{c.fruit}个 · 变异:{c.prob}%
+                </div>
+                <div className="mt-2">
+                  <GrowthPhases seedId={c.seedId} gold />
                 </div>
               </div>
             </div>
