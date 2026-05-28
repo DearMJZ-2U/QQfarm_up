@@ -1,16 +1,36 @@
 import React from 'react';
 import { Search, X } from 'lucide-react';
 import seedsData from '../data/seeds.json';
+import plantData from '../data/Plant.json';
 import { CropImage } from './shared';
 
 const seedsList = Array.isArray(seedsData) ? seedsData : (seedsData.rows || []);
+
+function getPhases(seedId: number): { name: string; sec: number }[] {
+  const pd = plantData.find((p: any) => Number(p.seed_id) === seedId);
+  if (!pd?.grow_phases) return [];
+  return pd.grow_phases.split(';').filter((x: string) => x.trim()).map((seg: string) => {
+    const [name, s] = seg.split(':');
+    return { name: name.trim(), sec: parseInt(s) || 0 };
+  });
+}
+
+function fmtSec(sec: number) {
+  if (sec < 60) return `${sec}秒`;
+  const m = Math.floor(sec / 60);
+  const r = sec % 60;
+  if (m < 60) return r > 0 ? `${m}分${r}秒` : `${m}分钟`;
+  const h = Math.floor(m / 60);
+  const mm = m % 60;
+  return mm > 0 ? `${h}小时${mm}分` : `${h}小时`;
+}
 
 export default function CropAtlasTab() {
   const [search, setSearch] = React.useState('');
   const [seasonFilter, setSeasonFilter] = React.useState(0);
   const [detail, setDetail] = React.useState<any>(null);
 
-  const filtered = seedsList.filter(s => {
+  const filtered = seedsList.filter((s: any) => {
     if (search && !s.name.includes(search)) return false;
     if (seasonFilter === 1 && s.seasons !== 1) return false;
     if (seasonFilter === 2 && s.seasons !== 2) return false;
@@ -35,7 +55,7 @@ export default function CropAtlasTab() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        {filtered.map(s => (
+        {filtered.map((s: any) => (
           <div key={s.seedId} onClick={() => setDetail(s)} className="glass-panel rounded-xl p-3 hover:shadow-lg transition-shadow cursor-pointer flex flex-col gap-1">
             <div className="flex items-center justify-between">
               <span className="text-xs text-gray-500 dark:text-white/40 font-bold">Lv{s.requiredLevel}</span>
@@ -49,57 +69,77 @@ export default function CropAtlasTab() {
               <span>🌱 {s.exp}经验</span>
               <span>🕒 {s.growTimeStr}</span>
             </div>
-            <div className="text-[10px] text-gray-400">
-              💰购买:{s.price} | 果实:{s.fruitCount}个
-            </div>
+            <div className="text-[10px] text-gray-400">💰{s.price} | 果实{s.fruitCount}个</div>
           </div>
         ))}
-        {filtered.length === 0 && (
-          <div className="col-span-full p-8 text-center text-gray-400 text-sm">未找到匹配的作物</div>
-        )}
       </div>
 
-      {/* Detail Modal */}
       {detail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setDetail(null)}>
           <div className="absolute inset-0 bg-black/50" />
-          <div className="relative glass-panel rounded-2xl p-6 max-w-sm w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setDetail(null)} className="absolute top-3 right-3 p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
-              <X size={18} />
-            </button>
+          <div className="relative glass-panel rounded-2xl p-5 max-w-sm w-full max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setDetail(null)} className="absolute top-3 right-3 p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 z-10"><X size={18} /></button>
+
             <div className="flex items-center gap-3 mb-4">
               <CropImage seedId={detail.seedId} name={detail.name} size={56} />
               <div>
                 <h3 className="text-lg font-black text-gray-900 dark:text-white">{detail.name}</h3>
-                <div className="text-xs text-gray-500">Lv.{detail.requiredLevel} · {detail.seasons === 2 ? '双季作物' : '单季作物'}</div>
+                <div className="text-xs text-gray-500">Lv.{detail.requiredLevel} · {detail.seasons === 2 ? '双季作物' : '单季作物'} · {detail.growTimeStr}</div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-black/5 dark:bg-white/5 rounded-xl p-3">
-                <div className="text-gray-500 mb-1">购买价格</div>
-                <div className="font-bold text-amber-600">{detail.price} 金币</div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-2 text-xs mb-4">
+              <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-3">
+                <div className="text-amber-600/70 dark:text-amber-400/60 mb-0.5">💰 购买价格</div>
+                <div className="font-bold text-amber-700 dark:text-amber-300">{detail.price}</div>
               </div>
-              <div className="bg-black/5 dark:bg-white/5 rounded-xl p-3">
-                <div className="text-gray-500 mb-1">生长经验</div>
-                <div className="font-bold text-purple-600">{detail.exp} 经验</div>
+              <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-3">
+                <div className="text-purple-600/70 dark:text-purple-400/60 mb-0.5">⭐ 生长经验</div>
+                <div className="font-bold text-purple-700 dark:text-purple-300">{detail.exp}</div>
               </div>
-              <div className="bg-black/5 dark:bg-white/5 rounded-xl p-3">
-                <div className="text-gray-500 mb-1">生长时间</div>
-                <div className="font-bold text-blue-600">{detail.growTimeStr}</div>
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-3">
+                <div className="text-green-600/70 dark:text-green-400/60 mb-0.5">📦 果实产量</div>
+                <div className="font-bold text-green-700 dark:text-green-300">{detail.fruitCount}个/季</div>
               </div>
-              <div className="bg-black/5 dark:bg-white/5 rounded-xl p-3">
-                <div className="text-gray-500 mb-1">果实产量</div>
-                <div className="font-bold text-green-600">{detail.fruitCount} 个/季</div>
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-3">
+                <div className="text-blue-600/70 dark:text-blue-400/60 mb-0.5">⚡ 经验/时</div>
+                <div className="font-bold text-blue-700 dark:text-blue-300">{detail.expPerHour?.toFixed(1)}</div>
               </div>
-              <div className="bg-black/5 dark:bg-white/5 rounded-xl p-3">
-                <div className="text-gray-500 mb-1">每小时经验</div>
-                <div className="font-bold text-purple-500">{detail.expPerHour?.toFixed(1)}</div>
+              <div className="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-3">
+                <div className="text-orange-600/70 dark:text-orange-400/60 mb-0.5">🎯 可行获季数</div>
+                <div className="font-bold text-orange-700 dark:text-orange-300">{detail.seasons}季</div>
               </div>
-              <div className="bg-black/5 dark:bg-white/5 rounded-xl p-3">
-                <div className="text-gray-500 mb-1">经验/金币比</div>
-                <div className="font-bold text-amber-500">{detail.expPerGold?.toFixed(3)}</div>
+              <div className="bg-teal-50 dark:bg-teal-900/20 rounded-xl p-3">
+                <div className="text-teal-600/70 dark:text-teal-400/60 mb-0.5">📊 经验/金币</div>
+                <div className="font-bold text-teal-700 dark:text-teal-300">{detail.expPerGold?.toFixed(4)}</div>
               </div>
             </div>
+
+            {/* Growth Phases */}
+            {(() => {
+              const phases = getPhases(detail.seedId);
+              if (phases.length === 0) return null;
+              const totalSec = phases.reduce((a: number, b: any) => a + b.sec, 0);
+              return (
+                <div>
+                  <div className="text-xs font-bold text-gray-500 dark:text-white/40 mb-2">🌱 生长阶段</div>
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {phases.map((p, i) => {
+                      const isMature = p.sec === 0;
+                      const bg = isMature ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-green-100 dark:bg-green-900/30';
+                      const fg = isMature ? 'text-amber-700 dark:text-amber-300' : 'text-green-700 dark:text-green-300';
+                      return (
+                        <span key={i} className={`${bg} ${fg} text-xs px-2 py-1 rounded-lg font-medium`}>
+                          {p.name}{p.sec > 0 ? ` ${fmtSec(p.sec)}` : ''}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <div className="text-[10px] text-gray-400">总时长: {fmtSec(totalSec)}</div>
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}
