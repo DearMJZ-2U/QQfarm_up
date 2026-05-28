@@ -34,15 +34,10 @@ const categoryData: Record<string, { name: string; icon: string; items: ItemEntr
   '02': {
     name: '货币与计数', icon: '💰',
     items: [
-      { name: '金币', desc: '农场基础货币' },
-      { name: '点券', desc: '特殊兑换货币' },
-      { name: '累计充值', desc: '累计充值金额计数' },
-      { name: '金豆豆', desc: '高级兑换货币' },
-      { name: '普通化肥容器', desc: '单个作物仅能使用一次' },
-      { name: '有机化肥容器', desc: '单个作物不限使用次数' },
-      { name: '友谊果实', desc: '友谊树果实' },
-      { name: '穗华', desc: '稀有种子兑换货币' },
-      { name: '幸运币', desc: '抽奖用货币' },
+      { name: '金币', desc: '农场基础货币' }, { name: '点券', desc: '特殊兑换货币' },
+      { name: '累计充值', desc: '累计充值金额计数' }, { name: '金豆豆', desc: '高级兑换货币' },
+      { name: '普通化肥容器', desc: '单个作物仅能使用一次' }, { name: '有机化肥容器', desc: '单个作物不限使用次数' },
+      { name: '友谊果实', desc: '友谊树果实' }, { name: '穗华', desc: '稀有种子兑换货币' }, { name: '幸运币', desc: '抽奖用货币' },
     ]
   },
   '04': {
@@ -74,12 +69,9 @@ const categoryData: Record<string, { name: string; icon: string; items: ItemEntr
   '10': {
     name: '头像框与装饰', icon: '🎨',
     items: [
-      { name: '农场元老内测框', desc: '农场元老内测头像框' },
-      { name: '金穗至尊SVIP框', desc: 'QQSVIP专属头像框' },
-      { name: '萌宠柯基头像框', desc: '萌宠柯基活动专属头像框' },
-      { name: '春耕纪头像框', desc: '清明春耕纪活动专属头像框' },
-      { name: '同气连枝头像框', desc: '同气连枝限定款' },
-      { name: '护主犬头像框', desc: '洛克王国联动限定' },
+      { name: '农场元老内测框', desc: '农场元老内测头像框' }, { name: '金穗至尊SVIP框', desc: 'QQSVIP专属头像框' },
+      { name: '萌宠柯基头像框', desc: '萌宠柯基活动专属头像框' }, { name: '春耕纪头像框', desc: '清明春耕纪活动专属头像框' },
+      { name: '同气连枝头像框', desc: '同气连枝限定款' }, { name: '护主犬头像框', desc: '洛克王国联动限定' },
       { name: '哈哈南瓜头像框', desc: '哈哈南瓜活动限定头像框' },
     ]
   },
@@ -90,7 +82,7 @@ const categoryData: Record<string, { name: string; icon: string; items: ItemEntr
       { name: '牧羊犬', desc: '吃饱后可看家，30%概率看护', imgSrc: IMG('extraRes/gui/texture/icon/Item_4_3.png') },
       { name: '斑点狗', desc: '吃饱后可看家，50%概率看护', imgSrc: IMG('extraRes/gui/texture/icon/Item_4_4.png') },
       { name: '柯基', desc: '吃饱后可看家，50%概率看护', imgSrc: IMG('extraRes/gui/texture/icon/Item_8_11.png') },
-      { name: '护主犬', desc: '洛克王国联动限定，50%概率看护', imgSrc: IMG('extraRes/gui/texture/icon/Item_8_21.png') },
+      { name: '护主犬', desc: '洛克王国联动限定', imgSrc: IMG('extraRes/gui/texture/icon/Item_8_21.png') },
     ]
   },
   '09': {
@@ -133,11 +125,45 @@ function ItemImage({ src, name }: { src?: string, name: string }) {
   return <img src={src} alt={name} className="w-10 h-10 rounded-lg object-contain shrink-0 bg-white dark:bg-gray-800 border border-black/5 dark:border-white/5" loading="lazy" onError={() => setFailed(true)} />;
 }
 
+function SeedsContent() {
+  return (
+    <>
+      {seedsList.map(s => (
+        <div key={s.seedId} className="flex items-center gap-2 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] hover:bg-green-500/5 transition-colors">
+          <CropImage seedId={s.seedId} name={s.name} size={32} className="shrink-0" />
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold text-gray-900 dark:text-white truncate">{s.name}</div>
+            <div className="text-[9px] text-gray-400">Lv{s.requiredLevel} · 🌱{s.exp}经验 · 🕒{s.growTimeStr}</div>
+          </div>
+          <span className="text-[9px] text-gray-400 font-bold shrink-0">💰{s.price}</span>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function ItemsContent({ catId }: { catId: string }) {
+  const data = categoryData[catId];
+  if (!data) return <div className="text-xs text-gray-400 text-center py-8">加载失败</div>;
+  return (
+    <>
+      {data.items.map((item, i) => (
+        <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] hover:bg-green-500/5 transition-colors">
+          <ItemImage src={item.imgSrc} name={item.name} />
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold text-gray-900 dark:text-white">{item.name}</div>
+            {item.desc && <div className="text-[9px] text-gray-400">{item.desc}</div>}
+          </div>
+          {item.level && <span className="text-[9px] text-gray-400 font-bold shrink-0">{item.level}</span>}
+        </div>
+      ))}
+    </>
+  );
+}
+
 export default function ItemsTab() {
   const [activeCat, setActiveCat] = React.useState('05');
-
   const cat = categories.find(c => c.id === activeCat)!;
-  const catData = categoryData[activeCat];
 
   return (
     <div className="flex gap-3 h-full fade-in">
@@ -155,31 +181,8 @@ export default function ItemsTab() {
             <h2 className="text-sm font-bold text-gray-900 dark:text-white">{cat.name}</h2>
             <span className="text-[10px] text-gray-500 ml-auto">{cat.count} 个道具</span>
           </div>
-          <div className="space-y-1 max-h-[65vh] overflow-y-auto">
-            {activeCat === '05'
-              ? seedsList.map(s => (
-                  <div key={s.seedId} className="flex items-center gap-2 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] hover:bg-green-500/5 transition-colors">
-                    <CropImage seedId={s.seedId} name={s.name} size={32} className="shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-xs font-bold text-gray-900 dark:text-white truncate">{s.name}</div>
-                      <div className="text-[9px] text-gray-400">Lv{s.requiredLevel} · 🌱{s.exp}经验 · 🕒{s.growTimeStr}</div>
-                    </div>
-                    <span className="text-[9px] text-gray-400 font-bold shrink-0">💰{s.price}</span>
-                  </div>
-                ))
-              : catData
-                ? catData.items.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] hover:bg-green-500/5 transition-colors">
-                      <ItemImage src={item.imgSrc} name={item.name} />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold text-gray-900 dark:text-white">{item.name}</div>
-                        {item.desc && <div className="text-[9px] text-gray-400">{item.desc}</div>}
-                      </div>
-                      {item.level && <span className="text-[9px] text-gray-400 font-bold shrink-0">{item.level}</span>}
-                    </div>
-                  ))
-                : <div className="text-xs text-gray-400 text-center py-8">🚧 数据整理中...</div>
-            }
+          <div key={activeCat} className="space-y-1 max-h-[65vh] overflow-y-auto">
+            {activeCat === '05' ? <SeedsContent /> : <ItemsContent catId={activeCat} />}
           </div>
         </div>
       </div>
