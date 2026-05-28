@@ -27,21 +27,21 @@ export default function LandAtlasTab() {
   return (
     <div className="space-y-6 fade-in">
       {/* Hero Stats */}
-      <div className="glass-panel rounded-2xl p-4 bg-gradient-to-br from-amber-700 via-orange-600 to-yellow-500 text-white">
-        <h1 className="text-xl font-bold mb-3">🏞️ 土地图鉴</h1>
-        <p className="text-amber-50/90 text-xs mb-4">单块地、多格地、开垦顺序与升级需求。</p>
+      <div className="rounded-2xl p-4 bg-gradient-to-br from-amber-700 via-orange-600 to-yellow-500">
+        <h1 className="text-xl font-bold text-white mb-3">🏞️ 土地图鉴</h1>
+        <p className="text-white/80 text-xs mb-4">单块地、多格地、开垦顺序与升级需求。</p>
         <div className="grid grid-cols-4 gap-2 text-center">
-          <div className="bg-white/15 rounded-xl p-2">
-            <div className="text-lg font-black">24</div><div className="text-[9px] text-amber-50/80">总地块</div>
+          <div className="bg-white/20 rounded-xl p-2">
+            <div className="text-lg font-black text-white">24</div><div className="text-[9px] text-white/80">总地块</div>
           </div>
-          <div className="bg-white/15 rounded-xl p-2">
-            <div className="text-lg font-black">6/18</div><div className="text-[9px] text-amber-50/80">初始/可开垦</div>
+          <div className="bg-white/20 rounded-xl p-2">
+            <div className="text-lg font-black text-white">6/18</div><div className="text-[9px] text-white/80">初始/可开垦</div>
           </div>
-          <div className="bg-white/15 rounded-xl p-2">
-            <div className="text-lg font-black">Lv39</div><div className="text-[9px] text-amber-50/80">最高开垦</div>
+          <div className="bg-white/20 rounded-xl p-2">
+            <div className="text-lg font-black text-white">Lv39</div><div className="text-[9px] text-white/80">最高开垦</div>
           </div>
-          <div className="bg-white/15 rounded-xl p-2">
-            <div className="text-lg font-black">Lv90-159</div><div className="text-[9px] text-amber-50/80">紫晶升级</div>
+          <div className="bg-white/20 rounded-xl p-2">
+            <div className="text-lg font-black text-white">Lv90-159</div><div className="text-[9px] text-white/80">紫晶升级</div>
           </div>
         </div>
       </div>
