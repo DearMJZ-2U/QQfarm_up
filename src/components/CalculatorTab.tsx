@@ -60,8 +60,8 @@ export default function CalculatorTab() {
     const currentLands = actualNormal + actualRed + actualBlack + actualGold + actualPurple;
     if (currentLands === 0) return [];
 
-    const plantSecNoFert = currentLands / NO_FERT_PLANT_SPEED;
-    const plantSecFert = currentLands / NORMAL_FERT_PLANT_SPEED;
+    const plantSecNoFert = idealMode ? 0 : currentLands / NO_FERT_PLANT_SPEED;
+    const plantSecFert = idealMode ? 0 : currentLands / NORMAL_FERT_PLANT_SPEED;
     const seedsList = Array.isArray(seedsData) ? seedsData : (seedsData.rows || []);
 
     const landCounts = [
@@ -161,20 +161,50 @@ export default function CalculatorTab() {
           </div>
         </div>
 
-        {/* Toggle switches */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3">
-            <input type="checkbox" checked={smartFert} onChange={e => setSmartFert(e.target.checked)} className="rounded" />
-            <span className="text-green-900/70 dark:text-green-50/70">🧪 智能施肥</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3">
-            <input type="checkbox" checked={idealMode} onChange={e => setIdealMode(e.target.checked)} className="rounded" />
-            <span className="text-green-900/70 dark:text-green-50/70">✨ 理想模式</span>
-          </label>
-          <label className={`flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3 ${!smartFert ? 'opacity-40' : ''}`}>
-            <input type="checkbox" checked={secondSeasonFert && smartFert} onChange={e => setSecondSeasonFert(e.target.checked)} disabled={!smartFert} className="rounded" />
-            <span className="text-green-900/70 dark:text-green-50/70">🔄 第二季化肥</span>
-          </label>
+        {/* Toggle switches with tooltips */}
+        <div className="space-y-2">
+          <div className="flex items-start gap-2">
+            <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3">
+              <input type="checkbox" checked={smartFert} onChange={e => setSmartFert(e.target.checked)} className="rounded" />
+              <span className="text-green-900/70 dark:text-green-50/70">🧪 智能施肥</span>
+            </label>
+            <div className="text-[9px] text-gray-400 leading-relaxed mt-2">
+              {smartFert
+                ? '⏱️ 自动选择耗时最长的生长阶段施肥，最大化缩短种植周期'
+                : '⏱️ 关闭后固定施肥第一阶段'
+              }
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2">
+            <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3">
+              <input type="checkbox" checked={idealMode} onChange={e => setIdealMode(e.target.checked)} className="rounded" />
+              <span className="text-green-900/70 dark:text-green-50/70">✨ 理想模式</span>
+            </label>
+            <div className="text-[9px] text-gray-400 leading-relaxed mt-2">
+              {idealMode
+                ? '🌟 忽略种植与施肥操作耗时，仅计算纯生长时间'
+                : '🌟 关闭后计算包含种植和施肥的操作耗时'
+              }
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2">
+            <label className={`flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3 ${!smartFert || (typeof level === 'number' && level < 60) ? 'opacity-40' : ''}`}>
+              <input type="checkbox" checked={secondSeasonFert && smartFert && typeof level === 'number' && level >= 60} onChange={e => setSecondSeasonFert(e.target.checked)} disabled={!smartFert || (typeof level === 'number' && level < 60)} className="rounded" />
+              <span className="text-green-900/70 dark:text-green-50/70">🔄 普通化肥·第二季</span>
+            </label>
+            <div className="text-[9px] text-gray-400 leading-relaxed mt-2">
+              {secondSeasonFert && smartFert && typeof level === 'number' && level >= 60
+                ? '🌾 第二季也会跳过最长阶段施肥，进一步缩短双季循环时间'
+                : typeof level === 'number' && level < 60
+                  ? '🔒 需要等级 > 60 且智能施肥开启（Lv60后解锁双季作物）'
+                  : !smartFert
+                    ? '🔒 需要先开启智能施肥'
+                    : '🌾 开启后第二季也跳过最长阶段施肥'
+              }
+            </div>
+          </div>
         </div>
       </div>
 
