@@ -1,3 +1,4 @@
+import React from 'react';
 import { Leaf } from 'lucide-react';
 import seedMapping from '../data/seed_mapping.json';
 import plantData from '../data/Plant.json';
@@ -11,11 +12,35 @@ for (const m of seedMapping) {
 }
 
 export function CropImage({ seedId, name, size = 32, className = '' }: { seedId?: number, name: string, size?: number, className?: string }) {
+  const [imgFailed, setImgFailed] = React.useState(false);
   const fileName = (seedId && seedImageMap[seedId]) || seedNameImageMap[name];
-  if (fileName) {
+  const remoteUrl = seedId ? `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${seedId}_Seed.png` : undefined;
+
+  if (!imgFailed && fileName) {
     const baseUrl = import.meta.env.BASE_URL || '/';
     const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
-    return <img src={`${cleanBaseUrl}seed_images_named/${fileName}`} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />;
+    return (
+      <img
+        src={`${cleanBaseUrl}seed_images_named/${fileName}`}
+        alt={name}
+        className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`}
+        loading="lazy"
+        style={{ width: size, height: size }}
+        onError={() => setImgFailed(true)}
+      />
+    );
+  }
+  if (remoteUrl && !imgFailed) {
+    return (
+      <img
+        src={remoteUrl}
+        alt={name}
+        className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`}
+        loading="lazy"
+        style={{ width: size, height: size }}
+        onError={() => setImgFailed(true)}
+      />
+    );
   }
   return <div className={`inline-flex items-center justify-center bg-black/10 dark:bg-white/10 rounded-full shrink-0 ${className}`} style={{ width: size, height: size }}><Leaf size={size * 0.5} className="text-green-500/50" /></div>;
 }
