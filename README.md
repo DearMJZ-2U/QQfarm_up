@@ -1,11 +1,41 @@
+# QQ农场收益计算器
 
-## Run Locally
+QQ农场（QQ Farm）游戏辅助工具集，提供收益计算、图鉴查阅、道具浏览等功能。移动端优先的渐进式 Web 应用。
 
-**Prerequisites:**  Node.js
+## 功能
 
+| 入口 | 功能 | 说明 |
+|------|------|------|
+| 🧮 计算 | 经验收益计算器 | 等级/土地配置/紫晶土地/施肥对比/TOP20 排行榜 |
+| 📖 图鉴 | 作物图鉴 | 149 种作物，点击卡片查看成长阶段图和详细属性 |
+| | 土地图鉴 | 5 种土地类型（普通/红/黑/金/紫晶），24 块地开垦顺序与升级需求 |
+| | 变异图鉴 | 7 种变异效果 + 黄金超变来源 + 超变图鉴 |
+| | 装扮图鉴 | 6 类 13 件装扮（小屋/木牌/栅栏/盆栽/仓库/道路） |
+| 🛒 道具 | 道具目录 | 12 个分类（种子/黄金果实/货币/工具/化肥/狗粮等） |
+| 📋 更多 | 等级查询 | Lv1-Lv200 等级经验表，搜索和分段快速定位 |
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 技术栈
+
+- React 19 / TypeScript
+- Vite 6
+- Tailwind CSS 4
+- Motion (Framer Motion)
+- Lucide Icons
+
+## 本地运行
+
+```bash
+npm install
+npm run dev
+```
+
+访问 `http://localhost:3000`
+
+## 构建部署
+
+```bash
+npm run build    # 输出到 dist/
+npm run preview  # 预览构建结果
+```
+
+部署到 GitHub Pages：推送 `main` 分支后自动通过 GitHub Actions 构建发布。
