@@ -47,9 +47,13 @@ const goldenEntries: GoldenEntry[] = [
 ];
 
 const mutationTypeImages: Record<string, string> = {
-  '塔塔': 'https://jsq.gptvip.chat/images/plant/model/v4/gold/Crop_416_Seed.png',
-  '黄金': 'https://jsq.gptvip.chat/images/plant/model/v4/gold/Crop_304_Seed.png',
-  '爱心': 'https://jsq.gptvip.chat/images/plant/model/v4/gold/Crop_46_Seed.png',
+  '塔塔': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/tata.png',
+  '哈哈': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/haha.png',
+  '黄金': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/golden.png',
+  '冰冻': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/frozen.png',
+  '爱心': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/love.png',
+  '暗化': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/dark.png',
+  '湿润': 'https://jsq.gptvip.chat/images/extraRes/gui/texture/mutant/icon/moist.png',
 };
 
 function DetailModal({ item, onClose }: { item: CropEntry | GoldenEntry; onClose: () => void }) {
