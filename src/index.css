@@ -1,0 +1,103 @@
+﻿@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@layer theme {
+  :root {
+    --color-green-400: #8FE8A8;
+    --color-green-500: #5DCF80;
+    --color-blue-900: #0D1B2A;
+  }
+}
+
+/* Background gradient animation */
+@keyframes backgrounds {
+  0% {
+    transform: scale(1.0) translateY(0);
+  }
+
+  33% {
+    transform: scale(1.05) translateY(-5px);
+  }
+
+  66% {
+    transform: scale(0.95) translateY(5px);
+  }
+
+  100% {
+    transform: scale(1.0) translateY(0);
+  }
+}
+
+:root {
+  --app-bg: #f4faeb;
+
+  --glass-panel-bg: rgba(255, 255, 255, 0.6);
+  --glass-panel-border: rgba(0, 0, 0, 0.05);
+
+  --glass-highlight-bg: linear-gradient(135deg, rgba(200, 240, 210, 0.6) 0%, rgba(255, 255, 255, 0.5) 100%);
+  --glass-highlight-border: rgba(93, 207, 128, 0.4);
+
+  --glass-input-bg: rgba(255, 255, 255, 0.7);
+  --glass-input-border: rgba(0, 0, 0, 0.08);
+  --glass-input-color: #1a2f24;
+  --glass-input-focus-bg: rgba(255, 255, 255, 0.9);
+}
+
+.dark {
+  --app-bg: #0d1e16;
+
+  --glass-panel-bg: rgba(18, 25, 23, 0.4);
+  --glass-panel-border: rgba(255, 255, 255, 0.05);
+
+  --glass-highlight-bg: linear-gradient(135deg, rgba(30, 45, 40, 0.6) 0%, rgba(18, 25, 23, 0.4) 100%);
+  --glass-highlight-border: rgba(93, 207, 128, 0.2);
+
+  --glass-input-bg: rgba(0, 0, 0, 0.3);
+  --glass-input-border: rgba(255, 255, 255, 0.08);
+  --glass-input-color: white;
+  --glass-input-focus-bg: rgba(0, 0, 0, 0.5);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--app-bg);
+  transition: background-color 0.3s ease;
+}
+
+/* Reusable Glassmorphism classes applied gracefully */
+.glass-panel {
+  background: var(--glass-panel-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-panel-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.glass-panel-highlight {
+  background: var(--glass-highlight-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-highlight-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+}
+
+.glass-input {
+  background: var(--glass-input-bg);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--glass-input-border);
+  color: var(--glass-input-color);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: var(--glass-input-focus-bg);
+  border-color: rgba(93, 207, 128, 0.6);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(93, 207, 128, 0.2);
+}
