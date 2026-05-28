@@ -46,6 +46,7 @@ export function parseGrowPhases(growPhases: string) {
 
 export const plantPhaseMap: Record<number, number> = {};
 export const plantLastPhaseMap: Record<number, number> = {};
+export const plantAllPhasesMap: Record<number, number[]> = {};
 for (const p of plantData) {
   const seedId = Number(p.seed_id);
   if (seedId > 0 && !plantPhaseMap[seedId]) {
@@ -53,6 +54,7 @@ for (const p of plantData) {
     if (phases.length > 0) {
       plantPhaseMap[seedId] = phases[0];
       plantLastPhaseMap[seedId] = phases[phases.length - 1];
+      plantAllPhasesMap[seedId] = phases;
     }
   }
 }
