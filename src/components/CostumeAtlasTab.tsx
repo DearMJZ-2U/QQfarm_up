@@ -1,4 +1,5 @@
 import React from 'react';
+import { CropImage } from './shared';
 
 const costumeCategories = [
   {
@@ -72,9 +73,11 @@ export default function CostumeAtlasTab() {
             <span className="text-[10px] text-gray-500 ml-auto">{cat.items.length} 个</span>
           </div>
           <div className="space-y-2">
-            {cat.items.map((item, j) => (
+            {cat.items.map((item, j) => {
+              const seedId = item.name.includes('南瓜') ? 20416 : undefined;
+              return (
               <div key={j} className="flex items-center gap-3 p-2 rounded-lg bg-black/[0.02] dark:bg-white/[0.02]">
-                <div className="text-2xl">🖼️</div>
+                {seedId ? <CropImage seedId={seedId} name="哈哈南瓜" size={32} /> : <div className="text-2xl">🖼️</div>}
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-xs text-gray-900 dark:text-white">{item.name}</span>
@@ -83,7 +86,8 @@ export default function CostumeAtlasTab() {
                   <div className="text-[10px] text-gray-500 dark:text-white/40">{item.desc}</div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}

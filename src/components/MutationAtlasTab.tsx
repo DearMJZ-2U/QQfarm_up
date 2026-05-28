@@ -12,33 +12,33 @@ const mutationTypes = [
 ];
 
 const goldMutationCrops = [
-  { name: '银杏树苗', rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
-  { name: '爱心果', rarity: '★4 天工', exp: 3840, fruit: 96, price: 320, prob: 10, note: '2x2 四方福地' },
-  { name: '蝴蝶兰', rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
-  { name: '风信子', rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
-  { name: '蔷薇', rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
-  { name: '昙花', rarity: '★3 珍品', exp: 840, fruit: 24, price: 280, prob: 10 },
-  { name: '荷包牡丹', rarity: '★3 珍品', exp: 840, fruit: 24, price: 280, prob: 10 },
-  { name: '艾草', rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
+  { name: '银杏树苗', seedId: 20025, rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
+  { name: '爱心果', seedId: 20046, rarity: '★4 天工', exp: 3840, fruit: 96, price: 320, prob: 10, note: '2x2 四方福地' },
+  { name: '蝴蝶兰', seedId: 20109, rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
+  { name: '风信子', seedId: 20112, rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
+  { name: '蔷薇', seedId: 20121, rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
+  { name: '昙花', seedId: 20224, rarity: '★3 珍品', exp: 840, fruit: 24, price: 280, prob: 10 },
+  { name: '荷包牡丹', seedId: 20249, rarity: '★3 珍品', exp: 840, fruit: 24, price: 280, prob: 10 },
+  { name: '艾草', seedId: 21135, rarity: '★2 稀有', exp: 720, fruit: 24, price: 240, prob: 10 },
 ];
 
 const goldenEntries = [
-  { name: '黄金·风信子', points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·银杏树苗', points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·蔷薇', points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·蝴蝶兰', points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·艾草', points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·卡特兰', points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·红云飞片', points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·石竹花', points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·针垫花', points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·昙花', points: 80, exp: 840, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·荷包牡丹', points: 80, exp: 840, fruit: 24, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·孔雀草', points: 80, exp: 1680, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·欧石楠', points: 80, exp: 1680, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·黄金果', points: 80, exp: 1680, fruit: 10, note: '卖给商人后可以获得金豆豆' },
-  { name: '黄金·爱心果', points: 200, exp: 3840, fruit: 96, note: '天工作物黄金变异' },
-  { name: '黄金·哈哈南瓜', points: 200, exp: 15360, fruit: 480, note: '天工作物黄金变异' },
+  { name: '黄金·风信子', seedId: 20112, points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·银杏树苗', seedId: 20025, points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·蔷薇', seedId: 20121, points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·蝴蝶兰', seedId: 20109, points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·艾草', seedId: 21135, points: 40, exp: 720, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·卡特兰', seedId: 20184, points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·红云飞片', seedId: 20193, points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·石竹花', seedId: 20256, points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·针垫花', seedId: 20261, points: 40, exp: 1440, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·昙花', seedId: 20224, points: 80, exp: 840, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·荷包牡丹', seedId: 20249, points: 80, exp: 840, fruit: 24, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·孔雀草', seedId: 20257, points: 80, exp: 1680, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·欧石楠', seedId: 20258, points: 80, exp: 1680, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·黄金果', seedId: 20304, points: 80, exp: 1680, fruit: 10, note: '卖给商人后可以获得金豆豆' },
+  { name: '黄金·爱心果', seedId: 20046, points: 200, exp: 3840, fruit: 96, note: '天工作物黄金变异' },
+  { name: '黄金·哈哈南瓜', seedId: 20416, points: 200, exp: 15360, fruit: 480, note: '天工作物黄金变异' },
 ];
 
 export default function MutationAtlasTab() {
@@ -73,7 +73,7 @@ export default function MutationAtlasTab() {
         <div className="space-y-3">
             {goldMutationCrops.map((c, i) => (
             <div key={i} className="glass-panel rounded-xl p-3 flex items-center gap-3">
-              <CropImage name={c.name} size={36} />
+              <CropImage seedId={c.seedId} name={c.name} size={36} />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-sm text-gray-900 dark:text-white">{c.name}</span>
@@ -93,7 +93,7 @@ export default function MutationAtlasTab() {
           <div className="text-xs text-gray-500 dark:text-white/40 mb-2">按黄金果实、装扮果实、活动果实整理，共 {goldenEntries.length} 条目</div>
           {goldenEntries.map((g, i) => (
             <div key={i} className="glass-panel rounded-xl p-3 flex items-center gap-3">
-              <CropImage name={g.name.replace(/^黄金·/, '')} size={32} />
+              <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={32} />
               <div className="flex-1">
                 <div className="font-bold text-xs text-gray-900 dark:text-white">{g.name}</div>
                 <div className="text-[10px] text-gray-500 dark:text-white/40">

@@ -8,7 +8,7 @@ const IMG = (path: string) => `https://jsq.gptvip.chat/images/${path}`;
 interface ItemEntry { name: string; desc?: string; level?: string; imgSrc?: string; }
 const categoryItems: Record<string, ItemEntry[]> = {
   '17': [
-    { name: '哈哈小南瓜', desc: '出售获得金币', level: 'Lv.41', imgSrc: IMG('plant/model/v4/gold/Crop_9001_Seed.png') },
+    { name: '黄金·哈哈南瓜', desc: '出售获得金豆豆', level: 'Lv.31', imgSrc: IMG('plant/model/v4/gold/Crop_416_Seed.png') },
     { name: '黄金·风信子', desc: '出售获得金豆豆', level: 'Lv.200', imgSrc: IMG('plant/model/v4/gold/Crop_112_Seed.png') },
     { name: '黄金·银杏树苗', desc: '出售获得金豆豆', level: 'Lv.200', imgSrc: IMG('plant/model/v4/gold/Crop_25_Seed.png') },
     { name: '黄金·蔷薇', desc: '出售获得金豆豆', level: 'Lv.200', imgSrc: IMG('plant/model/v4/gold/Crop_121_Seed.png') },
@@ -24,8 +24,8 @@ const categoryItems: Record<string, ItemEntry[]> = {
     { name: '黄金·欧石楠', desc: '出售获得金豆豆', level: 'Lv.41', imgSrc: IMG('plant/model/v4/gold/Crop_258_Seed.png') },
     { name: '黄金·黄金果', desc: '出售获得金豆豆', level: 'Lv.81', imgSrc: IMG('plant/model/v4/gold/Crop_304_Seed.png') },
     { name: '黄金·爱心果', desc: '出售获得金豆豆', level: 'Lv.202', imgSrc: IMG('plant/model/v4/gold/Crop_46_Seed.png') },
-    { name: '黄金·哈哈南瓜', desc: '出售获得金豆豆', level: 'Lv.31', imgSrc: IMG('plant/model/v4/gold/Crop_416_Seed.png') },
     { name: '黄金·哈哈小南瓜', desc: '出售获得金豆豆', level: 'Lv.41', imgSrc: IMG('plant/model/v4/gold/Crop_9001_Seed.png') },
+    { name: '哈哈小南瓜', desc: '出售获得金币', level: 'Lv.41', imgSrc: IMG('plant/model/v4/gold/Crop_9001_Seed.png') },
   ],
   '02': [
     { name: '金币', desc: '农场基础货币', imgSrc: IMG('extraRes/gui/texture/icon/golds.png') },
