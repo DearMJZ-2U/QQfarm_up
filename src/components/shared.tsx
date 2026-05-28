@@ -12,35 +12,26 @@ for (const m of seedMapping) {
 }
 
 export function CropImage({ seedId, name, size = 32, className = '' }: { seedId?: number, name: string, size?: number, className?: string }) {
-  const [imgFailed, setImgFailed] = React.useState(false);
+  const [step, setStep] = React.useState(0);
   const fileName = (seedId && seedImageMap[seedId]) || seedNameImageMap[name];
-  const remoteUrl = seedId ? `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${seedId}_Seed.png` : undefined;
+  const remoteId = seedId ? (seedId % 10000) : undefined;
+  const remoteUrl1 = remoteId ? `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${remoteId}_Seed.png` : undefined;
+  const remoteUrl2 = seedId ? `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${seedId}_Seed.png` : undefined;
 
-  if (!imgFailed && fileName) {
+  const step0 = step === 0 && !!fileName;
+  const step1 = step <= 1 && !!remoteUrl1;
+  const step2 = step <= 2 && !!remoteUrl2;
+
+  if (step0) {
     const baseUrl = import.meta.env.BASE_URL || '/';
     const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
-    return (
-      <img
-        src={`${cleanBaseUrl}seed_images_named/${fileName}`}
-        alt={name}
-        className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`}
-        loading="lazy"
-        style={{ width: size, height: size }}
-        onError={() => setImgFailed(true)}
-      />
-    );
+    return <img src={`${cleanBaseUrl}seed_images_named/${fileName}`} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={() => setStep(1)} />;
   }
-  if (remoteUrl && !imgFailed) {
-    return (
-      <img
-        src={remoteUrl}
-        alt={name}
-        className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`}
-        loading="lazy"
-        style={{ width: size, height: size }}
-        onError={() => setImgFailed(true)}
-      />
-    );
+  if (step1) {
+    return <img src={remoteUrl1!} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={() => setStep(2)} />;
+  }
+  if (step2) {
+    return <img src={remoteUrl2!} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={() => setStep(3)} />;
   }
   return <div className={`inline-flex items-center justify-center bg-black/10 dark:bg-white/10 rounded-full shrink-0 ${className}`} style={{ width: size, height: size }}><Leaf size={size * 0.5} className="text-green-500/50" /></div>;
 }
