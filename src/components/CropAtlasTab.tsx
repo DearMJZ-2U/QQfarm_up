@@ -113,7 +113,7 @@ export default function CropAtlasTab() {
                 <div className="font-bold text-blue-700 dark:text-blue-300">{detail.expPerHour?.toFixed(1)}</div>
               </div>
               <div className="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-3">
-                <div className="text-orange-600/70 dark:text-orange-400/60 mb-0.5">🎯 可行获季数</div>
+                <div className="text-orange-600/70 dark:text-orange-400/60 mb-0.5">🎯 可收获季数</div>
                 <div className="font-bold text-orange-700 dark:text-orange-300">{detail.seasons}季</div>
               </div>
               <div className="bg-teal-50 dark:bg-teal-900/20 rounded-xl p-3">
