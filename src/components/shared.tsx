@@ -3,38 +3,169 @@ import { Leaf } from 'lucide-react';
 import seedMapping from '../data/seed_mapping.json';
 import plantData from '../data/Plant.json';
 
+const BASE = (import.meta as any).env?.BASE_URL || '/';
+const CLEAN_BASE = BASE.endsWith('/') ? BASE : BASE + '/';
+
+const CDN = 'https://jsq.gptvip.chat/images';
+
+// ── 种子映射 ──────────────────────────────────────────────
+
 const seedImageMap: Record<number, string> = {};
 const seedNameImageMap: Record<string, string> = {};
+const seedCropNumber: Record<number, number> = {};
+const seedNameMap: Record<number, string> = {};
 for (const m of seedMapping) {
   const sid = Number(m.seedId);
   if (sid > 0 && m.fileName) seedImageMap[sid] = m.fileName;
   if (m.name && m.fileName && m.name !== '未知') seedNameImageMap[m.name] = m.fileName;
+  if (sid > 0 && m.cropNumber) seedCropNumber[sid] = m.cropNumber;
+  if (sid > 0 && m.name && m.name !== '未知') seedNameMap[sid] = m.name;
 }
 
-export function CropImage({ seedId, name, size = 32, className = '' }: { seedId?: number, name: string, size?: number, className?: string }) {
-  const [step, setStep] = React.useState(0);
-  const fileName = (seedId && seedImageMap[seedId]) || seedNameImageMap[name];
-  const remoteId = seedId ? (seedId % 10000) : undefined;
-  const remoteUrl1 = remoteId ? `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${remoteId}_Seed.png` : undefined;
-  const remoteUrl2 = seedId ? `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${seedId}_Seed.png` : undefined;
-
-  const step0 = step === 0 && !!fileName;
-  const step1 = step <= 1 && !!remoteUrl1;
-  const step2 = step <= 2 && !!remoteUrl2;
-
-  if (step0) {
-    const baseUrl = import.meta.env.BASE_URL || '/';
-    const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
-    return <img src={`${cleanBaseUrl}seed_images_named/${fileName}`} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={() => setStep(1)} />;
-  }
-  if (step1) {
-    return <img src={remoteUrl1!} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={() => setStep(2)} />;
-  }
-  if (step2) {
-    return <img src={remoteUrl2!} alt={name} className={`inline-block align-middle object-contain shrink-0 drop-shadow-md ${className}`} loading="lazy" style={{ width: size, height: size }} onError={() => setStep(3)} />;
-  }
-  return <div className={`inline-flex items-center justify-center bg-black/10 dark:bg-white/10 rounded-full shrink-0 ${className}`} style={{ width: size, height: size }}><Leaf size={size * 0.5} className="text-green-500/50" /></div>;
+function getCropNum(seedId: number): number {
+  return seedCropNumber[seedId] || (seedId % 10000);
 }
+
+function getSeedName(seedId: number): string {
+  return seedNameMap[seedId] || '';
+}
+
+// ── 通用多级图片组件 ────────────────────────────────────
+
+function MultiImage({ urls, alt, size, className = '', rounded = false }: {
+  urls: string[];
+  alt: string;
+  size?: number;
+  className?: string;
+  rounded?: boolean;
+}) {
+  const [idx, setIdx] = React.useState(0);
+  if (idx >= urls.length) {
+    return (
+      <div className={`inline-flex items-center justify-center bg-black/10 dark:bg-white/10 shrink-0 ${rounded ? 'rounded-lg' : 'rounded-full'} ${className}`}
+        style={size ? { width: size, height: size } : undefined}>
+        <Leaf size={(size || 32) * 0.5} className="text-green-500/50" />
+      </div>
+    );
+  }
+  return (
+    <img src={urls[idx]} alt={alt}
+      className={`object-contain shrink-0 ${rounded ? 'rounded-lg' : ''} ${className}`}
+      loading="lazy"
+      style={size ? { width: size, height: size } : undefined}
+      onError={() => setIdx(idx + 1)}
+    />
+  );
+}
+
+// ── 种子图片 ──────────────────────────────────────────────
+
+export function CropImage({ seedId, name, size = 32, className = '' }: {
+  seedId?: number; name: string; size?: number; className?: string;
+}) {
+  const sid = seedId || 0;
+  const cn = sid ? getCropNum(sid) : 0;
+  const sname = sid ? getSeedName(sid) : name;
+  const fileName = (sid && seedImageMap[sid]) || seedNameImageMap[name];
+
+  const urls: string[] = [];
+  if (fileName) urls.push(`${CLEAN_BASE}seed_images_named/${fileName}`);
+  if (cn) {
+    urls.push(
+      `${CDN}/plant/model/v4/Crop_${cn}_Seed.png`,
+      `${CDN}/plant/model/v4/Crop_${cn}_6.png`,
+      `${CDN}/plant/model/v4/Crop_${cn}_1.png`,
+    );
+  }
+  if (sid) {
+    urls.push(`${CDN}/plant/model/v4/Crop_${sid}_Seed.png`);
+  }
+
+  return <MultiImage urls={urls} alt={sname || name} size={size} className={`drop-shadow-md ${className}`} />;
+}
+
+// ── 生长阶段图 ──────────────────────────────────────────
+
+function resolvePhaseUrls(seedId: number, phase: string, gold: boolean): string[] {
+  const cn = getCropNum(seedId);
+  const sname = sanitize(getSeedName(seedId));
+  const pfx = gold ? 'gold/' : '';
+  const localPfx = `${CLEAN_BASE}seed_images_named/`;
+
+  const urls: string[] = [];
+  // 本地图片（以 seedId_name_cropNumber 命名）
+  if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
+  // CDN
+  urls.push(`${CDN}/plant/model/v4/${pfx}Crop_${cn}_${phase}.png`);
+  urls.push(`${CDN}/plant/model/v4/${pfx}Crop_${seedId}_${phase}.png`);
+  return urls;
+}
+
+function sanitize(n: string): string { return n.replace(/[<>:"/\\|?*]/g, '_'); }
+
+export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: boolean }) {
+  const phaseNames = [
+    { label: '种子', phase: 'Seed' },
+    { label: '阶段2', phase: '2' },
+    { label: '阶段3', phase: '3' },
+    { label: '阶段4', phase: '4' },
+    { label: '阶段5', phase: '5' },
+    { label: '成熟', phase: '6' },
+  ];
+
+  return (
+    <div className="flex items-center gap-1 overflow-x-auto pb-1">
+      {phaseNames.map((p, i) => (
+        <React.Fragment key={i}>
+          <div className="flex-shrink-0 flex flex-col items-center gap-0.5">
+            <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 border border-black/5 dark:border-white/5 flex items-center justify-center overflow-hidden">
+              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={32} rounded />
+            </div>
+            <div className="text-[8px] text-gray-400">{p.label}</div>
+          </div>
+          {i < phaseNames.length - 1 && <span className="text-gray-300 text-xs flex-shrink-0">→</span>}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
+// ── 通用装扮/道具/变异图片 ──────────────────────────────
+
+export function RemoteImage({ urls, name, size = 40, className = '', rounded = false }: {
+  urls: string[];
+  name: string;
+  size?: number;
+  className?: string;
+  rounded?: boolean;
+}) {
+  return <MultiImage urls={urls} alt={name} size={size} className={className} rounded={rounded} />;
+}
+
+export function itemImageUrls(iconFile: string, localFile?: string): string[] {
+  const urls: string[] = [];
+  if (localFile) urls.push(`${CLEAN_BASE}item_images/${localFile}`);
+  if (iconFile) urls.push(`${CDN}/${iconFile}`);
+  return urls;
+}
+
+export function costumeImageUrls(imgPath: string, name: string): string[] {
+  const urls: string[] = [];
+  const safe = sanitize(name);
+  urls.push(`${CLEAN_BASE}item_images/costume_${safe}.png`);
+  if (imgPath) urls.push(`${CDN}/${imgPath}`);
+  return urls;
+}
+
+export function mutationIconUrls(iconPath: string, name: string): string[] {
+  const urls: string[] = [];
+  const safe = sanitize(name);
+  urls.push(`${CLEAN_BASE}item_images/mutant_${safe}.png`);
+  if (iconPath) urls.push(`${CDN}/${iconPath}`);
+  return urls;
+}
+
+// ── 阶段解析 ──────────────────────────────────────────────
 
 export function parseGrowPhases(growPhases: string) {
   if (!growPhases) return [];
@@ -80,30 +211,3 @@ export const LAND_BUFFS = {
 
 export const NO_FERT_PLANT_SPEED = 9;
 export const NORMAL_FERT_PLANT_SPEED = 6;
-
-export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: boolean }) {
-  const base = gold ? `https://jsq.gptvip.chat/images/plant/model/v4/gold/Crop_${seedId % 10000}` : `https://jsq.gptvip.chat/images/plant/model/v4/Crop_${seedId % 10000}`;
-  const stages = [
-    { label: '种子', src: `${base}_Seed.png` },
-    { label: '阶段2', src: `${base}_2.png` },
-    { label: '阶段3', src: `${base}_3.png` },
-    { label: '阶段4', src: `${base}_4.png` },
-    { label: '阶段5', src: `${base}_5.png` },
-    { label: '成熟', src: `${base}_6.png` },
-  ];
-  return (
-    <div className="flex items-center gap-1 overflow-x-auto pb-1">
-      {stages.map((s, i) => (
-        <React.Fragment key={i}>
-          <div className="flex-shrink-0 flex flex-col items-center gap-0.5">
-            <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 border border-black/5 dark:border-white/5 flex items-center justify-center overflow-hidden">
-              <img src={s.src} alt={s.label} className="w-8 h-8 object-contain" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-            </div>
-            <div className="text-[8px] text-gray-400">{s.label}</div>
-          </div>
-          {i < stages.length - 1 && <span className="text-gray-300 text-xs flex-shrink-0">→</span>}
-        </React.Fragment>
-      ))}
-    </div>
-  );
-}
