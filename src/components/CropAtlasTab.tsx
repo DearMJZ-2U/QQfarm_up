@@ -77,7 +77,7 @@ export default function CropAtlasTab() {
       {detail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setDetail(null)}>
           <div className="absolute inset-0 bg-black/50" />
-          <div className="relative glass-panel rounded-2xl p-5 max-w-sm w-full max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="relative glass-panel-modal rounded-2xl p-5 max-w-sm w-full max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             <button onClick={() => setDetail(null)} className="absolute top-3 right-3 p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 z-10"><X size={18} /></button>
 
             <div className="flex items-center gap-3 mb-4">

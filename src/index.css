@@ -41,6 +41,8 @@
   --glass-input-border: rgba(0, 0, 0, 0.08);
   --glass-input-color: #1a2f24;
   --glass-input-focus-bg: rgba(255, 255, 255, 0.9);
+
+  --glass-modal-bg: rgba(255, 255, 255, 0.88);
 }
 
 .dark {
@@ -56,6 +58,8 @@
   --glass-input-border: rgba(255, 255, 255, 0.08);
   --glass-input-color: white;
   --glass-input-focus-bg: rgba(0, 0, 0, 0.5);
+
+  --glass-modal-bg: rgba(22, 32, 28, 0.92);
 }
 
 html,
@@ -84,6 +88,14 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-highlight-border);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+}
+
+.glass-panel-modal {
+  background: var(--glass-modal-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-panel-border);
+  box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.25);
 }
 
 .glass-input {
