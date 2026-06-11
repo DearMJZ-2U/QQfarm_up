@@ -44,7 +44,17 @@
     { "name": "凌霄花", "seedId": 26127, "rarity": "★珍品", "exp": 840, "fruit": 10, "price": 280, "prob": 10 },
     { "name": "艾草", "seedId": 21135, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
     { "name": "琉璃宝荷", "seedId": 21032, "rarity": "★天工", "exp": 7680, "fruit": 10, "price": 640, "prob": 10 },
-    { "name": "哈哈南瓜", "seedId": 20416, "rarity": "★天工", "exp": 15360, "fruit": 10, "price": 1280, "prob": 10 }
+    { "name": "哈哈南瓜", "seedId": 20416, "rarity": "★天工", "exp": 15360, "fruit": 10, "price": 1280, "prob": 10 },
+    { "name": "绿牡丹", "seedId": 20134, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
+    { "name": "糖槭树花", "seedId": 20139, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
+    { "name": "象牙红", "seedId": 20140, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
+    { "name": "七里香", "seedId": 20144, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
+    { "name": "月桂花", "seedId": 20154, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
+    { "name": "夏蜡梅", "seedId": 20223, "rarity": "★珍品", "exp": 840, "fruit": 10, "price": 280, "prob": 10 },
+    { "name": "石莲花", "seedId": 20199, "rarity": "★珍品", "exp": 840, "fruit": 10, "price": 280, "prob": 10 },
+    { "name": "帝王花", "seedId": 20262, "rarity": "★珍品", "exp": 840, "fruit": 10, "price": 280, "prob": 10 },
+    { "name": "天竺葵", "seedId": 20263, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 },
+    { "name": "桔梗花", "seedId": 20269, "rarity": "★稀有", "exp": 720, "fruit": 10, "price": 240, "prob": 10 }
   ],
   "goldenAtlas": {
     "goldenFruit": [
@@ -77,7 +87,18 @@
       { "name": "黄金·凌霄花", "seedId": 26127, "cropId": 6127, "points": 80, "exp": 840, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
       { "name": "黄金·爱心果", "seedId": 20046, "cropId": 46, "points": 200, "exp": 3840, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
       { "name": "黄金·哈哈南瓜", "seedId": 20416, "cropId": 416, "points": 200, "exp": 15360, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。", "note": "活动结束后出售" },
-      { "name": "黄金·琉璃宝荷", "seedId": 21032, "cropId": 1032, "points": 200, "exp": 7680, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" }
+      { "name": "黄金·琉璃宝荷", "seedId": 21032, "cropId": 1032, "points": 200, "exp": 7680, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·丁香花", "seedId": 20122, "cropId": 122, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·绿牡丹", "seedId": 20134, "cropId": 134, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·糖槭树花", "seedId": 20139, "cropId": 139, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·象牙红", "seedId": 20140, "cropId": 140, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·七里香", "seedId": 20144, "cropId": 144, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·月桂花", "seedId": 20154, "cropId": 154, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·夏蜡梅", "seedId": 20223, "cropId": 223, "points": 80, "exp": 840, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·石莲花", "seedId": 20199, "cropId": 199, "points": 80, "exp": 840, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·帝王花", "seedId": 20262, "cropId": 262, "points": 80, "exp": 840, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·天竺葵", "seedId": 20263, "cropId": 263, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" },
+      { "name": "黄金·桔梗花", "seedId": 20269, "cropId": 269, "points": 40, "exp": 720, "fruit": 10, "desc": "卖给商人后，可以获得金豆豆。" }
     ],
     "costumeFruit": [
       { "name": "哈哈南瓜塔", "seedId": 20416, "cropId": 8001, "points": 200, "exp": 15360, "fruit": 1, "desc": "卖给商人后，可以获得金币。" },

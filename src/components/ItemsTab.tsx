@@ -1,23 +1,9 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import itemsData from '../data/items.json';
-import { CropImage, GrowthPhases, RemoteImage, itemImageUrls } from './shared';
+import { CropImage, GrowthPhases, RemoteImage, itemImageUrls, goldSeedIds } from './shared';
 
 const categories = itemsData.categories;
-
-const goldSeedIds: Record<string, number> = {
-  '黄金·哈哈南瓜': 20416, '黄金·风信子': 20112, '黄金·银杏树苗': 20025, '黄金·蔷薇': 20121,
-  '黄金·蝴蝶兰': 20109, '黄金·昙花': 20224, '黄金·荷包牡丹': 20249, '黄金·艾草': 21135,
-  '黄金·卡特兰': 20184, '黄金·红云飞片': 20193, '黄金·石竹花': 20256, '黄金·针垫花': 20261,
-  '黄金·孔雀草': 20257, '黄金·欧石楠': 20258, '黄金·黄金果': 20304, '黄金·爱心果': 20046,
-  '黄金·丁香花': 20122, '黄金·欢乐糖果': 20167, '黄金·似何莲': 20185, '黄金·凤仙花': 20133,
-  '黄金·金银花': 20176, '黄金·米兰': 20186, '黄金·鹭草': 20251, '黄金·地涌金莲': 20267,
-  '黄金·繁星花': 21044, '黄金·香彩雀': 21038, '黄金·荷青花': 21474, '黄金·芹叶铁线莲': 20243,
-  '黄金·菖蒲': 21134, '黄金·凌霄花': 26127, '黄金·哈哈小南瓜': 20416, '哈哈小南瓜': 20416,
-  '黄金·琉璃宝荷': 21032, '哈哈南瓜塔': 20416, '黄金·哈哈南瓜塔': 20416,
-  '月华宝荷': 21032, '黄金·月华宝荷': 21032,
-  '荷花': 26109, '黄金·荷花': 26109, '绵绵糖果': 20167,
-};
 
 interface GoldDetail { name: string; desc: string; iconFile: string; localFile?: string; }
 
