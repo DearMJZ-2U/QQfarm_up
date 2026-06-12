@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Sparkles, Trophy, Zap, Coins, Clock, TrendingUp, Wand2 } from 'lucide-react';
 import seedsData from '../data/seeds.json';
-import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED } from './shared';
+import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands } from './shared';
 
 function longestPhase(seedId: number): number {
   const phases = plantAllPhasesMap[seedId];
@@ -10,15 +11,11 @@ function longestPhase(seedId: number): number {
   return Math.max(...nonMature);
 }
 
-function calcBestLands(level: number, total: number) {
-  let remaining = total;
-  let purple = 0, gold = 0, black = 0, red = 0;
-  if (level >= 90) { purple = Math.min(remaining, total); remaining -= purple; }
-  if (level >= 58) { gold = Math.min(remaining, total - purple); remaining -= gold; }
-  if (level >= 40) { black = Math.min(remaining, total - purple - gold); remaining -= black; }
-  if (level >= 28) { red = Math.min(remaining, total - purple - gold - black); remaining -= red; }
-  return { normal: remaining, red, black, gold, purple };
-}
+const RANK_COLORS = [
+  { bg: 'var(--sun-bg)', fg: 'var(--sun-deep)', medal: '🥇' },
+  { bg: 'var(--bg-2)', fg: 'var(--ink-soft)', medal: '🥈' },
+  { bg: 'var(--orange-bg)', fg: 'var(--orange-deep)', medal: '🥉' },
+];
 
 export default function CalculatorTab() {
   const [level, setLevel] = useState<number | ''>(70);
@@ -32,11 +29,24 @@ export default function CalculatorTab() {
   const [secondSeasonFert, setSecondSeasonFert] = useState(true);
   const [target, setTarget] = useState<'exp' | 'gold'>('exp');
 
+  // 按当前等级自动配置土地（红 Lv28+/黑 Lv40+/金 Lv58+/紫 Lv90+）
+  // 仅在非理想模式下生效；用户仍可手动调整
+  React.useEffect(() => {
+    if (idealMode) return;
+    const lv = typeof level === 'number' ? level : 0;
+    const tot = typeof totalLands === 'number' ? totalLands : 0;
+    if (tot <= 0) return;
+    const best = calcBestLands(lv, tot);
+    setRedLands(best.red);
+    setBlackLands(best.black);
+    setGoldLands(best.gold);
+    setPurpleLands(best.purple);
+  }, [level, totalLands, idealMode]);
+
   const calculatedRows = useMemo(() => {
     const currentLevel = typeof level === 'number' ? level : 1;
     const curTotal = typeof totalLands === 'number' ? totalLands : 0;
 
-    // Ideal mode: auto-distribute lands
     let actualNormal: number, actualRed: number, actualBlack: number, actualGold: number, actualPurple: number;
     if (idealMode) {
       const best = calcBestLands(currentLevel, curTotal);
@@ -80,10 +90,8 @@ export default function CalculatorTab() {
       const seasons = s.seasons || 1;
       const lastPhaseSec = plantLastPhaseMap[seedId] || 0;
 
-      // First season reduction
       const hasSeasons = seasons >= 2;
       let reduceSecFirst = smartFert ? longestPhase(seedId) : (plantAllPhasesMap[seedId]?.[0] || 0);
-      // Second season reduction
       let reduceSecSecond = 0;
       if (hasSeasons && secondSeasonFert && smartFert) {
         reduceSecSecond = longestPhase(seedId);
@@ -113,9 +121,7 @@ export default function CalculatorTab() {
     return rows;
   }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, smartFert, idealMode, secondSeasonFert]);
 
-  const sortedNoFert = [...calculatedRows].sort((a, b) => target === 'exp' ? b.expPerHourNoFert - a.expPerHourNoFert : b.goldPerHourNoFert - a.goldPerHourNoFert);
   const sortedFert = [...calculatedRows].sort((a, b) => target === 'exp' ? b.expPerHourFert - a.expPerHourFert : b.goldPerHourFert - a.goldPerHourFert);
-  const bestNo = sortedNoFert[0];
   const bestFert = sortedFert[0];
 
   const getRemaining = (type: string) => {
@@ -127,176 +133,378 @@ export default function CalculatorTab() {
   };
 
   const landInputs = [
-    { key: 'normal', label: '普通地', sub: '无加成', grad: 'from-[#f5f0eb] to-[#ebe5e0] dark:from-[#1c1814] dark:to-[#120f0d]', border: 'border-black/5 dark:border-white/5', readonly: true },
-    { key: 'red', label: '红土地', sub: '产+100%', grad: 'from-[#fcf0f0] to-[#f5e6e6] dark:from-[#2a1313] dark:to-[#1a0c0c]', border: 'border-red-500/20' },
-    { key: 'black', label: '黑土地', sub: '产+200%/速10%', grad: 'from-[#f5f5f5] to-[#ebebeb] dark:from-[#171717] dark:to-[#0a0a0a]', border: 'border-gray-300 dark:border-gray-500/20' },
-    { key: 'gold', label: '金土地', sub: '产+300%/速20%/经20%', grad: 'from-[#fefce8] to-[#fef9c3] dark:from-[#2b2512] dark:to-[#1f1a0a]', border: 'border-yellow-500/20' },
-    { key: 'purple', label: '紫晶土地', sub: '产+300%/速20%/经25%', grad: 'from-[#faf5ff] to-[#f3e8ff] dark:from-[#1a1225] dark:to-[#120b1a]', border: 'border-purple-500/20' },
+    { key: 'normal', label: '普通地', sub: '无加成', emoji: '🟫', tile: 'tile-orange', accent: 'earth', readonly: true },
+    { key: 'red', label: '红土地', sub: '产 +100%', emoji: '🟥', tile: 'tile-berry', accent: 'berry' },
+    { key: 'black', label: '黑土地', sub: '产 +200% · 速 10%', emoji: '⬛', tile: 'tile-ink', accent: 'ink' },
+    { key: 'gold', label: '金土地', sub: '产 +300% · 速 20% · 经 20%', emoji: '🟨', tile: 'tile-sun', accent: 'sun' },
+    { key: 'purple', label: '紫晶土地', sub: '产 +300% · 速 20% · 经 25%', emoji: '🟪', tile: 'tile-plum', accent: 'plum' },
+  ];
+
+  const toggles = [
+    {
+      id: 'smartFert',
+      checked: smartFert,
+      onChange: (v: boolean) => setSmartFert(v),
+      disabled: false,
+      emoji: '🧪',
+      label: '智能施肥',
+      hint: smartFert
+        ? '自动选择耗时最长的生长阶段施肥，最大化缩短周期'
+        : '关闭后固定施肥第一阶段',
+      color: 'leaf' as const,
+    },
+    {
+      id: 'idealMode',
+      checked: idealMode,
+      onChange: (v: boolean) => setIdealMode(v),
+      disabled: false,
+      emoji: '✨',
+      label: '理想模式',
+      hint: idealMode
+        ? '忽略种植与施肥操作耗时，仅计算纯生长时间'
+        : '计算包含种植和施肥的操作耗时',
+      color: 'sun' as const,
+    },
+    {
+      id: 'secondSeasonFert',
+      checked: secondSeasonFert && smartFert && typeof level === 'number' && level >= 60,
+      onChange: (v: boolean) => setSecondSeasonFert(v),
+      disabled: !smartFert || (typeof level === 'number' && level < 60),
+      emoji: '🔄',
+      label: '第二季施肥',
+      hint: secondSeasonFert && smartFert && typeof level === 'number' && level >= 60
+        ? '第二季也跳过最长阶段施肥，进一步缩短双季循环'
+        : typeof level === 'number' && level < 60
+          ? '需 Lv60+ 解锁双季作物'
+          : !smartFert
+            ? '需先开启智能施肥'
+            : '第二季也跳过最长阶段',
+      color: 'sky' as const,
+    },
   ];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-4 fade-in pb-16 px-1">
-      <div className="text-center pt-4 pb-2">
-        <h1 className="text-2xl font-black tracking-tight bg-gradient-to-br from-green-300 via-green-500 to-emerald-700 bg-clip-text text-transparent">QQ农场收益计算器</h1>
-        <p className="text-xs text-green-800/60 dark:text-green-100/60 mt-1">输入等级和土地配置，智能规划最高收益方案</p>
-      </div>
+    <div className="container-app pb-24 px-3 sm:px-4 fade-in space-y-6">
+      {/* HERO */}
+      <header className="pt-4 pb-2 text-center sm:text-left">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <div className="inline-flex items-center gap-2 chip chip-leaf mb-4">
+            <Sparkles size={12} strokeWidth={2.5} /> 收益最大化助手
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl font-bold leading-[1.3] tracking-tight text-[var(--ink)]">
+            种什么<span className="shine-text">最赚</span><span className="ml-2">？</span>
+          </h1>
+          <p className="text-sm text-[var(--ink-soft)] mt-4 max-w-md mx-auto sm:mx-0 leading-relaxed">
+            输入等级和土地配置，自动为你算出 <span className="font-bold text-[var(--leaf-deep)]">每小时收益最高</span> 的作物方案。
+          </p>
+        </motion.div>
+      </header>
 
-      {/* Level + Target + Mode toggles */}
-      <div className="glass-panel rounded-2xl p-4 space-y-3">
-        <div className="grid grid-cols-3 gap-3">
+      {/* CONFIG — Level, Lands, Optimization target */}
+      <motion.section
+        initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.05 }}
+        className="sticker-lg p-5 sm:p-6 space-y-5">
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {/* Level */}
           <div>
-            <label className="text-[10px] font-semibold text-green-800/70 dark:text-green-100/70 block mb-1">账号等级</label>
-            <input type="number" value={level} onChange={e => setLevel(e.target.value === '' ? '' : Number(e.target.value))} className="glass-input w-full p-3 rounded-xl text-sm font-bold" min={1} max={200} />
+            <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">
+              账号等级
+            </label>
+            <input type="number" value={level}
+              onChange={e => setLevel(e.target.value === '' ? '' : Number(e.target.value))}
+              className="input-pop text-center"
+              min={1} max={200} />
           </div>
+
+          {/* Total Lands */}
           <div>
-            <label className="text-[10px] font-semibold text-green-800/70 dark:text-green-100/70 block mb-1">土地总数</label>
-            <input type="number" value={totalLands} onChange={e => setTotalLands(e.target.value === '' ? '' : Number(e.target.value))} className="glass-input w-full p-3 rounded-xl text-sm font-bold" min={1} max={200} />
+            <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">
+              土地总数
+            </label>
+            <input type="number" value={totalLands}
+              onChange={e => setTotalLands(e.target.value === '' ? '' : Number(e.target.value))}
+              className="input-pop text-center"
+              min={1} max={200} />
           </div>
-          <div>
-            <label className="text-[10px] font-semibold text-green-800/70 dark:text-green-100/70 block mb-1">优化目标</label>
-            <div className="flex bg-white/60 dark:bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/5">
-              <button onClick={() => setTarget('exp')} className={`flex-1 text-xs font-bold rounded-lg py-2 transition-colors ${target === 'exp' ? 'text-green-700 dark:text-green-400 bg-black/10 dark:bg-white/10' : 'text-gray-400'}`}>经验</button>
-              <button onClick={() => setTarget('gold')} className={`flex-1 text-xs font-bold rounded-lg py-2 transition-colors ${target === 'gold' ? 'text-yellow-700 dark:text-yellow-400 bg-black/10 dark:bg-white/10' : 'text-gray-400'}`}>金币</button>
+
+          {/* Target */}
+          <div className="col-span-2">
+            <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">
+              优化目标
+            </label>
+            <div className="flex gap-1.5 p-1 rounded-full"
+              style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
+              <button onClick={() => setTarget('exp')}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-sm transition-all"
+                style={target === 'exp'
+                  ? { background: 'var(--leaf)', color: 'white', boxShadow: '0 2px 0 var(--leaf-deep)' }
+                  : { color: 'var(--ink-mute)' }}>
+                <Zap size={14} strokeWidth={2.5} /> 经验
+              </button>
+              <button onClick={() => setTarget('gold')}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-sm transition-all"
+                style={target === 'gold'
+                  ? { background: 'var(--sun-deep)', color: 'white', boxShadow: '0 2px 0 #b8860b' }
+                  : { color: 'var(--ink-mute)' }}>
+                <Coins size={14} strokeWidth={2.5} /> 金币
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Toggle switches with tooltips */}
-        <div className="space-y-2">
-          <div className="flex items-start gap-2">
-            <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3">
-              <input type="checkbox" checked={smartFert} onChange={e => setSmartFert(e.target.checked)} className="rounded" />
-              <span className="text-green-900/70 dark:text-green-50/70">🧪 智能施肥</span>
-            </label>
-            <div className="text-[9px] text-gray-400 leading-relaxed mt-2">
-              {smartFert
-                ? '⏱️ 自动选择耗时最长的生长阶段施肥，最大化缩短种植周期'
-                : '⏱️ 关闭后固定施肥第一阶段'
-              }
-            </div>
-          </div>
-
-          <div className="flex items-start gap-2">
-            <label className="flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3">
-              <input type="checkbox" checked={idealMode} onChange={e => setIdealMode(e.target.checked)} className="rounded" />
-              <span className="text-green-900/70 dark:text-green-50/70">✨ 理想模式</span>
-            </label>
-            <div className="text-[9px] text-gray-400 leading-relaxed mt-2">
-              {idealMode
-                ? '🌟 忽略种植与施肥操作耗时，仅计算纯生长时间'
-                : '🌟 关闭后计算包含种植和施肥的操作耗时'
-              }
-            </div>
-          </div>
-
-          <div className="flex items-start gap-2">
-            <label className={`flex items-center gap-2 cursor-pointer text-[10px] font-semibold p-2 rounded-lg bg-black/3 dark:bg-white/3 ${!smartFert || (typeof level === 'number' && level < 60) ? 'opacity-40' : ''}`}>
-              <input type="checkbox" checked={secondSeasonFert && smartFert && typeof level === 'number' && level >= 60} onChange={e => setSecondSeasonFert(e.target.checked)} disabled={!smartFert || (typeof level === 'number' && level < 60)} className="rounded" />
-              <span className="text-green-900/70 dark:text-green-50/70">🔄 普通化肥·第二季</span>
-            </label>
-            <div className="text-[9px] text-gray-400 leading-relaxed mt-2">
-              {secondSeasonFert && smartFert && typeof level === 'number' && level >= 60
-                ? '🌾 第二季也会跳过最长阶段施肥，进一步缩短双季循环时间'
-                : typeof level === 'number' && level < 60
-                  ? '🔒 需要等级 > 60 且智能施肥开启（Lv60后解锁双季作物）'
-                  : !smartFert
-                    ? '🔒 需要先开启智能施肥'
-                    : '🌾 开启后第二季也跳过最长阶段施肥'
-              }
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Land Config */}
-      {!idealMode && (
-        <div className="glass-panel rounded-2xl p-4">
-          <div className="text-[10px] font-bold text-green-800/70 dark:text-green-100/70 mb-2 uppercase tracking-wider">土地配置</div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-            {landInputs.map(li => (
-              <div key={li.key} className={`bg-gradient-to-br ${li.grad} p-3 rounded-xl border ${li.border} ${li.readonly ? 'opacity-80' : ''}`}>
-                <div className="text-[10px] font-semibold mb-1 flex flex-col gap-0.5 text-gray-700 dark:text-gray-300">{li.label} <span className="text-[8px] opacity-60">{li.sub}</span></div>
-                {li.readonly ? (
-                  <span className="text-xl font-bold text-gray-900 dark:text-white">{getRemaining(li.key)}</span>
-                ) : (
-                  <input type="number" placeholder="0" value={li.key === 'red' ? (redLands === 0 ? '' : redLands) : li.key === 'black' ? (blackLands === 0 ? '' : blackLands) : li.key === 'gold' ? (goldLands === 0 ? '' : goldLands) : (purpleLands === 0 ? '' : purpleLands)} className="w-full bg-transparent text-xl font-bold text-gray-900 dark:text-white outline-none placeholder:text-black/20" onChange={e => {
-                    const val = e.target.value === '' ? '' : Number(e.target.value);
-                    const curTotal = typeof totalLands === 'number' ? totalLands : 0;
-                    const others = { red: redLands, black: blackLands, gold: goldLands, purple: purpleLands };
-                    const otherSum = Object.entries(others).filter(([k]) => k !== li.key).reduce((a: number, [_, v]) => a + (typeof v === 'number' ? v : 0), 0);
-                    const max = Math.max(0, curTotal - otherSum);
-                    const setter = li.key === 'red' ? setRedLands : li.key === 'black' ? setBlackLands : li.key === 'gold' ? setGoldLands : setPurpleLands;
-                    if (typeof val === 'number') (setter as any)(Math.min(val, max)); else (setter as any)('');
-                  }} />
-                )}
+        {/* Toggles */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          {toggles.map(t => (
+            <label key={t.id}
+              className={`flex items-start gap-3 p-3 rounded-2xl cursor-pointer transition-all border-1.5 ${
+                t.disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[var(--bg-2)]'
+              }`}
+              style={{
+                background: t.checked ? `var(--${t.color}-bg)` : 'var(--bg-2)',
+                border: `1.5px solid ${t.checked ? `var(--${t.color})` : 'var(--line)'}`,
+              }}>
+              <input type="checkbox" checked={t.checked} disabled={t.disabled}
+                onChange={e => t.onChange(e.target.checked)}
+                className="farm-check mt-0.5"
+                style={t.checked && !t.disabled ? { background: `var(--${t.color})`, borderColor: `var(--${t.color})` } : {}} />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="text-base leading-none">{t.emoji}</span>
+                  <span className="text-xs font-bold text-[var(--ink)]">{t.label}</span>
+                </div>
+                <div className="text-[10px] text-[var(--ink-mute)] leading-snug">{t.hint}</div>
               </div>
-            ))}
-          </div>
+            </label>
+          ))}
         </div>
-      )}
+      </motion.section>
 
-      {/* Results */}
-      {calculatedRows.length > 0 && (
-        <div className="space-y-4">
-          {bestFert && (
-            <div className="glass-panel rounded-2xl p-4 bg-gradient-to-br from-[#f0fdf4]/80 to-[#dcfce7]/50 dark:from-[#0f1a14]/80 dark:to-[#0a120f]/50">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-green-800/60 dark:text-green-300/60">推荐方案（{smartFert ? '智能施肥' : '自然生长'}）</span>
-                <span className="text-[10px] text-gray-500">排行榜 ↓</span>
+      {/* LAND ALLOCATION */}
+      <AnimatePresence mode="wait">
+        {!idealMode && (
+          <motion.section
+            key="lands"
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}>
+            <div className="flex items-center justify-between mb-3 px-1">
+              <div className="section-eyebrow">土地配置</div>
+              <div className="text-[10px] font-mono text-[var(--ink-mute)] tnum">
+                已分配 {(typeof redLands === 'number' ? redLands : 0) + (typeof blackLands === 'number' ? blackLands : 0) + (typeof goldLands === 'number' ? goldLands : 0) + (typeof purpleLands === 'number' ? purpleLands : 0)} / {typeof totalLands === 'number' ? totalLands : 0}
               </div>
-              {(() => {
-                const best = bestFert;
-                if (!best) return null;
-                const perHour = target === 'exp' ? best.expPerHourFert : best.goldPerHourFert;
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+              {landInputs.map(li => {
+                const value = li.key === 'red' ? redLands : li.key === 'black' ? blackLands : li.key === 'gold' ? goldLands : li.key === 'purple' ? purpleLands : 0;
                 return (
-                  <div className="flex items-center gap-3">
-                    <CropImage seedId={best.seedId} name={best.name} size={48} className="drop-shadow-lg" />
-                    <div className="flex-1">
-                      <div className="text-lg font-black text-gray-900 dark:text-white">{best.name} <span className="text-xs font-normal text-gray-400">Lv{best.requiredLevel}</span></div>
-                      <div className="flex items-center gap-3 mt-1">
-                        <div><span className="text-[10px] text-gray-500">{target === 'exp' ? '时均经验' : '时均金币'}</span><div className="text-sm font-bold text-green-700 dark:text-green-400">{perHour.toFixed(2)}</div></div>
-                        <div><span className="text-[10px] text-gray-500">每日</span><div className="text-sm font-bold text-gray-600 dark:text-white/60">{Math.round(perHour * 24).toLocaleString()}</div></div>
-                        <div><span className="text-[10px] text-gray-500">周期</span><div className="text-[10px] font-semibold text-gray-500">{best.growTimeFertStr}</div></div>
-                      </div>
+                  <div key={li.key} className={`${li.tile} p-3 rounded-2xl`}
+                    style={{
+                      border: `1.5px solid var(--${li.accent === 'ink' ? 'line-strong' : li.accent === 'earth' ? 'line-strong' : li.accent})`,
+                      opacity: li.readonly ? 0.85 : 1,
+                    }}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xl">{li.emoji}</span>
+                      <span className="chip" style={{ background: 'rgba(255,255,255,0.6)', color: 'var(--ink)' }}>
+                        {li.readonly ? '剩余' : '配置'}
+                      </span>
                     </div>
+                    <div className="text-[11px] font-bold text-[var(--ink)] leading-none">{li.label}</div>
+                    <div className="text-[9px] text-[var(--ink-soft)] mt-0.5 leading-tight h-6">{li.sub}</div>
+                    {li.readonly ? (
+                      <div className="font-mono tnum text-3xl font-bold text-[var(--ink)] mt-1">{getRemaining(li.key)}</div>
+                    ) : (
+                      <input type="number" placeholder="0"
+                        value={value === 0 ? '' : value}
+                        className="w-full bg-transparent font-mono tnum text-3xl font-bold text-[var(--ink)] outline-none placeholder:text-[var(--ink-mute)]/40 mt-1"
+                        onChange={e => {
+                          const val = e.target.value === '' ? '' : Number(e.target.value);
+                          const curTotal = typeof totalLands === 'number' ? totalLands : 0;
+                          const others = { red: redLands, black: blackLands, gold: goldLands, purple: purpleLands };
+                          const otherSum = Object.entries(others).filter(([k]) => k !== li.key).reduce((a: number, [_, v]) => a + (typeof v === 'number' ? v : 0), 0);
+                          const max = Math.max(0, curTotal - otherSum);
+                          const setter = li.key === 'red' ? setRedLands : li.key === 'black' ? setBlackLands : li.key === 'gold' ? setGoldLands : setPurpleLands;
+                          if (typeof val === 'number') (setter as any)(Math.min(val, max)); else (setter as any)('');
+                        }} />
+                    )}
                   </div>
                 );
-              })()}
+              })}
             </div>
-          )}
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+      {/* RESULTS */}
+      {calculatedRows.length > 0 && bestFert && (
+        <>
+          {/* Winner Card */}
+          <motion.section
+            initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.35, delay: 0.1 }}
+            className="relative overflow-hidden rounded-3xl p-5 sm:p-6"
+            style={{
+              background: target === 'exp'
+                ? 'linear-gradient(135deg, var(--leaf) 0%, var(--leaf-deep) 100%)'
+                : 'linear-gradient(135deg, var(--sun-deep) 0%, var(--orange-deep) 100%)',
+              boxShadow: target === 'exp' ? '0 8px 32px -8px rgba(45, 157, 61, 0.45)' : '0 8px 32px -8px rgba(255, 138, 61, 0.45)',
+            }}>
+
+            {/* Decorative blobs */}
+            <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white/10" />
+            <div className="absolute -bottom-16 -left-12 w-48 h-48 rounded-full bg-white/5" />
+
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-full bg-white/25 flex items-center justify-center">
+                  <Trophy size={14} strokeWidth={2.5} className="text-white" />
+                </div>
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white/85">
+                  最佳推荐 · {smartFert ? '智能施肥' : '自然生长'}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 14, delay: 0.2 }}
+                  className="w-20 h-20 rounded-3xl bg-white/95 flex items-center justify-center shadow-lg flex-shrink-0">
+                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={56} />
+                </motion.div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="text-white/80 text-xs font-bold tracking-wide mb-0.5">
+                    Lv{bestFert.requiredLevel} · {bestFert.seasons > 1 ? `${bestFert.seasons} 季作物` : '单季作物'}
+                  </div>
+                  <h2 className="font-display italic text-2xl sm:text-3xl font-bold text-white truncate leading-tight">
+                    {bestFert.name}
+                  </h2>
+                  <div className="font-mono tnum text-3xl sm:text-4xl font-black text-white mt-1.5">
+                    {(target === 'exp' ? bestFert.expPerHourFert : bestFert.goldPerHourFert).toFixed(0)}
+                    <span className="text-sm font-bold text-white/70 ml-1">/小时</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-white/20">
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-white/70 mb-0.5">每日</div>
+                  <div className="font-mono tnum text-lg font-bold text-white">
+                    {Math.round((target === 'exp' ? bestFert.expPerHourFert : bestFert.goldPerHourFert) * 24).toLocaleString()}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-white/70 mb-0.5">周期</div>
+                  <div className="font-mono text-sm font-bold text-white flex items-center gap-1 mt-0.5">
+                    <Clock size={11} strokeWidth={2.5} className="opacity-70" />
+                    {bestFert.growTimeFertStr}
+                  </div>
+                </div>
+                {bestFert.gainPercent > 0 && (
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wider text-white/70 mb-0.5">提升</div>
+                    <div className="font-mono tnum text-lg font-bold text-white flex items-center gap-1">
+                      <TrendingUp size={13} strokeWidth={2.5} className="opacity-70" />
+                      +{bestFert.gainPercent.toFixed(0)}%
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.section>
 
           {/* Leaderboard */}
-          <div className="glass-panel rounded-2xl overflow-hidden">
-            <div className="px-4 py-3 bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/5 dark:border-white/5 flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-500">{target === 'exp' ? '经验天梯榜 TOP20' : '金币天梯榜 TOP20'}</span>
+          <motion.section
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.15 }}
+            className="sticker-lg overflow-hidden">
+
+            <div className="flex items-center justify-between px-5 py-3.5"
+              style={{ background: 'var(--bg-2)', borderBottom: '1.5px solid var(--line)' }}>
+              <div className="flex items-center gap-2">
+                <span className="text-base">🏆</span>
+                <span className="font-display italic text-base font-bold text-[var(--ink)]">
+                  {target === 'exp' ? '经验天梯榜' : '金币天梯榜'}
+                </span>
+                <span className="chip chip-ink">TOP 20</span>
+              </div>
+              <span className="text-[10px] font-mono text-[var(--ink-mute)]">共 {sortedFert.length}</span>
             </div>
+
             <div className="overflow-x-auto">
-              <table className="w-full text-xs">
+              <table className="table-clean table-fixed">
+                <colgroup>
+                  <col className="w-14" />
+                  <col />
+                  <col className="w-20" />
+                  <col className="w-28 hidden sm:table-column" />
+                  <col className="w-28" />
+                </colgroup>
                 <thead>
-                  <tr className="text-gray-500 dark:text-white/30 bg-black/[0.01] dark:bg-white/[0.01]">
-                    <th className="p-2 text-left w-8">#</th>
-                    <th className="p-2 text-left">作物</th>
-                    <th className="p-2 text-center">等级</th>
-                    <th className="p-2 text-center">耗时</th>
-                    <th className="p-2 text-right">{target === 'exp' ? '经验/h' : '金币/h'}</th>
+                  <tr>
+                    <th className="text-center">#</th>
+                    <th>作物</th>
+                    <th className="text-center">等级</th>
+                    <th className="text-center hidden sm:table-cell">周期</th>
+                    <th className="text-right">{target === 'exp' ? '经验/小时' : '金币/小时'}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedFert.slice(0, 20).map((row, i) => (
-                    <tr key={row.seedId} className="border-b border-black/[0.02] dark:border-white/[0.02] hover:bg-green-500/5">
-                      <td className="p-2 font-black text-gray-400">{i + 1}</td>
-                      <td className="p-2"><div className="flex items-center gap-2"><CropImage seedId={row.seedId} name={row.name} size={24} /><span className="font-bold text-gray-900 dark:text-white">{row.name}</span></div></td>
-                      <td className="p-2 text-center font-bold text-gray-500">L{row.requiredLevel}</td>
-                      <td className="p-2 text-center text-gray-500">{row.growTimeFertStr}</td>
-                      <td className="p-2 text-right font-bold text-green-700 dark:text-green-400">
-                        {target === 'exp' ? row.expPerHourFert.toFixed(2) : row.goldPerHourFert.toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
+                  {sortedFert.slice(0, 20).map((row, i) => {
+                    const rank = RANK_COLORS[i];
+                    return (
+                      <tr key={row.seedId} className="group">
+                        <td className="text-center">
+                          {rank ? (
+                            <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs mx-auto"
+                              style={{ background: rank.bg }}>
+                              <span>{rank.medal}</span>
+                            </div>
+                          ) : (
+                            <div className="w-7 h-7 rounded-full flex items-center justify-center font-mono font-bold text-xs text-[var(--ink-mute)] mx-auto"
+                              style={{ background: 'var(--bg-2)' }}>
+                              {i + 1}
+                            </div>
+                          )}
+                        </td>
+                        <td>
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <CropImage seedId={row.seedId} name={row.name} size={28} />
+                            <div className="min-w-0">
+                              <div className="font-bold text-sm text-[var(--ink)] leading-tight truncate">{row.name}</div>
+                              {row.seasons > 1 && <div className="text-[9px] text-[var(--sky-deep)] font-bold">{row.seasons} 季</div>}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="text-center">
+                          <span className="font-mono tnum text-xs font-bold text-[var(--ink-soft)]">
+                            Lv{row.requiredLevel}
+                          </span>
+                        </td>
+                        <td className="text-center text-[10px] font-mono text-[var(--ink-mute)] hidden sm:table-cell whitespace-nowrap">
+                          {row.growTimeFertStr}
+                        </td>
+                        <td className="text-right">
+                          <span className="font-mono tnum text-sm font-bold whitespace-nowrap"
+                            style={{ color: target === 'exp' ? 'var(--leaf-deep)' : 'var(--orange-deep)' }}>
+                            {(target === 'exp' ? row.expPerHourFert : row.goldPerHourFert).toFixed(0)}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.section>
+        </>
+      )}
+
+      {calculatedRows.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-5xl mb-3">🌱</div>
+          <div className="text-sm text-[var(--ink-mute)]">配置土地后开始计算</div>
         </div>
       )}
     </div>

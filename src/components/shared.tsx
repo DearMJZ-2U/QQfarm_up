@@ -1,9 +1,11 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { Leaf } from 'lucide-react';
 import seedMapping from '../data/seed_mapping.json';
 import plantData from '../data/Plant.json';
 import itemsData from '../data/items.json';
 import costumeData from '../data/costume_atlas.json';
+import landsData from '../data/lands_atlas.json';
 
 const BASE = (import.meta as any).env?.BASE_URL || '/';
 const CLEAN_BASE = BASE.endsWith('/') ? BASE : BASE + '/';
@@ -44,9 +46,12 @@ function MultiImage({ urls, alt, size, className = '', rounded = false }: {
   const [idx, setIdx] = React.useState(0);
   if (idx >= urls.length) {
     return (
-      <div className={`inline-flex items-center justify-center bg-black/10 dark:bg-white/10 shrink-0 ${rounded ? 'rounded-lg' : 'rounded-full'} ${className}`}
-        style={size ? { width: size, height: size } : undefined}>
-        <Leaf size={(size || 32) * 0.5} className="text-green-500/50" />
+      <div className={`inline-flex items-center justify-center shrink-0 ${rounded ? 'rounded-lg' : 'rounded-full'} ${className}`}
+        style={{
+          background: 'var(--bg-2)',
+          ...(size ? { width: size, height: size } : {})
+        }}>
+        <Leaf size={(size || 32) * 0.5} style={{ color: 'var(--leaf)', opacity: 0.5 }} />
       </div>
     );
   }
@@ -61,6 +66,14 @@ function MultiImage({ urls, alt, size, className = '', rounded = false }: {
 }
 
 // ── 种子图片 ──────────────────────────────────────────────
+// 默认显示成熟阶段图（phase 6 / Crop_X_6.png），更易识别
+// 像 哈哈南瓜、琉璃宝荷 这种 seed 阶段几乎不可见的作物会优先展示成熟形态
+
+// 白名单：seed 阶段几乎不可见、必须展示成熟图的作物
+const MATURE_FORCE_SEED_IDS = new Set<number>([
+  21032, // 琉璃宝荷
+  20416, // 哈哈南瓜
+]);
 
 export function CropImage({ seedId, name, size = 32, className = '' }: {
   seedId?: number; name: string; size?: number; className?: string;
@@ -69,18 +82,34 @@ export function CropImage({ seedId, name, size = 32, className = '' }: {
   const cn = sid ? getCropNum(sid) : 0;
   const sname = sid ? getSeedName(sid) : name;
   const fileName = (sid && seedImageMap[sid]) || seedNameImageMap[name];
+  // 本地 phase 6 文件：把 Seed.png 换成 6.png
+  const matureLocal = fileName ? fileName.replace(/_Seed\.png$/, '_6.png') : '';
+  const forceMature = sid > 0 && MATURE_FORCE_SEED_IDS.has(sid);
 
   const urls: string[] = [];
-  if (fileName) urls.push(`${CLEAN_BASE}seed_images_named/${fileName}`);
-  if (cn) {
-    urls.push(
-      `${CDN}/plant/model/v4/Crop_${cn}_Seed.png`,
-      `${CDN}/plant/model/v4/Crop_${cn}_6.png`,
-      `${CDN}/plant/model/v4/Crop_${cn}_1.png`,
-    );
-  }
-  if (sid) {
-    urls.push(`${CDN}/plant/model/v4/Crop_${sid}_Seed.png`);
+  if (forceMature) {
+    // 白名单作物：直接用成熟图，与 jsq.gptvip.chat/plants 一致
+    if (matureLocal && matureLocal !== fileName) {
+      urls.push(`${CLEAN_BASE}seed_images_named/${matureLocal}`);
+    }
+    if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_6.png`);
+    if (sid) urls.push(`${CDN}/plant/model/v4/Crop_${sid}_6.png`);
+  } else {
+    // 1) 本地 Seed 图（与参考站 jsq.gptvip.chat/plants 一致：默认展示种子阶段）
+    if (fileName) urls.push(`${CLEAN_BASE}seed_images_named/${fileName}`);
+    // 2) CDN Seed 兜底
+    if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_Seed.png`);
+    // 3) 本地成熟图（少数天工/特殊作物 fallback）
+    if (matureLocal && matureLocal !== fileName) {
+      urls.push(`${CLEAN_BASE}seed_images_named/${matureLocal}`);
+    }
+    // 4) CDN 成熟图
+    if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_6.png`);
+    if (sid) {
+      urls.push(`${CDN}/plant/model/v4/Crop_${sid}_Seed.png`);
+      urls.push(`${CDN}/plant/model/v4/Crop_${cn}_1.png`);
+      urls.push(`${CDN}/plant/model/v4/Crop_${sid}_6.png`);
+    }
   }
 
   return <MultiImage urls={urls} alt={sname || name} size={size} className={`drop-shadow-md ${className}`} />;
@@ -108,24 +137,30 @@ function sanitize(n: string): string { return n.replace(/[<>:"/\\|?*]/g, '_'); }
 export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: boolean }) {
   const phaseNames = [
     { label: '种子', phase: 'Seed' },
-    { label: '阶段2', phase: '2' },
-    { label: '阶段3', phase: '3' },
-    { label: '阶段4', phase: '4' },
-    { label: '阶段5', phase: '5' },
+    { label: '阶段 2', phase: '2' },
+    { label: '阶段 3', phase: '3' },
+    { label: '阶段 4', phase: '4' },
+    { label: '阶段 5', phase: '5' },
     { label: '成熟', phase: '6' },
   ];
 
   return (
-    <div className="flex items-center gap-1 overflow-x-auto pb-1">
+    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1">
       {phaseNames.map((p, i) => (
         <React.Fragment key={i}>
-          <div className="flex-shrink-0 flex flex-col items-center gap-0.5">
-            <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 border border-black/5 dark:border-white/5 flex items-center justify-center overflow-hidden">
+          <div className="flex-shrink-0 flex flex-col items-center gap-1">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center overflow-hidden"
+              style={{
+                background: gold ? 'var(--sun-bg)' : 'var(--leaf-bg)',
+                border: `1.5px solid ${gold ? 'var(--sun-soft)' : 'var(--leaf-soft)'}`,
+              }}>
               <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={32} rounded />
             </div>
-            <div className="text-[8px] text-gray-400">{p.label}</div>
+            <div className="text-[9px] font-bold text-[var(--ink-mute)] tracking-tight">{p.label}</div>
           </div>
-          {i < phaseNames.length - 1 && <span className="text-gray-300 text-xs flex-shrink-0">→</span>}
+          {i < phaseNames.length - 1 && (
+            <span className="text-[var(--ink-mute)]/60 text-base flex-shrink-0 -mt-3" aria-hidden>›</span>
+          )}
         </React.Fragment>
       ))}
     </div>
@@ -260,3 +295,46 @@ export const LAND_BUFFS = {
 
 export const NO_FERT_PLANT_SPEED = 9;
 export const NORMAL_FERT_PLANT_SPEED = 6;
+
+// ── 按等级算出该等级下应配置的土地数量 ─────────────────────
+// 基于 lands_atlas.json 中每块地的实际升级等级表（plot 1-24）：
+//   红 Lv28-57 · 黑 Lv40-69 · 金 Lv58-87 · 紫 Lv90-159
+// 例如 Lv114 时，plot 1-8 的紫晶解锁在 90-111（已升级），
+// plot 9 紫晶解锁 114（恰好刚解锁，默认不计入），plot 10+ 还需 Lv117+。
+// 所以 Lv114 自动配：8 紫晶 + 16 金 = 24。
+export function calcBestLands(level: number, total: number) {
+  const upgrades = (landsData as any).upgrades as Array<{ plotId: number; upgrades: Array<{ type: string; level: number }> }>;
+  const tierOrder: Array<{ key: 'purple' | 'gold' | 'black' | 'red'; type: string }> = [
+    { key: 'purple', type: '紫晶土地' },
+    { key: 'gold',   type: '金土地' },
+    { key: 'black',  type: '黑土地' },
+    { key: 'red',    type: '红土地' },
+  ];
+  const counts = { normal: 0, red: 0, black: 0, gold: 0, purple: 0 };
+  const max = Math.min(total, 24);
+  for (let i = 0; i < max; i++) {
+    const plot = upgrades[i];
+    if (!plot) { counts.normal++; continue; }
+    let assigned = false;
+    for (const t of tierOrder) {
+      const u = plot.upgrades.find(x => x.type === t.type);
+      // 严格 >：刚到解锁等级的那一级算"刚解锁但还未升级"
+      if (u && level > u.level) {
+        counts[t.key]++;
+        assigned = true;
+        break;
+      }
+    }
+    if (!assigned) counts.normal++;
+  }
+  return counts;
+}
+
+// ── React Portal wrapper：把弹窗渲染到 document.body 避开 transform 影响 ──
+
+export function Portal({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { setMounted(true); }, []);
+  if (!mounted) return null;
+  return createPortal(children, document.body);
+}

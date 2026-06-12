@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Sun, Moon, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Layers } from 'lucide-react';
 import CalculatorTab from './components/CalculatorTab';
 import LevelSearchTab from './components/LevelSearchTab';
 import LandAtlasTab from './components/LandAtlasTab';
@@ -12,15 +13,17 @@ type BottomTab = 'calc' | 'atlas' | 'items' | 'more';
 
 interface TabDef {
   id: BottomTab;
-  icon: string;
+  Icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
   label: string;
+  color: string;
+  emoji: string;
 }
 
 const bottomTabs: TabDef[] = [
-  { id: 'calc', icon: '🧮', label: '计算' },
-  { id: 'atlas', icon: '📖', label: '图鉴' },
-  { id: 'items', icon: '🛒', label: '道具' },
-  { id: 'more', icon: '📋', label: '更多' },
+  { id: 'calc', Icon: Calculator, label: '计算', color: 'leaf', emoji: '🧮' },
+  { id: 'atlas', Icon: BookOpen, label: '图鉴', color: 'orange', emoji: '📖' },
+  { id: 'items', Icon: ShoppingBag, label: '道具', color: 'berry', emoji: '🛒' },
+  { id: 'more', Icon: Layers, label: '更多', color: 'plum', emoji: '📋' },
 ];
 
 interface SidebarItem {
@@ -29,48 +32,54 @@ interface SidebarItem {
   id: string;
   count?: number;
   frozen?: boolean;
+  color?: string;
 }
 
 const sidebarSections: { title?: string; items: SidebarItem[] }[] = [
   {
     items: [
-      { icon: '🏠', label: '首页', id: 'calc' },
-      { icon: '🧮', label: '经验计算器', id: 'calc' },
-      { icon: '📊', label: '等级查询', id: 'more_level' },
+      { icon: '🏠', label: '首页', id: 'calc', color: 'leaf' },
+      { icon: '🧮', label: '经验计算器', id: 'calc', color: 'leaf' },
+      { icon: '📊', label: '等级查询', id: 'more_level', color: 'plum' },
     ]
   },
   {
     title: '图鉴',
     items: [
-      { icon: '🌿', label: '作物图鉴', id: 'crops', count: 134 },
-      { icon: '🏞️', label: '土地图鉴', id: 'lands', count: 24 },
-      { icon: '🧬', label: '变异图鉴', id: 'atlas_mutation' },
-      { icon: '🏡', label: '装扮图鉴', id: 'atlas_costume', count: 13 },
+      { icon: '🌿', label: '作物图鉴', id: 'crops', count: 134, color: 'leaf' },
+      { icon: '🏞️', label: '土地图鉴', id: 'lands', count: 24, color: 'orange' },
+      { icon: '🧬', label: '变异图鉴', id: 'atlas_mutation', color: 'berry' },
+      { icon: '🏡', label: '装扮图鉴', id: 'atlas_costume', count: 13, color: 'sky' },
     ]
   },
   {
     title: '商店道具',
     items: [
-      { icon: '🌱', label: '种子', id: 'items_seed', count: 134 },
-      { icon: '✨', label: '黄金果实', id: 'items', count: 18 },
-      { icon: '💰', label: '货币与计数', id: 'items', count: 9 },
-      { icon: '🛠️', label: '操作工具', id: 'items', count: 8 },
-      { icon: '🧪', label: '化肥道具', id: 'items', count: 8 },
-      { icon: '🎨', label: '头像框与装饰', id: 'items', count: 7 },
-      { icon: '🐕', label: '狗与看门犬', id: 'items', count: 5 },
-      { icon: '🦴', label: '狗粮', id: 'items', count: 3 },
-      { icon: '🎟', label: '活动货币', id: 'items', count: 2 },
+      { icon: '🌱', label: '种子', id: 'items_seed', count: 134, color: 'leaf' },
+      { icon: '✨', label: '黄金果实', id: 'items', count: 18, color: 'sun' },
+      { icon: '💰', label: '货币与计数', id: 'items', count: 9, color: 'sun' },
+      { icon: '🛠️', label: '操作工具', id: 'items', count: 8, color: 'sky' },
+      { icon: '🧪', label: '化肥道具', id: 'items', count: 8, color: 'leaf' },
+      { icon: '🎨', label: '头像框与装饰', id: 'items', count: 7, color: 'plum' },
+      { icon: '🐕', label: '狗与看门犬', id: 'items', count: 5, color: 'orange' },
+      { icon: '🦴', label: '狗粮', id: 'items', count: 3, color: 'earth' },
+      { icon: '🎟', label: '活动货币', id: 'items', count: 2, color: 'berry' },
       { icon: '💎', label: '充值货币', id: 'items', count: 1, frozen: true },
     ]
   },
 ];
 
+const atlasSubTabsDef = [
+  { id: 'crops' as const, label: '作物', emoji: '🌿', color: 'leaf' },
+  { id: 'lands' as const, label: '土地', emoji: '🏞️', color: 'orange' },
+  { id: 'mutation' as const, label: '变异', emoji: '🧬', color: 'berry' },
+  { id: 'costume' as const, label: '装扮', emoji: '🏡', color: 'sky' },
+];
+
 export default function App() {
   const [bottomTab, setBottomTab] = useState<BottomTab>('calc');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-
-  // Sub-tabs within main tabs
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [atlasSubTab, setAtlasSubTab] = useState<'crops' | 'lands' | 'mutation' | 'costume'>('crops');
 
   React.useEffect(() => {
@@ -98,7 +107,6 @@ export default function App() {
     if (id === 'atlas_mutation') { setAtlasSubTab('mutation'); setBottomTab('atlas'); return; }
     if (id === 'atlas_costume') { setAtlasSubTab('costume'); setBottomTab('atlas'); return; }
     if (id === 'items_seed') { setBottomTab('items'); return; }
-    // Other items are frozen - just close sidebar
   };
 
   const renderContent = () => {
@@ -107,39 +115,44 @@ export default function App() {
         return <CalculatorTab />;
       case 'atlas':
         return (
-          <div className="fade-in pb-16 px-1 max-w-5xl mx-auto">
-            {/* Atlas sub-tabs */}
-            <div className="flex bg-black/5 dark:bg-white/5 rounded-xl p-1 mb-4 sticky top-0 z-10 backdrop-blur-sm">
-              {[
-                { id: 'crops' as const, label: '🌿 作物' },
-                { id: 'lands' as const, label: '🏞️ 土地' },
-                { id: 'mutation' as const, label: '🧬 变异' },
-                { id: 'costume' as const, label: '🏡 装扮' },
-              ].map(t => (
-                <button key={t.id} onClick={() => setAtlasSubTab(t.id)} className={`flex-1 text-[10px] sm:text-xs font-bold py-2 rounded-lg transition-colors ${atlasSubTab === t.id ? 'bg-white dark:bg-slate-800 text-green-700 dark:text-green-400 shadow-sm' : 'text-gray-500'}`}>{t.label}</button>
-              ))}
+          <div className="fade-in pb-28 container-app px-3 sm:px-4">
+            {/* Atlas sub-tabs — chunky sticker pills */}
+            <div className="sticky top-[68px] sm:top-[76px] z-20 pt-3 pb-2 -mx-3 sm:-mx-4 px-3 sm:px-4"
+              style={{ background: 'linear-gradient(to bottom, var(--bg) 70%, transparent)' }}>
+              <div className="flex gap-1.5 p-1.5 sticker-pop rounded-full overflow-x-auto no-scrollbar">
+                {atlasSubTabsDef.map(t => {
+                  const active = atlasSubTab === t.id;
+                  return (
+                    <button key={t.id} onClick={() => setAtlasSubTab(t.id)}
+                      className={`flex-1 min-w-fit flex items-center justify-center gap-1.5 py-2 px-3 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
+                        active
+                          ? `bg-[var(--${t.color})] text-white shadow-[0_2px_0_var(--${t.color}-deep)]`
+                          : 'text-[var(--ink-soft)] hover:bg-[var(--bg-2)]'
+                      }`}
+                      style={active ? { background: `var(--${t.color})`, boxShadow: `0 2px 0 var(--${t.color}-deep)` } : {}}>
+                      <span className="text-base">{t.emoji}</span><span>{t.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            {atlasSubTab === 'crops' && <CropAtlasTab />}
-            {atlasSubTab === 'lands' && <LandAtlasTab />}
-            {atlasSubTab === 'mutation' && <MutationAtlasTab />}
-            {atlasSubTab === 'costume' && <CostumeAtlasTab />}
+            <div className="mt-3">
+              {atlasSubTab === 'crops' && <CropAtlasTab />}
+              {atlasSubTab === 'lands' && <LandAtlasTab />}
+              {atlasSubTab === 'mutation' && <MutationAtlasTab />}
+              {atlasSubTab === 'costume' && <CostumeAtlasTab />}
+            </div>
           </div>
         );
       case 'items':
         return (
-          <div className="fade-in pb-16 px-1 max-w-5xl mx-auto">
+          <div className="fade-in pb-28 container-app px-3 sm:px-4">
             <ItemsTab />
           </div>
         );
       case 'more':
         return (
-          <div className="fade-in pb-16 px-1 max-w-5xl mx-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white">📋 更多工具</h2>
-              <button onClick={() => setSidebarOpen(true)} className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400 font-semibold glass-input rounded-lg px-3 py-1.5">
-                <Menu size={14} /> 导航菜单
-              </button>
-            </div>
+          <div className="fade-in pb-28 container-app px-3 sm:px-4">
             <LevelSearchTab />
           </div>
         );
@@ -149,107 +162,168 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen text-gray-900 dark:text-slate-200 font-sans relative selection:bg-green-500/30 bg-slate-100/70 dark:bg-slate-950">
+    <div className="min-h-screen text-[var(--ink)] font-body relative">
 
       {/* Sidebar Drawer */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
-          <div className="relative w-72 max-w-[80vw] bg-slate-900 text-white h-full overflow-y-auto flex-shrink-0 animate-[slideIn_0.25s_ease]">
-            <div className="sticky top-0 bg-slate-900 z-10 flex items-center justify-between px-4 py-4 border-b border-slate-700/50">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🌾</span>
-                <span className="font-bold text-sm">QQ经典农场</span>
-              </div>
-              <button onClick={() => setSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-white/10 transition">
-                <X size={18} />
-              </button>
-            </div>
-            <nav className="px-3 py-3 space-y-4">
-              {sidebarSections.map((section, si) => (
-                <div key={si}>
-                  {section.title && <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 pb-2">{section.title}</div>}
-                  <div className="space-y-0.5">
-                    {section.items.map((item) => (
-                      <button
-                        key={item.id + item.label}
-                        onClick={() => !item.frozen && handleSidebarClick(item.id)}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${item.frozen ? 'opacity-35 cursor-not-allowed' : 'hover:bg-white/10'}`}
-                      >
-                        <span className={item.frozen ? 'grayscale opacity-50' : ''}>{item.icon}</span>
-                        <span className={`font-medium truncate ${item.frozen ? 'line-through decoration-slate-500' : ''}`}>{item.label}</span>
-                        {item.count && <span className="ml-auto text-[10px] text-slate-500">{item.frozen ? '🔒' : item.count}</span>}
-                      </button>
-                    ))}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            key="sidebar-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex">
+            <div className="absolute inset-0 bg-[var(--ink)]/40 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+            <motion.div
+              key="sidebar-panel"
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+              className="relative w-80 max-w-[85vw] h-full overflow-y-auto flex-shrink-0"
+              style={{ background: 'var(--bg-paper)' }}>
+
+              {/* Sidebar Header */}
+              <div className="sticky top-0 z-10 px-5 py-5 flex items-center justify-between"
+                style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl"
+                    style={{ background: 'var(--leaf)', boxShadow: '0 2px 0 var(--leaf-deep)' }}>
+                    <span>🌾</span>
+                  </div>
+                  <div className="leading-tight">
+                    <div className="font-display italic text-lg font-bold text-[var(--ink)]">QQ农场收益计算器</div>
+                    <div className="text-[10px] text-[var(--ink-mute)] font-body tracking-wide">QQ 经典农场 · 收益指南</div>
                   </div>
                 </div>
-              ))}
-              <div className="pt-2 border-t border-slate-700/50">
-                <button onClick={toggleTheme} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 text-sm">
-                  <span>{theme === 'dark' ? '☀️' : '🌙'}</span>
-                  <span className="font-medium">{theme === 'dark' ? '浅色模式' : '深色模式'}</span>
+                <button onClick={() => setSidebarOpen(false)}
+                  className="w-9 h-9 rounded-full flex items-center justify-center"
+                  style={{ background: 'var(--bg-2)' }}>
+                  <X size={16} className="text-[var(--ink-soft)]" />
                 </button>
               </div>
-            </nav>
-          </div>
-        </div>
-      )}
+
+              <nav className="px-3 py-4 space-y-5">
+                {sidebarSections.map((section, si) => (
+                  <div key={si}>
+                    {section.title && (
+                      <div className="section-eyebrow px-3 pb-3">{section.title}</div>
+                    )}
+                    <div className="space-y-1">
+                      {section.items.map((item) => {
+                        const color = item.color || 'leaf';
+                        return (
+                          <button
+                            key={item.id + item.label}
+                            onClick={() => !item.frozen && handleSidebarClick(item.id)}
+                            className={`group w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm transition-all ${
+                              item.frozen ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[var(--bg-2)]'
+                            }`}>
+                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0 transition-transform ${
+                              !item.frozen && 'group-hover:scale-110 group-hover:-rotate-6'
+                            }`}
+                              style={{ background: `var(--${color}-bg)` }}>
+                              <span className={item.frozen ? 'grayscale' : ''}>{item.icon}</span>
+                            </div>
+                            <span className={`font-bold truncate text-[var(--ink)] ${item.frozen ? 'line-through' : ''}`}>
+                              {item.label}
+                            </span>
+                            {item.count !== undefined && (
+                              <span className="ml-auto text-[10px] font-mono font-bold text-[var(--ink-mute)] tnum">
+                                {item.frozen ? '🔒' : item.count}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Theme toggle */}
+                <div className="pt-3" style={{ borderTop: '1.5px solid var(--line)' }}>
+                  <button onClick={toggleTheme}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl hover:bg-[var(--bg-2)] text-sm">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base"
+                      style={{ background: theme === 'dark' ? 'var(--sun-bg)' : 'var(--sky-bg)' }}>
+                      {theme === 'dark' ? '☀️' : '🌙'}
+                    </div>
+                    <span className="font-bold text-[var(--ink)]">
+                      {theme === 'dark' ? '切换浅色' : '切换深色'}
+                    </span>
+                  </button>
+                </div>
+              </nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Content */}
-      <div className="min-h-screen pb-4">
+      <div className="min-h-screen">
         {/* Top Bar */}
-        <div className="sticky top-0 z-30 bg-slate-100/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 px-4 py-3 flex items-center justify-between">
-          <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition">
-            <Menu size={18} />
-          </button>
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🌾</span>
-            <span className="font-bold text-sm">QQ经典农场</span>
+        <div className="sticky top-0 z-30 px-3 sm:px-4 pt-3 sm:pt-4 pb-2"
+          style={{ background: 'linear-gradient(to bottom, var(--bg) 60%, color-mix(in srgb, var(--bg) 80%, transparent))' }}>
+          <div className="container-app flex items-center justify-between gap-2 px-3 py-2 rounded-full"
+            style={{ background: 'var(--surface)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-pop)' }}>
+            <button onClick={() => setSidebarOpen(true)}
+              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)] transition-colors">
+              <Menu size={18} className="text-[var(--ink-soft)]" strokeWidth={2.5} />
+            </button>
+            <div className="flex items-center gap-2">
+              <span className="text-xl float-anim inline-block">🌾</span>
+              <div className="leading-tight text-center">
+                <div className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] tracking-wide">QQ农场收益计算器</div>
+                <div className="text-[9px] text-[var(--ink-mute)] tracking-widest uppercase -mt-0.5">QQ Farm Guide</div>
+              </div>
+            </div>
+            <button onClick={toggleTheme}
+              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)] transition-colors"
+              aria-label="切换主题">
+              {theme === 'dark' ? (
+                <Sun size={18} strokeWidth={2.5} style={{ color: 'var(--sun-deep)' }} />
+              ) : (
+                <Moon size={18} strokeWidth={2.5} style={{ color: 'var(--sky-deep)' }} />
+              )}
+            </button>
           </div>
-          <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition">
-            {theme === 'dark' ? <Sun size={18} className="text-orange-400" /> : <Moon size={18} className="text-blue-500" />}
-          </button>
         </div>
 
         {/* Content Area */}
-        <div className="p-3 pt-3">
+        <div className="pt-2">
           {renderContent()}
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-black/5 dark:border-white/5 safe-area-pb">
-        <div className="flex items-center justify-around max-w-5xl mx-auto">
-          {bottomTabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setBottomTab(tab.id)}
-              className={`flex flex-col items-center gap-0.5 py-2 px-4 min-w-[60px] transition-colors ${bottomTab === tab.id ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-slate-500'}`}
-            >
-              <span className="text-lg">{tab.icon}</span>
-              <span className="text-[10px] font-semibold">{tab.label}</span>
-              {bottomTab === tab.id && <div className="absolute bottom-0 w-8 h-0.5 bg-green-500 rounded-full" />}
-            </button>
-          ))}
+      {/* Bottom Navigation — 圆胖 sticker 风 */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 px-3 sm:px-4 pb-3 safe-area-pb pointer-events-none">
+        <div className="container-app pointer-events-auto">
+          <div className="flex items-center gap-1.5 p-1.5 rounded-full"
+            style={{ background: 'var(--surface)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+            {bottomTabs.map(tab => {
+              const active = bottomTab === tab.id;
+              const Icon = tab.Icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setBottomTab(tab.id)}
+                  aria-label={tab.label}
+                  className="relative flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-all"
+                  style={active ? {
+                    background: `var(--${tab.color})`,
+                    color: 'white',
+                    boxShadow: `0 2px 0 var(--${tab.color}-deep)`,
+                  } : {
+                    color: 'var(--ink-mute)',
+                  }}>
+                  <Icon size={16} strokeWidth={2.5} />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes slideIn {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(0); }
-        }
-        .fade-in {
-          animation: fadeIn 0.25s ease;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .safe-area-pb {
-          padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
-      `}</style>
     </div>
   );
 }
