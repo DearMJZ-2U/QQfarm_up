@@ -1,6 +1,5 @@
 {
   "exportedAt": "2026-06-11T00:00:00.000Z",
-  "source": "jsq.gptvip.chat/mutation_atlas",
   "mutationTypes": [
     { "name": "月华", "icon": "extraRes/gui/texture/mutant/icon/moon.png", "effectType": "产出", "effectValue": "月华宝荷", "desc": "种植琉璃宝荷有概率出现" },
     { "name": "荷华", "icon": "extraRes/gui/texture/mutant/icon/lotus.png", "effectType": "产出", "effectValue": "荷花", "desc": "种植荷风游记稀有种子有概率出现" },

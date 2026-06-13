@@ -88,14 +88,14 @@ export function CropImage({ seedId, name, size = 32, className = '' }: {
 
   const urls: string[] = [];
   if (forceMature) {
-    // 白名单作物：直接用成熟图，与 jsq.gptvip.chat/plants 一致
+    // 白名单作物：直接用成熟图，与参考站 plants 列表一致
     if (matureLocal && matureLocal !== fileName) {
       urls.push(`${CLEAN_BASE}seed_images_named/${matureLocal}`);
     }
     if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_6.png`);
     if (sid) urls.push(`${CDN}/plant/model/v4/Crop_${sid}_6.png`);
   } else {
-    // 1) 本地 Seed 图（与参考站 jsq.gptvip.chat/plants 一致：默认展示种子阶段）
+    // 1) 本地 Seed 图（默认展示种子阶段，与参考站 plants 列表一致）
     if (fileName) urls.push(`${CLEAN_BASE}seed_images_named/${fileName}`);
     // 2) CDN Seed 兜底
     if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_Seed.png`);

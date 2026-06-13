@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Layers } from 'lucide-react';
+import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Layers, Github } from 'lucide-react';
+
+const GITHUB_REPO_URL = 'https://github.com/DearMJZ-2U/QQfarm_up';
 import CalculatorTab from './components/CalculatorTab';
 import LevelSearchTab from './components/LevelSearchTab';
 import LandAtlasTab from './components/LandAtlasTab';
@@ -79,23 +81,33 @@ const atlasSubTabsDef = [
 export default function App() {
   const [bottomTab, setBottomTab] = useState<BottomTab>('calc');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'light';
+    const saved = localStorage.getItem('qqfarm_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
   const [atlasSubTab, setAtlasSubTab] = useState<'crops' | 'lands' | 'mutation' | 'costume'>('crops');
 
   React.useEffect(() => {
-    const hour = new Date().getHours();
-    const isDay = hour >= 6 && hour < 18;
-    const savedTheme = localStorage.getItem('qqfarm_theme') as 'light' | 'dark' | null;
-    const initial = savedTheme || (isDay ? 'light' : 'dark');
-    setTheme(initial);
-    document.documentElement.classList.toggle('dark', initial === 'dark');
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleSystemChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('qqfarm_theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    };
+    mediaQuery.addEventListener('change', handleSystemChange);
+    return () => mediaQuery.removeEventListener('change', handleSystemChange);
   }, []);
 
   const toggleTheme = () => {
     const next = theme === 'light' ? 'dark' : 'light';
     setTheme(next);
     localStorage.setItem('qqfarm_theme', next);
-    document.documentElement.classList.toggle('dark', next === 'dark');
   };
 
   const handleSidebarClick = (id: string) => {
@@ -264,28 +276,47 @@ export default function App() {
         {/* Top Bar */}
         <div className="sticky top-0 z-30 px-3 sm:px-4 pt-3 sm:pt-4 pb-2"
           style={{ background: 'linear-gradient(to bottom, var(--bg) 60%, color-mix(in srgb, var(--bg) 80%, transparent))' }}>
-          <div className="container-app flex items-center justify-between gap-2 px-3 py-2 rounded-full"
+          <div className="container-app flex items-center gap-2 px-3 py-2 rounded-full"
             style={{ background: 'var(--surface)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-pop)' }}>
             <button onClick={() => setSidebarOpen(true)}
-              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)] transition-colors">
+              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)] transition-colors flex-shrink-0"
+              aria-label="菜单">
               <Menu size={18} className="text-[var(--ink-soft)]" strokeWidth={2.5} />
             </button>
-            <div className="flex items-center gap-2">
-              <span className="text-xl float-anim inline-block">🌾</span>
-              <div className="leading-tight text-center">
-                <div className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] tracking-wide">QQ农场收益计算器</div>
-                <div className="text-[9px] text-[var(--ink-mute)] tracking-widest uppercase -mt-0.5">QQ Farm Guide</div>
+            <div className="flex-1 flex items-center justify-center gap-2 min-w-0">
+              <span className="text-xl float-anim inline-block flex-shrink-0">🌾</span>
+              <div className="leading-tight text-center min-w-0">
+                <div className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] tracking-wide truncate">QQ农场收益计算器</div>
+                <div className="text-[9px] text-[var(--ink-mute)] tracking-widest uppercase -mt-0.5 hidden sm:block">QQ Farm Guide</div>
               </div>
             </div>
-            <button onClick={toggleTheme}
-              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)] transition-colors"
-              aria-label="切换主题">
-              {theme === 'dark' ? (
-                <Sun size={18} strokeWidth={2.5} style={{ color: 'var(--sun-deep)' }} />
-              ) : (
-                <Moon size={18} strokeWidth={2.5} style={{ color: 'var(--sky-deep)' }} />
-              )}
-            </button>
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <a href={GITHUB_REPO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
+                aria-label="GitHub 仓库"
+                title="GitHub 仓库">
+                <Github size={16} strokeWidth={2.5} className="text-[var(--ink-soft)] flex-shrink-0" />
+                <span className="text-[var(--ink-soft)]">GitHub</span>
+              </a>
+              <button onClick={toggleTheme}
+                className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
+                aria-label="切换主题"
+                title="切换主题">
+                {theme === 'dark' ? (
+                  <>
+                    <Sun size={16} strokeWidth={2.5} style={{ color: 'var(--sun-deep)' }} className="flex-shrink-0" />
+                    <span className="text-[var(--ink-soft)]">日间</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon size={16} strokeWidth={2.5} style={{ color: 'var(--sky-deep)' }} className="flex-shrink-0" />
+                    <span className="text-[var(--ink-soft)]">夜间</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 

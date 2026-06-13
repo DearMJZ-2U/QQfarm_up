@@ -1,6 +1,6 @@
 /**
  * QQ农场数据同步脚本
- * 从 jsq.gptvip.chat 提取最新游戏配置数据，生成项目所需的JSON文件并下载图片资源
+ * 从配置接口提取最新游戏配置数据，生成项目所需的JSON文件并下载图片资源
  *
  * 用法: npx tsx scripts/sync_data.ts
  *       或 npm run sync-data
@@ -335,7 +335,6 @@ async function downloadCostumeImages(): Promise<void> {
 async function main() {
   console.log('╔══════════════════════════════════════════╗');
   console.log('║   QQ农场数据同步工具 v2                    ║');
-  console.log('║   数据源: jsq.gptvip.chat                  ║');
   console.log('╚══════════════════════════════════════════╝\n');
 
   const exportedAt = new Date().toISOString();
@@ -392,7 +391,7 @@ async function main() {
     };
   });
 
-  const seedsData = { exportedAt, source: 'jsq.gptvip.chat/items/05', count: rows.length, rows };
+  const seedsData = { exportedAt, count: rows.length, rows };
 
   const plantEntries = seedItems.map(item => ({
     seed_id: item.id,
@@ -424,7 +423,6 @@ async function main() {
   // 为每个item添加本地图片路径
   const itemsData = {
     exportedAt,
-    source: 'jsq.gptvip.chat',
     categories: allCategories.map(cat => ({
       id: cat.id,
       name: cat.name,
