@@ -87,24 +87,25 @@ export default function CropAtlasTab() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
         {filtered.map((s: any, idx: number) => (
           <motion.div key={s.seedId}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, delay: Math.min(idx * 0.01, 0.3) }}
             onClick={() => setDetail(s)}
-            className="sticker sticker-press p-3 cursor-pointer relative">
-            <div className="flex items-center justify-between mb-2">
+            className="sticker sticker-press p-3 sm:p-4 cursor-pointer relative">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
               <span className="chip chip-leaf" style={{ fontSize: '0.6rem' }}>Lv{s.requiredLevel}</span>
               {s.seasons === 2 && <span className="chip chip-sky" style={{ fontSize: '0.6rem' }}>双季</span>}
             </div>
-            <div className="flex items-center justify-center my-2 h-12">
-              <CropImage seedId={s.seedId} name={s.name} size={48} />
+            <div className="flex items-center justify-center my-2 sm:my-3 h-16 sm:h-24">
+              <CropImage seedId={s.seedId} name={s.name} size={56} className="sm:hidden" />
+              <CropImage seedId={s.seedId} name={s.name} size={88} className="hidden sm:block" />
             </div>
             <div className="text-center">
-              <div className="font-bold text-sm text-[var(--ink)] truncate">{s.name}</div>
-              <div className="text-[10px] text-[var(--ink-mute)] mt-1 flex items-center justify-center gap-1.5">
+              <div className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{s.name}</div>
+              <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-1 flex items-center justify-center gap-1.5">
                 <span className="flex items-center gap-0.5"><Star size={9} className="text-[var(--plum)]" />{s.exp}</span>
                 <span className="text-[var(--line-strong)]">·</span>
                 <span className="flex items-center gap-0.5"><Coins size={9} className="text-[var(--sun-deep)]" />{s.price}</span>
@@ -138,20 +139,21 @@ export default function CropAtlasTab() {
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 28, stiffness: 280 }}
                 onClick={e => e.stopPropagation()}
-                className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+                className="relative w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
                 style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
 
               {/* Header */}
-              <div className="sticky top-0 z-10 px-5 py-4 flex items-center justify-between"
+              <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
                 style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center"
                     style={{ background: 'var(--leaf-bg)' }}>
-                    <CropImage seedId={detail.seedId} name={detail.name} size={48} />
+                    <CropImage seedId={detail.seedId} name={detail.name} size={56} className="sm:hidden" />
+                    <CropImage seedId={detail.seedId} name={detail.name} size={96} className="hidden sm:block" />
                   </div>
                   <div>
-                    <h3 className="font-display italic text-xl font-bold text-[var(--ink)] leading-tight">{detail.name}</h3>
-                    <div className="flex items-center gap-1.5 mt-1">
+                    <h3 className="font-display italic text-xl sm:text-2xl font-bold text-[var(--ink)] leading-tight">{detail.name}</h3>
+                    <div className="flex items-center gap-1.5 mt-1 sm:mt-1.5">
                       <span className="chip chip-leaf">Lv{detail.requiredLevel}</span>
                       {detail.seasons === 2 ? (
                         <span className="chip chip-sky">双季</span>
@@ -162,17 +164,18 @@ export default function CropAtlasTab() {
                   </div>
                 </div>
                 <button onClick={() => setDetail(null)}
-                  className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                  className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0"
                   style={{ background: 'var(--bg-2)' }}>
-                  <X size={16} className="text-[var(--ink-soft)]" />
+                  <X size={16} className="text-[var(--ink-soft)] sm:hidden" />
+                  <X size={20} className="text-[var(--ink-soft)] hidden sm:block" />
                 </button>
               </div>
 
-              <div className="p-5 space-y-5">
+              <div className="p-5 sm:p-6 space-y-5 sm:space-y-6">
                 {/* Growth Phases Images */}
                 <div>
                   <div className="section-eyebrow mb-2">成长阶段</div>
-                  <div className="sticker-soft p-3">
+                  <div className="sticker-soft p-3 sm:p-4">
                     <GrowthPhases seedId={detail.seedId} />
                   </div>
                 </div>
@@ -180,7 +183,7 @@ export default function CropAtlasTab() {
                 {/* Stats Grid */}
                 <div>
                   <div className="section-eyebrow mb-2">作物属性</div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <StatTile icon={<Coins size={14} strokeWidth={2.5} />} color="sun" label="购买价格" value={detail.price} />
                     <StatTile icon={<Star size={14} strokeWidth={2.5} />} color="plum" label="生长经验" value={detail.exp} />
                     <StatTile icon={<Package size={14} strokeWidth={2.5} />} color="leaf" label="果实产量" value={`${detail.fruitCount} 个`} />
@@ -198,7 +201,7 @@ export default function CropAtlasTab() {
                   return (
                     <div>
                       <div className="section-eyebrow mb-2">阶段详情</div>
-                      <div className="sticker-soft p-3">
+                      <div className="sticker-soft p-3 sm:p-4">
                         <div className="flex flex-wrap gap-1.5 mb-2">
                           {phases.map((p, i) => {
                             const isMature = p.sec === 0;
@@ -210,7 +213,7 @@ export default function CropAtlasTab() {
                             );
                           })}
                         </div>
-                        <div className="text-[10px] font-mono text-[var(--ink-mute)] pt-2 border-t border-[var(--line)]">
+                        <div className="text-[10px] sm:text-[11px] font-mono text-[var(--ink-mute)] pt-2 border-t border-[var(--line)]">
                           总时长 <span className="font-bold text-[var(--ink)]">{fmtSec(totalSec)}</span>
                         </div>
                       </div>
@@ -229,13 +232,13 @@ export default function CropAtlasTab() {
 
 function StatTile({ icon, color, label, value }: { icon: React.ReactNode; color: string; label: string; value: any }) {
   return (
-    <div className="rounded-2xl p-3"
+    <div className="rounded-2xl p-3 sm:p-4"
       style={{ background: `var(--${color}-bg)`, border: `1.5px solid var(--${color}-soft)` }}>
-      <div className="flex items-center gap-1.5 mb-1" style={{ color: `var(--${color}-deep)` }}>
+      <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5" style={{ color: `var(--${color}-deep)` }}>
         {icon}
-        <span className="text-[10px] font-bold uppercase tracking-wide">{label}</span>
+        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide">{label}</span>
       </div>
-      <div className="font-mono tnum text-lg font-bold" style={{ color: `var(--${color}-deep)` }}>{value}</div>
+      <div className="font-mono tnum text-lg sm:text-xl font-bold" style={{ color: `var(--${color}-deep)` }}>{value}</div>
     </div>
   );
 }

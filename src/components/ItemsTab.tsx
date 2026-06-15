@@ -70,44 +70,44 @@ export default function ItemsTab() {
       {/* Mobile-friendly horizontal scroll for categories on small screens, sidebar on large */}
       <div className="flex flex-col lg:flex-row gap-4">
         {/* Category Pills (mobile: horizontal scroll, desktop: vertical rail) */}
-        <div className="lg:w-44 lg:flex-shrink-0">
-          <div className="lg:hidden flex gap-1.5 overflow-x-auto no-scrollbar pb-1 -mx-1 px-1">
+        <div className="lg:w-52 lg:flex-shrink-0">
+          <div className="lg:hidden flex gap-2 overflow-x-auto no-scrollbar pb-1 -mx-1 px-1">
             {categories.map(c => {
               const active = catId === c.id;
               const accent = catAccent[c.id] || 'leaf';
               return (
                 <button key={c.id} onClick={() => setCatId(c.id)}
-                  className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full font-bold text-xs whitespace-nowrap transition-all"
+                  className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap transition-all"
                   style={active
                     ? { background: `var(--${accent === 'ink' ? 'ink' : accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent === 'ink' ? 'ink' : accent}-deep)` }
                     : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
-                  <span>{c.icon}</span><span>{c.name}</span>
+                  <span className="text-base">{c.icon}</span><span>{c.name}</span>
                   <span className="font-mono opacity-70">{categoryCount(c)}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="hidden lg:block space-y-1 sticky top-32">
+          <div className="hidden lg:block space-y-1.5 sticky top-32">
             <div className="section-eyebrow px-2 pb-2">分类</div>
             {categories.map(c => {
               const active = catId === c.id;
               const accent = catAccent[c.id] || 'leaf';
               return (
                 <button key={c.id} onClick={() => setCatId(c.id)}
-                  className={`w-full text-left flex items-center gap-2.5 px-3 py-2.5 rounded-2xl transition-all ${!active && 'hover:bg-[var(--bg-2)]'}`}
+                  className={`w-full text-left flex items-center gap-3 px-3 py-3 rounded-2xl transition-all ${!active && 'hover:bg-[var(--bg-2)]'}`}
                   style={active ? {
                     background: `var(--${accent === 'ink' ? 'bg-2' : accent + '-bg'})`,
                     border: `1.5px solid var(--${accent === 'ink' ? 'ink' : accent})`,
                     boxShadow: 'var(--shadow-pop)',
                   } : { border: '1.5px solid transparent' }}>
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0"
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
                     style={{ background: active ? 'rgba(255,255,255,0.7)' : `var(--${accent === 'ink' ? 'bg-2' : accent + '-bg'})` }}>
                     {c.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-[var(--ink)] truncate">{c.name}</div>
-                    <div className="text-[10px] font-mono text-[var(--ink-mute)]">{categoryCount(c)} 件</div>
+                    <div className="text-sm font-bold text-[var(--ink)] truncate">{c.name}</div>
+                    <div className="text-[11px] font-mono text-[var(--ink-mute)]">{categoryCount(c)} 件</div>
                   </div>
                 </button>
               );
@@ -123,14 +123,14 @@ export default function ItemsTab() {
             transition={{ duration: 0.25 }}
             className="sticker-lg overflow-hidden">
 
-            <div className="px-4 py-3 flex items-center gap-2"
+            <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2"
               style={{ background: 'var(--bg-2)', borderBottom: '1.5px solid var(--line)' }}>
-              <span className="text-lg">{cat?.icon}</span>
-              <span className="font-display italic text-base font-bold text-[var(--ink)]">{cat?.name}</span>
+              <span className="text-lg sm:text-xl">{cat?.icon}</span>
+              <span className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)]">{cat?.name}</span>
               <span className="chip chip-ink ml-auto">{visibleCount} 件</span>
             </div>
 
-            <div className="p-2 space-y-1 max-h-[70vh] overflow-y-auto">
+            <div className="p-2.5 sm:p-3 space-y-1.5 sm:space-y-2 max-h-[70vh] overflow-y-auto">
               {!cat ? (
                 <div className="text-xs text-[var(--ink-mute)] text-center py-12">数据整理中</div>
               ) : visibleCount === 0 ? (
@@ -140,20 +140,21 @@ export default function ItemsTab() {
                   const seedPrice = item.sells ? parseInt(item.sells.split(':')[1]) || 0 : 0;
                   return (
                     <div key={item.id}
-                      className="flex items-center gap-2.5 p-2.5 rounded-2xl transition-colors hover:bg-[var(--leaf-bg)]"
+                      className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3.5 rounded-2xl transition-colors hover:bg-[var(--leaf-bg)]"
                       style={{ background: 'transparent' }}>
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center flex-shrink-0"
                         style={{ background: 'var(--leaf-bg)' }}>
-                        <CropImage seedId={item.id} name={item.name} size={32} />
+                        <CropImage seedId={item.id} name={item.name} size={40} className="sm:hidden" />
+                        <CropImage seedId={item.id} name={item.name} size={56} className="hidden sm:block" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold text-[var(--ink)] truncate">{item.name}</div>
-                        <div className="text-[10px] text-[var(--ink-mute)] font-mono mt-0.5">
+                        <div className="text-sm sm:text-base font-bold text-[var(--ink)] truncate">{item.name}</div>
+                        <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] font-mono mt-0.5 sm:mt-1">
                           Lv{item.level} · 🌱 {item.exp}
                           {item.seasons > 1 && <span className="ml-1.5 text-[var(--sky-deep)] font-bold">· {item.seasons}季</span>}
                         </div>
                       </div>
-                      <span className="font-mono tnum text-xs font-bold text-[var(--sun-deep)] flex-shrink-0">
+                      <span className="font-mono tnum text-xs sm:text-sm font-bold text-[var(--sun-deep)] flex-shrink-0">
                         💰 {seedPrice}
                       </span>
                     </div>
@@ -163,14 +164,15 @@ export default function ItemsTab() {
                 return (
                   <div key={item.id}
                     onClick={() => isGoldenFruit ? setGoldDetail({ name: item.name, desc: item.desc, iconFile: item.iconFile, localFile: (item as any).localFile }) : undefined}
-                    className={`flex items-center gap-3 p-2.5 rounded-2xl transition-all ${isGoldenFruit ? 'cursor-pointer hover:bg-[var(--sun-bg)]' : 'hover:bg-[var(--bg-2)]'}`}>
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    className={`flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3.5 rounded-2xl transition-all ${isGoldenFruit ? 'cursor-pointer hover:bg-[var(--sun-bg)]' : 'hover:bg-[var(--bg-2)]'}`}>
+                    <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{ background: isGoldenFruit ? 'var(--sun-bg)' : 'var(--bg-2)' }}>
-                      <RemoteImage urls={itemImageUrls(item.iconFile, (item as any).localFile)} name={item.name} size={40} rounded />
+                      <RemoteImage urls={itemImageUrls(item.iconFile, (item as any).localFile)} name={item.name} size={48} className="sm:hidden" rounded />
+                      <RemoteImage urls={itemImageUrls(item.iconFile, (item as any).localFile)} name={item.name} size={72} className="hidden sm:block" rounded />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs font-bold text-[var(--ink)]">{item.name}</div>
-                      {item.desc && <div className="text-[10px] text-[var(--ink-mute)] mt-0.5 line-clamp-2">{item.desc}</div>}
+                      <div className="text-sm sm:text-base font-bold text-[var(--ink)]">{item.name}</div>
+                      {item.desc && <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 sm:mt-1 line-clamp-2">{item.desc}</div>}
                     </div>
                     {item.level > 0 && (
                       <span className="chip chip-ink flex-shrink-0">Lv.{item.level}</span>
@@ -198,33 +200,35 @@ export default function ItemsTab() {
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-                onClick={e => e.stopPropagation()}
-                className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
-                style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+            onClick={e => e.stopPropagation()}
+            className="relative w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+            style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
 
-            <div className="sticky top-0 z-10 px-5 py-4 flex items-center justify-between"
+            <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
               style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
-              <div className="flex items-center gap-3">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center"
                   style={{ background: 'var(--sun-bg)' }}>
-                  <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} size={48} rounded />
+                  <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} size={56} className="sm:hidden" rounded />
+                  <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} size={96} className="hidden sm:block" rounded />
                 </div>
                 <div>
-                  <h3 className="font-display italic text-lg font-bold text-[var(--ink)] leading-tight">{goldDetail.name}</h3>
-                  <div className="text-[11px] text-[var(--ink-mute)] mt-1 line-clamp-2 max-w-[14rem]">{goldDetail.desc}</div>
+                  <h3 className="font-display italic text-lg sm:text-2xl font-bold text-[var(--ink)] leading-tight">{goldDetail.name}</h3>
+                  <div className="text-[11px] sm:text-xs text-[var(--ink-mute)] mt-1 sm:mt-1.5 line-clamp-2 max-w-[14rem] sm:max-w-[18rem]">{goldDetail.desc}</div>
                 </div>
               </div>
               <button onClick={() => setGoldDetail(null)}
-                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0"
                 style={{ background: 'var(--bg-2)' }}>
-                <X size={16} className="text-[var(--ink-soft)]" />
+                <X size={16} className="text-[var(--ink-soft)] sm:hidden" />
+                <X size={20} className="text-[var(--ink-soft)] hidden sm:block" />
               </button>
             </div>
 
             {goldSeedIds[goldDetail.name] && (
-              <div className="p-5">
+              <div className="p-5 sm:p-6">
                 <div className="section-eyebrow mb-2">成长阶段 · 黄金变异</div>
-                <div className="sticker-soft p-3">
+                <div className="sticker-soft p-3 sm:p-4">
                   <GrowthPhases seedId={goldSeedIds[goldDetail.name]} gold />
                 </div>
               </div>

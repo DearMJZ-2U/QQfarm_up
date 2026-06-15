@@ -132,21 +132,22 @@ export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: 
   ];
 
   return (
-    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1">
+    <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar pb-1">
       {phaseNames.map((p, i) => (
         <React.Fragment key={i}>
-          <div className="flex-shrink-0 flex flex-col items-center gap-1">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center overflow-hidden"
+          <div className="flex-shrink-0 flex flex-col items-center gap-1 sm:gap-1.5">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center overflow-hidden"
               style={{
                 background: gold ? 'var(--sun-bg)' : 'var(--leaf-bg)',
                 border: `1.5px solid ${gold ? 'var(--sun-soft)' : 'var(--leaf-soft)'}`,
               }}>
-              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={32} rounded />
+              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={40} className="sm:hidden" rounded />
+              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={64} className="hidden sm:block" rounded />
             </div>
-            <div className="text-[9px] font-bold text-[var(--ink-mute)] tracking-tight">{p.label}</div>
+            <div className="text-[10px] sm:text-xs font-bold text-[var(--ink-mute)] tracking-tight">{p.label}</div>
           </div>
           {i < phaseNames.length - 1 && (
-            <span className="text-[var(--ink-mute)]/60 text-base flex-shrink-0 -mt-3" aria-hidden>›</span>
+            <span className="text-[var(--ink-mute)]/60 text-lg sm:text-xl flex-shrink-0 -mt-3 sm:-mt-4" aria-hidden>›</span>
           )}
         </React.Fragment>
       ))}

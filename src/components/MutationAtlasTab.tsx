@@ -29,58 +29,64 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
           animate={{ y: 0, scale: 1 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-          onClick={e => e.stopPropagation()}
-          className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
-          style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+            onClick={e => e.stopPropagation()}
+            className="relative w-full sm:max-w-lg max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+            style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
 
-          <div className="sticky top-0 z-10 px-5 py-4 flex items-center justify-between"
+          <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
             style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center"
                 style={{ background: isGold ? 'var(--sun-bg)' : 'var(--berry-bg)' }}>
                 {detailUrls.length > 0 ? (
-                  <RemoteImage urls={detailUrls} name={item.name} size={48} rounded />
+                  <RemoteImage urls={detailUrls} name={item.name} size={56} className="sm:hidden" rounded />
                 ) : (
-                  <CropImage seedId={item.seedId} name={item.name.replace(/^黄金·/, '')} size={48} />
+                  <CropImage seedId={item.seedId} name={item.name.replace(/^黄金·/, '')} size={56} className="sm:hidden" />
+                )}
+                {detailUrls.length > 0 ? (
+                  <RemoteImage urls={detailUrls} name={item.name} size={96} className="hidden sm:block" rounded />
+                ) : (
+                  <CropImage seedId={item.seedId} name={item.name.replace(/^黄金·/, '')} size={96} className="hidden sm:block" />
                 )}
               </div>
               <div>
-                <h3 className="font-display italic text-lg font-bold text-[var(--ink)] leading-tight">{item.name}</h3>
-                <div className="flex items-center gap-1.5 mt-1">
+                <h3 className="font-display italic text-lg sm:text-2xl font-bold text-[var(--ink)] leading-tight">{item.name}</h3>
+                <div className="flex items-center gap-1.5 mt-1 sm:mt-1.5">
                   <span className="chip chip-sun">+{item.points} 点</span>
                   {isGold && <span className="chip chip-orange">黄金</span>}
                 </div>
               </div>
             </div>
-            <button onClick={onClose} className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+            <button onClick={onClose} className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0"
               style={{ background: 'var(--bg-2)' }}>
-              <X size={16} className="text-[var(--ink-soft)]" />
+              <X size={16} className="text-[var(--ink-soft)] sm:hidden" />
+              <X size={20} className="text-[var(--ink-soft)] hidden sm:block" />
             </button>
           </div>
 
-          <div className="p-5 space-y-4">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="rounded-2xl p-3" style={{ background: 'var(--plum-bg)', border: '1.5px solid var(--plum-soft)' }}>
-                <div className="text-[10px] font-bold uppercase tracking-wide text-[var(--plum-deep)] mb-0.5">经验</div>
-                <div className="font-mono tnum text-xl font-bold text-[var(--plum-deep)]">{item.exp}</div>
+          <div className="p-5 sm:p-6 space-y-4 sm:space-y-5">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <div className="rounded-2xl p-3 sm:p-4" style={{ background: 'var(--plum-bg)', border: '1.5px solid var(--plum-soft)' }}>
+                <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[var(--plum-deep)] mb-0.5 sm:mb-1">经验</div>
+                <div className="font-mono tnum text-xl sm:text-2xl font-bold text-[var(--plum-deep)]">{item.exp}</div>
               </div>
-              <div className="rounded-2xl p-3" style={{ background: 'var(--leaf-bg)', border: '1.5px solid var(--leaf-soft)' }}>
-                <div className="text-[10px] font-bold uppercase tracking-wide text-[var(--leaf-deep)] mb-0.5">果实</div>
-                <div className="font-mono tnum text-xl font-bold text-[var(--leaf-deep)]">{item.fruit} 个</div>
+              <div className="rounded-2xl p-3 sm:p-4" style={{ background: 'var(--leaf-bg)', border: '1.5px solid var(--leaf-soft)' }}>
+                <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[var(--leaf-deep)] mb-0.5 sm:mb-1">果实</div>
+                <div className="font-mono tnum text-xl sm:text-2xl font-bold text-[var(--leaf-deep)]">{item.fruit} 个</div>
               </div>
             </div>
 
             {showGrowth && (
               <div>
                 <div className="section-eyebrow mb-2">成长阶段 {isGold && '· 黄金变异'}</div>
-                <div className="sticker-soft p-3">
+                <div className="sticker-soft p-3 sm:p-4">
                   <GrowthPhases seedId={goldSeedIds[item.name]} gold={isGold} />
                 </div>
               </div>
             )}
 
             {item.desc && (
-              <div className="rounded-2xl p-3 text-[11px] text-[var(--ink-soft)] leading-relaxed"
+              <div className="rounded-2xl p-3 sm:p-4 text-[11px] sm:text-xs text-[var(--ink-soft)] leading-relaxed"
                 style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
                 {item.desc}
               </div>
@@ -151,7 +157,7 @@ export default function MutationAtlasTab() {
           </div>
 
           {/* 变异卡片网格 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {mutationTypes.map((mt, i) => {
               const probs = getProbabilitiesFor(mt.name);
               return (
@@ -159,14 +165,15 @@ export default function MutationAtlasTab() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, delay: i * 0.04 }}
-                  className="sticker p-3 flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  className="sticker p-3 sm:p-4 flex items-start gap-3 sm:gap-4">
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'var(--berry-bg)' }}>
-                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={40} rounded />
+                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={56} className="sm:hidden" rounded />
+                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={96} className="hidden sm:block" rounded />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
-                      <span className="font-bold text-sm text-[var(--ink)]">{mt.name}</span>
+                    <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                      <span className="font-bold text-sm sm:text-base text-[var(--ink)]">{mt.name}</span>
                       <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>{mt.effectType}</span>
                       {probs.map((p, k) => (
                         <span key={k} className="chip chip-sun flex-shrink-0 font-mono tnum"
@@ -175,8 +182,8 @@ export default function MutationAtlasTab() {
                         </span>
                       ))}
                     </div>
-                    <div className="text-[11px] font-mono font-bold text-[var(--berry-deep)] tnum">{mt.effectValue}</div>
-                    <div className="text-[10px] text-[var(--ink-mute)] mt-0.5 leading-snug">{mt.desc}</div>
+                    <div className="text-[11px] sm:text-sm font-mono font-bold text-[var(--berry-deep)] tnum">{mt.effectValue}</div>
+                    <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 sm:mt-1 leading-snug">{mt.desc}</div>
                   </div>
                 </motion.div>
               );
@@ -185,20 +192,20 @@ export default function MutationAtlasTab() {
 
           {/* 概率展示表（照搬游戏 UI） */}
           <div className="sticker overflow-hidden">
-            <div className="px-4 py-3 flex items-center gap-2"
+            <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2"
               style={{ background: 'var(--berry-bg)', borderBottom: '1.5px solid var(--berry-soft)' }}>
-              <span className="text-base">📊</span>
-              <h3 className="font-display italic text-base font-bold text-[var(--berry-deep)]">概率展示</h3>
+              <span className="text-base sm:text-lg">📊</span>
+              <h3 className="font-display italic text-base sm:text-lg font-bold text-[var(--berry-deep)]">概率展示</h3>
               <span className="chip chip-berry ml-auto" style={{ fontSize: '0.6rem' }}>{MUTATION_PROBABILITIES.length} 行</span>
             </div>
-            <div className="px-4 pt-2 pb-1 grid grid-cols-3 text-[10px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">
+            <div className="px-4 sm:px-5 pt-2 pb-1 grid grid-cols-3 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">
               <div>变异类型</div>
               <div>品质</div>
               <div className="text-right">概率</div>
             </div>
-            <div className="px-4 pb-3">
+            <div className="px-4 sm:px-5 pb-3 sm:pb-4">
               {MUTATION_PROBABILITIES.map((p, i) => (
-                <div key={i} className="grid grid-cols-3 py-2 text-[12px] items-center"
+                <div key={i} className="grid grid-cols-3 py-2 sm:py-2.5 text-[12px] sm:text-sm items-center"
                   style={{ borderTop: i === 0 ? 'none' : '1px dashed var(--line)' }}>
                   <div className="font-bold text-[var(--ink)]">{p.name}</div>
                   <div><span className="chip chip-ink" style={{ fontSize: '0.6rem' }}>{p.quality}</span></div>
@@ -229,7 +236,7 @@ export default function MutationAtlasTab() {
             })}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 sm:space-y-2.5">
             {(goldenAtlas[goldenTab] || []).map((g, i) => {
               const atlasUrls = goldenAtlasImageUrls(g.name);
               const isGold = g.name.startsWith('黄金');
@@ -239,28 +246,34 @@ export default function MutationAtlasTab() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.22, delay: Math.min(i * 0.02, 0.3) }}
                   onClick={() => setDetail({ ...g, seedId: g.seedId, cropId: g.cropId, points: g.points, exp: g.exp, fruit: g.fruit, desc: g.desc, note: (g as any).note })}
-                  className="sticker sticker-press p-3 flex items-center gap-3 cursor-pointer">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  className="sticker sticker-press p-3 sm:p-4 flex items-center gap-3 sm:gap-4 cursor-pointer">
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center flex-shrink-0"
                     style={{ background: isGold ? 'var(--sun-bg)' : 'var(--plum-bg)' }}>
                     {atlasUrls.length > 0 ? (
-                      <RemoteImage urls={atlasUrls} name={g.name} size={36} rounded />
+                      <RemoteImage urls={atlasUrls} name={g.name} size={56} className="sm:hidden" rounded />
                     ) : (
-                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={36} />
+                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={56} className="sm:hidden" />
+                    )}
+                    {atlasUrls.length > 0 ? (
+                      <RemoteImage urls={atlasUrls} name={g.name} size={96} className="hidden sm:block" rounded />
+                    ) : (
+                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={96} className="hidden sm:block" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className="font-bold text-sm text-[var(--ink)] truncate">{g.name}</span>
+                    <div className="flex items-center gap-1.5 mb-0.5 sm:mb-1">
+                      <span className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{g.name}</span>
                       <span className="chip chip-sun flex-shrink-0">+{g.points}</span>
                     </div>
-                    <div className="text-[10px] text-[var(--ink-mute)] font-mono tnum">
+                    <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] font-mono tnum">
                       经验 <span className="font-bold text-[var(--plum-deep)]">{g.exp}</span>
                       <span className="mx-1.5 opacity-40">·</span>
                       果实 <span className="font-bold text-[var(--leaf-deep)]">{g.fruit}</span>
                     </div>
-                    <div className="text-[10px] text-[var(--ink-soft)] mt-0.5 line-clamp-1">{g.desc}</div>
+                    <div className="text-[10px] sm:text-[11px] text-[var(--ink-soft)] mt-0.5 sm:mt-1 line-clamp-1">{g.desc}</div>
                   </div>
-                  <Sparkles size={14} className="text-[var(--ink-mute)] flex-shrink-0" />
+                  <Sparkles size={14} className="text-[var(--ink-mute)] flex-shrink-0 sm:hidden" />
+                  <Sparkles size={18} className="text-[var(--ink-mute)] flex-shrink-0 hidden sm:block" />
                 </motion.div>
               );
             })}

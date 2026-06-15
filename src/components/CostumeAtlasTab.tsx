@@ -17,19 +17,20 @@ type ViewTab = 'functional' | 'set';
 
 function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
   return (
-    <div className="flex items-center gap-3 p-2.5 rounded-2xl" style={{ background: 'var(--bg-2)' }}>
-      <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+    <div className="flex items-center gap-3 sm:gap-5 p-3 sm:p-5 rounded-2xl" style={{ background: 'var(--bg-2)' }}>
+      <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center flex-shrink-0"
         style={{ background: 'var(--surface)' }}>
-        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} size={48} rounded />
+        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} size={56} className="sm:hidden" rounded />
+        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} size={96} className="hidden sm:block" rounded />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5 mb-0.5">
-          <span className="font-bold text-sm text-[var(--ink)] truncate">{item.name}</span>
+        <div className="flex items-center gap-1.5 mb-1">
+          <span className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{item.name}</span>
           <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.6rem' }}>
             {item.tag}
           </span>
         </div>
-        <div className="text-[10px] text-[var(--ink-mute)] leading-snug">{item.desc}</div>
+        <div className="text-[11px] sm:text-xs text-[var(--ink-mute)] leading-snug">{item.desc}</div>
       </div>
     </div>
   );
@@ -37,7 +38,7 @@ function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
 
 function ItemGrid({ items }: { items: CostumeItem[] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
       {items.map((item, j) => (
         <ItemCard key={j} item={item} />
       ))}
@@ -74,10 +75,8 @@ function FunctionalView() {
                 </span>
               </div>
 
-              <div className="p-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {cat.items.map((item, j) => (
-                  <ItemCard key={j} item={{ ...item, category: cat.name }} />
-                ))}
+              <div className="p-3 sm:p-4">
+                <ItemGrid items={cat.items.map(item => ({ ...item, category: cat.name }))} />
               </div>
             </div>
           </motion.section>
@@ -127,7 +126,7 @@ function Section({ title, desc, icon, count, accent, children }: {
           </span>
         </div>
 
-        <div className="p-3">
+        <div className="p-3 sm:p-4">
           {children}
         </div>
       </div>
