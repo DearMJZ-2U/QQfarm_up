@@ -62,13 +62,6 @@ const upgradeMeta = {
 } as const;
 const upgradeTypes = ['红土地', '黑土地', '金土地', '紫晶土地'] as const;
 
-const HERO_STATS = [
-  { label: '总地块', value: '24', accent: 'leaf' as const, emoji: '🗺️' },
-  { label: '初始解锁', value: '6', accent: 'sun' as const, emoji: '🔓' },
-  { label: '最高开垦', value: 'Lv39', accent: 'orange' as const, emoji: '⛏️' },
-  { label: '紫晶升级', value: 'Lv90+', accent: 'plum' as const, emoji: '💎' },
-];
-
 export default function LandAtlasTab() {
   const [level, setLevel] = React.useState(90);
   const [tab, setTab] = React.useState<'plots' | 'upgrades'>('plots');
@@ -83,24 +76,6 @@ export default function LandAtlasTab() {
         </h2>
         <p className="text-xs text-[var(--ink-soft)] mt-1">从开垦到升级的全套数据</p>
       </header>
-
-      {/* Hero Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        {HERO_STATS.map((s, i) => (
-          <motion.div key={i}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: i * 0.05 }}
-            className="sticker p-3 text-center"
-            style={{ borderColor: `var(--${s.accent})` }}>
-            <div className="text-xl mb-1">{s.emoji}</div>
-            <div className="font-mono tnum text-xl font-black" style={{ color: `var(--${s.accent}-deep)` }}>
-              {s.value}
-            </div>
-            <div className="text-[10px] text-[var(--ink-mute)] mt-0.5 font-bold uppercase tracking-wide">{s.label}</div>
-          </motion.div>
-        ))}
-      </div>
 
       {/* Land Types */}
       <section>

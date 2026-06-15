@@ -180,30 +180,14 @@ function SetView() {
   );
 }
 
-function StatCard({ accent, emoji, label, value }: { accent: string; emoji: string; label: string; value: number | string }) {
-  return (
-    <div className="sticker p-3 text-center"
-      style={accent !== 'ink' ? { borderColor: `var(--${accent})` } : undefined}>
-      <div className="text-xl mb-1">{emoji}</div>
-      <div className="font-mono tnum text-2xl font-black"
-        style={{ color: accent === 'ink' ? 'var(--ink)' : `var(--${accent}-deep)` }}>
-        {value}
-      </div>
-      <div className="text-[10px] text-[var(--ink-mute)] mt-0.5 font-bold uppercase tracking-wide">{label}</div>
-    </div>
-  );
-}
-
 export default function CostumeAtlasTab() {
-  const [view, setView] = React.useState<ViewTab>('functional');
+  const [view, setView] = React.useState<ViewTab>('set');
   const { categories } = costumeData;
   const totalItems = categories.reduce((s, c) => s + c.items.length, 0);
-  const defaultCount = categories.reduce((s, c) => s + c.items.filter(i => i.tag === '默认').length, 0);
-  const eventCount = categories.reduce((s, c) => s + c.items.filter(i => i.tag === '活动').length, 0);
 
   const tabs: { id: ViewTab; label: string; emoji: string; accent: string; icon: React.ElementType }[] = [
-    { id: 'functional', label: '功能分类', emoji: '🗂️', accent: 'sky', icon: FolderTree },
     { id: 'set', label: '套装分类', emoji: '🎁', accent: 'orange', icon: Package },
+    { id: 'functional', label: '功能分类', emoji: '🗂️', accent: 'sky', icon: FolderTree },
   ];
 
   return (
@@ -217,34 +201,26 @@ export default function CostumeAtlasTab() {
         <p className="text-xs text-[var(--ink-soft)] mt-1">{categories.length} 大类装扮共 {totalItems} 件</p>
       </header>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <StatCard accent="leaf" emoji="🏡" label="总装扮" value={totalItems} />
-        <StatCard accent="sky" emoji="📂" label="分类" value={categories.length} />
-        <StatCard accent="orange" emoji="🎉" label="活动款" value={eventCount} />
-        <StatCard accent="ink" emoji="🎒" label="默认款" value={defaultCount} />
-      </div>
-
       {/* View tab toggle */}
-      <div className="flex gap-1.5 p-1.5 sticker-pop rounded-full">
+      <div className="flex gap-2 p-2 sticker-pop rounded-2xl">
         {tabs.map(t => {
           const active = view === t.id;
           const Icon = t.icon;
           return (
             <button key={t.id} onClick={() => setView(t.id)}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all"
               style={active
-                ? { background: `var(--${t.accent})`, color: 'white', boxShadow: `0 2px 0 var(--${t.accent}-deep)` }
+                ? { background: `var(--${t.accent})`, color: 'white', boxShadow: `0 3px 0 var(--${t.accent}-deep)` }
                 : { color: 'var(--ink-soft)' }}>
-              <Icon size={13} strokeWidth={2.5} />
+              <Icon size={18} strokeWidth={2.5} />
               <span>{t.label}</span>
             </button>
           );
         })}
       </div>
 
-      {view === 'functional' && <FunctionalView />}
       {view === 'set' && <SetView />}
+      {view === 'functional' && <FunctionalView />}
     </div>
   );
 }
