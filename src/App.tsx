@@ -73,9 +73,9 @@ const sidebarSections: { title?: string; items: SidebarItem[] }[] = [
 
 const atlasSubTabsDef = [
   { id: 'crops' as const, label: '作物', emoji: '🌿', color: 'leaf' },
+  { id: 'costume' as const, label: '装扮', emoji: '🏡', color: 'sky' },
   { id: 'lands' as const, label: '土地', emoji: '🏞️', color: 'orange' },
   { id: 'mutation' as const, label: '变异', emoji: '🧬', color: 'berry' },
-  { id: 'costume' as const, label: '装扮', emoji: '🏡', color: 'sky' },
 ];
 
 export default function App() {
