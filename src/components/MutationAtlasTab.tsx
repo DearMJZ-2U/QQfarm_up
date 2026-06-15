@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Dna, Sparkles, X } from 'lucide-react';
+import { Dna, Sparkles, X, BookOpen } from 'lucide-react';
 import mutationData from '../data/mutation_atlas.json';
 import { CropImage, GrowthPhases, RemoteImage, mutationIconUrls, goldenAtlasImageUrls, goldSeedIds, Portal } from './shared';
+import { MUTATION_RULES, MUTATION_PROBABILITIES, getProbabilitiesFor } from '../data/mutation-rules';
 
 interface GoldenEntry {
   name: string; seedId: number; cropId: number; points: number; exp: number; fruit: number;
@@ -137,28 +138,76 @@ export default function MutationAtlasTab() {
       </div>
 
       {tab === 'types' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {mutationTypes.map((mt, i) => (
-            <motion.div key={i}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, delay: i * 0.04 }}
-              className="sticker p-3 flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--berry-bg)' }}>
-                <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={40} rounded />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="font-bold text-sm text-[var(--ink)]">{mt.name}</span>
-                  <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>{mt.effectType}</span>
+        <>
+          {/* 规则说明 */}
+          <div className="sticker p-4" style={{ borderLeft: '4px solid var(--berry)' }}>
+            <div className="flex items-center gap-1.5 mb-2">
+              <BookOpen size={12} strokeWidth={2.5} className="text-[var(--berry-deep)]" />
+              <span className="text-[11px] font-bold text-[var(--berry-deep)] uppercase tracking-wide">变异规则</span>
+            </div>
+            <ol className="space-y-1.5 text-[11px] text-[var(--ink-soft)] leading-relaxed list-decimal list-inside">
+              {MUTATION_RULES.map((r, i) => <li key={i}>{r}</li>)}
+            </ol>
+          </div>
+
+          {/* 变异卡片网格 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {mutationTypes.map((mt, i) => {
+              const probs = getProbabilitiesFor(mt.name);
+              return (
+                <motion.div key={i}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: i * 0.04 }}
+                  className="sticker p-3 flex items-start gap-3">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'var(--berry-bg)' }}>
+                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={40} rounded />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
+                      <span className="font-bold text-sm text-[var(--ink)]">{mt.name}</span>
+                      <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>{mt.effectType}</span>
+                      {probs.map((p, k) => (
+                        <span key={k} className="chip chip-sun flex-shrink-0 font-mono tnum"
+                          style={{ fontSize: '0.6rem' }} title={`${p.quality} 品质触发概率`}>
+                          {p.quality !== '无' ? `${p.quality} ` : ''}{p.rate}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="text-[11px] font-mono font-bold text-[var(--berry-deep)] tnum">{mt.effectValue}</div>
+                    <div className="text-[10px] text-[var(--ink-mute)] mt-0.5 leading-snug">{mt.desc}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* 概率展示表（照搬游戏 UI） */}
+          <div className="sticker overflow-hidden">
+            <div className="px-4 py-3 flex items-center gap-2"
+              style={{ background: 'var(--berry-bg)', borderBottom: '1.5px solid var(--berry-soft)' }}>
+              <span className="text-base">📊</span>
+              <h3 className="font-display italic text-base font-bold text-[var(--berry-deep)]">概率展示</h3>
+              <span className="chip chip-berry ml-auto" style={{ fontSize: '0.6rem' }}>{MUTATION_PROBABILITIES.length} 行</span>
+            </div>
+            <div className="px-4 pt-2 pb-1 grid grid-cols-3 text-[10px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">
+              <div>变异类型</div>
+              <div>品质</div>
+              <div className="text-right">概率</div>
+            </div>
+            <div className="px-4 pb-3">
+              {MUTATION_PROBABILITIES.map((p, i) => (
+                <div key={i} className="grid grid-cols-3 py-2 text-[12px] items-center"
+                  style={{ borderTop: i === 0 ? 'none' : '1px dashed var(--line)' }}>
+                  <div className="font-bold text-[var(--ink)]">{p.name}</div>
+                  <div><span className="chip chip-ink" style={{ fontSize: '0.6rem' }}>{p.quality}</span></div>
+                  <div className="text-right font-mono tnum font-bold text-[var(--berry-deep)]">{p.rate}</div>
                 </div>
-                <div className="text-[11px] font-mono font-bold text-[var(--berry-deep)] tnum">{mt.effectValue}</div>
-                <div className="text-[10px] text-[var(--ink-mute)] mt-0.5 leading-snug">{mt.desc}</div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              ))}
+            </div>
+          </div>
+        </>
       )}
 
       {tab === 'golden' && (

@@ -255,10 +255,10 @@ export default function CalculatorTab() {
         </div>
 
         {/* Toggles */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
           {toggles.map(t => (
             <label key={t.id}
-              className={`flex items-start gap-3 p-3 rounded-2xl cursor-pointer transition-all border-1.5 ${
+              className={`flex items-start gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl cursor-pointer transition-all border-1.5 ${
                 t.disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[var(--bg-2)]'
               }`}
               style={{
@@ -270,8 +270,8 @@ export default function CalculatorTab() {
                 className="farm-check mt-0.5"
                 style={t.checked && !t.disabled ? { background: `var(--${t.color})`, borderColor: `var(--${t.color})` } : {}} />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-base leading-none">{t.emoji}</span>
+                <div className="flex items-center gap-1.5 mb-0.5 sm:mb-1">
+                  <span className="text-sm sm:text-base leading-none">{t.emoji}</span>
                   <span className="text-xs font-bold text-[var(--ink)]">{t.label}</span>
                 </div>
                 <div className="text-[10px] text-[var(--ink-mute)] leading-snug">{t.hint}</div>
@@ -294,17 +294,17 @@ export default function CalculatorTab() {
                 已分配 {(typeof redLands === 'number' ? redLands : 0) + (typeof blackLands === 'number' ? blackLands : 0) + (typeof goldLands === 'number' ? goldLands : 0) + (typeof purpleLands === 'number' ? purpleLands : 0)} / {typeof totalLands === 'number' ? totalLands : 0}
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5">
               {landInputs.map(li => {
                 const value = li.key === 'red' ? redLands : li.key === 'black' ? blackLands : li.key === 'gold' ? goldLands : li.key === 'purple' ? purpleLands : 0;
                 return (
-                  <div key={li.key} className={`${li.tile} p-3 rounded-2xl`}
+                  <div key={li.key} className={`${li.tile} p-2 sm:p-3 rounded-xl sm:rounded-2xl`}
                     style={{
                       border: `1.5px solid var(--${li.accent === 'ink' ? 'line-strong' : li.accent === 'earth' ? 'line-strong' : li.accent})`,
                       opacity: li.readonly ? 0.85 : 1,
                     }}>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xl">{li.emoji}</span>
+                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                      <span className="text-base sm:text-xl">{li.emoji}</span>
                       <span className="chip" style={{ background: 'rgba(255,255,255,0.6)', color: 'var(--ink)' }}>
                         {li.readonly ? '剩余' : '配置'}
                       </span>
@@ -312,11 +312,11 @@ export default function CalculatorTab() {
                     <div className="text-[11px] font-bold text-[var(--ink)] leading-none">{li.label}</div>
                     <div className="text-[9px] text-[var(--ink-soft)] mt-0.5 leading-tight h-6">{li.sub}</div>
                     {li.readonly ? (
-                      <div className="font-mono tnum text-3xl font-bold text-[var(--ink)] mt-1">{getRemaining(li.key)}</div>
+                      <div className="font-mono tnum text-2xl sm:text-3xl font-bold text-[var(--ink)] mt-1">{getRemaining(li.key)}</div>
                     ) : (
                       <input type="number" placeholder="0"
                         value={value === 0 ? '' : value}
-                        className="w-full bg-transparent font-mono tnum text-3xl font-bold text-[var(--ink)] outline-none placeholder:text-[var(--ink-mute)]/40 mt-1"
+                        className="w-full bg-transparent font-mono tnum text-2xl sm:text-3xl font-bold text-[var(--ink)] outline-none placeholder:text-[var(--ink-mute)]/40 mt-1"
                         onChange={e => {
                           const val = e.target.value === '' ? '' : Number(e.target.value);
                           const curTotal = typeof totalLands === 'number' ? totalLands : 0;
@@ -342,7 +342,7 @@ export default function CalculatorTab() {
           <motion.section
             initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, delay: 0.1 }}
-            className="relative overflow-hidden rounded-3xl p-5 sm:p-6"
+            className="relative overflow-hidden rounded-2xl sm:rounded-3xl p-3.5 sm:p-6"
             style={{
               background: target === 'exp'
                 ? 'linear-gradient(135deg, var(--leaf) 0%, var(--leaf-deep) 100%)'
@@ -355,57 +355,61 @@ export default function CalculatorTab() {
             <div className="absolute -bottom-16 -left-12 w-48 h-48 rounded-full bg-white/5" />
 
             <div className="relative">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 rounded-full bg-white/25 flex items-center justify-center">
-                  <Trophy size={14} strokeWidth={2.5} className="text-white" />
+              <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/25 flex items-center justify-center">
+                  <Trophy size={12} strokeWidth={2.5} className="text-white sm:hidden" />
+                  <Trophy size={14} strokeWidth={2.5} className="text-white hidden sm:block" />
                 </div>
-                <span className="text-[11px] font-bold uppercase tracking-widest text-white/85">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-white/85">
                   最佳推荐 · {smartFert ? '智能施肥' : '自然生长'}
                 </span>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 14, delay: 0.2 }}
-                  className="w-20 h-20 rounded-3xl bg-white/95 flex items-center justify-center shadow-lg flex-shrink-0">
-                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={56} />
+                  className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-white/95 flex items-center justify-center shadow-lg flex-shrink-0">
+                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={40} className="sm:hidden" />
+                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={56} className="hidden sm:block" />
                 </motion.div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="text-white/80 text-xs font-bold tracking-wide mb-0.5">
+                  <div className="text-white/80 text-[10px] sm:text-xs font-bold tracking-wide mb-0.5">
                     Lv{bestFert.requiredLevel} · {bestFert.seasons > 1 ? `${bestFert.seasons} 季作物` : '单季作物'}
                   </div>
-                  <h2 className="font-display italic text-2xl sm:text-3xl font-bold text-white truncate leading-tight">
+                  <h2 className="font-display italic text-xl sm:text-3xl font-bold text-white truncate leading-tight">
                     {bestFert.name}
                   </h2>
-                  <div className="font-mono tnum text-3xl sm:text-4xl font-black text-white mt-1.5">
+                  <div className="font-mono tnum text-2xl sm:text-4xl font-black text-white mt-0.5 sm:mt-1.5">
                     {(target === 'exp' ? bestFert.expPerHourFert : bestFert.goldPerHourFert).toFixed(0)}
-                    <span className="text-sm font-bold text-white/70 ml-1">/小时</span>
+                    <span className="text-xs sm:text-sm font-bold text-white/70 ml-1">/小时</span>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-white/20">
+              <div className="grid grid-cols-3 gap-2 mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/20">
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider text-white/70 mb-0.5">每日</div>
-                  <div className="font-mono tnum text-lg font-bold text-white">
+                  <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 mb-0.5">每日</div>
+                  <div className="font-mono tnum text-sm sm:text-lg font-bold text-white">
                     {Math.round((target === 'exp' ? bestFert.expPerHourFert : bestFert.goldPerHourFert) * 24).toLocaleString()}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider text-white/70 mb-0.5">周期</div>
-                  <div className="font-mono text-sm font-bold text-white flex items-center gap-1 mt-0.5">
-                    <Clock size={11} strokeWidth={2.5} className="opacity-70" />
+                  <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 mb-0.5">周期</div>
+                  <div className="font-mono text-[11px] sm:text-sm font-bold text-white flex items-center gap-1 mt-0.5">
+                    <Clock size={10} strokeWidth={2.5} className="opacity-70 sm:hidden" />
+                    <Clock size={11} strokeWidth={2.5} className="opacity-70 hidden sm:block" />
                     {bestFert.growTimeFertStr}
                   </div>
                 </div>
                 {bestFert.gainPercent > 0 && (
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider text-white/70 mb-0.5">提升</div>
-                    <div className="font-mono tnum text-lg font-bold text-white flex items-center gap-1">
-                      <TrendingUp size={13} strokeWidth={2.5} className="opacity-70" />
+                    <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 mb-0.5">提升</div>
+                    <div className="font-mono tnum text-sm sm:text-lg font-bold text-white flex items-center gap-1">
+                      <TrendingUp size={12} strokeWidth={2.5} className="opacity-70 sm:hidden" />
+                      <TrendingUp size={13} strokeWidth={2.5} className="opacity-70 hidden sm:block" />
                       +{bestFert.gainPercent.toFixed(0)}%
                     </div>
                   </div>
