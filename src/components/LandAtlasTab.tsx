@@ -6,21 +6,15 @@ import landsData from '../data/lands_atlas.json';
 const BASE = (import.meta as any).env?.BASE_URL || '/';
 const CLEAN_BASE = BASE.endsWith('/') ? BASE : BASE + '/';
 const LAND_IMG = (name: string) => `${CLEAN_BASE}land_images/${name}`;
-const CDN_FALLBACK = 'https://jsq.gptvip.chat/images';
 
-function LandImage({ file, cdnPath, alt, className = '', dim = false }: {
-  file: string; cdnPath: string; alt: string; className?: string; dim?: boolean;
+function LandImage({ file, alt, className = '', dim = false }: {
+  file: string; alt: string; className?: string; dim?: boolean;
 }) {
-  const [idx, setIdx] = React.useState(0);
-  const urls = [LAND_IMG(file), `${CDN_FALLBACK}/${cdnPath}`];
-  if (idx >= urls.length) {
-    return <div className={`${className} flex items-center justify-center text-2xl`} style={{ background: 'var(--bg-2)' }}>🟫</div>;
-  }
   return (
-    <img src={urls[idx]} alt={alt}
+    <img src={LAND_IMG(file)} alt={alt}
       className={`object-contain drop-shadow-md ${dim ? 'opacity-70' : ''} ${className}`}
       loading="lazy"
-      onError={() => setIdx(idx + 1)}
+      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
     />
   );
 }
@@ -29,45 +23,35 @@ const landTypes = [
   {
     name: '普通土地', lv: 'Lv.1', accent: 'earth', tile: 'tile-orange',
     valid: 'land_valid1.png', dry: 'land_dry1.png',
-    cdnValid: 'extraRes/model/v3/land_valid1.png',
-    cdnDry: 'extraRes/model/v3/land_dry1.png',
     y: '0%', t: '0%', e: '0%', m: '0%',
   },
   {
     name: '红土地', lv: 'Lv.2', accent: 'berry', tile: 'tile-berry',
     valid: 'land_valid2.png', dry: 'land_dry2.png',
-    cdnValid: 'extraRes/model/v3/land_valid2.png',
-    cdnDry: 'extraRes/model/v3/land_dry2.png',
     y: '+100%', t: '0%', e: '0%', m: '0%',
   },
   {
     name: '黑土地', lv: 'Lv.3', accent: 'ink', tile: 'tile-orange',
     valid: 'land_valid3.png', dry: 'land_dry3.png',
-    cdnValid: 'extraRes/model/v3/land_valid3.png',
-    cdnDry: 'extraRes/model/v3/land_dry3.png',
     y: '+200%', t: '-10%', e: '0%', m: '0%',
   },
   {
     name: '金土地', lv: 'Lv.4', accent: 'sun', tile: 'tile-sun',
     valid: 'land_valid4.png', dry: 'land_dry4.png',
-    cdnValid: 'extraRes/model/v3/land_valid4.png',
-    cdnDry: 'extraRes/model/v3/land_dry4.png',
     y: '+300%', t: '-20%', e: '+20%', m: '0%',
   },
   {
     name: '紫晶土地', lv: 'Lv.5', accent: 'plum', tile: 'tile-plum',
     valid: 'land_valid5.png', dry: 'land_dry5.png',
-    cdnValid: 'cutouts/lands/land_valid5.png',
-    cdnDry: 'cutouts/lands/land_dry5.png',
     y: '+300%', t: '-20%', e: '+25%', m: '+120%',
     note: '启用时间 2026-04-15',
   },
 ];
 
 const specialStates = [
-  { name: '荒地', icon: '🏜️', desc: '尚未开垦的地块', file: 'land_locked.png', cdn: 'extraRes/model/v3/land_locked.png' },
-  { name: '可开垦', icon: '➕', desc: '达条件可点击开垦', file: 'land_extend.png', cdn: 'extraRes/model/v3/land_extend.png' },
-  { name: '选中', icon: '✅', desc: '当前选中的地块外观', file: 'land_valid_selected.png', cdn: 'extraRes/model/v3/land_valid_selected.png' },
+  { name: '荒地', icon: '🏜️', desc: '尚未开垦的地块', file: 'land_locked.png' },
+  { name: '可开垦', icon: '➕', desc: '达条件可点击开垦', file: 'land_extend.png' },
+  { name: '选中', icon: '✅', desc: '当前选中的地块外观', file: 'land_valid_selected.png' },
 ];
 
 const upgradeMeta = {
@@ -132,11 +116,11 @@ export default function LandAtlasTab() {
 
               <div className={`${lt.tile} p-4 flex justify-center gap-4 items-center`}>
                 <div className="flex flex-col items-center gap-1">
-                  <LandImage file={lt.valid} cdnPath={lt.cdnValid} alt={`${lt.name}正常`} className="w-14 h-14" />
+                  <LandImage file={lt.valid} alt={`${lt.name}正常`} className="w-14 h-14" />
                   <span className="text-[9px] font-bold text-[var(--ink-soft)] uppercase tracking-wide">正常</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <LandImage file={lt.dry} cdnPath={lt.cdnDry} alt={`${lt.name}干裂`} className="w-14 h-14" dim />
+                  <LandImage file={lt.dry} alt={`${lt.name}干裂`} className="w-14 h-14" dim />
                   <span className="text-[9px] font-bold text-[var(--ink-soft)] uppercase tracking-wide">干裂</span>
                 </div>
               </div>
@@ -168,7 +152,7 @@ export default function LandAtlasTab() {
         <div className="grid grid-cols-3 gap-2.5">
           {specialStates.map((ss, i) => (
             <div key={i} className="sticker p-3 text-center">
-              <LandImage file={ss.file} cdnPath={ss.cdn} alt={ss.name} className="w-14 h-14 mx-auto mb-2" />
+              <LandImage file={ss.file} alt={ss.name} className="w-14 h-14 mx-auto mb-2" />
               <div className="text-xs font-bold text-[var(--ink)]">{ss.icon} {ss.name}</div>
               <div className="text-[10px] text-[var(--ink-mute)] mt-1 leading-snug">{ss.desc}</div>
             </div>
@@ -222,7 +206,6 @@ export default function LandAtlasTab() {
                     }}>
                     <LandImage
                       file={unlocked ? 'land_valid1.png' : 'land_locked.png'}
-                      cdnPath={unlocked ? 'extraRes/model/v3/land_valid1.png' : 'extraRes/model/v3/land_locked.png'}
                       alt=""
                       className="w-10 h-10 mx-auto mb-1" />
                     <div className="font-mono font-black text-sm" style={{ color: unlocked ? 'var(--leaf-deep)' : 'var(--sun-deep)' }}>

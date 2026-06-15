@@ -10,8 +10,6 @@ import landsData from '../data/lands_atlas.json';
 const BASE = (import.meta as any).env?.BASE_URL || '/';
 const CLEAN_BASE = BASE.endsWith('/') ? BASE : BASE + '/';
 
-const CDN = 'https://jsq.gptvip.chat/images';
-
 // ── 种子映射 ──────────────────────────────────────────────
 
 const seedImageMap: Record<number, string> = {};
@@ -88,27 +86,16 @@ export function CropImage({ seedId, name, size = 32, className = '' }: {
 
   const urls: string[] = [];
   if (forceMature) {
-    // 白名单作物：直接用成熟图，与参考站 plants 列表一致
+    // 白名单作物：直接用成熟图
     if (matureLocal && matureLocal !== fileName) {
       urls.push(`${CLEAN_BASE}seed_images_named/${matureLocal}`);
     }
-    if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_6.png`);
-    if (sid) urls.push(`${CDN}/plant/model/v4/Crop_${sid}_6.png`);
   } else {
-    // 1) 本地 Seed 图（默认展示种子阶段，与参考站 plants 列表一致）
+    // 1) 本地 Seed 图（默认展示种子阶段）
     if (fileName) urls.push(`${CLEAN_BASE}seed_images_named/${fileName}`);
-    // 2) CDN Seed 兜底
-    if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_Seed.png`);
-    // 3) 本地成熟图（少数天工/特殊作物 fallback）
+    // 2) 本地成熟图（少数天工/特殊作物 fallback）
     if (matureLocal && matureLocal !== fileName) {
       urls.push(`${CLEAN_BASE}seed_images_named/${matureLocal}`);
-    }
-    // 4) CDN 成熟图
-    if (cn) urls.push(`${CDN}/plant/model/v4/Crop_${cn}_6.png`);
-    if (sid) {
-      urls.push(`${CDN}/plant/model/v4/Crop_${sid}_Seed.png`);
-      urls.push(`${CDN}/plant/model/v4/Crop_${cn}_1.png`);
-      urls.push(`${CDN}/plant/model/v4/Crop_${sid}_6.png`);
     }
   }
 
@@ -126,9 +113,9 @@ function resolvePhaseUrls(seedId: number, phase: string, gold: boolean): string[
   const urls: string[] = [];
   // 本地图片（以 seedId_name_cropNumber 命名）
   if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
-  // CDN
-  urls.push(`${CDN}/plant/model/v4/${pfx}Crop_${cn}_${phase}.png`);
-  urls.push(`${CDN}/plant/model/v4/${pfx}Crop_${seedId}_${phase}.png`);
+  // Gold 变体：QQfarm_up 本地暂无，由 extractor 后续补全（见 extractor 改造任务）
+  if (gold && cn) urls.push(`${localPfx}gold/Crop_${cn}_${phase}.png`);
+  if (gold && seedId) urls.push(`${localPfx}gold/Crop_${seedId}_${phase}.png`);
   return urls;
 }
 
@@ -179,18 +166,16 @@ export function RemoteImage({ urls, name, size = 40, className = '', rounded = f
   return <MultiImage urls={urls} alt={name} size={size} className={className} rounded={rounded} />;
 }
 
-export function itemImageUrls(iconFile: string, localFile?: string): string[] {
+export function itemImageUrls(_iconFile: string, localFile?: string): string[] {
   const urls: string[] = [];
   if (localFile) urls.push(`${CLEAN_BASE}item_images/${localFile}`);
-  if (iconFile) urls.push(`${CDN}/${iconFile}`);
   return urls;
 }
 
-export function costumeImageUrls(imgPath: string, name: string): string[] {
+export function costumeImageUrls(_imgPath: string, name: string): string[] {
   const urls: string[] = [];
   const safe = sanitize(name);
   urls.push(`${CLEAN_BASE}item_images/costume_${safe}.png`);
-  if (imgPath) urls.push(`${CDN}/${imgPath}`);
   return urls;
 }
 
@@ -245,7 +230,6 @@ export function mutationIconUrls(iconPath: string, name: string): string[] {
   const urls: string[] = [];
   const iconBasename = iconPath.split('/').pop()?.replace(/\.[^/.]+$/, '') || sanitize(name);
   urls.push(`${CLEAN_BASE}item_images/mutant_${iconBasename}.png`);
-  if (iconPath) urls.push(`${CDN}/${iconPath}`);
   return urls;
 }
 

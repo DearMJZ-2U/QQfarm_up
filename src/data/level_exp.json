@@ -1,202 +1,1002 @@
 [
-  {"level": 1, "cumulativeExp": 0, "levelUpExp": 0},
-  {"level": 2, "cumulativeExp": 100, "levelUpExp": 100},
-  {"level": 3, "cumulativeExp": 300, "levelUpExp": 200},
-  {"level": 4, "cumulativeExp": 700, "levelUpExp": 400},
-  {"level": 5, "cumulativeExp": 1300, "levelUpExp": 600},
-  {"level": 6, "cumulativeExp": 2300, "levelUpExp": 1000},
-  {"level": 7, "cumulativeExp": 4000, "levelUpExp": 1700},
-  {"level": 8, "cumulativeExp": 6600, "levelUpExp": 2600},
-  {"level": 9, "cumulativeExp": 10100, "levelUpExp": 3500},
-  {"level": 10, "cumulativeExp": 14300, "levelUpExp": 4200},
-  {"level": 11, "cumulativeExp": 19300, "levelUpExp": 5000},
-  {"level": 12, "cumulativeExp": 25100, "levelUpExp": 5800},
-  {"level": 13, "cumulativeExp": 31800, "levelUpExp": 6700},
-  {"level": 14, "cumulativeExp": 39500, "levelUpExp": 7700},
-  {"level": 15, "cumulativeExp": 48300, "levelUpExp": 8800},
-  {"level": 16, "cumulativeExp": 58300, "levelUpExp": 10000},
-  {"level": 17, "cumulativeExp": 69500, "levelUpExp": 11200},
-  {"level": 18, "cumulativeExp": 82000, "levelUpExp": 12500},
-  {"level": 19, "cumulativeExp": 95900, "levelUpExp": 13900},
-  {"level": 20, "cumulativeExp": 111300, "levelUpExp": 15400},
-  {"level": 21, "cumulativeExp": 128300, "levelUpExp": 17000},
-  {"level": 22, "cumulativeExp": 146900, "levelUpExp": 18600},
-  {"level": 23, "cumulativeExp": 167200, "levelUpExp": 20300},
-  {"level": 24, "cumulativeExp": 189300, "levelUpExp": 22100},
-  {"level": 25, "cumulativeExp": 213300, "levelUpExp": 24000},
-  {"level": 26, "cumulativeExp": 239300, "levelUpExp": 26000},
-  {"level": 27, "cumulativeExp": 267300, "levelUpExp": 28000},
-  {"level": 28, "cumulativeExp": 297400, "levelUpExp": 30100},
-  {"level": 29, "cumulativeExp": 329700, "levelUpExp": 32300},
-  {"level": 30, "cumulativeExp": 364300, "levelUpExp": 34600},
-  {"level": 31, "cumulativeExp": 401300, "levelUpExp": 37000},
-  {"level": 32, "cumulativeExp": 440700, "levelUpExp": 39400},
-  {"level": 33, "cumulativeExp": 482600, "levelUpExp": 41900},
-  {"level": 34, "cumulativeExp": 527100, "levelUpExp": 44500},
-  {"level": 35, "cumulativeExp": 574300, "levelUpExp": 47200},
-  {"level": 36, "cumulativeExp": 624300, "levelUpExp": 50000},
-  {"level": 37, "cumulativeExp": 677100, "levelUpExp": 52800},
-  {"level": 38, "cumulativeExp": 732800, "levelUpExp": 55700},
-  {"level": 39, "cumulativeExp": 791500, "levelUpExp": 58700},
-  {"level": 40, "cumulativeExp": 853300, "levelUpExp": 61800},
-  {"level": 41, "cumulativeExp": 918300, "levelUpExp": 65000},
-  {"level": 42, "cumulativeExp": 986500, "levelUpExp": 68200},
-  {"level": 43, "cumulativeExp": 1058000, "levelUpExp": 71500},
-  {"level": 44, "cumulativeExp": 1132900, "levelUpExp": 74900},
-  {"level": 45, "cumulativeExp": 1211300, "levelUpExp": 78400},
-  {"level": 46, "cumulativeExp": 1293300, "levelUpExp": 82000},
-  {"level": 47, "cumulativeExp": 1378900, "levelUpExp": 85600},
-  {"level": 48, "cumulativeExp": 1468200, "levelUpExp": 89300},
-  {"level": 49, "cumulativeExp": 1561300, "levelUpExp": 93100},
-  {"level": 50, "cumulativeExp": 1658300, "levelUpExp": 97000},
-  {"level": 51, "cumulativeExp": 1759300, "levelUpExp": 101000},
-  {"level": 52, "cumulativeExp": 1864300, "levelUpExp": 105000},
-  {"level": 53, "cumulativeExp": 1973400, "levelUpExp": 109100},
-  {"level": 54, "cumulativeExp": 2086700, "levelUpExp": 113300},
-  {"level": 55, "cumulativeExp": 2204300, "levelUpExp": 117600},
-  {"level": 56, "cumulativeExp": 2326300, "levelUpExp": 122000},
-  {"level": 57, "cumulativeExp": 2452700, "levelUpExp": 126400},
-  {"level": 58, "cumulativeExp": 2583600, "levelUpExp": 130900},
-  {"level": 59, "cumulativeExp": 2719100, "levelUpExp": 135500},
-  {"level": 60, "cumulativeExp": 2859300, "levelUpExp": 140200},
-  {"level": 61, "cumulativeExp": 3004300, "levelUpExp": 145000},
-  {"level": 62, "cumulativeExp": 3154100, "levelUpExp": 149800},
-  {"level": 63, "cumulativeExp": 3308800, "levelUpExp": 154700},
-  {"level": 64, "cumulativeExp": 3468500, "levelUpExp": 159700},
-  {"level": 65, "cumulativeExp": 3633300, "levelUpExp": 164800},
-  {"level": 66, "cumulativeExp": 3803300, "levelUpExp": 170000},
-  {"level": 67, "cumulativeExp": 3978500, "levelUpExp": 175200},
-  {"level": 68, "cumulativeExp": 4159000, "levelUpExp": 180500},
-  {"level": 69, "cumulativeExp": 4344900, "levelUpExp": 185900},
-  {"level": 70, "cumulativeExp": 4536300, "levelUpExp": 191400},
-  {"level": 71, "cumulativeExp": 4733300, "levelUpExp": 197000},
-  {"level": 72, "cumulativeExp": 4935900, "levelUpExp": 202600},
-  {"level": 73, "cumulativeExp": 5144200, "levelUpExp": 208300},
-  {"level": 74, "cumulativeExp": 5358300, "levelUpExp": 214100},
-  {"level": 75, "cumulativeExp": 5578300, "levelUpExp": 220000},
-  {"level": 76, "cumulativeExp": 5804300, "levelUpExp": 226000},
-  {"level": 77, "cumulativeExp": 6036300, "levelUpExp": 232000},
-  {"level": 78, "cumulativeExp": 6274400, "levelUpExp": 238100},
-  {"level": 79, "cumulativeExp": 6518700, "levelUpExp": 244300},
-  {"level": 80, "cumulativeExp": 6769300, "levelUpExp": 250600},
-  {"level": 81, "cumulativeExp": 7026300, "levelUpExp": 257000},
-  {"level": 82, "cumulativeExp": 7289700, "levelUpExp": 263400},
-  {"level": 83, "cumulativeExp": 7559600, "levelUpExp": 269900},
-  {"level": 84, "cumulativeExp": 7836100, "levelUpExp": 276500},
-  {"level": 85, "cumulativeExp": 8119300, "levelUpExp": 283200},
-  {"level": 86, "cumulativeExp": 8409300, "levelUpExp": 290000},
-  {"level": 87, "cumulativeExp": 8706100, "levelUpExp": 296800},
-  {"level": 88, "cumulativeExp": 9009800, "levelUpExp": 303700},
-  {"level": 89, "cumulativeExp": 9320500, "levelUpExp": 310700},
-  {"level": 90, "cumulativeExp": 9638300, "levelUpExp": 317800},
-  {"level": 91, "cumulativeExp": 9963300, "levelUpExp": 325000},
-  {"level": 92, "cumulativeExp": 10295500, "levelUpExp": 332200},
-  {"level": 93, "cumulativeExp": 10635000, "levelUpExp": 339500},
-  {"level": 94, "cumulativeExp": 10981900, "levelUpExp": 346900},
-  {"level": 95, "cumulativeExp": 11336300, "levelUpExp": 354400},
-  {"level": 96, "cumulativeExp": 11698300, "levelUpExp": 362000},
-  {"level": 97, "cumulativeExp": 12067900, "levelUpExp": 369600},
-  {"level": 98, "cumulativeExp": 12445200, "levelUpExp": 377300},
-  {"level": 99, "cumulativeExp": 12830300, "levelUpExp": 385100},
-  {"level": 100, "cumulativeExp": 13223300, "levelUpExp": 393000},
-  {"level": 101, "cumulativeExp": 13624300, "levelUpExp": 401000},
-  {"level": 102, "cumulativeExp": 14185200, "levelUpExp": 560900},
-  {"level": 103, "cumulativeExp": 14760100, "levelUpExp": 574900},
-  {"level": 104, "cumulativeExp": 15349200, "levelUpExp": 589100},
-  {"level": 105, "cumulativeExp": 15952700, "levelUpExp": 603500},
-  {"level": 106, "cumulativeExp": 16570700, "levelUpExp": 618000},
-  {"level": 107, "cumulativeExp": 17203500, "levelUpExp": 632800},
-  {"level": 108, "cumulativeExp": 17851200, "levelUpExp": 647700},
-  {"level": 109, "cumulativeExp": 18513900, "levelUpExp": 662700},
-  {"level": 110, "cumulativeExp": 19191900, "levelUpExp": 678000},
-  {"level": 111, "cumulativeExp": 19885400, "levelUpExp": 693500},
-  {"level": 112, "cumulativeExp": 20594500, "levelUpExp": 709100},
-  {"level": 113, "cumulativeExp": 21319400, "levelUpExp": 724900},
-  {"level": 114, "cumulativeExp": 22060300, "levelUpExp": 740900},
-  {"level": 115, "cumulativeExp": 22817400, "levelUpExp": 757100},
-  {"level": 116, "cumulativeExp": 23590900, "levelUpExp": 773500},
-  {"level": 117, "cumulativeExp": 24381000, "levelUpExp": 790100},
-  {"level": 118, "cumulativeExp": 25187800, "levelUpExp": 806800},
-  {"level": 119, "cumulativeExp": 26011600, "levelUpExp": 823800},
-  {"level": 120, "cumulativeExp": 26852500, "levelUpExp": 840900},
-  {"level": 121, "cumulativeExp": 27710700, "levelUpExp": 858200},
-  {"level": 122, "cumulativeExp": 28586400, "levelUpExp": 875700},
-  {"level": 123, "cumulativeExp": 29479800, "levelUpExp": 893400},
-  {"level": 124, "cumulativeExp": 30391100, "levelUpExp": 911300},
-  {"level": 125, "cumulativeExp": 31320500, "levelUpExp": 929400},
-  {"level": 126, "cumulativeExp": 32268100, "levelUpExp": 947600},
-  {"level": 127, "cumulativeExp": 33234200, "levelUpExp": 966100},
-  {"level": 128, "cumulativeExp": 34218900, "levelUpExp": 984700},
-  {"level": 129, "cumulativeExp": 35222400, "levelUpExp": 1003500},
-  {"level": 130, "cumulativeExp": 36245000, "levelUpExp": 1022600},
-  {"level": 131, "cumulativeExp": 37286800, "levelUpExp": 1041800},
-  {"level": 132, "cumulativeExp": 38348000, "levelUpExp": 1061200},
-  {"level": 133, "cumulativeExp": 39428800, "levelUpExp": 1080800},
-  {"level": 134, "cumulativeExp": 40529400, "levelUpExp": 1100600},
-  {"level": 135, "cumulativeExp": 41650000, "levelUpExp": 1120600},
-  {"level": 136, "cumulativeExp": 42790800, "levelUpExp": 1140800},
-  {"level": 137, "cumulativeExp": 43952000, "levelUpExp": 1161200},
-  {"level": 138, "cumulativeExp": 45133800, "levelUpExp": 1181800},
-  {"level": 139, "cumulativeExp": 46336400, "levelUpExp": 1202600},
-  {"level": 140, "cumulativeExp": 47559900, "levelUpExp": 1223500},
-  {"level": 141, "cumulativeExp": 48804600, "levelUpExp": 1244700},
-  {"level": 142, "cumulativeExp": 50070700, "levelUpExp": 1266100},
-  {"level": 143, "cumulativeExp": 51358300, "levelUpExp": 1287600},
-  {"level": 144, "cumulativeExp": 52667700, "levelUpExp": 1309400},
-  {"level": 145, "cumulativeExp": 53999100, "levelUpExp": 1331400},
-  {"level": 146, "cumulativeExp": 55352600, "levelUpExp": 1353500},
-  {"level": 147, "cumulativeExp": 56728500, "levelUpExp": 1375900},
-  {"level": 148, "cumulativeExp": 58127000, "levelUpExp": 1398500},
-  {"level": 149, "cumulativeExp": 59548200, "levelUpExp": 1421200},
-  {"level": 150, "cumulativeExp": 60992400, "levelUpExp": 1444200},
-  {"level": 151, "cumulativeExp": 62459800, "levelUpExp": 1467400},
-  {"level": 152, "cumulativeExp": 63950500, "levelUpExp": 1490700},
-  {"level": 153, "cumulativeExp": 65464800, "levelUpExp": 1514300},
-  {"level": 154, "cumulativeExp": 67002900, "levelUpExp": 1538100},
-  {"level": 155, "cumulativeExp": 68564900, "levelUpExp": 1562000},
-  {"level": 156, "cumulativeExp": 70151100, "levelUpExp": 1586200},
-  {"level": 157, "cumulativeExp": 71761700, "levelUpExp": 1610600},
-  {"level": 158, "cumulativeExp": 73396900, "levelUpExp": 1635200},
-  {"level": 159, "cumulativeExp": 75056900, "levelUpExp": 1660000},
-  {"level": 160, "cumulativeExp": 76741900, "levelUpExp": 1685000},
-  {"level": 161, "cumulativeExp": 78452100, "levelUpExp": 1710200},
-  {"level": 162, "cumulativeExp": 80187700, "levelUpExp": 1735600},
-  {"level": 163, "cumulativeExp": 81948900, "levelUpExp": 1761200},
-  {"level": 164, "cumulativeExp": 83735900, "levelUpExp": 1787000},
-  {"level": 165, "cumulativeExp": 85548900, "levelUpExp": 1813000},
-  {"level": 166, "cumulativeExp": 87388200, "levelUpExp": 1839300},
-  {"level": 167, "cumulativeExp": 89253900, "levelUpExp": 1865700},
-  {"level": 168, "cumulativeExp": 91146300, "levelUpExp": 1892400},
-  {"level": 169, "cumulativeExp": 93065500, "levelUpExp": 1919200},
-  {"level": 170, "cumulativeExp": 95011800, "levelUpExp": 1946300},
-  {"level": 171, "cumulativeExp": 96985300, "levelUpExp": 1973500},
-  {"level": 172, "cumulativeExp": 98986300, "levelUpExp": 2001000},
-  {"level": 173, "cumulativeExp": 101015000, "levelUpExp": 2028700},
-  {"level": 174, "cumulativeExp": 103071600, "levelUpExp": 2056600},
-  {"level": 175, "cumulativeExp": 105156300, "levelUpExp": 2084700},
-  {"level": 176, "cumulativeExp": 107269400, "levelUpExp": 2113100},
-  {"level": 177, "cumulativeExp": 109411000, "levelUpExp": 2141600},
-  {"level": 178, "cumulativeExp": 111581300, "levelUpExp": 2170300},
-  {"level": 179, "cumulativeExp": 113780600, "levelUpExp": 2199300},
-  {"level": 180, "cumulativeExp": 116009100, "levelUpExp": 2228500},
-  {"level": 181, "cumulativeExp": 118267000, "levelUpExp": 2257900},
-  {"level": 182, "cumulativeExp": 120554500, "levelUpExp": 2287500},
-  {"level": 183, "cumulativeExp": 122871800, "levelUpExp": 2317300},
-  {"level": 184, "cumulativeExp": 125219100, "levelUpExp": 2347300},
-  {"level": 185, "cumulativeExp": 127596600, "levelUpExp": 2377500},
-  {"level": 186, "cumulativeExp": 130004600, "levelUpExp": 2408000},
-  {"level": 187, "cumulativeExp": 132443200, "levelUpExp": 2438600},
-  {"level": 188, "cumulativeExp": 134912700, "levelUpExp": 2469500},
-  {"level": 189, "cumulativeExp": 137413300, "levelUpExp": 2500600},
-  {"level": 190, "cumulativeExp": 139945200, "levelUpExp": 2531900},
-  {"level": 191, "cumulativeExp": 142508700, "levelUpExp": 2563500},
-  {"level": 192, "cumulativeExp": 145103900, "levelUpExp": 2595200},
-  {"level": 193, "cumulativeExp": 147731100, "levelUpExp": 2627200},
-  {"level": 194, "cumulativeExp": 150390400, "levelUpExp": 2659300},
-  {"level": 195, "cumulativeExp": 153082100, "levelUpExp": 2691700},
-  {"level": 196, "cumulativeExp": 155806500, "levelUpExp": 2724400},
-  {"level": 197, "cumulativeExp": 158563700, "levelUpExp": 2757200},
-  {"level": 198, "cumulativeExp": 161353900, "levelUpExp": 2790200},
-  {"level": 199, "cumulativeExp": 164177400, "levelUpExp": 2823500},
-  {"level": 200, "cumulativeExp": 167034400, "levelUpExp": 2857000}
+  {
+    "level": 1,
+    "cumulativeExp": 0,
+    "levelUpExp": 0
+  },
+  {
+    "level": 2,
+    "cumulativeExp": 100,
+    "levelUpExp": 100
+  },
+  {
+    "level": 3,
+    "cumulativeExp": 300,
+    "levelUpExp": 200
+  },
+  {
+    "level": 4,
+    "cumulativeExp": 700,
+    "levelUpExp": 400
+  },
+  {
+    "level": 5,
+    "cumulativeExp": 1300,
+    "levelUpExp": 600
+  },
+  {
+    "level": 6,
+    "cumulativeExp": 2300,
+    "levelUpExp": 1000
+  },
+  {
+    "level": 7,
+    "cumulativeExp": 4000,
+    "levelUpExp": 1700
+  },
+  {
+    "level": 8,
+    "cumulativeExp": 6600,
+    "levelUpExp": 2600
+  },
+  {
+    "level": 9,
+    "cumulativeExp": 10100,
+    "levelUpExp": 3500
+  },
+  {
+    "level": 10,
+    "cumulativeExp": 14300,
+    "levelUpExp": 4200
+  },
+  {
+    "level": 11,
+    "cumulativeExp": 19300,
+    "levelUpExp": 5000
+  },
+  {
+    "level": 12,
+    "cumulativeExp": 25100,
+    "levelUpExp": 5800
+  },
+  {
+    "level": 13,
+    "cumulativeExp": 31800,
+    "levelUpExp": 6700
+  },
+  {
+    "level": 14,
+    "cumulativeExp": 39500,
+    "levelUpExp": 7700
+  },
+  {
+    "level": 15,
+    "cumulativeExp": 48300,
+    "levelUpExp": 8800
+  },
+  {
+    "level": 16,
+    "cumulativeExp": 58300,
+    "levelUpExp": 10000
+  },
+  {
+    "level": 17,
+    "cumulativeExp": 69500,
+    "levelUpExp": 11200
+  },
+  {
+    "level": 18,
+    "cumulativeExp": 82000,
+    "levelUpExp": 12500
+  },
+  {
+    "level": 19,
+    "cumulativeExp": 95900,
+    "levelUpExp": 13900
+  },
+  {
+    "level": 20,
+    "cumulativeExp": 111300,
+    "levelUpExp": 15400
+  },
+  {
+    "level": 21,
+    "cumulativeExp": 128300,
+    "levelUpExp": 17000
+  },
+  {
+    "level": 22,
+    "cumulativeExp": 146900,
+    "levelUpExp": 18600
+  },
+  {
+    "level": 23,
+    "cumulativeExp": 167200,
+    "levelUpExp": 20300
+  },
+  {
+    "level": 24,
+    "cumulativeExp": 189300,
+    "levelUpExp": 22100
+  },
+  {
+    "level": 25,
+    "cumulativeExp": 213300,
+    "levelUpExp": 24000
+  },
+  {
+    "level": 26,
+    "cumulativeExp": 239300,
+    "levelUpExp": 26000
+  },
+  {
+    "level": 27,
+    "cumulativeExp": 267300,
+    "levelUpExp": 28000
+  },
+  {
+    "level": 28,
+    "cumulativeExp": 297400,
+    "levelUpExp": 30100
+  },
+  {
+    "level": 29,
+    "cumulativeExp": 329700,
+    "levelUpExp": 32300
+  },
+  {
+    "level": 30,
+    "cumulativeExp": 364300,
+    "levelUpExp": 34600
+  },
+  {
+    "level": 31,
+    "cumulativeExp": 401300,
+    "levelUpExp": 37000
+  },
+  {
+    "level": 32,
+    "cumulativeExp": 440700,
+    "levelUpExp": 39400
+  },
+  {
+    "level": 33,
+    "cumulativeExp": 482600,
+    "levelUpExp": 41900
+  },
+  {
+    "level": 34,
+    "cumulativeExp": 527100,
+    "levelUpExp": 44500
+  },
+  {
+    "level": 35,
+    "cumulativeExp": 574300,
+    "levelUpExp": 47200
+  },
+  {
+    "level": 36,
+    "cumulativeExp": 624300,
+    "levelUpExp": 50000
+  },
+  {
+    "level": 37,
+    "cumulativeExp": 677100,
+    "levelUpExp": 52800
+  },
+  {
+    "level": 38,
+    "cumulativeExp": 732800,
+    "levelUpExp": 55700
+  },
+  {
+    "level": 39,
+    "cumulativeExp": 791500,
+    "levelUpExp": 58700
+  },
+  {
+    "level": 40,
+    "cumulativeExp": 853300,
+    "levelUpExp": 61800
+  },
+  {
+    "level": 41,
+    "cumulativeExp": 918300,
+    "levelUpExp": 65000
+  },
+  {
+    "level": 42,
+    "cumulativeExp": 986500,
+    "levelUpExp": 68200
+  },
+  {
+    "level": 43,
+    "cumulativeExp": 1058000,
+    "levelUpExp": 71500
+  },
+  {
+    "level": 44,
+    "cumulativeExp": 1132900,
+    "levelUpExp": 74900
+  },
+  {
+    "level": 45,
+    "cumulativeExp": 1211300,
+    "levelUpExp": 78400
+  },
+  {
+    "level": 46,
+    "cumulativeExp": 1293300,
+    "levelUpExp": 82000
+  },
+  {
+    "level": 47,
+    "cumulativeExp": 1378900,
+    "levelUpExp": 85600
+  },
+  {
+    "level": 48,
+    "cumulativeExp": 1468200,
+    "levelUpExp": 89300
+  },
+  {
+    "level": 49,
+    "cumulativeExp": 1561300,
+    "levelUpExp": 93100
+  },
+  {
+    "level": 50,
+    "cumulativeExp": 1658300,
+    "levelUpExp": 97000
+  },
+  {
+    "level": 51,
+    "cumulativeExp": 1759300,
+    "levelUpExp": 101000
+  },
+  {
+    "level": 52,
+    "cumulativeExp": 1864300,
+    "levelUpExp": 105000
+  },
+  {
+    "level": 53,
+    "cumulativeExp": 1973400,
+    "levelUpExp": 109100
+  },
+  {
+    "level": 54,
+    "cumulativeExp": 2086700,
+    "levelUpExp": 113300
+  },
+  {
+    "level": 55,
+    "cumulativeExp": 2204300,
+    "levelUpExp": 117600
+  },
+  {
+    "level": 56,
+    "cumulativeExp": 2326300,
+    "levelUpExp": 122000
+  },
+  {
+    "level": 57,
+    "cumulativeExp": 2452700,
+    "levelUpExp": 126400
+  },
+  {
+    "level": 58,
+    "cumulativeExp": 2583600,
+    "levelUpExp": 130900
+  },
+  {
+    "level": 59,
+    "cumulativeExp": 2719100,
+    "levelUpExp": 135500
+  },
+  {
+    "level": 60,
+    "cumulativeExp": 2859300,
+    "levelUpExp": 140200
+  },
+  {
+    "level": 61,
+    "cumulativeExp": 3004300,
+    "levelUpExp": 145000
+  },
+  {
+    "level": 62,
+    "cumulativeExp": 3154100,
+    "levelUpExp": 149800
+  },
+  {
+    "level": 63,
+    "cumulativeExp": 3308800,
+    "levelUpExp": 154700
+  },
+  {
+    "level": 64,
+    "cumulativeExp": 3468500,
+    "levelUpExp": 159700
+  },
+  {
+    "level": 65,
+    "cumulativeExp": 3633300,
+    "levelUpExp": 164800
+  },
+  {
+    "level": 66,
+    "cumulativeExp": 3803300,
+    "levelUpExp": 170000
+  },
+  {
+    "level": 67,
+    "cumulativeExp": 3978500,
+    "levelUpExp": 175200
+  },
+  {
+    "level": 68,
+    "cumulativeExp": 4159000,
+    "levelUpExp": 180500
+  },
+  {
+    "level": 69,
+    "cumulativeExp": 4344900,
+    "levelUpExp": 185900
+  },
+  {
+    "level": 70,
+    "cumulativeExp": 4536300,
+    "levelUpExp": 191400
+  },
+  {
+    "level": 71,
+    "cumulativeExp": 4733300,
+    "levelUpExp": 197000
+  },
+  {
+    "level": 72,
+    "cumulativeExp": 4935900,
+    "levelUpExp": 202600
+  },
+  {
+    "level": 73,
+    "cumulativeExp": 5144200,
+    "levelUpExp": 208300
+  },
+  {
+    "level": 74,
+    "cumulativeExp": 5358300,
+    "levelUpExp": 214100
+  },
+  {
+    "level": 75,
+    "cumulativeExp": 5578300,
+    "levelUpExp": 220000
+  },
+  {
+    "level": 76,
+    "cumulativeExp": 5804300,
+    "levelUpExp": 226000
+  },
+  {
+    "level": 77,
+    "cumulativeExp": 6036300,
+    "levelUpExp": 232000
+  },
+  {
+    "level": 78,
+    "cumulativeExp": 6274400,
+    "levelUpExp": 238100
+  },
+  {
+    "level": 79,
+    "cumulativeExp": 6518700,
+    "levelUpExp": 244300
+  },
+  {
+    "level": 80,
+    "cumulativeExp": 6769300,
+    "levelUpExp": 250600
+  },
+  {
+    "level": 81,
+    "cumulativeExp": 7026300,
+    "levelUpExp": 257000
+  },
+  {
+    "level": 82,
+    "cumulativeExp": 7289700,
+    "levelUpExp": 263400
+  },
+  {
+    "level": 83,
+    "cumulativeExp": 7559600,
+    "levelUpExp": 269900
+  },
+  {
+    "level": 84,
+    "cumulativeExp": 7836100,
+    "levelUpExp": 276500
+  },
+  {
+    "level": 85,
+    "cumulativeExp": 8119300,
+    "levelUpExp": 283200
+  },
+  {
+    "level": 86,
+    "cumulativeExp": 8409300,
+    "levelUpExp": 290000
+  },
+  {
+    "level": 87,
+    "cumulativeExp": 8706100,
+    "levelUpExp": 296800
+  },
+  {
+    "level": 88,
+    "cumulativeExp": 9009800,
+    "levelUpExp": 303700
+  },
+  {
+    "level": 89,
+    "cumulativeExp": 9320500,
+    "levelUpExp": 310700
+  },
+  {
+    "level": 90,
+    "cumulativeExp": 9638300,
+    "levelUpExp": 317800
+  },
+  {
+    "level": 91,
+    "cumulativeExp": 9963300,
+    "levelUpExp": 325000
+  },
+  {
+    "level": 92,
+    "cumulativeExp": 10295500,
+    "levelUpExp": 332200
+  },
+  {
+    "level": 93,
+    "cumulativeExp": 10635000,
+    "levelUpExp": 339500
+  },
+  {
+    "level": 94,
+    "cumulativeExp": 10981900,
+    "levelUpExp": 346900
+  },
+  {
+    "level": 95,
+    "cumulativeExp": 11336300,
+    "levelUpExp": 354400
+  },
+  {
+    "level": 96,
+    "cumulativeExp": 11698300,
+    "levelUpExp": 362000
+  },
+  {
+    "level": 97,
+    "cumulativeExp": 12067900,
+    "levelUpExp": 369600
+  },
+  {
+    "level": 98,
+    "cumulativeExp": 12445200,
+    "levelUpExp": 377300
+  },
+  {
+    "level": 99,
+    "cumulativeExp": 12830300,
+    "levelUpExp": 385100
+  },
+  {
+    "level": 100,
+    "cumulativeExp": 13223300,
+    "levelUpExp": 393000
+  },
+  {
+    "level": 101,
+    "cumulativeExp": 13624300,
+    "levelUpExp": 401000
+  },
+  {
+    "level": 102,
+    "cumulativeExp": 14185200,
+    "levelUpExp": 560900
+  },
+  {
+    "level": 103,
+    "cumulativeExp": 14760100,
+    "levelUpExp": 574900
+  },
+  {
+    "level": 104,
+    "cumulativeExp": 15349200,
+    "levelUpExp": 589100
+  },
+  {
+    "level": 105,
+    "cumulativeExp": 15952700,
+    "levelUpExp": 603500
+  },
+  {
+    "level": 106,
+    "cumulativeExp": 16570700,
+    "levelUpExp": 618000
+  },
+  {
+    "level": 107,
+    "cumulativeExp": 17203500,
+    "levelUpExp": 632800
+  },
+  {
+    "level": 108,
+    "cumulativeExp": 17851200,
+    "levelUpExp": 647700
+  },
+  {
+    "level": 109,
+    "cumulativeExp": 18513900,
+    "levelUpExp": 662700
+  },
+  {
+    "level": 110,
+    "cumulativeExp": 19191900,
+    "levelUpExp": 678000
+  },
+  {
+    "level": 111,
+    "cumulativeExp": 19885400,
+    "levelUpExp": 693500
+  },
+  {
+    "level": 112,
+    "cumulativeExp": 20594500,
+    "levelUpExp": 709100
+  },
+  {
+    "level": 113,
+    "cumulativeExp": 21319400,
+    "levelUpExp": 724900
+  },
+  {
+    "level": 114,
+    "cumulativeExp": 22060300,
+    "levelUpExp": 740900
+  },
+  {
+    "level": 115,
+    "cumulativeExp": 22817400,
+    "levelUpExp": 757100
+  },
+  {
+    "level": 116,
+    "cumulativeExp": 23590900,
+    "levelUpExp": 773500
+  },
+  {
+    "level": 117,
+    "cumulativeExp": 24381000,
+    "levelUpExp": 790100
+  },
+  {
+    "level": 118,
+    "cumulativeExp": 25187800,
+    "levelUpExp": 806800
+  },
+  {
+    "level": 119,
+    "cumulativeExp": 26011600,
+    "levelUpExp": 823800
+  },
+  {
+    "level": 120,
+    "cumulativeExp": 26852500,
+    "levelUpExp": 840900
+  },
+  {
+    "level": 121,
+    "cumulativeExp": 27710700,
+    "levelUpExp": 858200
+  },
+  {
+    "level": 122,
+    "cumulativeExp": 28586400,
+    "levelUpExp": 875700
+  },
+  {
+    "level": 123,
+    "cumulativeExp": 29479800,
+    "levelUpExp": 893400
+  },
+  {
+    "level": 124,
+    "cumulativeExp": 30391100,
+    "levelUpExp": 911300
+  },
+  {
+    "level": 125,
+    "cumulativeExp": 31320500,
+    "levelUpExp": 929400
+  },
+  {
+    "level": 126,
+    "cumulativeExp": 32268100,
+    "levelUpExp": 947600
+  },
+  {
+    "level": 127,
+    "cumulativeExp": 33234200,
+    "levelUpExp": 966100
+  },
+  {
+    "level": 128,
+    "cumulativeExp": 34218900,
+    "levelUpExp": 984700
+  },
+  {
+    "level": 129,
+    "cumulativeExp": 35222400,
+    "levelUpExp": 1003500
+  },
+  {
+    "level": 130,
+    "cumulativeExp": 36245000,
+    "levelUpExp": 1022600
+  },
+  {
+    "level": 131,
+    "cumulativeExp": 37286800,
+    "levelUpExp": 1041800
+  },
+  {
+    "level": 132,
+    "cumulativeExp": 38348000,
+    "levelUpExp": 1061200
+  },
+  {
+    "level": 133,
+    "cumulativeExp": 39428800,
+    "levelUpExp": 1080800
+  },
+  {
+    "level": 134,
+    "cumulativeExp": 40529400,
+    "levelUpExp": 1100600
+  },
+  {
+    "level": 135,
+    "cumulativeExp": 41650000,
+    "levelUpExp": 1120600
+  },
+  {
+    "level": 136,
+    "cumulativeExp": 42790800,
+    "levelUpExp": 1140800
+  },
+  {
+    "level": 137,
+    "cumulativeExp": 43952000,
+    "levelUpExp": 1161200
+  },
+  {
+    "level": 138,
+    "cumulativeExp": 45133800,
+    "levelUpExp": 1181800
+  },
+  {
+    "level": 139,
+    "cumulativeExp": 46336400,
+    "levelUpExp": 1202600
+  },
+  {
+    "level": 140,
+    "cumulativeExp": 47559900,
+    "levelUpExp": 1223500
+  },
+  {
+    "level": 141,
+    "cumulativeExp": 48804600,
+    "levelUpExp": 1244700
+  },
+  {
+    "level": 142,
+    "cumulativeExp": 50070700,
+    "levelUpExp": 1266100
+  },
+  {
+    "level": 143,
+    "cumulativeExp": 51358300,
+    "levelUpExp": 1287600
+  },
+  {
+    "level": 144,
+    "cumulativeExp": 52667700,
+    "levelUpExp": 1309400
+  },
+  {
+    "level": 145,
+    "cumulativeExp": 53999100,
+    "levelUpExp": 1331400
+  },
+  {
+    "level": 146,
+    "cumulativeExp": 55352600,
+    "levelUpExp": 1353500
+  },
+  {
+    "level": 147,
+    "cumulativeExp": 56728500,
+    "levelUpExp": 1375900
+  },
+  {
+    "level": 148,
+    "cumulativeExp": 58127000,
+    "levelUpExp": 1398500
+  },
+  {
+    "level": 149,
+    "cumulativeExp": 59548200,
+    "levelUpExp": 1421200
+  },
+  {
+    "level": 150,
+    "cumulativeExp": 60992400,
+    "levelUpExp": 1444200
+  },
+  {
+    "level": 151,
+    "cumulativeExp": 62459800,
+    "levelUpExp": 1467400
+  },
+  {
+    "level": 152,
+    "cumulativeExp": 63950500,
+    "levelUpExp": 1490700
+  },
+  {
+    "level": 153,
+    "cumulativeExp": 65464800,
+    "levelUpExp": 1514300
+  },
+  {
+    "level": 154,
+    "cumulativeExp": 67002900,
+    "levelUpExp": 1538100
+  },
+  {
+    "level": 155,
+    "cumulativeExp": 68564900,
+    "levelUpExp": 1562000
+  },
+  {
+    "level": 156,
+    "cumulativeExp": 70151100,
+    "levelUpExp": 1586200
+  },
+  {
+    "level": 157,
+    "cumulativeExp": 71761700,
+    "levelUpExp": 1610600
+  },
+  {
+    "level": 158,
+    "cumulativeExp": 73396900,
+    "levelUpExp": 1635200
+  },
+  {
+    "level": 159,
+    "cumulativeExp": 75056900,
+    "levelUpExp": 1660000
+  },
+  {
+    "level": 160,
+    "cumulativeExp": 76741900,
+    "levelUpExp": 1685000
+  },
+  {
+    "level": 161,
+    "cumulativeExp": 78452100,
+    "levelUpExp": 1710200
+  },
+  {
+    "level": 162,
+    "cumulativeExp": 80187700,
+    "levelUpExp": 1735600
+  },
+  {
+    "level": 163,
+    "cumulativeExp": 81948900,
+    "levelUpExp": 1761200
+  },
+  {
+    "level": 164,
+    "cumulativeExp": 83735900,
+    "levelUpExp": 1787000
+  },
+  {
+    "level": 165,
+    "cumulativeExp": 85548900,
+    "levelUpExp": 1813000
+  },
+  {
+    "level": 166,
+    "cumulativeExp": 87388200,
+    "levelUpExp": 1839300
+  },
+  {
+    "level": 167,
+    "cumulativeExp": 89253900,
+    "levelUpExp": 1865700
+  },
+  {
+    "level": 168,
+    "cumulativeExp": 91146300,
+    "levelUpExp": 1892400
+  },
+  {
+    "level": 169,
+    "cumulativeExp": 93065500,
+    "levelUpExp": 1919200
+  },
+  {
+    "level": 170,
+    "cumulativeExp": 95011800,
+    "levelUpExp": 1946300
+  },
+  {
+    "level": 171,
+    "cumulativeExp": 96985300,
+    "levelUpExp": 1973500
+  },
+  {
+    "level": 172,
+    "cumulativeExp": 98986300,
+    "levelUpExp": 2001000
+  },
+  {
+    "level": 173,
+    "cumulativeExp": 101015000,
+    "levelUpExp": 2028700
+  },
+  {
+    "level": 174,
+    "cumulativeExp": 103071600,
+    "levelUpExp": 2056600
+  },
+  {
+    "level": 175,
+    "cumulativeExp": 105156300,
+    "levelUpExp": 2084700
+  },
+  {
+    "level": 176,
+    "cumulativeExp": 107269400,
+    "levelUpExp": 2113100
+  },
+  {
+    "level": 177,
+    "cumulativeExp": 109411000,
+    "levelUpExp": 2141600
+  },
+  {
+    "level": 178,
+    "cumulativeExp": 111581300,
+    "levelUpExp": 2170300
+  },
+  {
+    "level": 179,
+    "cumulativeExp": 113780600,
+    "levelUpExp": 2199300
+  },
+  {
+    "level": 180,
+    "cumulativeExp": 116009100,
+    "levelUpExp": 2228500
+  },
+  {
+    "level": 181,
+    "cumulativeExp": 118267000,
+    "levelUpExp": 2257900
+  },
+  {
+    "level": 182,
+    "cumulativeExp": 120554500,
+    "levelUpExp": 2287500
+  },
+  {
+    "level": 183,
+    "cumulativeExp": 122871800,
+    "levelUpExp": 2317300
+  },
+  {
+    "level": 184,
+    "cumulativeExp": 125219100,
+    "levelUpExp": 2347300
+  },
+  {
+    "level": 185,
+    "cumulativeExp": 127596600,
+    "levelUpExp": 2377500
+  },
+  {
+    "level": 186,
+    "cumulativeExp": 130004600,
+    "levelUpExp": 2408000
+  },
+  {
+    "level": 187,
+    "cumulativeExp": 132443200,
+    "levelUpExp": 2438600
+  },
+  {
+    "level": 188,
+    "cumulativeExp": 134912700,
+    "levelUpExp": 2469500
+  },
+  {
+    "level": 189,
+    "cumulativeExp": 137413300,
+    "levelUpExp": 2500600
+  },
+  {
+    "level": 190,
+    "cumulativeExp": 139945200,
+    "levelUpExp": 2531900
+  },
+  {
+    "level": 191,
+    "cumulativeExp": 142508700,
+    "levelUpExp": 2563500
+  },
+  {
+    "level": 192,
+    "cumulativeExp": 145103900,
+    "levelUpExp": 2595200
+  },
+  {
+    "level": 193,
+    "cumulativeExp": 147731100,
+    "levelUpExp": 2627200
+  },
+  {
+    "level": 194,
+    "cumulativeExp": 150390400,
+    "levelUpExp": 2659300
+  },
+  {
+    "level": 195,
+    "cumulativeExp": 153082100,
+    "levelUpExp": 2691700
+  },
+  {
+    "level": 196,
+    "cumulativeExp": 155806500,
+    "levelUpExp": 2724400
+  },
+  {
+    "level": 197,
+    "cumulativeExp": 158563700,
+    "levelUpExp": 2757200
+  },
+  {
+    "level": 198,
+    "cumulativeExp": 161353900,
+    "levelUpExp": 2790200
+  },
+  {
+    "level": 199,
+    "cumulativeExp": 164177400,
+    "levelUpExp": 2823500
+  },
+  {
+    "level": 200,
+    "cumulativeExp": 167034400,
+    "levelUpExp": 2857000
+  }
 ]
