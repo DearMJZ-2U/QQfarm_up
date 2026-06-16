@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Layers, Github, Home as HomeIcon } from 'lucide-react';
+import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Layers, Github, Home as HomeIcon, BarChart3, TrendingUp } from 'lucide-react';
 
 const GITHUB_REPO_URL = 'https://github.com/DearMJZ-2U/QQfarm_up';
 import CalculatorTab from './components/CalculatorTab';
 import LevelSearchTab from './components/LevelSearchTab';
+import LandUpgradeCalcTab from './components/LandUpgradeCalcTab';
 import LandAtlasTab from './components/LandAtlasTab';
 import CropAtlasTab from './components/CropAtlasTab';
 import ItemsTab from './components/ItemsTab';
@@ -14,7 +15,8 @@ import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
 
 type BottomTab = 'home' | 'atlas' | 'items' | 'more' | 'calc';
-type HomeNavTarget = 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'items_gold' | 'more_level';
+type HomeNavTarget = 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'items_gold' | 'more_level' | 'more_land';
+type MoreSubTab = 'level' | 'land';
 
 interface TabDef {
   id: BottomTab;
@@ -40,12 +42,13 @@ interface SidebarItem {
   color?: string;
 }
 
-const sidebarSections: { title?: string; items: SidebarItem[] }[] = [
+  const sidebarSections: { title?: string; items: SidebarItem[] }[] = [
   {
     items: [
       { icon: '🏠', label: '首页', id: 'home', color: 'leaf' },
       { icon: '🧮', label: '经验计算器', id: 'calc', color: 'leaf' },
       { icon: '📊', label: '等级查询', id: 'more_level', color: 'plum' },
+      { icon: '🟪', label: '土地升级所需', id: 'more_land', color: 'plum' },
     ]
   },
   {
@@ -98,6 +101,7 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
   const [atlasSubTab, setAtlasSubTab] = useState<'crops' | 'lands' | 'mutation' | 'costume'>('crops');
+  const [moreSubTab, setMoreSubTab] = useState<MoreSubTab>('level');
 
   React.useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -121,28 +125,34 @@ export default function App() {
   };
 
   // 统一导航入口：写入浏览器历史 + 切换 tab + 滚到顶部
-  const navigate = React.useCallback((tab: BottomTab, subTab?: 'crops' | 'lands' | 'mutation' | 'costume') => {
-    const effectiveSubTab = subTab ?? (tab === 'atlas' ? atlasSubTab : null);
-    const currentSubTab = bottomTab === 'atlas' ? atlasSubTab : null;
+  const navigate = React.useCallback((tab: BottomTab, subTab?: 'crops' | 'lands' | 'mutation' | 'costume' | MoreSubTab) => {
+    const isMore = tab === 'more';
+    const isAtlas = tab === 'atlas';
+    const effectiveSubTab = subTab ?? (isAtlas ? atlasSubTab : isMore ? moreSubTab : null);
+    const currentSubTab = isAtlas ? atlasSubTab : isMore ? moreSubTab : null;
     if (tab === bottomTab && effectiveSubTab === currentSubTab) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    history.pushState({ tab, subTab: effectiveSubTab }, '', '');
+    history.pushState({ tab, subTab: effectiveSubTab as any }, '', '');
     setBottomTab(tab);
-    if (subTab) setAtlasSubTab(subTab);
+    if (isAtlas && subTab) setAtlasSubTab(subTab as 'crops' | 'lands' | 'mutation' | 'costume');
+    if (isMore && subTab) setMoreSubTab(subTab as MoreSubTab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [bottomTab, atlasSubTab]);
+  }, [bottomTab, atlasSubTab, moreSubTab]);
 
   // 拦截浏览器后退：在 app 内做层级回退，不会跳出网页
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
     history.replaceState({ tab: 'home', subTab: null }, '', '');
     const onPopState = (e: PopStateEvent) => {
-      const s = e.state as { tab?: BottomTab; subTab?: 'crops' | 'lands' | 'mutation' | 'costume' } | null;
+      const s = e.state as { tab?: BottomTab; subTab?: 'crops' | 'lands' | 'mutation' | 'costume' | MoreSubTab } | null;
       if (s && s.tab) {
         setBottomTab(s.tab);
-        if (s.subTab) setAtlasSubTab(s.subTab);
+        if (s.subTab) {
+          if (s.tab === 'atlas') setAtlasSubTab(s.subTab as 'crops' | 'lands' | 'mutation' | 'costume');
+          if (s.tab === 'more') setMoreSubTab(s.subTab as MoreSubTab);
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
@@ -154,7 +164,8 @@ export default function App() {
     setSidebarOpen(false);
     if (id === 'home') { navigate('home'); return; }
     if (id === 'calc') { navigate('calc'); return; }
-    if (id === 'more_level') { navigate('more'); return; }
+    if (id === 'more_level') { navigate('more', 'level'); return; }
+    if (id === 'more_land') { navigate('more', 'land'); return; }
     if (id === 'crops') { navigate('atlas', 'crops'); return; }
     if (id === 'lands') { navigate('atlas', 'lands'); return; }
     if (id === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
@@ -170,7 +181,8 @@ export default function App() {
     if (target === 'atlas_costume') { navigate('atlas', 'costume'); return; }
     if (target === 'items_seed') { navigate('items'); return; }
     if (target === 'items_gold') { navigate('items'); return; }
-    if (target === 'more_level') { navigate('more'); return; }
+    if (target === 'more_level') { navigate('more', 'level'); return; }
+    if (target === 'more_land') { navigate('more', 'land'); return; }
   };
 
   const renderContent = () => {
@@ -253,7 +265,23 @@ export default function App() {
       case 'more':
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4">
-            <LevelSearchTab />
+            <div className="flex gap-1.5 p-1.5 sticker-pop rounded-full mb-4">
+              <button onClick={() => navigate('more', 'level')}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
+                style={moreSubTab === 'level'
+                  ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
+                  : { color: 'var(--ink-soft)' }}>
+                <BarChart3 size={14} strokeWidth={2.5} /> 等级查询
+              </button>
+              <button onClick={() => navigate('more', 'land')}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
+                style={moreSubTab === 'land'
+                  ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
+                  : { color: 'var(--ink-soft)' }}>
+                <TrendingUp size={14} strokeWidth={2.5} /> 土地升级所需
+              </button>
+            </div>
+            {moreSubTab === 'level' ? <LevelSearchTab /> : <LandUpgradeCalcTab />}
           </div>
         );
       default:

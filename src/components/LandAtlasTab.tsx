@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Map, Layers3, TrendingUp } from 'lucide-react';
+import { Map as MapIcon, Layers3, TrendingUp } from 'lucide-react';
 import landsData from '../data/lands_atlas.json';
 
 const BASE = (import.meta as any).env?.BASE_URL || '/';
@@ -54,13 +54,16 @@ const specialStates = [
   { name: '选中', icon: '✅', desc: '当前选中的地块外观', file: 'land_valid_selected.png' },
 ];
 
-const upgradeMeta = {
-  '红土地': { emoji: '🟥', accent: 'berry', lv: 'Lv 28-57', g: '20w-230w' },
-  '黑土地': { emoji: '⬛', accent: 'ink', lv: 'Lv 40-69', g: '60w-860w' },
-  '金土地': { emoji: '🟨', accent: 'sun', lv: 'Lv 58-87', g: '100w-1700w' },
-  '紫晶土地': { emoji: '🟪', accent: 'plum', lv: 'Lv 90-159', g: '5000w-5.1亿' },
-} as const;
-const upgradeTypes = ['红土地', '黑土地', '金土地', '紫晶土地'] as const;
+type UpgradeAccent = 'berry' | 'ink' | 'sun' | 'plum';
+type UpgradeType = '红土地' | '黑土地' | '金土地' | '紫晶土地';
+
+const upgradeMeta: Record<UpgradeType, { emoji: string; accent: UpgradeAccent; borderVar: string; bgVar: string; deepVar: string; textVar: string; lv: string; g: string }> = {
+  '红土地': { emoji: '🟥', accent: 'berry', borderVar: '--berry', bgVar: '--berry-bg', deepVar: '--berry-deep', textVar: '--berry-deep', lv: 'Lv 28-57', g: '20w-230w' },
+  '黑土地': { emoji: '⬛', accent: 'ink', borderVar: '--ink', bgVar: '--bg-2', deepVar: '--ink', textVar: '--ink', lv: 'Lv 40-69', g: '60w-860w' },
+  '金土地': { emoji: '🟨', accent: 'sun', borderVar: '--sun', bgVar: '--sun-bg', deepVar: '--sun-deep', textVar: '--sun-deep', lv: 'Lv 58-87', g: '100w-1700w' },
+  '紫晶土地': { emoji: '🟪', accent: 'plum', borderVar: '--plum', bgVar: '--plum-bg', deepVar: '--plum-deep', textVar: '--plum-deep', lv: 'Lv 90-159', g: '5000w-5.1亿' },
+};
+const upgradeTypes: readonly UpgradeType[] = ['红土地', '黑土地', '金土地', '紫晶土地'];
 
 export default function LandAtlasTab() {
   const [level, setLevel] = React.useState(90);
@@ -70,7 +73,7 @@ export default function LandAtlasTab() {
     <div className="space-y-6 fade-in">
       {/* Hero */}
       <header>
-        <div className="chip chip-orange mb-2"><Map size={11} strokeWidth={2.5} /> 土地图鉴</div>
+        <div className="chip chip-orange mb-2"><MapIcon size={11} strokeWidth={2.5} /> 土地图鉴</div>
         <h2 className="font-display italic text-3xl font-bold text-[var(--ink)] leading-tight">
           24 块地 · 5 种土壤
         </h2>
@@ -204,60 +207,76 @@ export default function LandAtlasTab() {
 
       {tab === 'upgrades' && (
         <section className="space-y-3">
-          {/* Upgrade type summary */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {/* 单条紧凑图例条：4 个色 chip 横向并排 */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 -mx-1 px-1">
             {upgradeTypes.map(ut => {
               const meta = upgradeMeta[ut];
               return (
-                <div key={ut} className="sticker p-3 text-center"
-                  style={{ borderColor: `var(--${meta.accent === 'ink' ? 'line-strong' : meta.accent})` }}>
-                  <div className="text-xl mb-1">{meta.emoji}</div>
-                  <div className="text-xs font-bold text-[var(--ink)]">{ut}</div>
-                  <div className="text-[10px] font-mono text-[var(--ink-mute)] mt-1 leading-tight">
-                    {meta.lv}<br />{meta.g}
-                  </div>
-                </div>
+                <span key={ut}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap flex-shrink-0"
+                  style={{ background: `var(${meta.bgVar})`, color: `var(${meta.textVar})` }}>
+                  <span>{meta.emoji}</span>
+                  <span>{ut}</span>
+                  <span className="font-mono opacity-70">{meta.lv}</span>
+                </span>
               );
             })}
           </div>
 
-          {/* Upgrade table */}
+          {/* 表格：白底单一表，单元格内无主题色，仅靠表头颜色识别列；未达等级行半透 */}
           <div className="sticker-lg overflow-x-auto">
-            <table className="table-clean">
+            <table className="w-full" style={{ tableLayout: 'auto', borderCollapse: 'separate', borderSpacing: 0 }}>
               <thead>
                 <tr>
-                  <th className="w-12">#</th>
-                  {upgradeTypes.map(ut => (
-                    <th key={ut} className="text-right">{upgradeMeta[ut].emoji} {ut}</th>
-                  ))}
+                  <th className="w-12 text-left font-bold text-[10px] uppercase tracking-widest text-[var(--ink-mute)] px-3 py-2.5"
+                    style={{ background: 'var(--bg-2)', borderBottom: '1.5px solid var(--line)' }}>地块</th>
+                  {upgradeTypes.map(ut => {
+                    const meta = upgradeMeta[ut];
+                    return (
+                      <th key={ut} className="text-right font-bold text-[10px] uppercase tracking-widest px-3 py-2.5 whitespace-nowrap"
+                        style={{ background: 'var(--bg-2)', color: `var(${meta.textVar})`, borderBottom: '1.5px solid var(--line)' }}>
+                        <span className="mr-1">{meta.emoji}</span>{ut}
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
-                {landsData.upgrades.map(pu => (
-                  <tr key={pu.plotId}>
-                    <td className="font-mono font-bold text-[var(--ink)]">#{pu.plotId}</td>
-                    {upgradeTypes.map(ut => {
-                      const u = pu.upgrades.find(u => u.type === ut);
-                      const active = u && level >= u.level;
-                      const meta = upgradeMeta[ut];
-                      return (
-                        <td key={ut} className="text-right">
-                          {u ? (
-                            <div className="font-mono tnum text-[10px]"
-                              style={{
-                                color: active ? `var(--${meta.accent === 'ink' ? 'ink' : meta.accent + '-deep'})` : 'var(--ink-mute)',
-                                fontWeight: active ? 700 : 500,
-                              }}>
-                              <div>Lv{u.level}</div>
-                              <div className="opacity-80">💰{u.gold >= 10000 ? `${(u.gold / 10000).toFixed(1)}w` : u.gold.toLocaleString()}</div>
-                              {'beans' in u && <div style={{ color: 'var(--plum-deep)' }}>🫘{u.beans.toLocaleString()}</div>}
-                            </div>
-                          ) : <span className="text-[var(--ink-mute)]/40">-</span>}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
+                {landsData.upgrades.map(pu => {
+                  const byType = new Map<string, any>(pu.upgrades.map(u => [u.type, u]));
+                  return (
+                    <tr key={pu.plotId}>
+                      <td className="font-mono font-black text-sm text-[var(--ink)] px-3 py-2 align-middle"
+                        style={{ borderBottom: '1px solid var(--line)' }}>#{pu.plotId}</td>
+                      {upgradeTypes.map(ut => {
+                        const u = byType.get(ut);
+                        return (
+                          <td key={ut} className="px-3 py-2 align-middle text-right"
+                            style={{ borderBottom: '1px solid var(--line)' }}>
+                            {u ? (
+                              <div className="flex flex-col items-end gap-0.5">
+                                <span className="font-mono tnum text-[10px] font-bold" style={{ color: 'var(--ink-soft)' }}>
+                                  Lv{u.level}
+                                </span>
+                                <span className="font-mono tnum text-[11px] font-bold" style={{ color: 'var(--ink)' }}>
+                                  {formatGold(u.gold)}
+                                </span>
+                                {'beans' in u && u.beans > 0 && (
+                                  <span className="font-mono tnum text-[10px] font-bold flex items-center gap-0.5" style={{ color: 'var(--ink-soft)' }}>
+                                    <span aria-hidden="true">🫘</span>
+                                    {u.beans.toLocaleString()}
+                                  </span>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="font-mono text-[10px] text-[var(--ink-mute)]/40">—</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -275,4 +294,10 @@ function BuffPill({ emoji, label, value, accent }: { emoji: string; label: strin
       <span className="font-mono font-bold tnum" style={{ color: `var(--${accent}-deep)` }}>{value}</span>
     </div>
   );
+}
+
+function formatGold(g: number): string {
+  if (g >= 100000000) return `${(g / 100000000).toFixed(2)}亿`;
+  if (g >= 10000) return `${(g / 10000).toFixed(1)}w`;
+  return g.toLocaleString();
 }

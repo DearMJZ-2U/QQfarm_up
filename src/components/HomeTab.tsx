@@ -7,7 +7,7 @@ import mutationData from '../data/mutation_atlas.json';
 import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
 
-type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'items_gold') => void;
+type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'items_gold') => void;
 
 interface Props {
   onNavigate: NavHandler;
@@ -407,6 +407,10 @@ export default function HomeTab({ onNavigate }: Props) {
             emoji="📊" label="等级查询" desc="Lv 1-200 累计/升级经验表" accent="plum"
             onClick={() => onNavigate('more_level')}
             icon={Search} />
+          <CategoryCard
+            emoji="🟪" label="土地升级所需" desc="输入当前/目标等级 · 自动算经验/金币/金豆" accent="plum"
+            onClick={() => onNavigate('more_land')}
+            icon={TrendingUp} />
         </div>
       </section>
 
