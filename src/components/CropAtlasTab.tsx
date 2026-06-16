@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Search, X, Sprout, Coins, Star, Package, Clock, Repeat } from 'lucide-react';
 import seedsData from '../data/seeds.json';
 import plantData from '../data/Plant.json';
-import { CropImage, GrowthPhases, Portal } from './shared';
+import { CropImage, GrowthPhases, Portal, EmptyState, StatTile as StatTileBase, PillTabGroup } from './shared';
 
 const seedsList = Array.isArray(seedsData) ? seedsData : (seedsData.rows || []);
 
@@ -28,31 +28,25 @@ function fmtSec(sec: number) {
 
 export default function CropAtlasTab() {
   const [search, setSearch] = React.useState('');
-  const [seasonFilter, setSeasonFilter] = React.useState(0);
+  const [seasonFilter, setSeasonFilter] = React.useState<'all' | '1' | '2'>('all');
   const [detail, setDetail] = React.useState<any>(null);
 
   const filtered = seedsList.filter((s: any) => {
-    if (search && !s.name.includes(search)) return false;
-    if (seasonFilter === 1 && s.seasons !== 1) return false;
-    if (seasonFilter === 2 && s.seasons !== 2) return false;
+    if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
+    if (seasonFilter === '1' && s.seasons !== 1) return false;
+    if (seasonFilter === '2' && s.seasons !== 2) return false;
     return true;
   });
-
-  const filterPills = [
-    { id: 0, label: '全部', emoji: '🌿' },
-    { id: 1, label: '单季', emoji: '🌾' },
-    { id: 2, label: '双季', emoji: '🔁' },
-  ];
 
   return (
     <div className="space-y-4 fade-in">
       {/* Hero */}
-      <header>
-        <div className="chip chip-leaf mb-2"><Sprout size={11} strokeWidth={2.5} /> 作物图鉴</div>
-        <h2 className="font-display italic text-3xl font-bold text-[var(--ink)] leading-tight">
-          全部 <span className="text-[var(--leaf-deep)]">{seedsList.length}</span> 种作物
+      <header className="page-header">
+        <span className="page-header-chip"><Sprout size={11} strokeWidth={2.5} /> 作物图鉴</span>
+        <h2 className="page-header-title">
+          全部 <span style={{ color: 'var(--leaf-deep)' }}>{seedsList.length}</span> 种作物
         </h2>
-        <p className="text-xs text-[var(--ink-soft)] mt-1">点开任意作物查看成长阶段与详细属性</p>
+        <p className="page-header-subtitle">点开任意作物查看成长阶段与详细属性</p>
       </header>
 
       {/* Search + Filter */}
@@ -64,24 +58,24 @@ export default function CropAtlasTab() {
             className="input-line text-sm py-1" />
           {search && (
             <button onClick={() => setSearch('')}
-              className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)]">
+              className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[var(--bg-2)]"
+              aria-label="清空搜索">
               <X size={12} className="text-[var(--ink-mute)]" />
             </button>
           )}
         </div>
-        <div className="flex items-center gap-1.5 flex-wrap">
-          {filterPills.map(p => {
-            const active = seasonFilter === p.id;
-            return (
-              <button key={p.id} onClick={() => setSeasonFilter(p.id)}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
-                style={active
-                  ? { background: 'var(--leaf)', color: 'white', boxShadow: '0 2px 0 var(--leaf-deep)' }
-                  : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
-                <span>{p.emoji}</span><span>{p.label}</span>
-              </button>
-            );
-          })}
+        <div className="flex items-center gap-2">
+          <PillTabGroup
+            items={[
+              { id: 'all', label: '全部', emoji: '🌿' },
+              { id: '1',   label: '单季', emoji: '🌾' },
+              { id: '2',   label: '双季', emoji: '🔁' },
+            ]}
+            value={seasonFilter}
+            onChange={(id) => setSeasonFilter(id as 'all' | '1' | '2')}
+            accent="leaf"
+            size="sm"
+          />
           <span className="ml-auto text-[10px] font-mono text-[var(--ink-mute)] tnum">显示 {filtered.length}</span>
         </div>
       </div>
@@ -97,11 +91,10 @@ export default function CropAtlasTab() {
             className="sticker sticker-press p-3 sm:p-4 cursor-pointer relative">
             <div className="flex items-center justify-between mb-2 sm:mb-3">
               <span className="chip chip-leaf" style={{ fontSize: '0.6rem' }}>Lv{s.requiredLevel}</span>
-              {s.seasons === 2 && <span className="chip chip-sky" style={{ fontSize: '0.6rem' }}>双季</span>}
+              {s.seasons === 2 && <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>双季</span>}
             </div>
-            <div className="flex items-center justify-center my-2 sm:my-3 h-16 sm:h-24">
-              <CropImage seedId={s.seedId} name={s.name} size={56} className="sm:hidden" />
-              <CropImage seedId={s.seedId} name={s.name} size={88} className="hidden sm:block" />
+            <div className="flex items-center justify-center my-2 sm:my-3 h-24 sm:h-32">
+              <CropImage seedId={s.seedId} name={s.name} className="w-20 h-20 sm:w-32 sm:h-32" />
             </div>
             <div className="text-center">
               <div className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{s.name}</div>
@@ -116,10 +109,7 @@ export default function CropAtlasTab() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-5xl mb-3">🔍</div>
-          <div className="text-sm text-[var(--ink-mute)]">没找到符合条件的作物</div>
-        </div>
+        <EmptyState emoji="🔍" title="没找到符合条件的作物" hint="试试别的关键词或切换过滤器" />
       )}
 
       {/* Detail Modal */}
@@ -139,24 +129,23 @@ export default function CropAtlasTab() {
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 28, stiffness: 280 }}
                 onClick={e => e.stopPropagation()}
-                className="relative w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+                className="relative w-full sm:max-w-4xl lg:max-w-5xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
                 style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
 
               {/* Header */}
               <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
                 style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
                 <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center"
+                  <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl flex items-center justify-center"
                     style={{ background: 'var(--leaf-bg)' }}>
-                    <CropImage seedId={detail.seedId} name={detail.name} size={56} className="sm:hidden" />
-                    <CropImage seedId={detail.seedId} name={detail.name} size={96} className="hidden sm:block" />
+                    <CropImage seedId={detail.seedId} name={detail.name} className="w-16 h-16 sm:w-28 sm:h-28" />
                   </div>
                   <div>
                     <h3 className="font-display italic text-xl sm:text-2xl font-bold text-[var(--ink)] leading-tight">{detail.name}</h3>
                     <div className="flex items-center gap-1.5 mt-1 sm:mt-1.5">
                       <span className="chip chip-leaf">Lv{detail.requiredLevel}</span>
                       {detail.seasons === 2 ? (
-                        <span className="chip chip-sky">双季</span>
+                        <span className="chip chip-berry">双季</span>
                       ) : (
                         <span className="chip chip-ink">单季</span>
                       )}
@@ -165,7 +154,8 @@ export default function CropAtlasTab() {
                 </div>
                 <button onClick={() => setDetail(null)}
                   className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'var(--bg-2)' }}>
+                  style={{ background: 'var(--bg-2)' }}
+                  aria-label="关闭">
                   <X size={16} className="text-[var(--ink-soft)] sm:hidden" />
                   <X size={20} className="text-[var(--ink-soft)] hidden sm:block" />
                 </button>
@@ -184,12 +174,12 @@ export default function CropAtlasTab() {
                 <div>
                   <div className="section-eyebrow mb-2">作物属性</div>
                   <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                    <StatTile icon={<Coins size={14} strokeWidth={2.5} />} color="sun" label="购买价格" value={detail.price} />
-                    <StatTile icon={<Star size={14} strokeWidth={2.5} />} color="plum" label="生长经验" value={detail.exp} />
-                    <StatTile icon={<Package size={14} strokeWidth={2.5} />} color="leaf" label="果实产量" value={`${detail.fruitCount} 个`} />
-                    <StatTile icon={<Clock size={14} strokeWidth={2.5} />} color="sky" label="种植周期" value={detail.growTimeStr} />
-                    <StatTile icon={<Repeat size={14} strokeWidth={2.5} />} color="orange" label="季数" value={`${detail.seasons} 季`} />
-                    <StatTile icon={<Sprout size={14} strokeWidth={2.5} />} color="berry" label="经验/小时" value={detail.expPerHour?.toFixed(0) || '-'} />
+                    <StatTileBase label="购买价格" value={detail.price} color="sun" icon={<Coins size={12} strokeWidth={2.5} style={{ color: 'var(--sun-deep)' }} />} />
+                    <StatTileBase label="生长经验" value={detail.exp} color="plum" icon={<Star size={12} strokeWidth={2.5} style={{ color: 'var(--plum-deep)' }} />} />
+                    <StatTileBase label="果实产量" value={`${detail.fruitCount} 个`} color="leaf" icon={<Package size={12} strokeWidth={2.5} style={{ color: 'var(--leaf-deep)' }} />} />
+                    <StatTileBase label="种植周期" value={detail.growTimeStr} color="sky" icon={<Clock size={12} strokeWidth={2.5} style={{ color: 'var(--sky-deep)' }} />} />
+                    <StatTileBase label="季数" value={`${detail.seasons} 季`} color="orange" icon={<Repeat size={12} strokeWidth={2.5} style={{ color: 'var(--orange-deep)' }} />} />
+                    <StatTileBase label="经验/小时" value={detail.expPerHour?.toFixed(0) || '-'} color="berry" icon={<Sprout size={12} strokeWidth={2.5} style={{ color: 'var(--berry-deep)' }} />} />
                   </div>
                 </div>
 
@@ -226,19 +216,6 @@ export default function CropAtlasTab() {
           </Portal>
         )}
       </AnimatePresence>
-    </div>
-  );
-}
-
-function StatTile({ icon, color, label, value }: { icon: React.ReactNode; color: string; label: string; value: any }) {
-  return (
-    <div className="rounded-2xl p-3 sm:p-4"
-      style={{ background: `var(--${color}-bg)`, border: `1.5px solid var(--${color}-soft)` }}>
-      <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5" style={{ color: `var(--${color}-deep)` }}>
-        {icon}
-        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide">{label}</span>
-      </div>
-      <div className="font-mono tnum text-lg sm:text-xl font-bold" style={{ color: `var(--${color}-deep)` }}>{value}</div>
     </div>
   );
 }

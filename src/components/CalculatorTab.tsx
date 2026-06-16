@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Trophy, Zap, Coins, Clock, TrendingUp, Wand2 } from 'lucide-react';
 import seedsData from '../data/seeds.json';
-import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands } from './shared';
+import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, EmptyState, PillTabGroup, ToggleCard, LandSwatch } from './shared';
 
 function longestPhase(seedId: number): number {
   const phases = plantAllPhasesMap[seedId];
@@ -132,12 +132,19 @@ export default function CalculatorTab() {
     return typeof vals[type] === 'number' ? vals[type] : 0;
   };
 
-  const landInputs = [
-    { key: 'normal', label: '普通地', sub: '无加成', emoji: '🟫', tile: 'tile-orange', accent: 'earth', readonly: true },
-    { key: 'red', label: '红土地', sub: '产 +100%', emoji: '🟥', tile: 'tile-berry', accent: 'berry' },
-    { key: 'black', label: '黑土地', sub: '产 +200% · 速 10%', emoji: '⬛', tile: 'tile-ink', accent: 'ink' },
-    { key: 'gold', label: '金土地', sub: '产 +300% · 速 20% · 经 20%', emoji: '🟨', tile: 'tile-sun', accent: 'sun' },
-    { key: 'purple', label: '紫晶土地', sub: '产 +300% · 速 20% · 经 25%', emoji: '🟪', tile: 'tile-plum', accent: 'plum' },
+  const landInputs: Array<{
+    key: 'normal' | 'red' | 'black' | 'gold' | 'purple';
+    label: string;
+    sub: string;
+    accent: 'earth' | 'berry' | 'ink' | 'sun' | 'plum';
+    color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink' | 'earth';
+    readonly?: boolean;
+  }> = [
+    { key: 'normal', label: '普通地', sub: '无加成', accent: 'earth', color: 'ink', readonly: true },
+    { key: 'red',    label: '红土地', sub: '产 +100%',              accent: 'berry', color: 'berry' },
+    { key: 'black',  label: '黑土地', sub: '产 +200% · 速 -10%',    accent: 'ink',   color: 'ink' },
+    { key: 'gold',   label: '金土地', sub: '产 +300% · 速 -20% · 经 +20%', accent: 'sun', color: 'sun' },
+    { key: 'purple', label: '紫晶土地', sub: '产 +300% · 速 -20% · 经 +25%', accent: 'plum', color: 'plum' },
   ];
 
   const toggles = [
@@ -234,49 +241,32 @@ export default function CalculatorTab() {
             <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">
               优化目标
             </label>
-            <div className="flex gap-1.5 p-1 rounded-full"
-              style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
-              <button onClick={() => setTarget('exp')}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-sm transition-all"
-                style={target === 'exp'
-                  ? { background: 'var(--leaf)', color: 'white', boxShadow: '0 2px 0 var(--leaf-deep)' }
-                  : { color: 'var(--ink-mute)' }}>
-                <Zap size={14} strokeWidth={2.5} /> 经验
-              </button>
-              <button onClick={() => setTarget('gold')}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-sm transition-all"
-                style={target === 'gold'
-                  ? { background: 'var(--sun-deep)', color: 'white', boxShadow: '0 2px 0 #b8860b' }
-                  : { color: 'var(--ink-mute)' }}>
-                <Coins size={14} strokeWidth={2.5} /> 金币
-              </button>
-            </div>
+            <PillTabGroup
+              items={[
+                { id: 'exp',  label: '经验', emoji: '⚡' },
+                { id: 'gold', label: '金币', emoji: '🪙' },
+              ]}
+              value={target}
+              onChange={(id) => setTarget(id as 'exp' | 'gold')}
+              accent={target === 'exp' ? 'leaf' : 'sun'}
+              size="md"
+            />
           </div>
         </div>
 
         {/* Toggles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
           {toggles.map(t => (
-            <label key={t.id}
-              className={`flex items-start gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl cursor-pointer transition-all border-1.5 ${
-                t.disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[var(--bg-2)]'
-              }`}
-              style={{
-                background: t.checked ? `var(--${t.color}-bg)` : 'var(--bg-2)',
-                border: `1.5px solid ${t.checked ? `var(--${t.color})` : 'var(--line)'}`,
-              }}>
-              <input type="checkbox" checked={t.checked} disabled={t.disabled}
-                onChange={e => t.onChange(e.target.checked)}
-                className="farm-check mt-0.5"
-                style={t.checked && !t.disabled ? { background: `var(--${t.color})`, borderColor: `var(--${t.color})` } : {}} />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-0.5 sm:mb-1">
-                  <span className="text-sm sm:text-base leading-none">{t.emoji}</span>
-                  <span className="text-xs font-bold text-[var(--ink)]">{t.label}</span>
-                </div>
-                <div className="text-[10px] text-[var(--ink-mute)] leading-snug">{t.hint}</div>
-              </div>
-            </label>
+            <ToggleCard
+              key={t.id}
+              checked={t.checked}
+              onChange={t.onChange}
+              disabled={t.disabled}
+              emoji={t.emoji}
+              label={t.label}
+              hint={t.hint}
+              color={t.color}
+            />
           ))}
         </div>
       </motion.section>
@@ -297,14 +287,17 @@ export default function CalculatorTab() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5">
               {landInputs.map(li => {
                 const value = li.key === 'red' ? redLands : li.key === 'black' ? blackLands : li.key === 'gold' ? goldLands : li.key === 'purple' ? purpleLands : 0;
+                const tileBg = `var(--${li.color}-bg)`;
+                const tileBorder = li.color === 'ink' ? 'var(--line-strong)' : `var(--${li.color})`;
                 return (
-                  <div key={li.key} className={`${li.tile} p-2 sm:p-3 rounded-xl sm:rounded-2xl`}
+                  <div key={li.key} className="p-2 sm:p-3 rounded-xl sm:rounded-2xl"
                     style={{
-                      border: `1.5px solid var(--${li.accent === 'ink' ? 'line-strong' : li.accent === 'earth' ? 'line-strong' : li.accent})`,
+                      background: tileBg,
+                      border: `1.5px solid ${tileBorder}`,
                       opacity: li.readonly ? 0.85 : 1,
                     }}>
                     <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                      <span className="text-base sm:text-xl">{li.emoji}</span>
+                      <LandSwatch type={li.key} size={22} />
                       <span className="chip" style={{ background: 'rgba(255,255,255,0.6)', color: 'var(--ink)' }}>
                         {li.readonly ? '剩余' : '配置'}
                       </span>
@@ -370,9 +363,9 @@ export default function CalculatorTab() {
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 14, delay: 0.2 }}
-                  className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-white/95 flex items-center justify-center shadow-lg flex-shrink-0">
-                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={40} className="sm:hidden" />
-                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={56} className="hidden sm:block" />
+                  className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl sm:rounded-3xl bg-white/95 flex items-center justify-center shadow-lg flex-shrink-0">
+                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={64} className="sm:hidden" />
+                  <CropImage seedId={bestFert.seedId} name={bestFert.name} size={96} className="hidden sm:block" />
                 </motion.div>
 
                 <div className="flex-1 min-w-0">
@@ -474,10 +467,10 @@ export default function CalculatorTab() {
                         </td>
                         <td>
                           <div className="flex items-center gap-2.5 min-w-0">
-                            <CropImage seedId={row.seedId} name={row.name} size={28} />
+                            <CropImage seedId={row.seedId} name={row.name} size={44} />
                             <div className="min-w-0">
                               <div className="font-bold text-sm text-[var(--ink)] leading-tight truncate">{row.name}</div>
-                              {row.seasons > 1 && <div className="text-[9px] text-[var(--sky-deep)] font-bold">{row.seasons} 季</div>}
+                              {row.seasons > 1 && <div className="text-[9px] text-[var(--berry-deep)] font-bold">{row.seasons} 季</div>}
                             </div>
                           </div>
                         </td>
@@ -506,10 +499,11 @@ export default function CalculatorTab() {
       )}
 
       {calculatedRows.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-5xl mb-3">🌱</div>
-          <div className="text-sm text-[var(--ink-mute)]">配置土地后开始计算</div>
-        </div>
+        <EmptyState
+          emoji="🌱"
+          title="配置土地后开始计算"
+          hint="设置等级、土地数与各类土地分配，结果会出现在这里"
+        />
       )}
     </div>
   );

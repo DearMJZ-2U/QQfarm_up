@@ -4,7 +4,7 @@ import { Sparkles, ArrowRight, Calculator, Sprout, Map, Dna, Home as HomeIcon, C
 import seedsData from '../data/seeds.json';
 import itemsData from '../data/items.json';
 import mutationData from '../data/mutation_atlas.json';
-import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls } from './shared';
+import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls, StatTile } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
 
 type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'items_gold') => void;
@@ -93,18 +93,19 @@ function runQuickCalc(level: number, totalLands: number): QuickCalcResult | null
   };
 }
 
-function StatPill({ icon, label, value, accent }: { icon: React.ReactNode; label: string; value: string | number; accent: string }) {
+function StatPill({ icon, label, value, accent }: { icon: React.ReactNode; label: string; value: string | number; accent: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' }) {
   return (
-    <div className="sticker p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3">
-      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-        style={{ background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }}>
-        {icon}
-      </div>
-      <div className="min-w-0">
-        <div className="font-mono tnum text-base sm:text-xl font-black text-[var(--ink)] leading-none">{value}</div>
-        <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] font-bold mt-0.5 truncate">{label}</div>
-      </div>
-    </div>
+    <StatTile
+      label={label}
+      value={value}
+      color={accent}
+      icon={
+        <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }}>
+          {icon}
+        </div>
+      }
+    />
   );
 }
 
@@ -248,9 +249,9 @@ export default function HomeTab({ onNavigate }: Props) {
               initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
               className="rounded-2xl p-3 sm:p-4 flex items-center gap-3"
               style={{ background: 'linear-gradient(135deg, var(--leaf-bg) 0%, var(--sun-bg) 100%)', border: '1.5px solid var(--leaf-soft)' }}>
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 bg-white/80">
-                <CropImage seedId={result.seedId} name={result.name} size={40} className="sm:hidden" />
-                <CropImage seedId={result.seedId} name={result.name} size={56} className="hidden sm:block" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 bg-white/80">
+                <CropImage seedId={result.seedId} name={result.name} size={56} className="sm:hidden" />
+                <CropImage seedId={result.seedId} name={result.name} size={72} className="hidden sm:block" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[var(--leaf-deep)] mb-0.5">最佳推荐</div>
@@ -298,17 +299,17 @@ export default function HomeTab({ onNavigate }: Props) {
                     style={{ background: i === 0 ? 'var(--sun)' : 'var(--bg-2)', color: i === 0 ? 'white' : 'var(--ink-mute)' }}>
                     {i + 1}
                   </div>
-                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'var(--sun-bg)' }}>
                     {atlasUrls.length > 0 ? (
-                      <RemoteImage urls={atlasUrls} name={g.name} size={32} className="sm:hidden" rounded />
+                      <RemoteImage urls={atlasUrls} name={g.name} size={36} className="sm:hidden" rounded />
                     ) : (
-                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={32} className="sm:hidden" />
+                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={36} className="sm:hidden" />
                     )}
                     {atlasUrls.length > 0 ? (
-                      <RemoteImage urls={atlasUrls} name={g.name} size={40} className="hidden sm:block" rounded />
+                      <RemoteImage urls={atlasUrls} name={g.name} size={48} className="hidden sm:block" rounded />
                     ) : (
-                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={40} className="hidden sm:block" />
+                      <CropImage seedId={g.seedId} name={g.name.replace(/^黄金·/, '')} size={48} className="hidden sm:block" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">

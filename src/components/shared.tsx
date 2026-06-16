@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { Leaf } from 'lucide-react';
+import { Leaf, ArrowRight } from 'lucide-react';
 import seedMapping from '../data/seed_mapping.json';
 import plantData from '../data/Plant.json';
 import itemsData from '../data/items.json';
@@ -43,13 +43,11 @@ function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = 
   pixel?: boolean;
 }) {
   const [idx, setIdx] = React.useState(0);
+  const hasSize = className === '' && size != null;
   if (idx >= urls.length) {
     return (
       <div className={`inline-flex items-center justify-center shrink-0 ${rounded ? 'rounded-lg' : 'rounded-full'} ${className}`}
-        style={{
-          background: 'var(--bg-2)',
-          ...(size ? { width: size, height: size } : {})
-        }}>
+        style={hasSize ? { background: 'var(--bg-2)', width: size, height: size } : { background: 'var(--bg-2)' }}>
         <Leaf size={(size || 32) * 0.5} style={{ color: 'var(--leaf)', opacity: 0.5 }} />
       </div>
     );
@@ -58,7 +56,7 @@ function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = 
     <img src={urls[idx]} alt={alt}
       className={`object-contain shrink-0 ${rounded ? 'rounded-lg' : ''} ${pixel ? 'pixel-art' : ''} ${className}`}
       loading="lazy"
-      style={size ? { width: size, height: size } : undefined}
+      style={hasSize ? { width: size, height: size } : undefined}
       onError={() => setIdx(idx + 1)}
     />
   );
@@ -135,22 +133,23 @@ export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: 
   ];
 
   return (
-    <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar pb-1">
+    <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 overflow-x-auto sm:overflow-x-visible no-scrollbar pb-1">
       {phaseNames.map((p, i) => (
         <React.Fragment key={i}>
-          <div className="flex-shrink-0 flex flex-col items-center gap-1 sm:gap-1.5">
-            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center overflow-hidden"
+          <div className="flex-shrink-0 flex flex-col items-center gap-1.5 sm:gap-2">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-2xl flex items-center justify-center overflow-hidden"
               style={{
                 background: gold ? 'var(--sun-bg)' : 'var(--leaf-bg)',
                 border: `1.5px solid ${gold ? 'var(--sun-soft)' : 'var(--leaf-soft)'}`,
               }}>
-              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={40} className="sm:hidden" rounded />
-              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={64} className="hidden sm:block" rounded />
+              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={64} className="sm:hidden" rounded />
+              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={80} className="hidden sm:block lg:hidden" rounded />
+              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={96} className="hidden lg:block" rounded />
             </div>
             <div className="text-[10px] sm:text-xs font-bold text-[var(--ink-mute)] tracking-tight">{p.label}</div>
           </div>
           {i < phaseNames.length - 1 && (
-            <span className="text-[var(--ink-mute)]/60 text-lg sm:text-xl flex-shrink-0 -mt-3 sm:-mt-4" aria-hidden>›</span>
+            <span className="text-[var(--ink-mute)]/60 text-lg sm:text-xl lg:text-2xl flex-shrink-0 -mt-5 sm:-mt-6" aria-hidden>›</span>
           )}
         </React.Fragment>
       ))}
@@ -326,4 +325,370 @@ export function Portal({ children }: { children: React.ReactNode }) {
   React.useEffect(() => { setMounted(true); }, []);
   if (!mounted) return null;
   return createPortal(children, document.body);
+}
+
+// ══════════════════════════════════════════════════════════════
+// 设计系统共享组件 — 取代各页面里重复造轮子的实现
+// ══════════════════════════════════════════════════════════════
+
+// ── EmptyState — 统一空状态 ──────────────────────────────────
+
+export function EmptyState({
+  emoji = '🌾',
+  title,
+  hint,
+}: {
+  emoji?: string;
+  title: string;
+  hint?: string;
+}) {
+  return (
+    <div className="empty-state">
+      <div className="empty-state-emoji" aria-hidden>{emoji}</div>
+      <div className="empty-state-title">{title}</div>
+      {hint && <div className="empty-state-hint">{hint}</div>}
+    </div>
+  );
+}
+
+// ── PillTabGroup — 统一 tab / 过滤器 pill 组 ──────────────────
+// 用法：
+//   <PillTabGroup
+//     items={[{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }]}
+//     value={tab} onChange={setTab}
+//     accent="leaf"
+//   />
+
+export interface PillTabItem {
+  id: string;
+  label: string;
+  emoji?: string;
+  count?: number;
+  disabled?: boolean;
+}
+
+export function PillTabGroup({
+  items,
+  value,
+  onChange,
+  accent,
+  size = 'md',
+}: {
+  items: PillTabItem[];
+  value: string;
+  onChange: (id: string) => void;
+  /** 选填：accent 决定 active pill 的高亮色。空 = 纯中性。 */
+  accent?: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum';
+  size?: 'sm' | 'md';
+}) {
+  const style = accent ? ({ '--accent': `var(--${accent})`, '--accent-deep': `var(--${accent}-deep)` } as React.CSSProperties) : undefined;
+  return (
+    <div className="pill-tab-group" style={style}>
+      {items.map(item => {
+        const active = item.id === value;
+        const cls = [
+          'pill-tab',
+          active ? 'pill-tab-active' : '',
+          accent && active ? 'pill-tab-accent' : '',
+        ].filter(Boolean).join(' ');
+        const fontSize = size === 'sm' ? '0.7rem' : '0.75rem';
+        return (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => !item.disabled && onChange(item.id)}
+            disabled={item.disabled}
+            className={cls}
+            style={{ fontSize }}
+            aria-pressed={active}>
+            {item.emoji && <span className="text-sm leading-none">{item.emoji}</span>}
+            <span>{item.label}</span>
+            {item.count !== undefined && (
+              <span className="font-mono tnum opacity-70" style={{ fontSize: '0.65rem' }}>{item.count}</span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── RowCard — 统一行卡片 ─────────────────────────────────────
+
+export function RowCard({
+  children,
+  onClick,
+  className = '',
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
+} & React.AriaAttributes) {
+  const cls = ['row-card', onClick ? 'row-card-press' : '', className].filter(Boolean).join(' ');
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={cls}>
+        {children}
+      </button>
+    );
+  }
+  return <div className={cls}>{children}</div>;
+}
+
+// ── StatTile — 统一小统计卡 ──────────────────────────────────
+
+export function StatTile({
+  label,
+  value,
+  hint,
+  color,
+  muted,
+  icon,
+}: {
+  label: string;
+  value: string | number;
+  hint?: string;
+  /** 选填：语义色。会同时给底色 + 边框。 */
+  color?: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink';
+  muted?: boolean;
+  icon?: React.ReactNode;
+}) {
+  const colorCls = color ? `stat-tile-${color}` : '';
+  const cls = ['stat-tile', colorCls, muted ? 'stat-tile-muted' : ''].filter(Boolean).join(' ');
+  return (
+    <div className={cls}>
+      <div className="flex items-center justify-between gap-2">
+        <div className="stat-tile-label">{label}</div>
+        {icon}
+      </div>
+      <div className="stat-tile-value">{value}</div>
+      {hint && <div className="stat-tile-hint">{hint}</div>}
+    </div>
+  );
+}
+
+// ── LandSwatch — 统一土地色块 ───────────────────────────────
+
+export function LandSwatch({ type, size = 20 }: { type: 'normal' | 'red' | 'black' | 'gold' | 'purple'; size?: number }) {
+  const labels: Record<string, string> = { normal: '普', red: '红', black: '黑', gold: '金', purple: '紫' };
+  return (
+    <span
+      className={`land-swatch land-swatch-${type}`}
+      style={{ width: size, height: size, fontSize: size * 0.4 }}
+      aria-label={labels[type]}>
+      {labels[type]}
+    </span>
+  );
+}
+
+// ── ToggleCard — 农场风开关（复选框 + emoji + 标题 + 提示） ────
+// Calculator / CropAtlas 重复实现两次，现统一。
+
+export function ToggleCard({
+  checked,
+  onChange,
+  disabled,
+  emoji,
+  label,
+  hint,
+  color,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  disabled?: boolean;
+  emoji: string;
+  label: string;
+  hint: string;
+  color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum';
+} & React.AriaAttributes) {
+  return (
+    <label
+      className={`flex items-start gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl cursor-pointer transition-all border-1.5 ${
+        disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[var(--bg-2)]'
+      }`}
+      style={{
+        background: checked ? `var(--${color}-bg)` : 'var(--bg-2)',
+        border: `1.5px solid ${checked ? `var(--${color})` : 'var(--line)'}`,
+      }}>
+      <input
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={e => onChange(e.target.checked)}
+        className="farm-check mt-0.5"
+        style={checked && !disabled ? { background: `var(--${color})`, borderColor: `var(--${color})` } : {}}
+      />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1.5 mb-0.5 sm:mb-1">
+          <span className="text-sm sm:text-base leading-none">{emoji}</span>
+          <span className="text-xs font-bold text-[var(--ink)]">{label}</span>
+        </div>
+        <div className="text-[10px] text-[var(--ink-mute)] leading-snug">{hint}</div>
+      </div>
+    </label>
+  );
+}
+
+// ── LevelRangeInput — 等级范围输入（Lv a → Lv b + 快速跳转） ──
+// LevelSearchTab 和 LandUpgradeCalcTab 都用。
+
+export function LevelRangeInput({
+  from,
+  to,
+  onFromChange,
+  onToChange,
+  presets,
+  onPreset,
+  fromPlaceholder = '当前',
+  toPlaceholder = '目标',
+  invalid,
+}: {
+  from: number | '';
+  to: number | '';
+  onFromChange: (v: number | '') => void;
+  onToChange: (v: number | '') => void;
+  presets: Array<{ label: string; from: number; to: number }>;
+  onPreset: (p: { from: number; to: number }) => void;
+  fromPlaceholder?: string;
+  toPlaceholder?: string;
+  invalid?: boolean;
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">{fromPlaceholder}</div>
+          <input
+            type="number"
+            value={from}
+            onChange={e => onFromChange(e.target.value === '' ? '' : Number(e.target.value))}
+            className="input-pop text-center"
+            min={1}
+            max={200}
+            style={invalid ? { borderColor: 'var(--berry)' } : {}}
+          />
+        </div>
+        <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-5"
+          style={{ background: 'var(--plum-bg)', color: 'var(--plum-deep)' }}>
+          <ArrowRight size={14} strokeWidth={2.5} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">{toPlaceholder}</div>
+          <input
+            type="number"
+            value={to}
+            onChange={e => onToChange(e.target.value === '' ? '' : Number(e.target.value))}
+            className="input-pop text-center"
+            min={1}
+            max={200}
+            style={invalid ? { borderColor: 'var(--berry)' } : {}}
+          />
+        </div>
+      </div>
+      <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-1 px-1">
+        {presets.map(p => (
+          <button
+            key={p.label}
+            type="button"
+            onClick={() => onPreset(p)}
+            className="flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold transition-colors"
+            style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg-2)')}>
+            {p.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── CategoryNav — 共享分类导航 ──────────────────────────────
+// Atlas tab 和 ItemsTab 都用：移动端横滚 pill，桌面端 sticky 侧栏。
+
+export interface CategoryNavItem {
+  id: string;
+  label: string;
+  emoji: string;
+  count?: number;
+  color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum';
+}
+
+export function CategoryNav({
+  items,
+  value,
+  onChange,
+}: {
+  items: CategoryNavItem[];
+  value: string;
+  onChange: (id: string) => void;
+}) {
+  return (
+    <>
+      {/* 移动端：横滚 pill */}
+      <div className="lg:hidden">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-1 px-1 pb-1">
+          {items.map(t => {
+            const active = t.id === value;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => onChange(t.id)}
+                className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap transition-all"
+                style={
+                  active
+                    ? { background: `var(--${t.color})`, color: 'white', boxShadow: `0 2px 0 var(--${t.color}-deep)` }
+                    : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                }
+                aria-pressed={active}>
+                <span className="text-base">{t.emoji}</span>
+                <span>{t.label}</span>
+                {t.count !== undefined && (
+                  <span className="font-mono tnum opacity-80" style={{ fontSize: '0.65rem' }}>{t.count}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 桌面端：sticky 侧栏 */}
+      <div className="hidden lg:block space-y-1.5 sticky" style={{ top: 'calc(var(--header-h) + 1.5rem)' }}>
+        <div className="section-eyebrow px-2 pb-2">分类</div>
+        {items.map(t => {
+          const active = t.id === value;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => onChange(t.id)}
+              className={`w-full text-left flex items-center gap-3 px-3 py-3 rounded-2xl transition-all ${!active && 'hover:bg-[var(--bg-2)]'}`}
+              style={
+                active
+                  ? {
+                      background: `var(--${t.color}-bg)`,
+                      border: `1.5px solid var(--${t.color})`,
+                      boxShadow: 'var(--shadow-pop)',
+                    }
+                  : { border: '1.5px solid transparent' }
+              }
+              aria-pressed={active}>
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style={{ background: active ? 'rgba(255,255,255,0.7)' : `var(--${t.color}-bg)` }}>
+                <span>{t.emoji}</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-bold text-[var(--ink)] truncate">{t.label}</div>
+                {t.count !== undefined && (
+                  <div className="text-[11px] font-mono text-[var(--ink-mute)] tnum">{t.count}</div>
+                )}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </>
+  );
 }

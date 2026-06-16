@@ -3,14 +3,21 @@ import { motion } from 'motion/react';
 import { TrendingUp, Sparkles, Coins, ArrowRight, Layers, Sprout } from 'lucide-react';
 import levelExpData from '../data/level_exp.json';
 import landsData from '../data/lands_atlas.json';
+import { EmptyState, StatTile } from './shared';
 
 type LandType = '红土地' | '黑土地' | '金土地' | '紫晶土地';
 
-const landTypeMeta: Record<LandType, { emoji: string; accent: 'berry' | 'ink' | 'sun' | 'plum'; bgVar: string; textVar: string; borderVar: string; inkText: string }> = {
-  '红土地': { emoji: '🟥', accent: 'berry', bgVar: '--berry-bg', textVar: '--berry-deep', borderVar: '--berry', inkText: 'var(--berry-deep)' },
-  '黑土地': { emoji: '⬛', accent: 'ink', bgVar: '--bg-2', textVar: '--ink', borderVar: '--ink', inkText: 'var(--ink)' },
-  '金土地': { emoji: '🟨', accent: 'sun', bgVar: '--sun-bg', textVar: '--sun-deep', borderVar: '--sun-deep', inkText: 'var(--ink)' },
-  '紫晶土地': { emoji: '🟪', accent: 'plum', bgVar: '--plum-bg', textVar: '--plum-deep', borderVar: '--plum', inkText: 'var(--plum-deep)' },
+const landTypeKey: Record<LandType, 'red' | 'black' | 'gold' | 'purple'> = {
+  '红土地': 'red',
+  '黑土地': 'black',
+  '金土地': 'gold',
+  '紫晶土地': 'purple',
+};
+const landTypeColor: Record<LandType, 'berry' | 'ink' | 'sun' | 'plum'> = {
+  '红土地': 'berry',
+  '黑土地': 'ink',
+  '金土地': 'sun',
+  '紫晶土地': 'plum',
 };
 const landTypeOrder: LandType[] = ['红土地', '黑土地', '金土地', '紫晶土地'];
 
@@ -40,6 +47,7 @@ export default function LandUpgradeCalcTab() {
 
   const safeCurrent = Math.max(1, Math.min(200, currentLevel || 1));
   const safeTarget = Math.max(safeCurrent, Math.min(200, targetLevel || safeCurrent));
+  const rangeInvalid = (targetLevel || 0) < safeCurrent;
 
   const levelExpMap = React.useMemo(() => {
     const m = new Map<number, { cumulativeExp: number; levelUpExp: number }>();
@@ -90,23 +98,21 @@ export default function LandUpgradeCalcTab() {
     return map;
   }, [events]);
 
-  const quickPicks = [
-    { label: '红土阶段', from: 28, to: 40, emoji: '🟥', accent: 'berry' as const },
-    { label: '黑土阶段', from: 40, to: 58, emoji: '⬛', accent: 'ink' as const },
-    { label: '金土阶段', from: 58, to: 90, emoji: '🟨', accent: 'sun' as const },
-    { label: '紫晶起步', from: 90, to: 120, emoji: '🟪', accent: 'plum' as const },
-    { label: '满级紫晶', from: 120, to: 160, emoji: '👑', accent: 'plum' as const },
+  const quickPicks: Array<{ label: string; from: number; to: number; type: 'red' | 'black' | 'gold' | 'purple' }> = [
+    { label: '红土阶段',  from: 28,  to: 40,  type: 'red'    },
+    { label: '黑土阶段',  from: 40,  to: 58,  type: 'black'  },
+    { label: '金土阶段',  from: 58,  to: 90,  type: 'gold'   },
+    { label: '紫晶起步',  from: 90,  to: 120, type: 'purple' },
+    { label: '满级紫晶',  from: 120, to: 160, type: 'purple' },
   ];
 
   return (
     <div className="space-y-5 fade-in pt-3">
       {/* Hero */}
-      <header>
-        <div className="chip chip-plum mb-2"><TrendingUp size={11} strokeWidth={2.5} /> 土地升级所需</div>
-        <h2 className="font-display italic text-3xl font-bold text-[var(--ink)] leading-tight">
-          升到目标等级 · 所需一览
-        </h2>
-        <p className="text-xs text-[var(--ink-soft)] mt-1">输入当前 / 目标等级，自动算出经验、金币、金豆</p>
+      <header className="page-header">
+        <span className="page-header-chip"><TrendingUp size={11} strokeWidth={2.5} /> 土地升级所需</span>
+        <h2 className="page-header-title">升到目标等级 · 所需一览</h2>
+        <p className="page-header-subtitle">输入当前 / 目标等级，自动算出经验、金币、金豆</p>
       </header>
 
       {/* Inputs */}
@@ -131,7 +137,11 @@ export default function LandUpgradeCalcTab() {
             <input type="number" value={targetLevel}
               onChange={e => setTargetLevel(Number(e.target.value) || safeCurrent)}
               className="w-full input-pop text-center font-mono font-bold"
-              style={{ padding: '0.7rem 0.5rem', fontSize: '1.1rem', borderColor: 'var(--plum-soft)' }}
+              style={{
+                padding: '0.7rem 0.5rem',
+                fontSize: '1.1rem',
+                borderColor: rangeInvalid ? 'var(--berry)' : 'var(--plum-soft)',
+              }}
               min={1} max={200} />
           </div>
         </div>
@@ -140,80 +150,76 @@ export default function LandUpgradeCalcTab() {
           {quickPicks.map((q, i) => (
             <button key={i}
               onClick={() => { setCurrentLevel(q.from); setTargetLevel(q.to); }}
-              className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all active:scale-95"
-              style={{ background: `var(--${q.accent === 'ink' ? 'bg-2' : q.accent + '-bg'})`,
-                       color: `var(--${q.accent === 'ink' ? 'ink' : q.accent + '-deep'})` }}>
-              <span>{q.emoji}</span>
+              className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all active:scale-95"
+              style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
               <span>{q.label}</span>
               <span className="font-mono opacity-70">{q.from}→{q.to}</span>
             </button>
           ))}
         </div>
 
-        {safeTarget === safeCurrent && (
-          <div className="text-[11px] text-center text-[var(--ink-mute)] font-bold">
+        {rangeInvalid && (
+          <div className="text-[11px] text-center text-[var(--berry-deep)] font-bold">
             ⚠️ 目标等级需大于当前等级
           </div>
         )}
       </div>
 
-      {/* 3 核心结果卡：参考图例，主题色描边 + 淡色背景 + 右上角小 chip */}
+      {/* 3 核心结果卡 */}
       <div className="grid grid-cols-3 gap-2.5">
-        <ResultCard
-          emoji="✨" label="所需经验" value={formatExp(expRequired)}
-          sub={`Lv${safeCurrent} → Lv${safeTarget}`} tag="计算"
-          bgVar="--leaf-bg" textVar="--leaf-deep" borderVar="--leaf"
+        <StatTile
+          label="所需经验"
+          value={formatExp(expRequired)}
+          hint={`Lv${safeCurrent} → Lv${safeTarget}`}
+          color="leaf"
+          muted={rangeInvalid}
+          icon={<Sparkles size={12} strokeWidth={2.5} style={{ color: 'var(--leaf-deep)' }} />}
         />
-        <ResultCard
-          emoji="💰" label="所需金币" value={formatGold(totalGold)}
-          sub={`共 ${events.length} 次升级`} tag="累计"
-          bgVar="--sun-bg" textVar="--sun-deep" borderVar="--sun-deep"
+        <StatTile
+          label="所需金币"
+          value={formatGold(totalGold)}
+          hint={`共 ${events.length} 次升级`}
+          color="sun"
+          muted={rangeInvalid}
+          icon={<Coins size={12} strokeWidth={2.5} style={{ color: 'var(--sun-deep)' }} />}
         />
-        <ResultCard
-          emoji="🫘" label="所需金豆" value={totalBeans.toLocaleString()}
-          sub={totalBeans > 0 ? `含紫晶 ${byType['紫晶土地'].count} 次` : '当前区间无需金豆'} tag="累计"
-          bgVar="--plum-bg" textVar="--plum-deep" borderVar="--plum"
+        <StatTile
+          label="所需金豆"
+          value={totalBeans.toLocaleString()}
+          hint={totalBeans > 0 ? `含紫晶 ${byType['紫晶土地'].count} 次` : '当前区间无需金豆'}
+          color="plum"
+          muted={rangeInvalid}
         />
       </div>
 
-      {/* 按土地类型分布 — 4 张主题色卡：彩色描边 + 淡背景 + 右上角"配置/剩余"小 chip */}
+      {/* 按土地类型分布 */}
       <section>
         <div className="section-eyebrow mb-2.5 px-1 flex items-center gap-1.5">
           <Layers size={11} strokeWidth={2.5} /> 按土地类型
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
           {landTypeOrder.map(lt => {
-            const m = landTypeMeta[lt];
+            const color = landTypeColor[lt];
+            const key = landTypeKey[lt];
             const s = byType[lt];
             const has = s.count > 0;
             return (
               <div key={lt}
-                className="rounded-2xl p-3 relative"
-                style={{
-                  background: `var(${m.bgVar})`,
-                  border: `1.5px solid var(${m.borderVar})`,
-                  opacity: has ? 1 : 0.5,
-                }}>
-                {/* 右上角小 chip：白底 + 主题色文字 */}
+                className={`stat-tile stat-tile-${color === 'ink' ? 'ink' : color} relative`}
+                style={{ opacity: has ? 1 : 0.5 }}>
                 <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md text-[10px] font-bold"
-                  style={{ background: 'rgba(255,255,255,0.85)', color: `var(${m.textVar})` }}>
+                  style={{ background: 'rgba(255,255,255,0.85)', color: `var(--${color}-deep)` }}>
                   {has ? '配置' : '剩余'}
                 </span>
-
                 <div className="flex items-center gap-1.5 pr-12">
-                  <span className="text-base leading-none">{m.emoji}</span>
-                  <span className="text-sm font-bold truncate" style={{ color: `var(${m.textVar})` }}>{lt}</span>
+                  <span className="text-sm font-bold truncate" style={{ color: `var(--${color}-deep)` }}>{lt}</span>
                 </div>
-
-                <div className="mt-1.5 text-[10px] font-mono tnum font-bold leading-relaxed"
-                  style={{ color: `var(${m.textVar})` }}>
+                <div className="text-[10px] font-mono tnum font-bold leading-relaxed" style={{ color: `var(--${color}-deep)` }}>
                   💰 {has ? formatGold(s.gold) : '—'}
                   <span className="opacity-50 mx-1">·</span>
                   🫘 {s.beans > 0 ? s.beans.toLocaleString() : '—'}
                 </div>
-
-                <div className="font-mono tnum text-2xl font-black mt-1.5"
-                  style={{ color: m.inkText }}>
+                <div className="font-mono tnum text-2xl font-black mt-1" style={{ color: 'var(--ink)' }}>
                   {s.count}
                   <span className="text-[10px] font-bold text-[var(--ink-mute)] ml-1">次</span>
                 </div>
@@ -223,7 +229,7 @@ export default function LandUpgradeCalcTab() {
         </div>
       </section>
 
-      {/* 升级事件明细 — 单 sticker-lg 包住，header 用浅色背景条 */}
+      {/* 升级事件明细 */}
       <section>
         <div className="section-eyebrow mb-2.5 px-1 flex items-center gap-1.5">
           <Sprout size={11} strokeWidth={2.5} /> 升级事件明细
@@ -239,14 +245,11 @@ export default function LandUpgradeCalcTab() {
             <span className="w-14 text-right">金豆</span>
           </div>
           {events.length === 0 ? (
-            <div className="p-10 text-center">
-              <div className="text-4xl mb-2">🌾</div>
-              <div className="text-sm text-[var(--ink-mute)]">当前等级到目标等级之间没有升级事件</div>
-            </div>
+            <EmptyState emoji="🌾" title="当前等级到目标等级之间没有升级事件" hint={rangeInvalid ? '检查等级输入' : '试试更大的等级区间'} />
           ) : (
             <div className="max-h-[50vh] overflow-y-auto">
               {events.map((e, i) => {
-                const m = landTypeMeta[e.type];
+                const color = landTypeColor[e.type];
                 return (
                   <motion.div key={`${e.plotId}-${e.type}-${e.level}`}
                     initial={{ opacity: 0, y: 4 }}
@@ -262,9 +265,9 @@ export default function LandUpgradeCalcTab() {
                       </span>
                     </div>
                     <div className="min-w-0">
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md font-bold text-[10px]"
-                        style={{ background: `var(${m.bgVar})`, color: `var(${m.textVar})` }}>
-                        {m.emoji} {e.type}
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded-md font-bold text-[10px]"
+                        style={{ background: `var(--${color}-bg)`, color: `var(--${color}-deep)` }}>
+                        {e.type}
                       </span>
                     </div>
                     <div className="text-right font-mono tnum text-[10px] font-bold" style={{ color: 'var(--sun-deep)' }}>
@@ -280,31 +283,6 @@ export default function LandUpgradeCalcTab() {
           )}
         </div>
       </section>
-    </div>
-  );
-}
-
-function ResultCard({ emoji, label, value, sub, tag, bgVar, textVar, borderVar }: {
-  emoji: string;
-  label: string;
-  value: string;
-  sub: string;
-  tag: string;
-  bgVar: string;
-  textVar: string;
-  borderVar: string;
-}) {
-  return (
-    <div className="rounded-2xl p-3 text-center relative"
-      style={{ background: `var(${bgVar})`, border: `1.5px solid var(${borderVar})` }}>
-      <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md text-[10px] font-bold"
-        style={{ background: 'rgba(255,255,255,0.85)', color: `var(${textVar})` }}>
-        {tag}
-      </span>
-      <div className="text-base leading-none mb-1">{emoji}</div>
-      <div className="text-[10px] font-bold uppercase tracking-wide" style={{ color: `var(${textVar})` }}>{label}</div>
-      <div className="font-mono tnum text-xl font-black mt-1" style={{ color: `var(${textVar})` }}>{value}</div>
-      <div className="text-[9px] text-[var(--ink-mute)] font-mono tnum mt-0.5 truncate" title={sub}>{sub}</div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Home, Package, FolderTree } from 'lucide-react';
 import costumeData from '../data/costume_atlas.json';
 import { groupCostumesBySet, buildOrderedSections, type CostumeItem, type CostumeSet } from '../data/costume-sets';
-import { RemoteImage, costumeImageUrls } from './shared';
+import { RemoteImage, costumeImageUrls, RowCard, EmptyState, PillTabGroup } from './shared';
 
 const tagChip: Record<string, string> = {
   '默认': 'chip-ink',
@@ -11,28 +11,28 @@ const tagChip: Record<string, string> = {
   '黄金': 'chip-sun',
 };
 
-const catAccents = ['leaf', 'orange', 'sun', 'berry', 'sky', 'plum'];
+const catAccents = ['leaf', 'orange', 'sun', 'berry', 'sky', 'plum'] as const;
+type Accent = typeof catAccents[number];
 
 type ViewTab = 'functional' | 'set';
 
 function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
   return (
-    <div className="flex items-center gap-3 sm:gap-5 p-3 sm:p-5 rounded-2xl" style={{ background: 'var(--bg-2)' }}>
-      <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center flex-shrink-0"
+    <RowCard>
+      <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center flex-shrink-0"
         style={{ background: 'var(--surface)' }}>
-        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} size={56} className="sm:hidden" rounded />
-        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} size={96} className="hidden sm:block" rounded />
+        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} className="w-16 h-16 sm:w-24 sm:h-24" rounded />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-1">
           <span className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{item.name}</span>
-          <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.6rem' }}>
+          <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.65rem' }}>
             {item.tag}
           </span>
         </div>
-        <div className="text-[11px] sm:text-xs text-[var(--ink-mute)] leading-snug">{item.desc}</div>
+        <div className="text-[11px] sm:text-xs text-[var(--ink-soft)] leading-snug">{item.desc}</div>
       </div>
-    </div>
+    </RowCard>
   );
 }
 
@@ -40,7 +40,7 @@ function ItemGrid({ items }: { items: CostumeItem[] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
       {items.map((item, j) => (
-        <ItemCard key={j} item={item} />
+        <ItemCard key={`${item.name}-${j}`} item={item} />
       ))}
     </div>
   );
@@ -53,7 +53,7 @@ function FunctionalView() {
       {categories.map((cat, i) => {
         const accent = catAccents[i % catAccents.length];
         return (
-          <motion.section key={i}
+          <motion.section key={cat.name}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.05 }}>
@@ -76,7 +76,11 @@ function FunctionalView() {
               </div>
 
               <div className="p-3 sm:p-4">
-                <ItemGrid items={cat.items.map(item => ({ ...item, category: cat.name }))} />
+                {cat.items.length === 0 ? (
+                  <EmptyState emoji="🎒" title="该分类暂无装扮" />
+                ) : (
+                  <ItemGrid items={cat.items.map(item => ({ ...item, category: cat.name }))} />
+                )}
               </div>
             </div>
           </motion.section>
@@ -86,13 +90,13 @@ function FunctionalView() {
   );
 }
 
-function SetRow({ set, accent }: { set: CostumeSet; accent: string; key?: React.Key }) {
+function SetRow({ set, accent }: { set: CostumeSet; accent: Accent; key?: React.Key }) {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 px-1">
         <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: `var(--${accent})` }} />
         <span className="font-bold text-sm text-[var(--ink)]">{set.name}</span>
-        <span className="chip chip-ink flex-shrink-0" style={{ fontSize: '0.6rem' }}>{set.items.length} 件</span>
+        <span className="chip chip-ink flex-shrink-0" style={{ fontSize: '0.65rem' }}>{set.items.length} 件</span>
       </div>
       <ItemGrid items={set.items} />
     </div>
@@ -100,7 +104,7 @@ function SetRow({ set, accent }: { set: CostumeSet; accent: string; key?: React.
 }
 
 function Section({ title, desc, icon, count, accent, children }: {
-  title: string; desc?: string; icon: string; count: string; accent: string;
+  title: string; desc?: string; icon: string; count: string; accent: Accent | 'ink';
   children: React.ReactNode; key?: React.Key;
 }) {
   return (
@@ -140,7 +144,6 @@ function SetView() {
     []
   );
 
-  // 顶级 section 共享 6 色循环：默认 = ink；活动 / 主题套按排序后顺序循环分配。
   const ordered = React.useMemo(
     () => buildOrderedSections(grouped.events, grouped.themes),
     [grouped]
@@ -184,39 +187,27 @@ export default function CostumeAtlasTab() {
   const { categories } = costumeData;
   const totalItems = categories.reduce((s, c) => s + c.items.length, 0);
 
-  const tabs: { id: ViewTab; label: string; emoji: string; accent: string; icon: React.ElementType }[] = [
-    { id: 'set', label: '套装分类', emoji: '🎁', accent: 'orange', icon: Package },
-    { id: 'functional', label: '功能分类', emoji: '🗂️', accent: 'sky', icon: FolderTree },
-  ];
-
   return (
     <div className="space-y-5 fade-in">
       {/* Hero */}
-      <header>
-        <div className="chip chip-sky mb-2"><Home size={11} strokeWidth={2.5} /> 装扮图鉴</div>
-        <h2 className="font-display italic text-3xl font-bold text-[var(--ink)] leading-tight">
-          打扮你的农场
-        </h2>
-        <p className="text-xs text-[var(--ink-soft)] mt-1">{categories.length} 大类装扮共 {totalItems} 件</p>
+      <header className="page-header">
+        <span className="page-header-chip" style={{ background: 'var(--sky-bg)', color: 'var(--sky-deep)' }}>
+          <Home size={11} strokeWidth={2.5} /> 装扮图鉴
+        </span>
+        <h2 className="page-header-title">打扮你的农场</h2>
+        <p className="page-header-subtitle">{categories.length} 大类装扮共 {totalItems} 件</p>
       </header>
 
-      {/* View tab toggle */}
-      <div className="flex gap-2 p-2 sticker-pop rounded-2xl">
-        {tabs.map(t => {
-          const active = view === t.id;
-          const Icon = t.icon;
-          return (
-            <button key={t.id} onClick={() => setView(t.id)}
-              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all"
-              style={active
-                ? { background: `var(--${t.accent})`, color: 'white', boxShadow: `0 3px 0 var(--${t.accent}-deep)` }
-                : { color: 'var(--ink-soft)' }}>
-              <Icon size={18} strokeWidth={2.5} />
-              <span>{t.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      <PillTabGroup
+        items={[
+          { id: 'set',        label: '套装分类', emoji: '🎁' },
+          { id: 'functional', label: '功能分类', emoji: '🗂️' },
+        ]}
+        value={view}
+        onChange={(id) => setView(id as ViewTab)}
+        accent="orange"
+        size="md"
+      />
 
       {view === 'set' && <SetView />}
       {view === 'functional' && <FunctionalView />}

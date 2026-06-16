@@ -13,6 +13,7 @@ import MutationAtlasTab from './components/MutationAtlasTab';
 import CostumeAtlasTab from './components/CostumeAtlasTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
+import { CategoryNav, type CategoryNavItem } from './components/shared';
 
 type BottomTab = 'home' | 'atlas' | 'items' | 'more' | 'calc';
 type HomeNavTarget = 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'items_gold' | 'more_level' | 'more_land';
@@ -77,11 +78,16 @@ interface SidebarItem {
   },
 ];
 
-const atlasSubTabsDef = [
-  { id: 'crops' as const, label: '作物', emoji: '🌿', color: 'leaf' },
-  { id: 'costume' as const, label: '装扮', emoji: '🏡', color: 'sky' },
-  { id: 'lands' as const, label: '土地', emoji: '🏞️', color: 'orange' },
-  { id: 'mutation' as const, label: '变异', emoji: '🧬', color: 'berry' },
+const atlasSubTabsDef: Array<{
+  id: 'crops' | 'lands' | 'mutation' | 'costume';
+  label: string;
+  emoji: string;
+  color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum';
+}> = [
+  { id: 'crops', label: '作物', emoji: '🌿', color: 'leaf' },
+  { id: 'costume', label: '装扮', emoji: '🏡', color: 'sky' },
+  { id: 'lands', label: '土地', emoji: '🏞️', color: 'orange' },
+  { id: 'mutation', label: '变异', emoji: '🧬', color: 'berry' },
 ];
 
 const atlasSubTabCount = (id: 'crops' | 'costume' | 'lands' | 'mutation'): number => {
@@ -201,45 +207,17 @@ export default function App() {
             <div className="flex flex-col lg:flex-row gap-4">
               {/* 分类导航 — 移动端横滚 pill，PC 端左侧吸顶侧栏 */}
               <div className="lg:w-52 lg:flex-shrink-0">
-                <div className="lg:hidden flex gap-2 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1">
-                  {atlasSubTabsDef.map(t => {
-                    const active = atlasSubTab === t.id;
-                    return (
-                      <button key={t.id} onClick={() => navigate('atlas', t.id)}
-                        className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap transition-all"
-                        style={active
-                          ? { background: `var(--${t.color})`, color: 'white', boxShadow: `0 2px 0 var(--${t.color}-deep)` }
-                          : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
-                        <span className="text-base">{t.emoji}</span><span>{t.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="hidden lg:block space-y-1.5 sticky top-32">
-                  <div className="section-eyebrow px-2 pb-2">图鉴分类</div>
-                  {atlasSubTabsDef.map(t => {
-                    const active = atlasSubTab === t.id;
-                    return (
-                      <button key={t.id} onClick={() => navigate('atlas', t.id)}
-                        className={`w-full text-left flex items-center gap-3 px-3 py-3 rounded-2xl transition-all ${!active && 'hover:bg-[var(--bg-2)]'}`}
-                        style={active ? {
-                          background: `var(--${t.color}-bg)`,
-                          border: `1.5px solid var(--${t.color})`,
-                          boxShadow: 'var(--shadow-pop)',
-                        } : { border: '1.5px solid transparent' }}>
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                          style={{ background: active ? 'rgba(255,255,255,0.7)' : `var(--${t.color}-bg)` }}>
-                          <span>{t.emoji}</span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-sm font-bold text-[var(--ink)] truncate">{t.label}</div>
-                          <div className="text-[11px] font-mono text-[var(--ink-mute)]">{atlasSubTabCount(t.id)}</div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+                <CategoryNav
+                  items={atlasSubTabsDef.map(t => ({
+                    id: t.id,
+                    label: t.label,
+                    emoji: t.emoji,
+                    color: t.color,
+                    count: atlasSubTabCount(t.id),
+                  }))}
+                  value={atlasSubTab}
+                  onChange={(id) => navigate('atlas', id as 'crops' | 'lands' | 'mutation' | 'costume')}
+                />
               </div>
 
               {/* 当前分类内容 — 与道具 tab 同款「盒子内滚动」结构 */}
@@ -411,6 +389,15 @@ export default function App() {
               </div>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
+              <button
+                onClick={() => navigate('calc')}
+                className="hidden sm:flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
+                aria-label="打开收益计算器"
+                title="打开收益计算器"
+                style={{ color: 'var(--leaf-deep)' }}>
+                <Calculator size={16} strokeWidth={2.5} className="flex-shrink-0" />
+                <span>计算器</span>
+              </button>
               <a href={GITHUB_REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -456,11 +443,14 @@ export default function App() {
               const active = bottomTab === tab.id || (tab.id === 'home' && bottomTab === 'calc');
               const Icon = tab.Icon;
               return (
-                <button
+                <motion.button
                   key={tab.id}
                   onClick={() => navigate(tab.id)}
+                  whileTap={{ scale: 0.92 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   aria-label={tab.label}
-                  className="relative flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-all"
+                  aria-pressed={active}
+                  className="relative flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full font-bold text-xs transition-colors"
                   style={active ? {
                     background: `var(--${tab.color})`,
                     color: 'white',
@@ -470,7 +460,7 @@ export default function App() {
                   }}>
                   <Icon size={16} strokeWidth={2.5} />
                   <span>{tab.label}</span>
-                </button>
+                </motion.button>
               );
             })}
           </div>

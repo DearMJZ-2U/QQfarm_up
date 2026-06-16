@@ -321,6 +321,26 @@ body::after {
   white-space: nowrap;
 }
 
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.75rem;
+  gap: 0.3rem;
+}
+
+.btn-icon {
+  padding: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--r-pill);
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn-primary {
   background: var(--leaf);
   color: white;
@@ -336,6 +356,26 @@ body::after {
   box-shadow: var(--shadow-pop);
 }
 .btn-ghost:hover { background: var(--bg-2); }
+
+.btn-leaf    { background: var(--leaf);    color: white; box-shadow: 0 2px 0 var(--leaf-deep),    0 4px 12px rgba(45, 157, 61, 0.30); }
+.btn-orange  { background: var(--orange);  color: white; box-shadow: 0 2px 0 var(--orange-deep),  0 4px 12px rgba(255, 138, 61, 0.30); }
+.btn-sun     { background: var(--sun-deep); color: white; box-shadow: 0 2px 0 #b8860b,            0 4px 12px rgba(255, 203, 69, 0.35); }
+.btn-berry   { background: var(--berry);   color: white; box-shadow: 0 2px 0 var(--berry-deep),   0 4px 12px rgba(233, 75, 106, 0.30); }
+.btn-sky     { background: var(--sky);     color: white; box-shadow: 0 2px 0 var(--sky-deep),     0 4px 12px rgba(79, 184, 229, 0.30); }
+.btn-plum    { background: var(--plum);    color: white; box-shadow: 0 2px 0 var(--plum-deep),    0 4px 12px rgba(138, 79, 255, 0.30); }
+
+.btn-leaf:hover,
+.btn-orange:hover,
+.btn-sun:hover,
+.btn-berry:hover,
+.btn-sky:hover,
+.btn-plum:hover { transform: translateY(-1px); }
+.btn-leaf:active,
+.btn-orange:active,
+.btn-sun:active,
+.btn-berry:active,
+.btn-sky:active,
+.btn-plum:active { transform: translateY(1px); box-shadow: 0 0 0 transparent; }
 
 /* ──────────────────────────────────────────────────────────────
    输入框
@@ -405,8 +445,311 @@ body::after {
 .dark .chip-plum { background: var(--plum-bg); color: var(--plum-deep); }
 
 /* ──────────────────────────────────────────────────────────────
-   段标题（小标）
+   pill-tab — 统一的 tab / 过滤器 pill 组
+   - 全部为 rounded-full（与全 app 一致）
+   - 单色调 (--accent)，active 状态用 --accent + --accent-deep shadow
    ────────────────────────────────────────────────────────────── */
+
+.pill-tab-group {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  background: var(--bg-2);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+}
+
+.pill-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1.5px solid transparent;
+  user-select: none;
+}
+
+.pill-tab:hover:not(.pill-tab-active) {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.pill-tab-active {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: var(--shadow-pop);
+}
+
+/* pill-tab with an accent color (used in page-level tab toggle) */
+.pill-tab-accent.pill-tab-active {
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 2px 0 var(--accent-deep, var(--leaf-deep));
+  background: var(--accent, var(--leaf));
+}
+
+/* ──────────────────────────────────────────────────────────────
+   row-card — 统一的行卡片
+   - 默认不可点击
+   - row-card-press 加 hover lift 表明可点击
+   ────────────────────────────────────────────────────────────── */
+
+.row-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  text-align: left;
+  width: 100%;
+  color: var(--ink);
+  font-family: inherit;
+  cursor: default;
+}
+
+.row-card-press {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.row-card-press:hover {
+  background: var(--bg-2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-pop);
+}
+.row-card-press:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   stat-tile — 统一的小统计卡
+   - 取代 4 种 "rounded-2xl p-3 + bg + border" 的散乱实现
+   - stat-tile-{color} 5 种语义色
+   ────────────────────────────────────────────────────────────── */
+
+.stat-tile {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.stat-tile-leaf    { background: var(--leaf-bg);    border-color: var(--leaf);    }
+.stat-tile-orange  { background: var(--orange-bg);  border-color: var(--orange);  }
+.stat-tile-sun     { background: var(--sun-bg);     border-color: var(--sun-deep);}
+.stat-tile-berry   { background: var(--berry-bg);   border-color: var(--berry);   }
+.stat-tile-sky     { background: var(--sky-bg);     border-color: var(--sky);     }
+.stat-tile-plum    { background: var(--plum-bg);    border-color: var(--plum);    }
+.stat-tile-ink     { background: var(--bg-2);       border-color: var(--line-strong); }
+
+.stat-tile-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-family: var(--font-body);
+}
+
+.stat-tile-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.stat-tile-hint {
+  font-size: 0.7rem;
+  color: var(--ink-mute);
+  font-weight: 700;
+}
+
+.stat-tile-muted {
+  opacity: 0.45;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   empty-state — 统一的空状态
+   - 居中 + emoji + 主文本 + 副文本
+   ────────────────────────────────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  gap: 0.5rem;
+  color: var(--ink-mute);
+}
+
+.empty-state-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  opacity: 0.6;
+  margin-bottom: 0.25rem;
+}
+
+.empty-state-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.empty-state-hint {
+  font-size: 0.75rem;
+  color: var(--ink-mute);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   land-swatch — 统一的 5 种土地色块
+   - 取代 emoji 🟥⬛🟨🟪 平行编码
+   - 圆形小色块，用作 chip / list / pill 上的"土地类型"标识
+   ────────────────────────────────────────────────────────────── */
+
+.land-swatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+
+.land-swatch-normal { background: var(--earth); }
+.land-swatch-red    { background: var(--berry); }
+.land-swatch-black  { background: #1F2A1F; color: var(--ink-soft); }
+.land-swatch-gold   { background: var(--sun-deep); color: #5C3D00; }
+.land-swatch-purple { background: var(--plum); }
+
+/* ──────────────────────────────────────────────────────────────
+   data-table — 统一的"假表"(div-grid)样式
+   - 真实 <table> 仍可用 .table-clean
+   - 优势：响应式断点更灵活
+   ────────────────────────────────────────────────────────────── */
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-body);
+}
+
+.data-table-header {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-2);
+  border-bottom: 1.5px solid var(--line);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-family: var(--font-body);
+}
+
+.data-table-row {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  transition: background 0.15s ease;
+}
+
+.data-table-row:last-child { border-bottom: none; }
+.data-table-row:hover { background: var(--surface-soft); }
+
+/* ──────────────────────────────────────────────────────────────
+   page-header — 统一的页面 Hero
+   - chip + h1 + subtitle
+   - 所有 6 个 tab 的 hero 统一用这个
+   ────────────────────────────────────────────────────────────── */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.page-header-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: var(--leaf-bg);
+  color: var(--leaf-deep);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.page-header-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.page-header-subtitle {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 36rem;
+}
+
+@media (min-width: 640px) {
+  .page-header { padding: 0.5rem 0; }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   layout tokens — 高度变量
+   - 让 sticky 元素不再 hardcode top-32 / bottom-24
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  --header-h: 64px;
+  --bottom-nav-h: 72px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --header-h: 56px;
+    --bottom-nav-h: 64px;
+  }
+}
 
 .section-eyebrow {
   display: inline-flex;

@@ -24,23 +24,21 @@ export default function BackToTop() {
           initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 10 }}
+          whileTap={{ scale: 0.9 }}
+          whileHover={{ y: -2 }}
           transition={{ type: 'spring', damping: 22, stiffness: 280 }}
           onClick={scrollTop}
           aria-label="回到顶部"
           title="回到顶部"
-          className="fixed bottom-24 right-5 z-40 hidden sm:flex items-center justify-center w-12 h-12 rounded-full"
+          className="fixed right-4 sm:right-5 z-40 flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full"
           style={{
+            bottom: 'calc(var(--bottom-nav-h) + 1rem)',
             background: 'var(--surface)',
             color: 'var(--ink)',
             border: '1.5px solid var(--line)',
             boxShadow: 'var(--shadow-sticker-lg)',
           }}>
-          <motion.span
-            whileHover={{ y: -2 }}
-            transition={{ type: 'spring', damping: 16, stiffness: 300 }}
-            className="flex items-center justify-center">
-            <ArrowUp size={18} strokeWidth={2.5} />
-          </motion.span>
+          <ArrowUp size={18} strokeWidth={2.5} />
         </motion.button>
       )}
     </AnimatePresence>

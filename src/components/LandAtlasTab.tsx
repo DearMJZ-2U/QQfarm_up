@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Map as MapIcon, Layers3, TrendingUp } from 'lucide-react';
 import landsData from '../data/lands_atlas.json';
+import { LandSwatch, PillTabGroup, StatTile } from './shared';
 
 const BASE = (import.meta as any).env?.BASE_URL || '/';
 const CLEAN_BASE = BASE.endsWith('/') ? BASE : BASE + '/';
@@ -19,33 +20,18 @@ function LandImage({ file, alt, className = '', dim = false }: {
   );
 }
 
-const landTypes = [
-  {
-    name: '普通土地', lv: 'Lv.1', accent: 'earth', tile: 'tile-orange',
-    valid: 'land_valid1.png', dry: 'land_dry1.png',
-    y: '0%', t: '0%', e: '0%', m: '0%',
-  },
-  {
-    name: '红土地', lv: 'Lv.2', accent: 'berry', tile: 'tile-berry',
-    valid: 'land_valid2.png', dry: 'land_dry2.png',
-    y: '+100%', t: '0%', e: '0%', m: '0%',
-  },
-  {
-    name: '黑土地', lv: 'Lv.3', accent: 'ink', tile: 'tile-orange',
-    valid: 'land_valid3.png', dry: 'land_dry3.png',
-    y: '+200%', t: '-10%', e: '0%', m: '0%',
-  },
-  {
-    name: '金土地', lv: 'Lv.4', accent: 'sun', tile: 'tile-sun',
-    valid: 'land_valid4.png', dry: 'land_dry4.png',
-    y: '+300%', t: '-20%', e: '+20%', m: '0%',
-  },
-  {
-    name: '紫晶土地', lv: 'Lv.5', accent: 'plum', tile: 'tile-plum',
-    valid: 'land_valid5.png', dry: 'land_dry5.png',
-    y: '+300%', t: '-20%', e: '+25%', m: '+120%',
-    note: '启用时间 2026-04-15',
-  },
+type LandKey = 'normal' | 'red' | 'black' | 'gold' | 'purple';
+
+const landTypes: Array<{
+  name: string; lv: string; accent: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink';
+  tile: string; key: LandKey; valid: string; dry: string;
+  y: string; t: string; e: string; m: string; note?: string;
+}> = [
+  { name: '普通土地', lv: 'Lv.1', accent: 'ink',   tile: 'tile-orange', key: 'normal', valid: 'land_valid1.png', dry: 'land_dry1.png', y: '0%',     t: '0%',  e: '0%',  m: '0%' },
+  { name: '红土地',   lv: 'Lv.2', accent: 'berry', tile: 'tile-berry',  key: 'red',    valid: 'land_valid2.png', dry: 'land_dry2.png', y: '+100%',  t: '0%',  e: '0%',  m: '0%' },
+  { name: '黑土地',   lv: 'Lv.3', accent: 'ink',   tile: 'tile-orange', key: 'black',  valid: 'land_valid3.png', dry: 'land_dry3.png', y: '+200%',  t: '-10%', e: '0%',  m: '0%' },
+  { name: '金土地',   lv: 'Lv.4', accent: 'sun',   tile: 'tile-sun',    key: 'gold',   valid: 'land_valid4.png', dry: 'land_dry4.png', y: '+300%',  t: '-20%', e: '+20%', m: '0%' },
+  { name: '紫晶土地', lv: 'Lv.5', accent: 'plum',  tile: 'tile-plum',   key: 'purple', valid: 'land_valid5.png', dry: 'land_dry5.png', y: '+300%',  t: '-20%', e: '+25%', m: '+120%', note: '启用时间 2026-04-15' },
 ];
 
 const specialStates = [
@@ -54,14 +40,18 @@ const specialStates = [
   { name: '选中', icon: '✅', desc: '当前选中的地块外观', file: 'land_valid_selected.png' },
 ];
 
-type UpgradeAccent = 'berry' | 'ink' | 'sun' | 'plum';
 type UpgradeType = '红土地' | '黑土地' | '金土地' | '紫晶土地';
-
-const upgradeMeta: Record<UpgradeType, { emoji: string; accent: UpgradeAccent; borderVar: string; bgVar: string; deepVar: string; textVar: string; lv: string; g: string }> = {
-  '红土地': { emoji: '🟥', accent: 'berry', borderVar: '--berry', bgVar: '--berry-bg', deepVar: '--berry-deep', textVar: '--berry-deep', lv: 'Lv 28-57', g: '20w-230w' },
-  '黑土地': { emoji: '⬛', accent: 'ink', borderVar: '--ink', bgVar: '--bg-2', deepVar: '--ink', textVar: '--ink', lv: 'Lv 40-69', g: '60w-860w' },
-  '金土地': { emoji: '🟨', accent: 'sun', borderVar: '--sun', bgVar: '--sun-bg', deepVar: '--sun-deep', textVar: '--sun-deep', lv: 'Lv 58-87', g: '100w-1700w' },
-  '紫晶土地': { emoji: '🟪', accent: 'plum', borderVar: '--plum', bgVar: '--plum-bg', deepVar: '--plum-deep', textVar: '--plum-deep', lv: 'Lv 90-159', g: '5000w-5.1亿' },
+const upgradeKey: Record<UpgradeType, LandKey> = {
+  '红土地': 'red', '黑土地': 'black', '金土地': 'gold', '紫晶土地': 'purple',
+};
+const upgradeColor: Record<UpgradeType, 'berry' | 'ink' | 'sun' | 'plum'> = {
+  '红土地': 'berry', '黑土地': 'ink', '金土地': 'sun', '紫晶土地': 'plum',
+};
+const upgradeMeta: Record<UpgradeType, { lv: string; g: string }> = {
+  '红土地': { lv: 'Lv 28-57', g: '20w-230w' },
+  '黑土地': { lv: 'Lv 40-69', g: '60w-860w' },
+  '金土地': { lv: 'Lv 58-87', g: '100w-1700w' },
+  '紫晶土地': { lv: 'Lv 90-159', g: '5000w-5.1亿' },
 };
 const upgradeTypes: readonly UpgradeType[] = ['红土地', '黑土地', '金土地', '紫晶土地'];
 
@@ -72,12 +62,12 @@ export default function LandAtlasTab() {
   return (
     <div className="space-y-6 fade-in">
       {/* Hero */}
-      <header>
-        <div className="chip chip-orange mb-2"><MapIcon size={11} strokeWidth={2.5} /> 土地图鉴</div>
-        <h2 className="font-display italic text-3xl font-bold text-[var(--ink)] leading-tight">
-          24 块地 · 5 种土壤
-        </h2>
-        <p className="text-xs text-[var(--ink-soft)] mt-1">从开垦到升级的全套数据</p>
+      <header className="page-header">
+        <span className="page-header-chip" style={{ background: 'var(--orange-bg)', color: 'var(--orange-deep)' }}>
+          <MapIcon size={11} strokeWidth={2.5} /> 土地图鉴
+        </span>
+        <h2 className="page-header-title">24 块地 · 5 种土壤</h2>
+        <p className="page-header-subtitle">从开垦到升级的全套数据</p>
       </header>
 
       {/* Land Types */}
@@ -85,7 +75,7 @@ export default function LandAtlasTab() {
         <div className="section-eyebrow mb-3">单块土地类型</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {landTypes.map((lt, i) => (
-            <motion.div key={i}
+            <motion.div key={lt.name}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.04 }}
@@ -93,19 +83,21 @@ export default function LandAtlasTab() {
               style={{ borderColor: `var(--${lt.accent === 'ink' ? 'line-strong' : lt.accent})` }}>
 
               <div className={`${lt.tile} p-4 flex justify-center gap-4 items-center`}>
-                <div className="flex flex-col items-center gap-1">
-                  <LandImage file={lt.valid} alt={`${lt.name}正常`} className="w-14 h-14" />
+                <div className="flex flex-col items-center gap-1.5">
+                  <LandImage file={lt.valid} alt={`${lt.name}正常`} className="w-20 h-20" />
                   <span className="text-[9px] font-bold text-[var(--ink-soft)] uppercase tracking-wide">正常</span>
                 </div>
-                <div className="flex flex-col items-center gap-1">
-                  <LandImage file={lt.dry} alt={`${lt.name}干裂`} className="w-14 h-14" dim />
+                <div className="flex flex-col items-center gap-1.5">
+                  <LandImage file={lt.dry} alt={`${lt.name}干裂`} className="w-20 h-20" dim />
                   <span className="text-[9px] font-bold text-[var(--ink-soft)] uppercase tracking-wide">干裂</span>
                 </div>
               </div>
 
               <div className="p-3.5 space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display italic text-base font-bold text-[var(--ink)]">{lt.name}</h3>
+                  <h3 className="font-display italic text-base font-bold text-[var(--ink)] flex items-center gap-1.5">
+                    <LandSwatch type={lt.key} size={16} /> {lt.name}
+                  </h3>
                   <span className="chip" style={{
                     background: `var(--${lt.accent === 'ink' ? 'bg-2' : lt.accent + '-bg'})`,
                     color: `var(--${lt.accent === 'ink' ? 'ink' : lt.accent + '-deep'})`,
@@ -127,10 +119,10 @@ export default function LandAtlasTab() {
       {/* Special States */}
       <section>
         <div className="section-eyebrow mb-3">特殊土地状态</div>
-        <div className="grid grid-cols-3 gap-2.5">
-          {specialStates.map((ss, i) => (
-            <div key={i} className="sticker p-3 text-center">
-              <LandImage file={ss.file} alt={ss.name} className="w-14 h-14 mx-auto mb-2" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+          {specialStates.map(ss => (
+            <div key={ss.name} className="sticker p-3 text-center">
+              <LandImage file={ss.file} alt={ss.name} className="w-20 h-20 mx-auto mb-2" />
               <div className="text-xs font-bold text-[var(--ink)]">{ss.icon} {ss.name}</div>
               <div className="text-[10px] text-[var(--ink-mute)] mt-1 leading-snug">{ss.desc}</div>
             </div>
@@ -138,23 +130,17 @@ export default function LandAtlasTab() {
         </div>
       </section>
 
-      {/* Tab toggle */}
-      <div className="flex gap-1.5 p-1.5 sticker-pop rounded-full">
-        <button onClick={() => setTab('plots')}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
-          style={tab === 'plots'
-            ? { background: 'var(--orange)', color: 'white', boxShadow: '0 2px 0 var(--orange-deep)' }
-            : { color: 'var(--ink-soft)' }}>
-          <Layers3 size={14} strokeWidth={2.5} /> 地块布局
-        </button>
-        <button onClick={() => setTab('upgrades')}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
-          style={tab === 'upgrades'
-            ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
-            : { color: 'var(--ink-soft)' }}>
-          <TrendingUp size={14} strokeWidth={2.5} /> 升级需求
-        </button>
-      </div>
+      {/* Tab toggle — 统一 PillTabGroup */}
+      <PillTabGroup
+        items={[
+          { id: 'plots',    label: '地块布局', emoji: '🗺️' },
+          { id: 'upgrades', label: '升级需求', emoji: '📈' },
+        ]}
+        value={tab}
+        onChange={(id) => setTab(id as 'plots' | 'upgrades')}
+        accent="orange"
+        size="md"
+      />
 
       {tab === 'plots' && (
         <section>
@@ -162,7 +148,7 @@ export default function LandAtlasTab() {
             <div className="section-eyebrow">地块开垦顺序</div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">参考等级</span>
-              <input type="number" value={level} onChange={e => setLevel(Number(e.target.value) || 1)}
+              <input type="number" value={level} onChange={e => setLevel(Math.max(1, Math.min(200, Number(e.target.value) || 1)))}
                 className="w-16 input-pop text-center"
                 style={{ padding: '0.4rem 0.5rem', fontSize: '0.9rem' }}
                 min={1} max={200} />
@@ -185,7 +171,7 @@ export default function LandAtlasTab() {
                     <LandImage
                       file={unlocked ? 'land_valid1.png' : 'land_locked.png'}
                       alt=""
-                      className="w-10 h-10 mx-auto mb-1" />
+                      className="w-14 h-14 mx-auto mb-1" />
                     <div className="font-mono font-black text-sm" style={{ color: unlocked ? 'var(--leaf-deep)' : 'var(--sun-deep)' }}>
                       #{plot.id}
                     </div>
@@ -207,15 +193,15 @@ export default function LandAtlasTab() {
 
       {tab === 'upgrades' && (
         <section className="space-y-3">
-          {/* 单条紧凑图例条：4 个色 chip 横向并排 */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 -mx-1 px-1">
             {upgradeTypes.map(ut => {
               const meta = upgradeMeta[ut];
+              const color = upgradeColor[ut];
               return (
                 <span key={ut}
                   className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap flex-shrink-0"
-                  style={{ background: `var(${meta.bgVar})`, color: `var(${meta.textVar})` }}>
-                  <span>{meta.emoji}</span>
+                  style={{ background: `var(--${color}-bg)`, color: `var(--${color}-deep)` }}>
+                  <LandSwatch type={upgradeKey[ut]} size={14} />
                   <span>{ut}</span>
                   <span className="font-mono opacity-70">{meta.lv}</span>
                 </span>
@@ -223,7 +209,6 @@ export default function LandAtlasTab() {
             })}
           </div>
 
-          {/* 表格：白底单一表，单元格内无主题色，仅靠表头颜色识别列；未达等级行半透 */}
           <div className="sticker-lg overflow-x-auto">
             <table className="w-full" style={{ tableLayout: 'auto', borderCollapse: 'separate', borderSpacing: 0 }}>
               <thead>
@@ -231,11 +216,14 @@ export default function LandAtlasTab() {
                   <th className="w-12 text-left font-bold text-[10px] uppercase tracking-widest text-[var(--ink-mute)] px-3 py-2.5"
                     style={{ background: 'var(--bg-2)', borderBottom: '1.5px solid var(--line)' }}>地块</th>
                   {upgradeTypes.map(ut => {
-                    const meta = upgradeMeta[ut];
+                    const color = upgradeColor[ut];
                     return (
                       <th key={ut} className="text-right font-bold text-[10px] uppercase tracking-widest px-3 py-2.5 whitespace-nowrap"
-                        style={{ background: 'var(--bg-2)', color: `var(${meta.textVar})`, borderBottom: '1.5px solid var(--line)' }}>
-                        <span className="mr-1">{meta.emoji}</span>{ut}
+                        style={{ background: 'var(--bg-2)', color: `var(--${color}-deep)`, borderBottom: '1.5px solid var(--line)' }}>
+                        <span className="inline-flex items-center gap-1">
+                          <LandSwatch type={upgradeKey[ut]} size={12} />
+                          {ut}
+                        </span>
                       </th>
                     );
                   })}
@@ -286,7 +274,7 @@ export default function LandAtlasTab() {
   );
 }
 
-function BuffPill({ emoji, label, value, accent }: { emoji: string; label: string; value: string; accent: string }) {
+function BuffPill({ emoji, label, value, accent }: { emoji: string; label: string; value: string; accent: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink' }) {
   return (
     <div className="flex items-center justify-between rounded-lg px-2 py-1.5 text-[10px]"
       style={{ background: `var(--${accent}-bg)` }}>
