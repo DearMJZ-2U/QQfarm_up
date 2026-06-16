@@ -225,14 +225,23 @@ export default function ItemsTab() {
               </button>
             </div>
 
-            {goldSeedIds[goldDetail.name] && (
-              <div className="p-5 sm:p-6">
-                <div className="section-eyebrow mb-2">成长阶段 · 黄金变异</div>
-                <div className="sticker-soft p-3 sm:p-4">
-                  <GrowthPhases seedId={goldSeedIds[goldDetail.name]} gold />
+            {goldSeedIds[goldDetail.name] && (() => {
+              const isGoldItem = goldDetail.name.startsWith('黄金·');
+              return (
+                <div className="p-5 sm:p-6">
+                  <div className="section-eyebrow mb-2">成长阶段{isGoldItem && ' · 黄金变异'}</div>
+                  <div className="sticker-soft p-3 sm:p-4">
+                    {isGoldItem ? (
+                      <GrowthPhases seedId={goldSeedIds[goldDetail.name]} gold />
+                    ) : (
+                      <div className="flex justify-center">
+                        <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} size={160} rounded />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
             </motion.div>
           </motion.div>
           </Portal>

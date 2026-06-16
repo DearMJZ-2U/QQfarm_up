@@ -23,14 +23,14 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
         className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4"
         onClick={onClose}>
         <div className="absolute inset-0 bg-[var(--ink)]/40 backdrop-blur-sm" />
-        <motion.div
-          key="mutation-modal-panel"
-          initial={{ y: '100%', scale: 0.95 }}
-          animate={{ y: 0, scale: 1 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+          <motion.div
+            key="mutation-modal-panel"
+            initial={{ y: '100%', scale: 0.95 }}
+            animate={{ y: 0, scale: 1 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
             onClick={e => e.stopPropagation()}
-            className="relative w-full sm:max-w-lg max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+            className="relative w-full sm:max-w-4xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
             style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
 
           <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
@@ -80,7 +80,13 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
               <div>
                 <div className="section-eyebrow mb-2">成长阶段 {isGold && '· 黄金变异'}</div>
                 <div className="sticker-soft p-3 sm:p-4">
-                  <GrowthPhases seedId={goldSeedIds[item.name]} gold={isGold} />
+                  {isGold ? (
+                    <GrowthPhases seedId={goldSeedIds[item.name]} gold={isGold} />
+                  ) : (
+                    <div className="flex justify-center">
+                      <RemoteImage urls={goldenAtlasImageUrls(item.name)} name={item.name} size={160} rounded />
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -166,10 +172,10 @@ export default function MutationAtlasTab() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, delay: i * 0.04 }}
                   className="sticker p-3 sm:p-4 flex items-start gap-3 sm:gap-4">
-                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'var(--berry-bg)' }}>
-                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={56} className="sm:hidden" rounded />
-                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={96} className="hidden sm:block" rounded />
+                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={40} className="sm:hidden" pixel rounded />
+                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} size={56} className="hidden sm:block" pixel rounded />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 mb-1 flex-wrap">
@@ -196,19 +202,19 @@ export default function MutationAtlasTab() {
               style={{ background: 'var(--berry-bg)', borderBottom: '1.5px solid var(--berry-soft)' }}>
               <span className="text-base sm:text-lg">📊</span>
               <h3 className="font-display italic text-base sm:text-lg font-bold text-[var(--berry-deep)]">概率展示</h3>
-              <span className="chip chip-berry ml-auto" style={{ fontSize: '0.6rem' }}>{MUTATION_PROBABILITIES.length} 行</span>
+              <span className="chip chip-berry ml-auto" style={{ fontSize: '0.65rem' }}>{MUTATION_PROBABILITIES.length} 行</span>
             </div>
-            <div className="px-4 sm:px-5 pt-2 pb-1 grid grid-cols-3 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">
+            <div className="px-4 sm:px-5 pt-3 pb-1.5 grid grid-cols-3 text-xs sm:text-sm font-bold uppercase tracking-wide text-[var(--ink-mute)]">
               <div>变异类型</div>
               <div>品质</div>
               <div className="text-right">概率</div>
             </div>
-            <div className="px-4 sm:px-5 pb-3 sm:pb-4">
+            <div className="px-4 sm:px-5 pb-4 sm:pb-5">
               {MUTATION_PROBABILITIES.map((p, i) => (
-                <div key={i} className="grid grid-cols-3 py-2 sm:py-2.5 text-[12px] sm:text-sm items-center"
+                <div key={i} className="grid grid-cols-3 py-2.5 sm:py-3 text-sm sm:text-base items-center"
                   style={{ borderTop: i === 0 ? 'none' : '1px dashed var(--line)' }}>
                   <div className="font-bold text-[var(--ink)]">{p.name}</div>
-                  <div><span className="chip chip-ink" style={{ fontSize: '0.6rem' }}>{p.quality}</span></div>
+                  <div><span className="chip chip-ink" style={{ fontSize: '0.65rem' }}>{p.quality}</span></div>
                   <div className="text-right font-mono tnum font-bold text-[var(--berry-deep)]">{p.rate}</div>
                 </div>
               ))}
@@ -237,7 +243,7 @@ export default function MutationAtlasTab() {
           </div>
 
           <div className="space-y-2 sm:space-y-2.5">
-            {(goldenAtlas[goldenTab] || []).map((g, i) => {
+            {((goldenAtlas[goldenTab] || []) as any[]).slice().reverse().map((g, i) => {
               const atlasUrls = goldenAtlasImageUrls(g.name);
               const isGold = g.name.startsWith('黄金');
               return (

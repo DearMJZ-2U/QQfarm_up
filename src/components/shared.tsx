@@ -34,12 +34,13 @@ function getSeedName(seedId: number): string {
 
 // ── 通用多级图片组件 ────────────────────────────────────
 
-function MultiImage({ urls, alt, size, className = '', rounded = false }: {
+function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = false }: {
   urls: string[];
   alt: string;
   size?: number;
   className?: string;
   rounded?: boolean;
+  pixel?: boolean;
 }) {
   const [idx, setIdx] = React.useState(0);
   if (idx >= urls.length) {
@@ -55,7 +56,7 @@ function MultiImage({ urls, alt, size, className = '', rounded = false }: {
   }
   return (
     <img src={urls[idx]} alt={alt}
-      className={`object-contain shrink-0 ${rounded ? 'rounded-lg' : ''} ${className}`}
+      className={`object-contain shrink-0 ${rounded ? 'rounded-lg' : ''} ${pixel ? 'pixel-art' : ''} ${className}`}
       loading="lazy"
       style={size ? { width: size, height: size } : undefined}
       onError={() => setIdx(idx + 1)}
@@ -107,15 +108,17 @@ export function CropImage({ seedId, name, size = 32, className = '' }: {
 function resolvePhaseUrls(seedId: number, phase: string, gold: boolean): string[] {
   const cn = getCropNum(seedId);
   const sname = sanitize(getSeedName(seedId));
-  const pfx = gold ? 'gold/' : '';
   const localPfx = `${CLEAN_BASE}seed_images_named/`;
 
   const urls: string[] = [];
-  // 本地图片（以 seedId_name_cropNumber 命名）
-  if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
-  // Gold 变体：QQfarm_up 本地暂无，由 extractor 后续补全（见 extractor 改造任务）
-  if (gold && cn) urls.push(`${localPfx}gold/Crop_${cn}_${phase}.png`);
-  if (gold && seedId) urls.push(`${localPfx}gold/Crop_${seedId}_${phase}.png`);
+  if (gold) {
+    // 黄金变体: 优先 .cache 本地 gold/ 目录(extractor 已下载)
+    if (cn) urls.push(`${localPfx}gold/Crop_${cn}_${phase}.png`);
+    // 兜底: 正常版(extractor 漏下或 gold 缺失时, 如 CN=416/9001 缺 阶段 2-6)
+    if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
+  } else {
+    if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
+  }
   return urls;
 }
 
@@ -157,14 +160,15 @@ export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: 
 
 // ── 通用装扮/道具/变异图片 ──────────────────────────────
 
-export function RemoteImage({ urls, name, size = 40, className = '', rounded = false }: {
+export function RemoteImage({ urls, name, size = 40, className = '', rounded = false, pixel = false }: {
   urls: string[];
   name: string;
   size?: number;
   className?: string;
   rounded?: boolean;
+  pixel?: boolean;
 }) {
-  return <MultiImage urls={urls} alt={name} size={size} className={className} rounded={rounded} />;
+  return <MultiImage urls={urls} alt={name} size={size} className={className} rounded={rounded} pixel={pixel} />;
 }
 
 export function itemImageUrls(_iconFile: string, localFile?: string): string[] {

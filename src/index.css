@@ -489,6 +489,13 @@ body::after {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 
+/* 小尺寸游戏图标的近邻像素渲染（防止放大后模糊/锯齿） */
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
 /* 桌面 ≥640 限制最大宽 */
 .container-app {
   width: 100%;
