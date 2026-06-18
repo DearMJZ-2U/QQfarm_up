@@ -457,7 +457,10 @@ body::after {
   background: var(--bg-2);
   border: 1.5px solid var(--line);
   border-radius: var(--r-pill);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.pill-tab-group::-webkit-scrollbar { display: none; }
 
 .pill-tab {
   display: inline-flex;

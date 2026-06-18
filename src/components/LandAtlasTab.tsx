@@ -469,31 +469,31 @@ export default function LandAtlasTab() {
                       {squares.map(idx => (
                         <div key={idx} className="w-6 h-6 rounded-md"
                           style={{
-                            background: idx === squares.length - 1 ? `var(--${colorKey})` : `var(--${colorKey}-soft)`,
+                            background: `var(--${colorKey})`,
                             boxShadow: '0 1.5px 0 var(--line-strong)',
                           }} />
                       ))}
                     </div>
                   </div>
-                  <div className="p-3.5 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="p-2.5 sm:p-3.5 grid grid-cols-2 gap-1.5 sm:gap-2.5">
                     {mgl.levels.map((lv: any) => {
                       const isTop = lv.level === mgl.levels.length;
                       return (
-                        <div key={lv.level} className="rounded-xl p-3"
+                        <div key={lv.level} className="rounded-xl p-2.5 sm:p-3 flex flex-col"
                           style={{
                             background: isTop ? 'var(--plum-bg)' : 'var(--bg-2)',
                             border: `1.5px solid ${isTop ? 'var(--plum-soft)' : 'var(--line)'}`,
                           }}>
-                          <div className="mb-2 pb-2" style={{ borderBottom: '1px dashed var(--line)' }}>
+                          <div className="text-center pb-1.5" style={{ borderBottom: '1px dashed var(--line)' }}>
                             <div className="font-display italic text-base font-bold leading-none"
                               style={{ color: isTop ? 'var(--plum-deep)' : 'var(--ink)' }}>
                               Lv{lv.level}
                             </div>
-                            <div className="text-[10px] text-[var(--ink-mute)] mt-1 font-bold">
-                              {mgl.name} Lv{lv.level}{isTop ? ' · 顶级' : ''}
-                            </div>
+                            {isTop && (
+                              <div className="text-[9px] text-[var(--plum-deep)] mt-0.5 font-bold tracking-wide">· 顶级 ·</div>
+                            )}
                           </div>
-                          <div>
+                          <div className="flex flex-col mt-1.5">
                             <BuffRow label="产量" value={formatBuff(lv.yieldBonus)} color="leaf" />
                             <BuffRow label="时间" value={formatBuff(-lv.timeReduction)} color="sky" />
                             <BuffRow label="经验" value={formatBuff(lv.expBonus)} color="plum" />
@@ -524,13 +524,14 @@ function BuffPill({ emoji, label, value, accent }: { emoji: string; label: strin
 }
 
 function BuffRow({ label, value, color, last = false }: {
-  label: string; value: string; color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink'; last?: boolean;
+  label: string; value: string; color: 'leaf' | 'sky' | 'plum' | 'berry'; last?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between py-1.5 text-xs"
+    <div className="flex items-center justify-between py-1 text-sm"
       style={last ? {} : { borderBottom: '1px solid var(--line)' }}>
       <span className="text-[var(--ink-soft)] font-bold">{label}</span>
-      <span className="font-mono font-bold tnum" style={{ color: `var(--${color}-deep)` }}>{value}</span>
+      <span className="font-mono font-bold tnum"
+        style={{ color: `var(--${color}-deep)` }}>{value}</span>
     </div>
   );
 }
