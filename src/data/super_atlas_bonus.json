@@ -1,0 +1,27 @@
+{
+  "exportedAt": "2026-06-18T00:00:00.000Z",
+  "title": "超变图鉴属性加成",
+  "desc": "超变图鉴等级达成对应图鉴进度值（叶子）后，会永久激活对应属性加成。",
+  "levels": [
+    { "level": 1,  "leaves": 200,  "type": "exp",     "text": "收获经验产出 +1%" },
+    { "level": 2,  "leaves": 310,  "type": "steal",   "text": "有 1% 概率偷菜数量 x2倍" },
+    { "level": 3,  "leaves": 430,  "type": "exp",     "text": "收获经验产出 +1.5%" },
+    { "level": 4,  "leaves": 560,  "type": "steal",   "text": "有 2% 概率偷菜数量 x2倍" },
+    { "level": 5,  "leaves": 700,  "type": "fert",    "text": "有 2% 概率节省 10% 肥料" },
+    { "level": 6,  "leaves": 850,  "type": "exp",     "text": "收获经验产出 +2%" },
+    { "level": 7,  "leaves": 1020, "type": "steal",   "text": "有 3% 概率偷菜数量 x2倍" },
+    { "level": 8,  "leaves": 1210, "type": "exp",     "text": "收获经验产出 +2.5%" },
+    { "level": 9,  "leaves": 1410, "type": "steal",   "text": "有 4% 概率偷菜数量 x2倍" },
+    { "level": 10, "leaves": 1640, "type": "gold",    "text": "黄金变异最终产量 +2个" },
+    { "level": 11, "leaves": 1890, "type": "exp",     "text": "收获经验产出 +3%" },
+    { "level": 12, "leaves": 2160, "type": "steal",   "text": "有 5% 概率偷菜数量 x2倍" },
+    { "level": 13, "leaves": 2460, "type": "exp",     "text": "收获经验产出 +3.5%" },
+    { "level": 14, "leaves": 2780, "type": "steal",   "text": "有 6% 概率偷菜数量 x2倍" },
+    { "level": 15, "leaves": 3130, "type": "fert",    "text": "有 2.5% 概率节省 10% 肥料" },
+    { "level": 16, "leaves": 3510, "type": "exp",     "text": "收获经验产出 +4%" },
+    { "level": 17, "leaves": 3920, "type": "steal",   "text": "有 7% 概率偷菜数量 x2倍" },
+    { "level": 18, "leaves": 4360, "type": "exp",     "text": "收获经验产出 +4.5%" },
+    { "level": 19, "leaves": 4830, "type": "steal",   "text": "有 8% 概率偷菜数量 x2倍" },
+    { "level": 20, "leaves": 5340, "type": "gold",    "text": "黄金变异最终产量 +3个" }
+  ]
+}

@@ -413,6 +413,36 @@ export function PillTabGroup({
   );
 }
 
+// ── 品级（天工 / 珍品 / 稀有 / 普通）─────────────────────────
+// 道具图鉴里 05 种子 + 17 超变果实 的名字会按 rarity 上色 + hover 显示品级。
+// 颜色优先用 items.json 里的 rarityColor，缺失时按 rarity 走默认映射。
+
+export type GradeName = '天工' | '珍品' | '稀有' | '普通';
+
+const GRADE_COLOR_BY_RARITY: Record<number, string> = {
+  4: 'D1A21E',
+  3: 'B09DED',
+  2: 'A8C1F4',
+  1: 'D2C5AC',
+};
+
+const GRADE_NAME_BY_RARITY: Record<number, GradeName> = {
+  4: '天工',
+  3: '珍品',
+  2: '稀有',
+  1: '普通',
+};
+
+export function getGrade(rarity: number | string | undefined, rarityColor?: string): {
+  name: GradeName;
+  color: string;
+} {
+  const r = Number(rarity) || 1;
+  const color = (rarityColor && String(rarityColor).trim()) || GRADE_COLOR_BY_RARITY[r] || '334155';
+  const name = GRADE_NAME_BY_RARITY[r] || '普通';
+  return { name, color };
+}
+
 // ── RowCard — 统一行卡片 ─────────────────────────────────────
 
 export function RowCard({

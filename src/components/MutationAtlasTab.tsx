@@ -1,9 +1,19 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Dna, Sparkles, X, BookOpen } from 'lucide-react';
+import { Dna, Sparkles, X, BookOpen, TrendingUp } from 'lucide-react';
 import mutationData from '../data/mutation_atlas.json';
+import bonusData from '../data/super_atlas_bonus.json';
 import { CropImage, GrowthPhases, RemoteImage, mutationIconUrls, goldenAtlasImageUrls, goldSeedIds, Portal, StatTile, PillTabGroup, EmptyState } from './shared';
 import { MUTATION_RULES, MUTATION_PROBABILITIES, getProbabilitiesFor } from '../data/mutation-rules';
+
+type BonusType = 'exp' | 'steal' | 'fert' | 'gold';
+
+const BONUS_META: Record<BonusType, { label: string; color: 'leaf' | 'sky' | 'orange' | 'sun'; chip: string; emoji: string }> = {
+  exp:   { label: '经验',  color: 'leaf',   chip: 'chip-leaf',   emoji: '🌱' },
+  steal: { label: '偷菜',  color: 'sky',    chip: 'chip-sky',    emoji: '🥷' },
+  fert:  { label: '肥料',  color: 'orange', chip: 'chip-orange', emoji: '🧪' },
+  gold:  { label: '黄金',  color: 'sun',    chip: 'chip-sun',    emoji: '✨' },
+};
 
 interface GoldenEntry {
   name: string; seedId: number; cropId: number; points: number; exp: number; fruit: number;
@@ -101,7 +111,7 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
 }
 
 export default function MutationAtlasTab() {
-  const [tab, setTab] = React.useState<'types' | 'golden'>('types');
+  const [tab, setTab] = React.useState<'types' | 'golden' | 'bonus'>('types');
   const [goldenTab, setGoldenTab] = React.useState<'goldenFruit' | 'costumeFruit' | 'eventFruit'>('goldenFruit');
   const [detail, setDetail] = React.useState<GoldenEntry | null>(null);
 
@@ -127,11 +137,12 @@ export default function MutationAtlasTab() {
       {/* Main tab toggle */}
       <PillTabGroup
         items={[
-          { id: 'types',  label: '变异宝典', emoji: '🧬' },
-          { id: 'golden', label: '超变图鉴', emoji: '✨' },
+          { id: 'types',  label: '变异宝典',     emoji: '🧬' },
+          { id: 'golden', label: '超变图鉴',     emoji: '✨' },
+          { id: 'bonus',  label: '属性加成',     emoji: '📈', count: bonusData.levels.length },
         ]}
         value={tab}
-        onChange={(id) => setTab(id as 'types' | 'golden')}
+        onChange={(id) => setTab(id as 'types' | 'golden' | 'bonus')}
         accent="berry"
         size="md"
       />
@@ -255,6 +266,70 @@ export default function MutationAtlasTab() {
                 );
               })
             )}
+          </div>
+        </>
+      )}
+
+      {tab === 'bonus' && (
+        <>
+          <div className="sticker p-3 sm:p-4" style={{ borderLeft: '4px solid var(--sun)' }}>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <TrendingUp size={12} strokeWidth={2.5} className="text-[var(--sun-deep)]" />
+              <span className="text-[11px] font-bold text-[var(--sun-deep)] uppercase tracking-wide">{bonusData.title}</span>
+            </div>
+            <p className="text-[11px] sm:text-xs text-[var(--ink-soft)] leading-relaxed">
+              {bonusData.desc}
+            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {Object.entries(BONUS_META).map(([k, m]) => (
+                <span key={k} className={`chip ${m.chip}`} style={{ fontSize: '0.65rem' }}>
+                  {m.emoji} {m.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="sticker overflow-hidden">
+            <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2"
+              style={{ background: 'var(--sun-bg)', borderBottom: '1.5px solid var(--sun-soft)' }}>
+              <span className="text-base sm:text-lg">📈</span>
+              <h3 className="font-display italic text-base sm:text-lg font-bold text-[var(--sun-deep)]">等级加成一览</h3>
+              <span className="chip chip-sun ml-auto" style={{ fontSize: '0.65rem' }}>{bonusData.levels.length} 级</span>
+            </div>
+            <div className="px-4 sm:px-5 pt-3 pb-1.5 hidden sm:grid grid-cols-12 gap-2 text-xs sm:text-sm font-bold uppercase tracking-wide text-[var(--ink-mute)]">
+              <div className="col-span-2">等级</div>
+              <div className="col-span-3">所需图鉴进度</div>
+              <div className="col-span-2">类型</div>
+              <div className="col-span-5">属性加成</div>
+            </div>
+            <div className="px-4 sm:px-5 pb-4 sm:pb-5">
+              {bonusData.levels.map((row, i) => {
+                const meta = BONUS_META[row.type as BonusType] || BONUS_META.exp;
+                const isMilestone = row.level % 5 === 0;
+                return (
+                  <div key={row.level}
+                    className="grid grid-cols-12 gap-2 py-2.5 sm:py-3 text-sm sm:text-base items-center transition-colors hover:bg-[var(--surface-soft)]"
+                    style={{ borderTop: i === 0 ? 'none' : '1px solid var(--line)' }}>
+                    <div className="col-span-2 font-mono tnum font-bold"
+                      style={{ color: isMilestone ? 'var(--sun-deep)' : 'var(--ink)' }}>
+                      Lv.{row.level}
+                    </div>
+                    <div className="col-span-3 font-mono tnum font-bold text-[var(--leaf-deep)] flex items-center gap-1">
+                      <span>🌿</span>
+                      <span>{row.leaves.toLocaleString()}</span>
+                    </div>
+                    <div className="col-span-2">
+                      <span className={`chip ${meta.chip}`} style={{ fontSize: '0.65rem' }}>
+                        {meta.emoji} {meta.label}
+                      </span>
+                    </div>
+                    <div className="col-span-5 text-[var(--ink)] font-medium leading-snug">
+                      {row.text}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </>
       )}

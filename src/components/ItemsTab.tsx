@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, X } from 'lucide-react';
 import itemsData from '../data/items.json';
-import { CropImage, RemoteImage, itemImageUrls, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav } from './shared';
+import { CropImage, RemoteImage, itemImageUrls, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade } from './shared';
 import type { CategoryNavItem } from './shared';
 
 const categories = itemsData.categories;
@@ -22,7 +22,14 @@ const catAccent: Record<string, 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'p
   '15': 'plum',
 };
 
-interface GoldDetail { name: string; desc: string; iconFile: string; localFile?: string; }
+interface GoldDetail {
+  name: string;
+  desc: string;
+  iconFile: string;
+  localFile?: string;
+  rarity?: number;
+  rarityColor?: string;
+}
 
 // 占位/无意义条目过滤（id 列表）
 const HIDDEN_ITEM_IDS = new Set([2101, 2102, 2103]);
@@ -38,6 +45,7 @@ export default function ItemsTab() {
   const cat = categories.find(c => c.id === catId);
   const isSeed = catId === '05';
   const isGoldenFruit = catId === '17';
+  const showGrade = isSeed || isGoldenFruit;
 
   // 给 CategoryNav 用的简化数据
   const navItems: CategoryNavItem[] = React.useMemo(
@@ -52,18 +60,11 @@ export default function ItemsTab() {
   );
 
   const visibleItems = React.useMemo(() => {
+    // 05 种子 / 17 超变果实等所有分类统一按 items.json 的物理顺序展示，
+    // 与 jsq.gptvip.chat/items/17 保持一致；不再按 cropNumber 倒序。
     let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
-    // 超变果实(id=17)：按 cropNumber 倒序排，cropNumber 越大代表越近期上架，越靠前
-    if (isGoldenFruit) {
-      items = [...items].sort((a: any, b: any) => {
-        const ca = Number(a.cropNumber) || 0;
-        const cb = Number(b.cropNumber) || 0;
-        if (cb !== ca) return cb - ca;
-        return (b.id || 0) - (a.id || 0);
-      });
-    }
     return items;
-  }, [cat, isGoldenFruit]);
+  }, [cat]);
   const visibleCount = visibleItems.length;
 
   return (
@@ -111,6 +112,7 @@ export default function ItemsTab() {
               ) : visibleItems.map((item) => {
                 if (isSeed) {
                   const seedPrice = item.sells ? parseInt(item.sells.split(':')[1]) || 0 : 0;
+                  const grade = showGrade ? getGrade(item.rarity, item.rarityColor) : null;
                   return (
                     <RowCard key={item.id}>
                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -118,7 +120,12 @@ export default function ItemsTab() {
                         <CropImage seedId={item.id} name={item.name} className="w-14 h-14 sm:w-16 sm:h-16" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm sm:text-base font-bold text-[var(--ink)] truncate">{item.name}</div>
+                        <div
+                          className="text-sm sm:text-base font-bold truncate"
+                          style={grade ? { color: `#${grade.color}` } : undefined}
+                          title={grade ? `品级：${grade.name}` : undefined}>
+                          {item.name}
+                        </div>
                         <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] font-mono mt-0.5 sm:mt-1">
                           Lv{item.level} · 🌱 {item.exp}
                           {item.seasons > 1 && <span className="ml-1.5 text-[var(--berry-deep)] font-bold">· {item.seasons}季</span>}
@@ -133,10 +140,18 @@ export default function ItemsTab() {
 
                 const openGold = () => {
                   if (isGoldenFruit) {
-                    setGoldDetail({ name: item.name, desc: item.desc, iconFile: item.iconFile, localFile: (item as any).localFile });
+                    setGoldDetail({
+                      name: item.name,
+                      desc: item.desc,
+                      iconFile: item.iconFile,
+                      localFile: (item as any).localFile,
+                      rarity: item.rarity,
+                      rarityColor: item.rarityColor,
+                    });
                   }
                 };
 
+                const grade = showGrade ? getGrade(item.rarity, item.rarityColor) : null;
                 return (
                   <RowCard key={item.id} onClick={openGold}>
                     <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -144,7 +159,12 @@ export default function ItemsTab() {
                       <RemoteImage urls={itemImageUrls(item.iconFile, (item as any).localFile)} name={item.name} className="w-14 h-14 sm:w-20 sm:h-20" rounded />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm sm:text-base font-bold text-[var(--ink)]">{item.name}</div>
+                      <div
+                        className="text-sm sm:text-base font-bold"
+                        style={grade ? { color: `#${grade.color}` } : undefined}
+                        title={grade ? `品级：${grade.name}` : undefined}>
+                        {item.name}
+                      </div>
                       {item.desc && <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 sm:mt-1 line-clamp-2">{item.desc}</div>}
                     </div>
                     {item.level > 0 && (
@@ -185,7 +205,17 @@ export default function ItemsTab() {
                   <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} className="w-16 h-16 sm:w-28 sm:h-28" rounded />
                 </div>
                 <div>
-                  <h3 className="font-display italic text-lg sm:text-2xl font-bold text-[var(--ink)] leading-tight">{goldDetail.name}</h3>
+                  {(() => {
+                    const g = showGrade ? getGrade(goldDetail.rarity, goldDetail.rarityColor) : null;
+                    return (
+                      <h3
+                        className="font-display italic text-lg sm:text-2xl font-bold leading-tight"
+                        style={g ? { color: `#${g.color}` } : undefined}
+                        title={g ? `品级：${g.name}` : undefined}>
+                        {goldDetail.name}
+                      </h3>
+                    );
+                  })()}
                   <div className="text-[11px] sm:text-xs text-[var(--ink-mute)] mt-1 sm:mt-1.5 line-clamp-2 max-w-[14rem] sm:max-w-[18rem]">{goldDetail.desc}</div>
                 </div>
               </div>
