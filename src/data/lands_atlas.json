@@ -1,4 +1,5 @@
 {
+  "exportedAt": "2026-07-06T02:11:07.584Z",
   "landTypes": [
     {
       "name": "普通土地",
@@ -38,8 +39,7 @@
       "yieldBonus": 300,
       "timeReduction": 20,
       "expBonus": 25,
-      "mutationBonus": 120,
-      "enabledAt": "2026-04-15 12:00:00"
+      "mutationBonus": 120
     }
   ],
   "plots": [
@@ -977,7 +977,7 @@
       ]
     },
     {
-      "name": "九宫良田",
+      "name": "九宫福地",
       "size": "3×3",
       "levels": [
         {
@@ -1011,7 +1011,7 @@
       ]
     },
     {
-      "name": "阡陌沃土",
+      "name": "聚宝福地",
       "size": "4×4",
       "levels": [
         {
@@ -1046,52 +1046,212 @@
     }
   ],
   "stealWeights": [
-    { "count": 1,  "weight": 100, "percent": 3.42 },
-    { "count": 2,  "weight": 100, "percent": 3.42 },
-    { "count": 3,  "weight": 400, "percent": 13.68 },
-    { "count": 4,  "weight": 400, "percent": 13.68 },
-    { "count": 5,  "weight": 500, "percent": 17.09 },
-    { "count": 6,  "weight": 500, "percent": 17.09 },
-    { "count": 7,  "weight": 400, "percent": 13.68 },
-    { "count": 8,  "weight": 25,  "percent": 0.85 },
-    { "count": 9,  "weight": 25,  "percent": 0.85 },
-    { "count": 10, "weight": 25,  "percent": 0.85 },
-    { "count": 11, "weight": 25,  "percent": 0.85 },
-    { "count": 12, "weight": 25,  "percent": 0.85 },
-    { "count": 13, "weight": 25,  "percent": 0.85 },
-    { "count": 14, "weight": 25,  "percent": 0.85 },
-    { "count": 15, "weight": 25,  "percent": 0.85 },
-    { "count": 16, "weight": 25,  "percent": 0.85 },
-    { "count": 17, "weight": 25,  "percent": 0.85 },
-    { "count": 18, "weight": 25,  "percent": 0.85 },
-    { "count": 19, "weight": 25,  "percent": 0.85 },
-    { "count": 20, "weight": 25,  "percent": 0.85 },
-    { "count": 21, "weight": 10,  "percent": 0.34 },
-    { "count": 22, "weight": 10,  "percent": 0.34 },
-    { "count": 23, "weight": 10,  "percent": 0.34 },
-    { "count": 24, "weight": 10,  "percent": 0.34 },
-    { "count": 25, "weight": 10,  "percent": 0.34 },
-    { "count": 26, "weight": 10,  "percent": 0.34 },
-    { "count": 27, "weight": 10,  "percent": 0.34 },
-    { "count": 28, "weight": 10,  "percent": 0.34 },
-    { "count": 29, "weight": 10,  "percent": 0.34 },
-    { "count": 30, "weight": 10,  "percent": 0.34 },
-    { "count": 31, "weight": 10,  "percent": 0.34 },
-    { "count": 32, "weight": 10,  "percent": 0.34 },
-    { "count": 33, "weight": 10,  "percent": 0.34 },
-    { "count": 34, "weight": 10,  "percent": 0.34 },
-    { "count": 35, "weight": 10,  "percent": 0.34 },
-    { "count": 36, "weight": 10,  "percent": 0.34 },
-    { "count": 37, "weight": 10,  "percent": 0.34 },
-    { "count": 38, "weight": 10,  "percent": 0.34 },
-    { "count": 39, "weight": 10,  "percent": 0.34 },
-    { "count": 40, "weight": 10,  "percent": 0.34 }
+    {
+      "count": 1,
+      "weight": 100,
+      "percent": 0
+    },
+    {
+      "count": 2,
+      "weight": 100,
+      "percent": 0
+    },
+    {
+      "count": 3,
+      "weight": 400,
+      "percent": 0
+    },
+    {
+      "count": 4,
+      "weight": 400,
+      "percent": 0
+    },
+    {
+      "count": 5,
+      "weight": 500,
+      "percent": 0
+    },
+    {
+      "count": 6,
+      "weight": 500,
+      "percent": 0
+    },
+    {
+      "count": 7,
+      "weight": 400,
+      "percent": 0
+    },
+    {
+      "count": 8,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 9,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 10,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 11,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 12,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 13,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 14,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 15,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 16,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 17,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 18,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 19,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 20,
+      "weight": 25,
+      "percent": 0
+    },
+    {
+      "count": 21,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 22,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 23,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 24,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 25,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 26,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 27,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 28,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 29,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 30,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 31,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 32,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 33,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 34,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 35,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 36,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 37,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 38,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 39,
+      "weight": 10,
+      "percent": 0
+    },
+    {
+      "count": 40,
+      "weight": 10,
+      "percent": 0
+    }
   ],
   "summary": {
     "totalPlots": 24,
     "initialUnlock": 6,
     "reclaimable": 18,
-    "maxReclaimLevel": 39,
+    "maxReclaimLevel": 159,
     "purpleCrystalLevelRange": "Lv90 - Lv159"
   }
 }

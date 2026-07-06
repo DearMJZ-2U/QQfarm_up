@@ -38,9 +38,16 @@ function categoryCount(c: any): number {
   return (c.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id)).length;
 }
 
-export default function ItemsTab() {
-  const [catId, setCatId] = React.useState('05');
+export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: string } = {}) {
+  const [catId, setCatId] = React.useState(initialCategoryId || '05');
   const [goldDetail, setGoldDetail] = React.useState<GoldDetail | null>(null);
+
+  // 当父组件传入新的 initialCategoryId 时切换分类
+  React.useEffect(() => {
+    if (initialCategoryId && initialCategoryId !== catId) {
+      setCatId(initialCategoryId);
+    }
+  }, [initialCategoryId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const cat = categories.find(c => c.id === catId);
   const isSeed = catId === '05';
@@ -60,11 +67,18 @@ export default function ItemsTab() {
   );
 
   const visibleItems = React.useMemo(() => {
-    // 05 种子 / 17 超变果实等所有分类统一按 items.json 的物理顺序展示，
-    // 与 jsq.gptvip.chat/items/17 保持一致；不再按 cropNumber 倒序。
     let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
+    // 种子和超变果实按品级降序：天工(4) > 珍品(3) > 稀有(2) > 普通(1)
+    if (isSeed || isGoldenFruit) {
+      items = [...items].sort((a, b) => {
+        const ra = a.rarity || 1;
+        const rb = b.rarity || 1;
+        if (rb !== ra) return rb - ra;
+        return (a.level || 0) - (b.level || 0);
+      });
+    }
     return items;
-  }, [cat]);
+  }, [cat, isSeed, isGoldenFruit]);
   const visibleCount = visibleItems.length;
 
   return (

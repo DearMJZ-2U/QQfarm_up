@@ -31,12 +31,21 @@ export default function CropAtlasTab() {
   const [seasonFilter, setSeasonFilter] = React.useState<'all' | '1' | '2'>('all');
   const [detail, setDetail] = React.useState<any>(null);
 
-  const filtered = seedsList.filter((s: any) => {
-    if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
-    if (seasonFilter === '1' && s.seasons !== 1) return false;
-    if (seasonFilter === '2' && s.seasons !== 2) return false;
-    return true;
-  });
+  const filtered = seedsList
+    .filter((s: any) => {
+      if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (seasonFilter === '1' && s.seasons !== 1) return false;
+      if (seasonFilter === '2' && s.seasons !== 2) return false;
+      return true;
+    })
+    .sort((a: any, b: any) => {
+      // 按品级降序：天工(4) > 珍品(3) > 稀有(2) > 普通(1)
+      const ra = a.rarity || 1;
+      const rb = b.rarity || 1;
+      if (rb !== ra) return rb - ra;
+      // 同品级内按等级升序
+      return (a.requiredLevel || 0) - (b.requiredLevel || 0);
+    });
 
   return (
     <div className="space-y-4 fade-in">

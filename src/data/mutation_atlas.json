@@ -1,75 +1,75 @@
 {
-  "exportedAt": "2026-06-15T10:56:32.002Z",
+  "exportedAt": "2026-07-06T02:11:07.584Z",
   "mutationTypes": [
     {
-      "name": "月华",
-      "icon": "extraRes/gui/texture/mutant/icon/moon.png",
-      "effectType": "产出",
-      "effectValue": "月华宝荷",
-      "desc": "种植琉璃宝荷有概率出现"
+      "name": "冰冻",
+      "icon": "extraRes/gui/texture/mutant/icon/frozen.png",
+      "effectType": "负面",
+      "effectValue": "3",
+      "desc": "作物生长过程中随机出现"
     },
     {
-      "name": "荷华",
-      "icon": "extraRes/gui/texture/mutant/icon/lotus.png",
-      "effectType": "产出",
-      "effectValue": "荷花",
-      "desc": "种植荷风游记稀有种子有概率出现"
+      "name": "爱心",
+      "icon": "extraRes/gui/texture/mutant/icon/love.png",
+      "effectType": "外观",
+      "effectValue": "3",
+      "desc": "作物生长过程中随机出现"
     },
     {
-      "name": "绵绵",
-      "icon": "extraRes/gui/texture/mutant/icon/mian.png",
-      "effectType": "产出",
-      "effectValue": "绵绵糖果",
-      "desc": "种植欢乐糖果有概率出现"
+      "name": "暗化",
+      "icon": "extraRes/gui/texture/mutant/icon/dark.png",
+      "effectType": "负面",
+      "effectValue": "2",
+      "desc": "作物生长过程中随机出现"
+    },
+    {
+      "name": "湿润",
+      "icon": "extraRes/gui/texture/mutant/icon/moist.png",
+      "effectType": "外观",
+      "effectValue": "2",
+      "desc": "作物生长过程中随机出现"
+    },
+    {
+      "name": "黄金",
+      "icon": "extraRes/gui/texture/mutant/icon/golden.png",
+      "effectType": "增益",
+      "effectValue": "黄金果实",
+      "desc": "稀有作物生长过程中随机出现"
     },
     {
       "name": "哈哈",
       "icon": "extraRes/gui/texture/mutant/icon/haha.png",
-      "effectType": "产出",
+      "effectType": "增益",
       "effectValue": "哈哈小南瓜",
       "desc": "种植本期活动稀有种子有概率出现"
     },
     {
       "name": "塔塔",
       "icon": "extraRes/gui/texture/mutant/icon/tata.png",
-      "effectType": "产出",
+      "effectType": "增益",
       "effectValue": "哈哈南瓜塔",
       "desc": "种植哈哈南瓜有概率出现"
     },
     {
-      "name": "黄金",
-      "icon": "extraRes/gui/texture/mutant/icon/golden.png",
-      "effectType": "产出",
-      "effectValue": "黄金果实",
-      "desc": "稀有作物生长过程中随机出现"
+      "name": "荷华",
+      "icon": "extraRes/gui/texture/mutant/icon/lotus.png",
+      "effectType": "增益",
+      "effectValue": "荷花",
+      "desc": "种植荷风游记稀有种子有概率出现"
     },
     {
-      "name": "冰冻",
-      "icon": "extraRes/gui/texture/mutant/icon/frozen.png",
-      "effectType": "售价",
-      "effectValue": "×3倍",
-      "desc": "作物生长过程中随机出现"
+      "name": "月华",
+      "icon": "extraRes/gui/texture/mutant/icon/moon.png",
+      "effectType": "增益",
+      "effectValue": "月华宝荷",
+      "desc": "种植琉璃宝荷有概率出现"
     },
     {
-      "name": "爱心",
-      "icon": "extraRes/gui/texture/mutant/icon/love.png",
-      "effectType": "数量",
-      "effectValue": "×3倍",
-      "desc": "作物生长过程中随机出现"
-    },
-    {
-      "name": "暗化",
-      "icon": "extraRes/gui/texture/mutant/icon/dark.png",
-      "effectType": "售价",
-      "effectValue": "×2倍",
-      "desc": "作物生长过程中随机出现"
-    },
-    {
-      "name": "湿润",
-      "icon": "extraRes/gui/texture/mutant/icon/moist.png",
-      "effectType": "数量",
-      "effectValue": "×2倍",
-      "desc": "作物生长过程中随机出现"
+      "name": "绵绵",
+      "icon": "extraRes/gui/texture/mutant/icon/mian.png",
+      "effectType": "增益",
+      "effectValue": "绵绵糖果",
+      "desc": "种植欢乐糖果有概率出现"
     }
   ],
   "goldenMutationCrops": [
@@ -150,6 +150,66 @@
         "plant/model/v4/gold/Crop_109_4.png",
         "plant/model/v4/gold/Crop_109_5.png",
         "plant/model/v4/gold/Crop_109_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·昙花",
+      "seedId": 20224,
+      "exp": 840,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 224,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_224_6.png",
+        "plant/model/v4/gold/Crop_224_Seed.png",
+        "plant/model/v4/gold/Crop_224_2.png",
+        "plant/model/v4/gold/Crop_224_3.png",
+        "plant/model/v4/gold/Crop_224_4.png",
+        "plant/model/v4/gold/Crop_224_5.png",
+        "plant/model/v4/gold/Crop_224_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·荷包牡丹",
+      "seedId": 20249,
+      "exp": 840,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 249,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_249_6.png",
+        "plant/model/v4/gold/Crop_249_Seed.png",
+        "plant/model/v4/gold/Crop_249_2.png",
+        "plant/model/v4/gold/Crop_249_3.png",
+        "plant/model/v4/gold/Crop_249_4.png",
+        "plant/model/v4/gold/Crop_249_5.png",
+        "plant/model/v4/gold/Crop_249_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·爱心果",
+      "seedId": 20046,
+      "exp": 3840,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 46,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_46_6.png",
+        "plant/model/v4/gold/Crop_46_Seed.png",
+        "plant/model/v4/gold/Crop_46_2.png",
+        "plant/model/v4/gold/Crop_46_3.png",
+        "plant/model/v4/gold/Crop_46_4.png",
+        "plant/model/v4/gold/Crop_46_5.png",
+        "plant/model/v4/gold/Crop_46_6.png"
       ],
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -254,22 +314,314 @@
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
-      "name": "黄金·欢乐糖果",
-      "seedId": 20167,
+      "name": "黄金·孔雀草",
+      "seedId": 20257,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 257,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_257_6.png",
+        "plant/model/v4/gold/Crop_257_Seed.png",
+        "plant/model/v4/gold/Crop_257_2.png",
+        "plant/model/v4/gold/Crop_257_3.png",
+        "plant/model/v4/gold/Crop_257_4.png",
+        "plant/model/v4/gold/Crop_257_5.png",
+        "plant/model/v4/gold/Crop_257_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·欧石楠",
+      "seedId": 20258,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 258,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_258_6.png",
+        "plant/model/v4/gold/Crop_258_Seed.png",
+        "plant/model/v4/gold/Crop_258_2.png",
+        "plant/model/v4/gold/Crop_258_3.png",
+        "plant/model/v4/gold/Crop_258_4.png",
+        "plant/model/v4/gold/Crop_258_5.png",
+        "plant/model/v4/gold/Crop_258_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·黄金果",
+      "seedId": 20304,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 304,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_304_6.png",
+        "plant/model/v4/gold/Crop_304_Seed.png",
+        "plant/model/v4/gold/Crop_304_2.png",
+        "plant/model/v4/gold/Crop_304_3.png",
+        "plant/model/v4/gold/Crop_304_4.png",
+        "plant/model/v4/gold/Crop_304_5.png",
+        "plant/model/v4/gold/Crop_304_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·哈哈南瓜",
+      "seedId": 29998,
+      "exp": 15360,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 416,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_416_6.png",
+        "plant/model/v4/gold/Crop_416_Seed.png",
+        "plant/model/v4/gold/Crop_416_2.png",
+        "plant/model/v4/gold/Crop_416_3.png",
+        "plant/model/v4/gold/Crop_416_4.png",
+        "plant/model/v4/gold/Crop_416_5.png",
+        "plant/model/v4/gold/Crop_416_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·哈哈小南瓜",
+      "seedId": 0,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 0,
+      "phaseImages": [],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·丁香花",
+      "seedId": 20122,
       "exp": 960,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 40,
-      "cropId": 167,
+      "cropId": 122,
       "phaseImages": [
-        "plant/model/v4/gold/Crop_167_6.png",
-        "plant/model/v4/gold/Crop_167_Seed.png",
-        "plant/model/v4/gold/Crop_167_2.png",
-        "plant/model/v4/gold/Crop_167_3.png",
-        "plant/model/v4/gold/Crop_167_4.png",
-        "plant/model/v4/gold/Crop_167_5.png",
-        "plant/model/v4/gold/Crop_167_6.png"
+        "plant/model/v4/gold/Crop_122_6.png",
+        "plant/model/v4/gold/Crop_122_Seed.png",
+        "plant/model/v4/gold/Crop_122_2.png",
+        "plant/model/v4/gold/Crop_122_3.png",
+        "plant/model/v4/gold/Crop_122_4.png",
+        "plant/model/v4/gold/Crop_122_5.png",
+        "plant/model/v4/gold/Crop_122_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·绿牡丹",
+      "seedId": 20134,
+      "exp": 960,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 134,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_134_6.png",
+        "plant/model/v4/gold/Crop_134_Seed.png",
+        "plant/model/v4/gold/Crop_134_2.png",
+        "plant/model/v4/gold/Crop_134_3.png",
+        "plant/model/v4/gold/Crop_134_4.png",
+        "plant/model/v4/gold/Crop_134_5.png",
+        "plant/model/v4/gold/Crop_134_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·糖槭树花",
+      "seedId": 20139,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 139,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_139_6.png",
+        "plant/model/v4/gold/Crop_139_Seed.png",
+        "plant/model/v4/gold/Crop_139_2.png",
+        "plant/model/v4/gold/Crop_139_3.png",
+        "plant/model/v4/gold/Crop_139_4.png",
+        "plant/model/v4/gold/Crop_139_5.png",
+        "plant/model/v4/gold/Crop_139_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·象牙红",
+      "seedId": 20140,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 140,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_140_6.png",
+        "plant/model/v4/gold/Crop_140_Seed.png",
+        "plant/model/v4/gold/Crop_140_2.png",
+        "plant/model/v4/gold/Crop_140_3.png",
+        "plant/model/v4/gold/Crop_140_4.png",
+        "plant/model/v4/gold/Crop_140_5.png",
+        "plant/model/v4/gold/Crop_140_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·七里香",
+      "seedId": 20144,
+      "exp": 360,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 144,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_144_6.png",
+        "plant/model/v4/gold/Crop_144_Seed.png",
+        "plant/model/v4/gold/Crop_144_2.png",
+        "plant/model/v4/gold/Crop_144_3.png",
+        "plant/model/v4/gold/Crop_144_4.png",
+        "plant/model/v4/gold/Crop_144_5.png",
+        "plant/model/v4/gold/Crop_144_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·月桂花",
+      "seedId": 20154,
+      "exp": 360,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 154,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_154_6.png",
+        "plant/model/v4/gold/Crop_154_Seed.png",
+        "plant/model/v4/gold/Crop_154_2.png",
+        "plant/model/v4/gold/Crop_154_3.png",
+        "plant/model/v4/gold/Crop_154_4.png",
+        "plant/model/v4/gold/Crop_154_5.png",
+        "plant/model/v4/gold/Crop_154_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·天竺葵",
+      "seedId": 20263,
+      "exp": 720,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 263,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_263_6.png",
+        "plant/model/v4/gold/Crop_263_Seed.png",
+        "plant/model/v4/gold/Crop_263_2.png",
+        "plant/model/v4/gold/Crop_263_3.png",
+        "plant/model/v4/gold/Crop_263_4.png",
+        "plant/model/v4/gold/Crop_263_5.png",
+        "plant/model/v4/gold/Crop_263_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·桔梗花",
+      "seedId": 20269,
+      "exp": 720,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 269,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_269_6.png",
+        "plant/model/v4/gold/Crop_269_Seed.png",
+        "plant/model/v4/gold/Crop_269_2.png",
+        "plant/model/v4/gold/Crop_269_3.png",
+        "plant/model/v4/gold/Crop_269_4.png",
+        "plant/model/v4/gold/Crop_269_5.png",
+        "plant/model/v4/gold/Crop_269_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·石莲花",
+      "seedId": 20199,
+      "exp": 420,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 199,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_199_6.png",
+        "plant/model/v4/gold/Crop_199_Seed.png",
+        "plant/model/v4/gold/Crop_199_2.png",
+        "plant/model/v4/gold/Crop_199_3.png",
+        "plant/model/v4/gold/Crop_199_4.png",
+        "plant/model/v4/gold/Crop_199_5.png",
+        "plant/model/v4/gold/Crop_199_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·帝王花",
+      "seedId": 20262,
+      "exp": 840,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 262,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_262_6.png",
+        "plant/model/v4/gold/Crop_262_Seed.png",
+        "plant/model/v4/gold/Crop_262_2.png",
+        "plant/model/v4/gold/Crop_262_3.png",
+        "plant/model/v4/gold/Crop_262_4.png",
+        "plant/model/v4/gold/Crop_262_5.png",
+        "plant/model/v4/gold/Crop_262_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·夏蜡梅",
+      "seedId": 20223,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 223,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_223_6.png",
+        "plant/model/v4/gold/Crop_223_Seed.png",
+        "plant/model/v4/gold/Crop_223_2.png",
+        "plant/model/v4/gold/Crop_223_3.png",
+        "plant/model/v4/gold/Crop_223_4.png",
+        "plant/model/v4/gold/Crop_223_5.png",
+        "plant/model/v4/gold/Crop_223_6.png"
       ],
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -290,6 +642,26 @@
         "plant/model/v4/gold/Crop_185_4.png",
         "plant/model/v4/gold/Crop_185_5.png",
         "plant/model/v4/gold/Crop_185_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·地涌金莲",
+      "seedId": 20267,
+      "exp": 840,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 267,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_267_6.png",
+        "plant/model/v4/gold/Crop_267_Seed.png",
+        "plant/model/v4/gold/Crop_267_2.png",
+        "plant/model/v4/gold/Crop_267_3.png",
+        "plant/model/v4/gold/Crop_267_4.png",
+        "plant/model/v4/gold/Crop_267_5.png",
+        "plant/model/v4/gold/Crop_267_6.png"
       ],
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -374,133 +746,13 @@
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
-      "name": "黄金·昙花",
-      "seedId": 20224,
-      "exp": 840,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 80,
-      "cropId": 224,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_224_6.png",
-        "plant/model/v4/gold/Crop_224_Seed.png",
-        "plant/model/v4/gold/Crop_224_2.png",
-        "plant/model/v4/gold/Crop_224_3.png",
-        "plant/model/v4/gold/Crop_224_4.png",
-        "plant/model/v4/gold/Crop_224_5.png",
-        "plant/model/v4/gold/Crop_224_6.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
-      "name": "黄金·荷包牡丹",
-      "seedId": 20249,
-      "exp": 840,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 80,
-      "cropId": 249,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_249_6.png",
-        "plant/model/v4/gold/Crop_249_Seed.png",
-        "plant/model/v4/gold/Crop_249_2.png",
-        "plant/model/v4/gold/Crop_249_3.png",
-        "plant/model/v4/gold/Crop_249_4.png",
-        "plant/model/v4/gold/Crop_249_5.png",
-        "plant/model/v4/gold/Crop_249_6.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
-      "name": "黄金·孔雀草",
-      "seedId": 20257,
-      "exp": 1680,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 80,
-      "cropId": 257,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_257_6.png",
-        "plant/model/v4/gold/Crop_257_Seed.png",
-        "plant/model/v4/gold/Crop_257_2.png",
-        "plant/model/v4/gold/Crop_257_3.png",
-        "plant/model/v4/gold/Crop_257_4.png",
-        "plant/model/v4/gold/Crop_257_5.png",
-        "plant/model/v4/gold/Crop_257_6.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
-      "name": "黄金·欧石楠",
-      "seedId": 20258,
-      "exp": 1680,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 80,
-      "cropId": 258,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_258_6.png",
-        "plant/model/v4/gold/Crop_258_Seed.png",
-        "plant/model/v4/gold/Crop_258_2.png",
-        "plant/model/v4/gold/Crop_258_3.png",
-        "plant/model/v4/gold/Crop_258_4.png",
-        "plant/model/v4/gold/Crop_258_5.png",
-        "plant/model/v4/gold/Crop_258_6.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
-      "name": "黄金·黄金果",
-      "seedId": 20304,
-      "exp": 1680,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 80,
-      "cropId": 304,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_304_6.png",
-        "plant/model/v4/gold/Crop_304_Seed.png",
-        "plant/model/v4/gold/Crop_304_2.png",
-        "plant/model/v4/gold/Crop_304_3.png",
-        "plant/model/v4/gold/Crop_304_4.png",
-        "plant/model/v4/gold/Crop_304_5.png",
-        "plant/model/v4/gold/Crop_304_6.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
-      "name": "黄金·地涌金莲",
-      "seedId": 20267,
-      "exp": 840,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 80,
-      "cropId": 267,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_267_6.png",
-        "plant/model/v4/gold/Crop_267_Seed.png",
-        "plant/model/v4/gold/Crop_267_2.png",
-        "plant/model/v4/gold/Crop_267_3.png",
-        "plant/model/v4/gold/Crop_267_4.png",
-        "plant/model/v4/gold/Crop_267_5.png",
-        "plant/model/v4/gold/Crop_267_6.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
       "name": "黄金·繁星花",
       "seedId": 21044,
       "exp": 840,
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 80,
+      "points": 40,
       "cropId": 1044,
       "phaseImages": [
         "plant/model/v4/gold/Crop_1044_6.png",
@@ -520,7 +772,7 @@
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 80,
+      "points": 40,
       "cropId": 1038,
       "phaseImages": [
         "plant/model/v4/gold/Crop_1038_6.png",
@@ -540,7 +792,7 @@
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 80,
+      "points": 40,
       "cropId": 1474,
       "phaseImages": [
         "plant/model/v4/gold/Crop_1474_6.png",
@@ -560,7 +812,7 @@
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 80,
+      "points": 40,
       "cropId": 243,
       "phaseImages": [
         "plant/model/v4/gold/Crop_243_6.png",
@@ -580,7 +832,7 @@
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 80,
+      "points": 40,
       "cropId": 1134,
       "phaseImages": [
         "plant/model/v4/gold/Crop_1134_6.png",
@@ -600,7 +852,7 @@
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 80,
+      "points": 40,
       "cropId": 6127,
       "phaseImages": [
         "plant/model/v4/gold/Crop_6127_6.png",
@@ -614,40 +866,16 @@
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
-      "name": "黄金·爱心果",
-      "seedId": 20046,
-      "exp": 3840,
+      "name": "黄金·荷花",
+      "seedId": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 200,
-      "cropId": 46,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_46_6.png",
-        "plant/model/v4/gold/Crop_46_Seed.png",
-        "plant/model/v4/gold/Crop_46_2.png",
-        "plant/model/v4/gold/Crop_46_3.png",
-        "plant/model/v4/gold/Crop_46_4.png",
-        "plant/model/v4/gold/Crop_46_5.png",
-        "plant/model/v4/gold/Crop_46_6.png"
-      ],
+      "points": 40,
+      "cropId": 0,
+      "phaseImages": [],
       "desc": "卖给商人后，可以获得金豆豆。"
-    },
-    {
-      "name": "黄金·哈哈南瓜",
-      "seedId": 20416,
-      "exp": 15360,
-      "fruit": 10,
-      "price": 0,
-      "prob": 10,
-      "points": 200,
-      "cropId": 416,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_416_Seed.png",
-        "plant/model/v4/gold/Crop_416_Seed.png"
-      ],
-      "desc": "卖给商人后，可以获得金豆豆。",
-      "note": "活动结束后出售"
     },
     {
       "name": "黄金·琉璃宝荷",
@@ -656,7 +884,7 @@
       "fruit": 10,
       "price": 0,
       "prob": 10,
-      "points": 200,
+      "points": 40,
       "cropId": 1032,
       "phaseImages": [
         "plant/model/v4/gold/Crop_1032_6.png",
@@ -666,6 +894,46 @@
         "plant/model/v4/gold/Crop_1032_4.png",
         "plant/model/v4/gold/Crop_1032_5.png",
         "plant/model/v4/gold/Crop_1032_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·欢乐糖果",
+      "seedId": 20167,
+      "exp": 960,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 167,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_167_6.png",
+        "plant/model/v4/gold/Crop_167_Seed.png",
+        "plant/model/v4/gold/Crop_167_2.png",
+        "plant/model/v4/gold/Crop_167_3.png",
+        "plant/model/v4/gold/Crop_167_4.png",
+        "plant/model/v4/gold/Crop_167_5.png",
+        "plant/model/v4/gold/Crop_167_6.png"
+      ],
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·青梅",
+      "seedId": 21221,
+      "exp": 720,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 1221,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_1221_6.png",
+        "plant/model/v4/gold/Crop_1221_Seed.png",
+        "plant/model/v4/gold/Crop_1221_2.png",
+        "plant/model/v4/gold/Crop_1221_3.png",
+        "plant/model/v4/gold/Crop_1221_4.png",
+        "plant/model/v4/gold/Crop_1221_5.png",
+        "plant/model/v4/gold/Crop_1221_6.png"
       ],
       "desc": "卖给商人后，可以获得金豆豆。"
     }
@@ -749,6 +1017,66 @@
           "plant/model/v4/gold/Crop_109_4.png",
           "plant/model/v4/gold/Crop_109_5.png",
           "plant/model/v4/gold/Crop_109_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·昙花",
+        "seedId": 20224,
+        "exp": 840,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 224,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_224_6.png",
+          "plant/model/v4/gold/Crop_224_Seed.png",
+          "plant/model/v4/gold/Crop_224_2.png",
+          "plant/model/v4/gold/Crop_224_3.png",
+          "plant/model/v4/gold/Crop_224_4.png",
+          "plant/model/v4/gold/Crop_224_5.png",
+          "plant/model/v4/gold/Crop_224_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·荷包牡丹",
+        "seedId": 20249,
+        "exp": 840,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 249,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_249_6.png",
+          "plant/model/v4/gold/Crop_249_Seed.png",
+          "plant/model/v4/gold/Crop_249_2.png",
+          "plant/model/v4/gold/Crop_249_3.png",
+          "plant/model/v4/gold/Crop_249_4.png",
+          "plant/model/v4/gold/Crop_249_5.png",
+          "plant/model/v4/gold/Crop_249_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·爱心果",
+        "seedId": 20046,
+        "exp": 3840,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 46,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_46_6.png",
+          "plant/model/v4/gold/Crop_46_Seed.png",
+          "plant/model/v4/gold/Crop_46_2.png",
+          "plant/model/v4/gold/Crop_46_3.png",
+          "plant/model/v4/gold/Crop_46_4.png",
+          "plant/model/v4/gold/Crop_46_5.png",
+          "plant/model/v4/gold/Crop_46_6.png"
         ],
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -853,22 +1181,314 @@
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
-        "name": "黄金·欢乐糖果",
-        "seedId": 20167,
+        "name": "黄金·孔雀草",
+        "seedId": 20257,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 257,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_257_6.png",
+          "plant/model/v4/gold/Crop_257_Seed.png",
+          "plant/model/v4/gold/Crop_257_2.png",
+          "plant/model/v4/gold/Crop_257_3.png",
+          "plant/model/v4/gold/Crop_257_4.png",
+          "plant/model/v4/gold/Crop_257_5.png",
+          "plant/model/v4/gold/Crop_257_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·欧石楠",
+        "seedId": 20258,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 258,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_258_6.png",
+          "plant/model/v4/gold/Crop_258_Seed.png",
+          "plant/model/v4/gold/Crop_258_2.png",
+          "plant/model/v4/gold/Crop_258_3.png",
+          "plant/model/v4/gold/Crop_258_4.png",
+          "plant/model/v4/gold/Crop_258_5.png",
+          "plant/model/v4/gold/Crop_258_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·黄金果",
+        "seedId": 20304,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 304,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_304_6.png",
+          "plant/model/v4/gold/Crop_304_Seed.png",
+          "plant/model/v4/gold/Crop_304_2.png",
+          "plant/model/v4/gold/Crop_304_3.png",
+          "plant/model/v4/gold/Crop_304_4.png",
+          "plant/model/v4/gold/Crop_304_5.png",
+          "plant/model/v4/gold/Crop_304_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·哈哈南瓜",
+        "seedId": 29998,
+        "exp": 15360,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 416,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_416_6.png",
+          "plant/model/v4/gold/Crop_416_Seed.png",
+          "plant/model/v4/gold/Crop_416_2.png",
+          "plant/model/v4/gold/Crop_416_3.png",
+          "plant/model/v4/gold/Crop_416_4.png",
+          "plant/model/v4/gold/Crop_416_5.png",
+          "plant/model/v4/gold/Crop_416_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·哈哈小南瓜",
+        "seedId": 0,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 0,
+        "phaseImages": [],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·丁香花",
+        "seedId": 20122,
         "exp": 960,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 40,
-        "cropId": 167,
+        "cropId": 122,
         "phaseImages": [
-          "plant/model/v4/gold/Crop_167_6.png",
-          "plant/model/v4/gold/Crop_167_Seed.png",
-          "plant/model/v4/gold/Crop_167_2.png",
-          "plant/model/v4/gold/Crop_167_3.png",
-          "plant/model/v4/gold/Crop_167_4.png",
-          "plant/model/v4/gold/Crop_167_5.png",
-          "plant/model/v4/gold/Crop_167_6.png"
+          "plant/model/v4/gold/Crop_122_6.png",
+          "plant/model/v4/gold/Crop_122_Seed.png",
+          "plant/model/v4/gold/Crop_122_2.png",
+          "plant/model/v4/gold/Crop_122_3.png",
+          "plant/model/v4/gold/Crop_122_4.png",
+          "plant/model/v4/gold/Crop_122_5.png",
+          "plant/model/v4/gold/Crop_122_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·绿牡丹",
+        "seedId": 20134,
+        "exp": 960,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 134,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_134_6.png",
+          "plant/model/v4/gold/Crop_134_Seed.png",
+          "plant/model/v4/gold/Crop_134_2.png",
+          "plant/model/v4/gold/Crop_134_3.png",
+          "plant/model/v4/gold/Crop_134_4.png",
+          "plant/model/v4/gold/Crop_134_5.png",
+          "plant/model/v4/gold/Crop_134_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·糖槭树花",
+        "seedId": 20139,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 139,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_139_6.png",
+          "plant/model/v4/gold/Crop_139_Seed.png",
+          "plant/model/v4/gold/Crop_139_2.png",
+          "plant/model/v4/gold/Crop_139_3.png",
+          "plant/model/v4/gold/Crop_139_4.png",
+          "plant/model/v4/gold/Crop_139_5.png",
+          "plant/model/v4/gold/Crop_139_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·象牙红",
+        "seedId": 20140,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 140,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_140_6.png",
+          "plant/model/v4/gold/Crop_140_Seed.png",
+          "plant/model/v4/gold/Crop_140_2.png",
+          "plant/model/v4/gold/Crop_140_3.png",
+          "plant/model/v4/gold/Crop_140_4.png",
+          "plant/model/v4/gold/Crop_140_5.png",
+          "plant/model/v4/gold/Crop_140_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·七里香",
+        "seedId": 20144,
+        "exp": 360,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 144,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_144_6.png",
+          "plant/model/v4/gold/Crop_144_Seed.png",
+          "plant/model/v4/gold/Crop_144_2.png",
+          "plant/model/v4/gold/Crop_144_3.png",
+          "plant/model/v4/gold/Crop_144_4.png",
+          "plant/model/v4/gold/Crop_144_5.png",
+          "plant/model/v4/gold/Crop_144_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·月桂花",
+        "seedId": 20154,
+        "exp": 360,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 154,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_154_6.png",
+          "plant/model/v4/gold/Crop_154_Seed.png",
+          "plant/model/v4/gold/Crop_154_2.png",
+          "plant/model/v4/gold/Crop_154_3.png",
+          "plant/model/v4/gold/Crop_154_4.png",
+          "plant/model/v4/gold/Crop_154_5.png",
+          "plant/model/v4/gold/Crop_154_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·天竺葵",
+        "seedId": 20263,
+        "exp": 720,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 263,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_263_6.png",
+          "plant/model/v4/gold/Crop_263_Seed.png",
+          "plant/model/v4/gold/Crop_263_2.png",
+          "plant/model/v4/gold/Crop_263_3.png",
+          "plant/model/v4/gold/Crop_263_4.png",
+          "plant/model/v4/gold/Crop_263_5.png",
+          "plant/model/v4/gold/Crop_263_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·桔梗花",
+        "seedId": 20269,
+        "exp": 720,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 269,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_269_6.png",
+          "plant/model/v4/gold/Crop_269_Seed.png",
+          "plant/model/v4/gold/Crop_269_2.png",
+          "plant/model/v4/gold/Crop_269_3.png",
+          "plant/model/v4/gold/Crop_269_4.png",
+          "plant/model/v4/gold/Crop_269_5.png",
+          "plant/model/v4/gold/Crop_269_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·石莲花",
+        "seedId": 20199,
+        "exp": 420,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 199,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_199_6.png",
+          "plant/model/v4/gold/Crop_199_Seed.png",
+          "plant/model/v4/gold/Crop_199_2.png",
+          "plant/model/v4/gold/Crop_199_3.png",
+          "plant/model/v4/gold/Crop_199_4.png",
+          "plant/model/v4/gold/Crop_199_5.png",
+          "plant/model/v4/gold/Crop_199_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·帝王花",
+        "seedId": 20262,
+        "exp": 840,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 262,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_262_6.png",
+          "plant/model/v4/gold/Crop_262_Seed.png",
+          "plant/model/v4/gold/Crop_262_2.png",
+          "plant/model/v4/gold/Crop_262_3.png",
+          "plant/model/v4/gold/Crop_262_4.png",
+          "plant/model/v4/gold/Crop_262_5.png",
+          "plant/model/v4/gold/Crop_262_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·夏蜡梅",
+        "seedId": 20223,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 223,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_223_6.png",
+          "plant/model/v4/gold/Crop_223_Seed.png",
+          "plant/model/v4/gold/Crop_223_2.png",
+          "plant/model/v4/gold/Crop_223_3.png",
+          "plant/model/v4/gold/Crop_223_4.png",
+          "plant/model/v4/gold/Crop_223_5.png",
+          "plant/model/v4/gold/Crop_223_6.png"
         ],
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -889,6 +1509,26 @@
           "plant/model/v4/gold/Crop_185_4.png",
           "plant/model/v4/gold/Crop_185_5.png",
           "plant/model/v4/gold/Crop_185_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·地涌金莲",
+        "seedId": 20267,
+        "exp": 840,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 267,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_267_6.png",
+          "plant/model/v4/gold/Crop_267_Seed.png",
+          "plant/model/v4/gold/Crop_267_2.png",
+          "plant/model/v4/gold/Crop_267_3.png",
+          "plant/model/v4/gold/Crop_267_4.png",
+          "plant/model/v4/gold/Crop_267_5.png",
+          "plant/model/v4/gold/Crop_267_6.png"
         ],
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -973,133 +1613,13 @@
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
-        "name": "黄金·昙花",
-        "seedId": 20224,
-        "exp": 840,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 224,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_224_6.png",
-          "plant/model/v4/gold/Crop_224_Seed.png",
-          "plant/model/v4/gold/Crop_224_2.png",
-          "plant/model/v4/gold/Crop_224_3.png",
-          "plant/model/v4/gold/Crop_224_4.png",
-          "plant/model/v4/gold/Crop_224_5.png",
-          "plant/model/v4/gold/Crop_224_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "黄金·荷包牡丹",
-        "seedId": 20249,
-        "exp": 840,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 249,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_249_6.png",
-          "plant/model/v4/gold/Crop_249_Seed.png",
-          "plant/model/v4/gold/Crop_249_2.png",
-          "plant/model/v4/gold/Crop_249_3.png",
-          "plant/model/v4/gold/Crop_249_4.png",
-          "plant/model/v4/gold/Crop_249_5.png",
-          "plant/model/v4/gold/Crop_249_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "黄金·孔雀草",
-        "seedId": 20257,
-        "exp": 1680,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 257,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_257_6.png",
-          "plant/model/v4/gold/Crop_257_Seed.png",
-          "plant/model/v4/gold/Crop_257_2.png",
-          "plant/model/v4/gold/Crop_257_3.png",
-          "plant/model/v4/gold/Crop_257_4.png",
-          "plant/model/v4/gold/Crop_257_5.png",
-          "plant/model/v4/gold/Crop_257_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "黄金·欧石楠",
-        "seedId": 20258,
-        "exp": 1680,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 258,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_258_6.png",
-          "plant/model/v4/gold/Crop_258_Seed.png",
-          "plant/model/v4/gold/Crop_258_2.png",
-          "plant/model/v4/gold/Crop_258_3.png",
-          "plant/model/v4/gold/Crop_258_4.png",
-          "plant/model/v4/gold/Crop_258_5.png",
-          "plant/model/v4/gold/Crop_258_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "黄金·黄金果",
-        "seedId": 20304,
-        "exp": 1680,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 304,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_304_6.png",
-          "plant/model/v4/gold/Crop_304_Seed.png",
-          "plant/model/v4/gold/Crop_304_2.png",
-          "plant/model/v4/gold/Crop_304_3.png",
-          "plant/model/v4/gold/Crop_304_4.png",
-          "plant/model/v4/gold/Crop_304_5.png",
-          "plant/model/v4/gold/Crop_304_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "黄金·地涌金莲",
-        "seedId": 20267,
-        "exp": 840,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 267,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_267_6.png",
-          "plant/model/v4/gold/Crop_267_Seed.png",
-          "plant/model/v4/gold/Crop_267_2.png",
-          "plant/model/v4/gold/Crop_267_3.png",
-          "plant/model/v4/gold/Crop_267_4.png",
-          "plant/model/v4/gold/Crop_267_5.png",
-          "plant/model/v4/gold/Crop_267_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
         "name": "黄金·繁星花",
         "seedId": 21044,
         "exp": 840,
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 80,
+        "points": 40,
         "cropId": 1044,
         "phaseImages": [
           "plant/model/v4/gold/Crop_1044_6.png",
@@ -1119,7 +1639,7 @@
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 80,
+        "points": 40,
         "cropId": 1038,
         "phaseImages": [
           "plant/model/v4/gold/Crop_1038_6.png",
@@ -1139,7 +1659,7 @@
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 80,
+        "points": 40,
         "cropId": 1474,
         "phaseImages": [
           "plant/model/v4/gold/Crop_1474_6.png",
@@ -1159,7 +1679,7 @@
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 80,
+        "points": 40,
         "cropId": 243,
         "phaseImages": [
           "plant/model/v4/gold/Crop_243_6.png",
@@ -1179,7 +1699,7 @@
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 80,
+        "points": 40,
         "cropId": 1134,
         "phaseImages": [
           "plant/model/v4/gold/Crop_1134_6.png",
@@ -1199,7 +1719,7 @@
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 80,
+        "points": 40,
         "cropId": 6127,
         "phaseImages": [
           "plant/model/v4/gold/Crop_6127_6.png",
@@ -1213,40 +1733,16 @@
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
-        "name": "黄金·爱心果",
-        "seedId": 20046,
-        "exp": 3840,
+        "name": "黄金·荷花",
+        "seedId": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 200,
-        "cropId": 46,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_46_6.png",
-          "plant/model/v4/gold/Crop_46_Seed.png",
-          "plant/model/v4/gold/Crop_46_2.png",
-          "plant/model/v4/gold/Crop_46_3.png",
-          "plant/model/v4/gold/Crop_46_4.png",
-          "plant/model/v4/gold/Crop_46_5.png",
-          "plant/model/v4/gold/Crop_46_6.png"
-        ],
+        "points": 40,
+        "cropId": 0,
+        "phaseImages": [],
         "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "黄金·哈哈南瓜",
-        "seedId": 20416,
-        "exp": 15360,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 200,
-        "cropId": 416,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_416_Seed.png",
-          "plant/model/v4/gold/Crop_416_Seed.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。",
-        "note": "活动结束后出售"
       },
       {
         "name": "黄金·琉璃宝荷",
@@ -1255,7 +1751,7 @@
         "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 200,
+        "points": 40,
         "cropId": 1032,
         "phaseImages": [
           "plant/model/v4/gold/Crop_1032_6.png",
@@ -1267,14 +1763,117 @@
           "plant/model/v4/gold/Crop_1032_6.png"
         ],
         "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·欢乐糖果",
+        "seedId": 20167,
+        "exp": 960,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 167,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_167_6.png",
+          "plant/model/v4/gold/Crop_167_Seed.png",
+          "plant/model/v4/gold/Crop_167_2.png",
+          "plant/model/v4/gold/Crop_167_3.png",
+          "plant/model/v4/gold/Crop_167_4.png",
+          "plant/model/v4/gold/Crop_167_5.png",
+          "plant/model/v4/gold/Crop_167_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·青梅",
+        "seedId": 21221,
+        "exp": 720,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 1221,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_1221_6.png",
+          "plant/model/v4/gold/Crop_1221_Seed.png",
+          "plant/model/v4/gold/Crop_1221_2.png",
+          "plant/model/v4/gold/Crop_1221_3.png",
+          "plant/model/v4/gold/Crop_1221_4.png",
+          "plant/model/v4/gold/Crop_1221_5.png",
+          "plant/model/v4/gold/Crop_1221_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金豆豆。"
       }
     ],
     "costumeFruit": [
       {
+        "name": "荷花",
+        "seedId": 46109,
+        "exp": 0,
+        "fruit": 0,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 6109,
+        "phaseImages": [
+          "plant/model/v4/Crop_6109_6.png",
+          "plant/model/v4/Crop_6109_Seed.png",
+          "plant/model/v4/Crop_6109_2.png",
+          "plant/model/v4/Crop_6109_3.png",
+          "plant/model/v4/Crop_6109_4.png",
+          "plant/model/v4/Crop_6109_5.png",
+          "plant/model/v4/Crop_6109_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金币。",
+        "note": "活动结束后出售"
+      },
+      {
+        "name": "绵绵糖果",
+        "seedId": 40804,
+        "exp": 0,
+        "fruit": 0,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 804,
+        "phaseImages": [
+          "plant/model/v4/Crop_804_6.png",
+          "plant/model/v4/Crop_804_Seed.png",
+          "plant/model/v4/Crop_804_2.png",
+          "plant/model/v4/Crop_804_3.png",
+          "plant/model/v4/Crop_804_4.png",
+          "plant/model/v4/Crop_804_5.png",
+          "plant/model/v4/Crop_804_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金币。",
+        "note": "活动结束后出售"
+      },
+      {
+        "name": "黄金·哈哈小南瓜",
+        "seedId": 1049001,
+        "exp": 0,
+        "fruit": 0,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 9001,
+        "phaseImages": [
+          "plant/model/v4/Crop_9001_6.png",
+          "plant/model/v4/Crop_9001_Seed.png",
+          "plant/model/v4/Crop_9001_2.png",
+          "plant/model/v4/Crop_9001_3.png",
+          "plant/model/v4/Crop_9001_4.png",
+          "plant/model/v4/Crop_9001_5.png",
+          "plant/model/v4/Crop_9001_6.png"
+        ],
+        "desc": "卖给商人后，可以获得金币。",
+        "note": "活动结束后出售"
+      },
+      {
         "name": "哈哈南瓜塔",
-        "seedId": 28001,
-        "exp": 15360,
-        "fruit": 1,
+        "seedId": 204002,
+        "exp": 0,
+        "fruit": 0,
         "price": 0,
         "prob": 10,
         "points": 200,
@@ -1292,144 +1891,48 @@
         "note": "活动结束后出售"
       },
       {
-        "name": "黄金·哈哈南瓜塔",
-        "seedId": 28001,
-        "exp": 15360,
-        "fruit": 1,
-        "price": 0,
-        "prob": 10,
-        "points": 400,
-        "cropId": 8001,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_8001_Seed.png",
-          "plant/model/v4/gold/Crop_8001_Seed.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。",
-        "note": "活动结束后出售"
-      },
-      {
         "name": "月华宝荷",
-        "seedId": 28002,
-        "exp": 7680,
-        "fruit": 1,
+        "seedId": 204004,
+        "exp": 0,
+        "fruit": 0,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8002,
         "phaseImages": [
+          "plant/model/v4/Crop_8002_6.png",
           "plant/model/v4/Crop_8002_Seed.png",
-          "plant/model/v4/Crop_8002_Seed.png"
+          "plant/model/v4/Crop_8002_2.png",
+          "plant/model/v4/Crop_8002_3.png",
+          "plant/model/v4/Crop_8002_4.png",
+          "plant/model/v4/Crop_8002_5.png",
+          "plant/model/v4/Crop_8002_6.png"
         ],
-        "desc": "卖给商人后，可以获得金币。"
-      },
-      {
-        "name": "黄金·月华宝荷",
-        "seedId": 28002,
-        "exp": 7680,
-        "fruit": 1,
-        "price": 0,
-        "prob": 10,
-        "points": 400,
-        "cropId": 8002,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_8002_Seed.png",
-          "plant/model/v4/gold/Crop_8002_Seed.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
+        "desc": "卖给商人后，可以获得金币。",
+        "note": "活动结束后出售"
       }
     ],
     "eventFruit": [
       {
         "name": "哈哈小南瓜",
-        "seedId": 29001,
-        "exp": 1680,
-        "fruit": 10,
+        "seedId": 49001,
+        "exp": 0,
+        "fruit": 0,
         "price": 0,
         "prob": 10,
         "points": 80,
         "cropId": 9001,
         "phaseImages": [
+          "plant/model/v4/Crop_9001_6.png",
           "plant/model/v4/Crop_9001_Seed.png",
-          "plant/model/v4/Crop_9001_Seed.png"
+          "plant/model/v4/Crop_9001_2.png",
+          "plant/model/v4/Crop_9001_3.png",
+          "plant/model/v4/Crop_9001_4.png",
+          "plant/model/v4/Crop_9001_5.png",
+          "plant/model/v4/Crop_9001_6.png"
         ],
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
-      },
-      {
-        "name": "黄金·哈哈小南瓜",
-        "seedId": 29001,
-        "exp": 1680,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 160,
-        "cropId": 9001,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_9001_Seed.png",
-          "plant/model/v4/gold/Crop_9001_Seed.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。",
-        "note": "活动结束后出售"
-      },
-      {
-        "name": "绵绵糖果",
-        "seedId": 20804,
-        "exp": 960,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 40,
-        "cropId": 804,
-        "phaseImages": [
-          "plant/model/v4/Crop_804_6.png",
-          "plant/model/v4/Crop_804_Seed.png",
-          "plant/model/v4/Crop_804_2.png",
-          "plant/model/v4/Crop_804_3.png",
-          "plant/model/v4/Crop_804_4.png",
-          "plant/model/v4/Crop_804_5.png",
-          "plant/model/v4/Crop_804_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
-      },
-      {
-        "name": "荷花",
-        "seedId": 26109,
-        "exp": 1680,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 6109,
-        "phaseImages": [
-          "plant/model/v4/Crop_6109_6.png",
-          "plant/model/v4/Crop_6109_Seed.png",
-          "plant/model/v4/Crop_6109_2.png",
-          "plant/model/v4/Crop_6109_3.png",
-          "plant/model/v4/Crop_6109_4.png",
-          "plant/model/v4/Crop_6109_5.png",
-          "plant/model/v4/Crop_6109_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金币。"
-      },
-      {
-        "name": "黄金·荷花",
-        "seedId": 26109,
-        "exp": 1680,
-        "fruit": 10,
-        "price": 0,
-        "prob": 10,
-        "points": 160,
-        "cropId": 6109,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_6109_6.png",
-          "plant/model/v4/gold/Crop_6109_Seed.png",
-          "plant/model/v4/gold/Crop_6109_2.png",
-          "plant/model/v4/gold/Crop_6109_3.png",
-          "plant/model/v4/gold/Crop_6109_4.png",
-          "plant/model/v4/gold/Crop_6109_5.png",
-          "plant/model/v4/gold/Crop_6109_6.png"
-        ],
-        "desc": "卖给商人后，可以获得金豆豆。"
       }
     ]
   }

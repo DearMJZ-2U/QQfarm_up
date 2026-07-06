@@ -6,6 +6,7 @@ import plantData from '../data/Plant.json';
 import itemsData from '../data/items.json';
 import costumeData from '../data/costume_atlas.json';
 import landsData from '../data/lands_atlas.json';
+import mutationData from '../data/mutation_atlas.json';
 
 const BASE = (import.meta as any).env?.BASE_URL || '/';
 const CLEAN_BASE = BASE.endsWith('/') ? BASE : BASE + '/';
@@ -208,27 +209,42 @@ export function goldenAtlasImageUrls(name: string): string[] {
   if (item) return itemImageUrls(item.iconFile, item.localFile);
   const costumeImg = costumeImgByName[name];
   if (costumeImg !== undefined) return costumeImageUrls(costumeImg, name);
+  // fallback: 从 mutation_atlas.goldenAtlas 按 name 找 cropId，构造 gold 路径图片 URL
+  const ga = (mutationData as any).goldenAtlas;
+  if (ga) {
+    for (const key of ['goldenFruit', 'costumeFruit', 'eventFruit'] as const) {
+      const arr = ga[key] || [];
+      const found = arr.find((g: any) => g.name === name && g.cropId);
+      if (found) {
+        return [
+          `${CLEAN_BASE}item_images/17_0_${sanitize(name)}.png`,
+          `${CLEAN_BASE}seed_images_named/${found.seedId}_${name.replace(/^黄金·/, '')}_gold/Crop_${found.cropId}_Seed.png`,
+        ];
+      }
+    }
+  }
   return [];
 }
 
 // ── 超变图鉴成长阶段 ──────────────────────────────────────
 
-export const goldSeedIds: Record<string, number> = {
-  '黄金·哈哈南瓜': 20416, '黄金·风信子': 20112, '黄金·银杏树苗': 20025, '黄金·蔷薇': 20121,
-  '黄金·蝴蝶兰': 20109, '黄金·昙花': 20224, '黄金·荷包牡丹': 20249, '黄金·艾草': 21135,
-  '黄金·卡特兰': 20184, '黄金·红云飞片': 20193, '黄金·石竹花': 20256, '黄金·针垫花': 20261,
-  '黄金·孔雀草': 20257, '黄金·欧石楠': 20258, '黄金·黄金果': 20304, '黄金·爱心果': 20046,
-  '黄金·丁香花': 20122, '黄金·欢乐糖果': 20167, '黄金·似何莲': 20185, '黄金·凤仙花': 20133,
-  '黄金·金银花': 20176, '黄金·米兰': 20186, '黄金·鹭草': 20251, '黄金·地涌金莲': 20267,
-  '黄金·繁星花': 21044, '黄金·香彩雀': 21038, '黄金·荷青花': 21474, '黄金·芹叶铁线莲': 20243,
-  '黄金·菖蒲': 21134, '黄金·凌霄花': 26127, '黄金·哈哈小南瓜': 20416, '哈哈小南瓜': 20416,
-  '黄金·琉璃宝荷': 21032, '哈哈南瓜塔': 20416, '黄金·哈哈南瓜塔': 20416,
-  '月华宝荷': 21032, '黄金·月华宝荷': 21032,
-  '荷花': 26109, '黄金·荷花': 26109, '绵绵糖果': 20167,
-  '黄金·绿牡丹': 20134, '黄金·糖槭树花': 20139, '黄金·象牙红': 20140,
-  '黄金·七里香': 20144, '黄金·月桂花': 20154, '黄金·夏蜡梅': 20223,
-  '黄金·石莲花': 20199, '黄金·帝王花': 20262, '黄金·天竺葵': 20263, '黄金·桔梗花': 20269,
-};
+// 从 mutation_atlas.json 动态派生：黄金果实/装扮果实/活动果实的 name → seedId 映射
+// 数据更新时自动同步，无需手改
+export const goldSeedIds: Record<string, number> = (() => {
+  const map: Record<string, number> = {};
+  const ga = (mutationData as any).goldenAtlas;
+  if (ga) {
+    for (const key of ['goldenFruit', 'costumeFruit', 'eventFruit'] as const) {
+      const arr = ga[key] || [];
+      for (const item of arr) {
+        if (item.name && item.seedId) {
+          map[item.name] = item.seedId;
+        }
+      }
+    }
+  }
+  return map;
+})();
 
 export function mutationIconUrls(iconPath: string, name: string): string[] {
   const urls: string[] = [];
@@ -423,7 +439,7 @@ const GRADE_COLOR_BY_RARITY: Record<number, string> = {
   4: 'D1A21E',
   3: 'B09DED',
   2: 'A8C1F4',
-  1: 'D2C5AC',
+  1: '6B5D4E',
 };
 
 const GRADE_NAME_BY_RARITY: Record<number, GradeName> = {
@@ -438,7 +454,10 @@ export function getGrade(rarity: number | string | undefined, rarityColor?: stri
   color: string;
 } {
   const r = Number(rarity) || 1;
-  const color = (rarityColor && String(rarityColor).trim()) || GRADE_COLOR_BY_RARITY[r] || '334155';
+  // 普通品级用固定深色（游戏原始 rarityColor 太浅看不清），其他品级优先用 rarityColor
+  const color = (r === 1)
+    ? GRADE_COLOR_BY_RARITY[1]
+    : ((rarityColor && String(rarityColor).trim()) || GRADE_COLOR_BY_RARITY[r] || '334155');
   const name = GRADE_NAME_BY_RARITY[r] || '普通';
   return { name, color };
 }

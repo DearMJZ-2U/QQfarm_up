@@ -22,6 +22,8 @@ function LandImage({ file, alt, className = '', dim = false }: {
 
 type LandKey = 'normal' | 'red' | 'black' | 'gold' | 'purple';
 
+// NOTE: 数值字段（y/t/e/m）与 landsData.landTypes 一致，由 extract_from_wxapkg.ts 同步生成。
+// 图片文件名和颜色为显示配置，不在 JSON 中。如游戏更新土地等级数值，重新跑 sync 即可。
 const landTypes: Array<{
   name: string; lv: string; accent: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink';
   tile: string; key: LandKey; valid: string; dry: string;

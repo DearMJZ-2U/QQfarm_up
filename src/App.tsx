@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Layers, Github, Home as HomeIcon, BarChart3, TrendingUp } from 'lucide-react';
+import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Wrench, Github, Home as HomeIcon } from 'lucide-react';
 
 const GITHUB_REPO_URL = 'https://github.com/DearMJZ-2U/QQfarm_up';
 import CalculatorTab from './components/CalculatorTab';
@@ -15,9 +15,17 @@ import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
 import { CategoryNav, type CategoryNavItem } from './components/shared';
 
-type BottomTab = 'home' | 'atlas' | 'items' | 'more' | 'calc';
-type HomeNavTarget = 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'items_gold' | 'more_level' | 'more_land';
-type MoreSubTab = 'level' | 'land';
+// 动态数据：count 从 JSON 实时读取，不再硬编码
+import seedsData from './data/seeds.json';
+import itemsData from './data/items.json';
+import landsData from './data/lands_atlas.json';
+import costumeData from './data/costume_atlas.json';
+import mutationData from './data/mutation_atlas.json';
+
+type BottomTab = 'home' | 'calc' | 'atlas' | 'items' | 'tools';
+type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume';
+type ToolsSubTab = 'level' | 'land';
+type ItemCategoryId = string;
 
 interface TabDef {
   id: BottomTab;
@@ -27,12 +35,40 @@ interface TabDef {
   emoji: string;
 }
 
+// 底栏 5 个 tab：首页 / 计算器 / 图鉴 / 道具 / 工具
 const bottomTabs: TabDef[] = [
   { id: 'home', Icon: HomeIcon, label: '首页', color: 'leaf', emoji: '🏠' },
+  { id: 'calc', Icon: Calculator, label: '计算器', color: 'leaf', emoji: '🧮' },
   { id: 'atlas', Icon: BookOpen, label: '图鉴', color: 'orange', emoji: '📖' },
   { id: 'items', Icon: ShoppingBag, label: '道具', color: 'berry', emoji: '🛒' },
-  { id: 'more', Icon: Layers, label: '更多', color: 'plum', emoji: '📋' },
+  { id: 'tools', Icon: Wrench, label: '工具', color: 'plum', emoji: '🛠️' },
 ];
+
+// 动态计算各图鉴分类的 count
+const atlasSubTabCount = (id: AtlasSubTab): number => {
+  if (id === 'crops') return (seedsData as any).count || (seedsData as any).rows?.length || 0;
+  if (id === 'lands') return (landsData as any).plots?.length || 0;
+  if (id === 'costume') return (costumeData as any).categories?.reduce((s: number, c: any) => s + c.items.length, 0) || 0;
+  // mutation: 变异类型 + 黄金果实 + 装扮果实 + 活动果实
+  const m = mutationData as any;
+  const golden = m.goldenAtlas ? (m.goldenAtlas.goldenFruit?.length || 0) + (m.goldenAtlas.costumeFruit?.length || 0) + (m.goldenAtlas.eventFruit?.length || 0) : 0;
+  return (m.mutationTypes?.length || 0) + golden;
+};
+
+const atlasSubTabsDef: Array<{ id: AtlasSubTab; label: string; emoji: string; color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' }> = [
+  { id: 'crops', label: '作物', emoji: '🌿', color: 'leaf' },
+  { id: 'costume', label: '装扮', emoji: '🏡', color: 'sky' },
+  { id: 'lands', label: '土地', emoji: '🏞️', color: 'orange' },
+  { id: 'mutation', label: '变异', emoji: '🧬', color: 'berry' },
+];
+
+// 动态构建侧边栏：count 从 items.json 实时读取
+const HIDDEN_ITEM_IDS = new Set([2101, 2102, 2103]);
+function itemsCountFor(catId: string): number {
+  const cat = (itemsData as any).categories.find((c: any) => c.id === catId);
+  if (!cat) return 0;
+  return (cat.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id)).length;
+}
 
 interface SidebarItem {
   icon: string;
@@ -43,59 +79,47 @@ interface SidebarItem {
   color?: string;
 }
 
-  const sidebarSections: { title?: string; items: SidebarItem[] }[] = [
-  {
-    items: [
-      { icon: '🏠', label: '首页', id: 'home', color: 'leaf' },
-      { icon: '🧮', label: '经验计算器', id: 'calc', color: 'leaf' },
-      { icon: '📊', label: '等级查询', id: 'more_level', color: 'plum' },
-      { icon: '🟪', label: '土地升级所需', id: 'more_land', color: 'plum' },
-    ]
-  },
-  {
-    title: '图鉴',
-    items: [
-      { icon: '🌿', label: '作物图鉴', id: 'crops', count: 134, color: 'leaf' },
-      { icon: '🏡', label: '装扮图鉴', id: 'atlas_costume', count: 13, color: 'sky' },
-      { icon: '🏞️', label: '土地图鉴', id: 'lands', count: 24, color: 'orange' },
-      { icon: '🧬', label: '变异图鉴', id: 'atlas_mutation', color: 'berry' },
-    ]
-  },
-  {
-    title: '商店道具',
-    items: [
-      { icon: '🌱', label: '种子', id: 'items_seed', count: 134, color: 'leaf' },
-      { icon: '✨', label: '黄金果实', id: 'items', count: 18, color: 'sun' },
-      { icon: '💰', label: '货币与计数', id: 'items', count: 9, color: 'sun' },
-      { icon: '🛠️', label: '操作工具', id: 'items', count: 8, color: 'sky' },
-      { icon: '🧪', label: '化肥道具', id: 'items', count: 8, color: 'leaf' },
-      { icon: '🎨', label: '头像框与装饰', id: 'items', count: 7, color: 'plum' },
-      { icon: '🐕', label: '狗与看门犬', id: 'items', count: 5, color: 'orange' },
-      { icon: '🦴', label: '狗粮', id: 'items', count: 3, color: 'earth' },
-      { icon: '🎟', label: '活动货币', id: 'items', count: 2, color: 'berry' },
-      { icon: '💎', label: '充值货币', id: 'items', count: 1, frozen: true },
-    ]
-  },
-];
+function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
+  const cropsCount = (seedsData as any).count || (seedsData as any).rows?.length || 0;
+  const costumeCount = (costumeData as any).categories?.reduce((s: number, c: any) => s + c.items.length, 0) || 0;
+  const landsCount = (landsData as any).plots?.length || 0;
+  const mutationCount = atlasSubTabCount('mutation');
 
-const atlasSubTabsDef: Array<{
-  id: 'crops' | 'lands' | 'mutation' | 'costume';
-  label: string;
-  emoji: string;
-  color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum';
-}> = [
-  { id: 'crops', label: '作物', emoji: '🌿', color: 'leaf' },
-  { id: 'costume', label: '装扮', emoji: '🏡', color: 'sky' },
-  { id: 'lands', label: '土地', emoji: '🏞️', color: 'orange' },
-  { id: 'mutation', label: '变异', emoji: '🧬', color: 'berry' },
-];
-
-const atlasSubTabCount = (id: 'crops' | 'costume' | 'lands' | 'mutation'): number => {
-  if (id === 'crops') return 134;
-  if (id === 'lands') return 24;
-  if (id === 'costume') return 38;
-  return 39; // mutation: 10 变异 + 29 黄金果实（黄金果实 30 + 装扮 4 + 活动 5 = 39）
-};
+  return [
+    {
+      items: [
+        { icon: '🏠', label: '首页', id: 'home', color: 'leaf' },
+        { icon: '🧮', label: '经验计算器', id: 'calc', color: 'leaf' },
+        { icon: '📊', label: '等级查询', id: 'tools_level', color: 'plum' },
+        { icon: '🟪', label: '土地升级所需', id: 'tools_land', color: 'plum' },
+      ]
+    },
+    {
+      title: '图鉴',
+      items: [
+        { icon: '🌿', label: '作物图鉴', id: 'crops', count: cropsCount, color: 'leaf' },
+        { icon: '🏡', label: '装扮图鉴', id: 'atlas_costume', count: costumeCount, color: 'sky' },
+        { icon: '🏞️', label: '土地图鉴', id: 'lands', count: landsCount, color: 'orange' },
+        { icon: '🧬', label: '变异图鉴', id: 'atlas_mutation', count: mutationCount, color: 'berry' },
+      ]
+    },
+    {
+      title: '商店道具',
+      items: [
+        { icon: '🌱', label: '种子', id: 'items_05', count: itemsCountFor('05'), color: 'leaf' },
+        { icon: '✨', label: '黄金果实', id: 'items_17', count: itemsCountFor('17'), color: 'sun' },
+        { icon: '💰', label: '货币与计数', id: 'items_02', count: itemsCountFor('02'), color: 'sun' },
+        { icon: '🛠️', label: '操作工具', id: 'items_04', count: itemsCountFor('04'), color: 'sky' },
+        { icon: '🧪', label: '化肥道具', id: 'items_07', count: itemsCountFor('07'), color: 'leaf' },
+        { icon: '🎨', label: '头像框与装饰', id: 'items_10', count: itemsCountFor('10'), color: 'plum' },
+        { icon: '🐕', label: '狗与看门犬', id: 'items_08', count: itemsCountFor('08'), color: 'orange' },
+        { icon: '🦴', label: '狗粮', id: 'items_09', count: itemsCountFor('09'), color: 'earth' },
+        { icon: '🎟', label: '活动货币', id: 'items_19', count: itemsCountFor('19'), color: 'berry' },
+        { icon: '💎', label: '充值货币', id: 'items_15', count: itemsCountFor('15'), frozen: true },
+      ]
+    },
+  ];
+}
 
 export default function App() {
   const [bottomTab, setBottomTab] = useState<BottomTab>('home');
@@ -106,8 +130,11 @@ export default function App() {
     if (saved === 'light' || saved === 'dark') return saved;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
-  const [atlasSubTab, setAtlasSubTab] = useState<'crops' | 'lands' | 'mutation' | 'costume'>('crops');
-  const [moreSubTab, setMoreSubTab] = useState<MoreSubTab>('level');
+  const [atlasSubTab, setAtlasSubTab] = useState<AtlasSubTab>('crops');
+  const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('level');
+  const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
+
+  const sidebarSections = useMemo(() => buildSidebarSections(), []);
 
   React.useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -131,33 +158,39 @@ export default function App() {
   };
 
   // 统一导航入口：写入浏览器历史 + 切换 tab + 滚到顶部
-  const navigate = React.useCallback((tab: BottomTab, subTab?: 'crops' | 'lands' | 'mutation' | 'costume' | MoreSubTab) => {
-    const isMore = tab === 'more';
+  const navigate = React.useCallback((
+    tab: BottomTab,
+    subTab?: AtlasSubTab | ToolsSubTab | ItemCategoryId
+  ) => {
+    const isTools = tab === 'tools';
     const isAtlas = tab === 'atlas';
-    const effectiveSubTab = subTab ?? (isAtlas ? atlasSubTab : isMore ? moreSubTab : null);
-    const currentSubTab = isAtlas ? atlasSubTab : isMore ? moreSubTab : null;
+    const isItems = tab === 'items';
+    const effectiveSubTab = subTab ?? (isAtlas ? atlasSubTab : isTools ? toolsSubTab : isItems ? itemsCatId : null);
+    const currentSubTab = isAtlas ? atlasSubTab : isTools ? toolsSubTab : isItems ? itemsCatId : null;
     if (tab === bottomTab && effectiveSubTab === currentSubTab) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     history.pushState({ tab, subTab: effectiveSubTab as any }, '', '');
     setBottomTab(tab);
-    if (isAtlas && subTab) setAtlasSubTab(subTab as 'crops' | 'lands' | 'mutation' | 'costume');
-    if (isMore && subTab) setMoreSubTab(subTab as MoreSubTab);
+    if (isAtlas && subTab) setAtlasSubTab(subTab as AtlasSubTab);
+    if (isTools && subTab) setToolsSubTab(subTab as ToolsSubTab);
+    if (isItems && subTab) setItemsCatId(subTab as ItemCategoryId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [bottomTab, atlasSubTab, moreSubTab]);
+  }, [bottomTab, atlasSubTab, toolsSubTab, itemsCatId]);
 
-  // 拦截浏览器后退：在 app 内做层级回退，不会跳出网页
+  // 拦截浏览器后退
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
     history.replaceState({ tab: 'home', subTab: null }, '', '');
     const onPopState = (e: PopStateEvent) => {
-      const s = e.state as { tab?: BottomTab; subTab?: 'crops' | 'lands' | 'mutation' | 'costume' | MoreSubTab } | null;
+      const s = e.state as { tab?: BottomTab; subTab?: AtlasSubTab | ToolsSubTab | ItemCategoryId } | null;
       if (s && s.tab) {
         setBottomTab(s.tab);
         if (s.subTab) {
-          if (s.tab === 'atlas') setAtlasSubTab(s.subTab as 'crops' | 'lands' | 'mutation' | 'costume');
-          if (s.tab === 'more') setMoreSubTab(s.subTab as MoreSubTab);
+          if (s.tab === 'atlas') setAtlasSubTab(s.subTab as AtlasSubTab);
+          if (s.tab === 'tools') setToolsSubTab(s.subTab as ToolsSubTab);
+          if (s.tab === 'items') setItemsCatId(s.subTab as ItemCategoryId);
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -166,29 +199,35 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
+  // 侧边栏直达：支持带分类参数跳转
   const handleSidebarClick = (id: string) => {
     setSidebarOpen(false);
     if (id === 'home') { navigate('home'); return; }
     if (id === 'calc') { navigate('calc'); return; }
-    if (id === 'more_level') { navigate('more', 'level'); return; }
-    if (id === 'more_land') { navigate('more', 'land'); return; }
+    if (id === 'tools_level') { navigate('tools', 'level'); return; }
+    if (id === 'tools_land') { navigate('tools', 'land'); return; }
     if (id === 'crops') { navigate('atlas', 'crops'); return; }
     if (id === 'lands') { navigate('atlas', 'lands'); return; }
     if (id === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
     if (id === 'atlas_costume') { navigate('atlas', 'costume'); return; }
-    if (id === 'items_seed') { navigate('items'); return; }
-    if (id === 'items') { navigate('items'); return; }
+    // 商店道具直达分类：items_05 → navigate('items', '05')
+    if (id.startsWith('items_')) {
+      const catId = id.substring(6);
+      navigate('items', catId);
+      return;
+    }
   };
 
-  const navigateFromHome = (target: HomeNavTarget) => {
+  // 首页导航入口
+  const navigateFromHome = (target: string) => {
     if (target === 'calc') { navigate('calc'); return; }
     if (target === 'atlas') { navigate('atlas', 'crops'); return; }
     if (target === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
     if (target === 'atlas_costume') { navigate('atlas', 'costume'); return; }
-    if (target === 'items_seed') { navigate('items'); return; }
-    if (target === 'items_gold') { navigate('items'); return; }
-    if (target === 'more_level') { navigate('more', 'level'); return; }
-    if (target === 'more_land') { navigate('more', 'land'); return; }
+    if (target === 'items_seed') { navigate('items', '05'); return; }
+    if (target === 'items_gold') { navigate('items', '17'); return; }
+    if (target === 'more_level') { navigate('tools', 'level'); return; }
+    if (target === 'more_land') { navigate('tools', 'land'); return; }
   };
 
   const renderContent = () => {
@@ -205,7 +244,6 @@ export default function App() {
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4">
             <div className="flex flex-col lg:flex-row gap-4">
-              {/* 分类导航 — 移动端横滚 pill，PC 端左侧吸顶侧栏 */}
               <div className="lg:w-52 lg:flex-shrink-0">
                 <CategoryNav
                   items={atlasSubTabsDef.map(t => ({
@@ -216,11 +254,9 @@ export default function App() {
                     count: atlasSubTabCount(t.id),
                   }))}
                   value={atlasSubTab}
-                  onChange={(id) => navigate('atlas', id as 'crops' | 'lands' | 'mutation' | 'costume')}
+                  onChange={(id) => navigate('atlas', id as AtlasSubTab)}
                 />
               </div>
-
-              {/* 当前分类内容 — 与道具 tab 同款「盒子内滚动」结构 */}
               <div className="flex-1 min-w-0">
                 <div className="sticker-lg overflow-hidden">
                   <div className="max-h-[calc(100vh-220px)] overflow-y-auto p-3 sm:p-4">
@@ -237,29 +273,29 @@ export default function App() {
       case 'items':
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4">
-            <ItemsTab />
+            <ItemsTab initialCategoryId={itemsCatId} />
           </div>
         );
-      case 'more':
+      case 'tools':
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4">
             <div className="flex gap-1.5 p-1.5 sticker-pop rounded-full mb-4">
-              <button onClick={() => navigate('more', 'level')}
+              <button onClick={() => navigate('tools', 'level')}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
-                style={moreSubTab === 'level'
+                style={toolsSubTab === 'level'
                   ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
                   : { color: 'var(--ink-soft)' }}>
-                <BarChart3 size={14} strokeWidth={2.5} /> 等级查询
+                📊 等级查询
               </button>
-              <button onClick={() => navigate('more', 'land')}
+              <button onClick={() => navigate('tools', 'land')}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
-                style={moreSubTab === 'land'
+                style={toolsSubTab === 'land'
                   ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
                   : { color: 'var(--ink-soft)' }}>
-                <TrendingUp size={14} strokeWidth={2.5} /> 土地升级所需
+                🟪 土地升级所需
               </button>
             </div>
-            {moreSubTab === 'level' ? <LevelSearchTab /> : <LandUpgradeCalcTab />}
+            {toolsSubTab === 'level' ? <LevelSearchTab /> : <LandUpgradeCalcTab />}
           </div>
         );
       default:
@@ -389,15 +425,6 @@ export default function App() {
               </div>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
-              <button
-                onClick={() => navigate('calc')}
-                className="hidden sm:flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
-                aria-label="打开收益计算器"
-                title="打开收益计算器"
-                style={{ color: 'var(--leaf-deep)' }}>
-                <Calculator size={16} strokeWidth={2.5} className="flex-shrink-0" />
-                <span>计算器</span>
-              </button>
               <a href={GITHUB_REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -405,7 +432,7 @@ export default function App() {
                 aria-label="GitHub 仓库"
                 title="GitHub 仓库">
                 <Github size={16} strokeWidth={2.5} className="text-[var(--ink-soft)] flex-shrink-0" />
-                <span className="text-[var(--ink-soft)]">GitHub</span>
+                <span className="text-[var(--ink-soft)] hidden sm:inline">GitHub</span>
               </a>
               <button onClick={toggleTheme}
                 className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
@@ -414,12 +441,12 @@ export default function App() {
                 {theme === 'dark' ? (
                   <>
                     <Sun size={16} strokeWidth={2.5} style={{ color: 'var(--sun-deep)' }} className="flex-shrink-0" />
-                    <span className="text-[var(--ink-soft)]">日间</span>
+                    <span className="text-[var(--ink-soft)] hidden sm:inline">日间</span>
                   </>
                 ) : (
                   <>
                     <Moon size={16} strokeWidth={2.5} style={{ color: 'var(--sky-deep)' }} className="flex-shrink-0" />
-                    <span className="text-[var(--ink-soft)]">夜间</span>
+                    <span className="text-[var(--ink-soft)] hidden sm:inline">夜间</span>
                   </>
                 )}
               </button>
@@ -439,8 +466,7 @@ export default function App() {
           <div className="flex items-center gap-1.5 p-1.5 rounded-full"
             style={{ background: 'var(--surface)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
             {bottomTabs.map(tab => {
-              // 'calc' 不在底部导航中，但当用户在计算器页时高亮「首页」以提供视觉反馈
-              const active = bottomTab === tab.id || (tab.id === 'home' && bottomTab === 'calc');
+              const active = bottomTab === tab.id;
               const Icon = tab.Icon;
               return (
                 <motion.button
@@ -459,7 +485,7 @@ export default function App() {
                     color: 'var(--ink-mute)',
                   }}>
                   <Icon size={16} strokeWidth={2.5} />
-                  <span>{tab.label}</span>
+                  <span className="hidden sm:inline">{tab.label}</span>
                 </motion.button>
               );
             })}

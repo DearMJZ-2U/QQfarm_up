@@ -3,7 +3,7 @@
 
 const SUFFIXES = [
   '小屋', '木牌', '栅栏', '塔', '仓库', '街道',
-  '篱栏', '粮仓', '步道', '迎宾牌', '府邸',
+  '狗屋', '围栏', '篱栏', '粮仓', '步道', '迎宾牌', '府邸',
 ];
 
 function stripGoldPrefix(name: string): string {

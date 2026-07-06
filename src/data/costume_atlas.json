@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-06-15T10:56:32.422Z",
+  "exportedAt": "2026-07-06T02:11:07.584Z",
   "categories": [
     {
       "name": "小屋",
@@ -9,265 +9,351 @@
         {
           "name": "默认小屋",
           "tag": "默认",
-          "desc": "默认装扮",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_house.png"
+          "desc": "默认小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house.png"
         },
         {
           "name": "哈哈南瓜小屋",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_house_1.png"
+          "desc": "哈哈南瓜小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_1.png"
         },
         {
           "name": "嘻嘻南瓜小屋",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_house_2.png"
+          "desc": "嘻嘻南瓜小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_2.png"
         },
         {
-          "name": "金穗至尊府邸",
+          "name": "晴空庄园小屋",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": ""
+          "desc": "晴空庄园小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_3.png"
         },
         {
           "name": "枕水听荷小屋",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_house_4.png"
+          "desc": "枕水听荷小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_4.png"
         },
         {
           "name": "绿荫闲庭小屋",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_house_5.png"
+          "desc": "绿荫闲庭小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_5.png"
         },
         {
           "name": "夏野农家小屋",
           "tag": "活动",
-          "desc": "在【商店】功能中进行购买。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_house_6.png"
+          "desc": "夏野农家小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_6.png"
         }
       ]
     },
     {
       "name": "木牌",
       "icon": "🪧",
-      "desc": "门牌与提示木牌",
+      "desc": "农场木牌",
       "items": [
         {
           "name": "默认木牌",
           "tag": "默认",
-          "desc": "默认装扮",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_board.png"
+          "desc": "默认木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board.png"
         },
         {
           "name": "哈哈南瓜木牌",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_board_1.png"
+          "desc": "哈哈南瓜木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_1.png"
         },
         {
-          "name": "金穗至尊迎宾牌",
+          "name": "晴空庄园木牌",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": ""
+          "desc": "晴空庄园木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_2.png"
         },
         {
           "name": "枕水听荷木牌",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_board_3.png"
+          "desc": "枕水听荷木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_3.png"
         },
         {
           "name": "绿荫闲庭木牌",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_board_4.png"
+          "desc": "绿荫闲庭木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_4.png"
         },
         {
           "name": "夏野农家木牌",
           "tag": "活动",
-          "desc": "在【商店】功能中进行购买。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_board_5.png"
+          "desc": "夏野农家木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_5.png"
         }
       ]
     },
     {
       "name": "栅栏",
-      "icon": "🪵",
-      "desc": "农场边界装饰",
+      "icon": "🚧",
+      "desc": "农场栅栏",
       "items": [
         {
           "name": "默认栅栏",
           "tag": "默认",
-          "desc": "默认装扮",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_barrier.png"
+          "desc": "默认栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier.png"
         },
         {
           "name": "哈哈南瓜栅栏",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_barrier_1.png"
+          "desc": "哈哈南瓜栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_1.png"
         },
         {
           "name": "嘻嘻南瓜栅栏",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_barrier_2.png"
+          "desc": "嘻嘻南瓜栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_2.png"
         },
         {
-          "name": "金穗至尊篱栏",
+          "name": "晴空庄园栅栏",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": ""
+          "desc": "晴空庄园栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_3.png"
         },
         {
           "name": "枕水听荷栅栏",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_barrier_4.png"
+          "desc": "枕水听荷栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_4.png"
         },
         {
           "name": "绿荫闲庭栅栏",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_barrier_5.png"
+          "desc": "绿荫闲庭栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_5.png"
         },
         {
           "name": "夏野农家栅栏",
           "tag": "活动",
-          "desc": "在【商店】功能中进行购买。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_barrier_6.png"
+          "desc": "夏野农家栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_6.png"
         }
       ]
     },
     {
       "name": "盆栽",
       "icon": "🪴",
-      "desc": "盆栽与塔类摆件",
+      "desc": "装饰盆栽",
       "items": [
-        {
-          "name": "默认盆栽",
-          "tag": "默认",
-          "desc": "默认装扮",
-          "img": ""
-        },
         {
           "name": "哈哈南瓜塔",
           "tag": "活动",
-          "desc": "卖给商人后，可以获得金币。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_tower_1.png"
+          "desc": "哈哈南瓜塔",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_1.png"
         },
         {
           "name": "黄金·哈哈南瓜塔",
-          "tag": "黄金",
-          "desc": "卖给商人后，可以获得金豆豆。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_tower_1_1.png"
+          "tag": "活动",
+          "desc": "黄金·哈哈南瓜塔",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_1_1.png"
         },
         {
           "name": "月华宝荷",
           "tag": "活动",
-          "desc": "卖给商人后，可以获得金币。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_tower_2.png"
+          "desc": "月华宝荷",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_2.png"
         },
         {
           "name": "黄金·月华宝荷",
-          "tag": "黄金",
-          "desc": "卖给商人后，可以获得金豆豆。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_tower_2_1.png"
+          "tag": "活动",
+          "desc": "黄金·月华宝荷",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_2_1.png"
+        }
+      ]
+    },
+    {
+      "name": "狗屋",
+      "icon": "🐕",
+      "desc": "狗屋外观",
+      "items": [
+        {
+          "name": "默认狗屋",
+          "tag": "默认",
+          "desc": "默认狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse.png"
+        },
+        {
+          "name": "哈哈南瓜狗屋",
+          "tag": "活动",
+          "desc": "哈哈南瓜狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_1.png"
+        },
+        {
+          "name": "晴空庄园狗屋",
+          "tag": "活动",
+          "desc": "晴空庄园狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_2.png"
+        },
+        {
+          "name": "枕水听荷狗屋",
+          "tag": "活动",
+          "desc": "枕水听荷狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_3.png"
+        },
+        {
+          "name": "绿荫闲庭狗屋",
+          "tag": "活动",
+          "desc": "绿荫闲庭狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_4.png"
+        },
+        {
+          "name": "夏野农家狗屋",
+          "tag": "活动",
+          "desc": "夏野农家狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_5.png"
         }
       ]
     },
     {
       "name": "仓库",
-      "icon": "📦",
+      "icon": "🏚️",
       "desc": "仓库外观",
       "items": [
         {
           "name": "默认仓库",
           "tag": "默认",
-          "desc": "默认装扮",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_warehouse.png"
+          "desc": "默认仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse.png"
         },
         {
           "name": "哈哈南瓜仓库",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_warehouse_1.png"
+          "desc": "哈哈南瓜仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_1.png"
         },
         {
-          "name": "金穗至尊粮仓",
+          "name": "晴空庄园仓库",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": ""
+          "desc": "晴空庄园仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_2.png"
         },
         {
           "name": "枕水听荷仓库",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_warehouse_3.png"
+          "desc": "枕水听荷仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_3.png"
         },
         {
           "name": "绿荫闲庭仓库",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_warehouse_4.png"
+          "desc": "绿荫闲庭仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_4.png"
         },
         {
           "name": "夏野农家仓库",
           "tag": "活动",
-          "desc": "在【商店】功能中进行购买。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_warehouse_5.png"
+          "desc": "夏野农家仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_5.png"
         }
       ]
     },
     {
-      "name": "道路",
-      "icon": "🛤️",
-      "desc": "道路地面装饰",
+      "name": "街道",
+      "icon": "🛣️",
+      "desc": "道路装饰",
       "items": [
         {
-          "name": "默认道路",
+          "name": "默认街道",
           "tag": "默认",
-          "desc": "默认装扮",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_road.png"
+          "desc": "默认街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road.png"
         },
         {
           "name": "哈哈南瓜街道",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_road_1.png"
+          "desc": "哈哈南瓜街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_1.png"
         },
         {
           "name": "嘻嘻南瓜街道",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_road_2.png"
+          "desc": "嘻嘻南瓜街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_2.png"
         },
         {
-          "name": "金穗御景步道",
+          "name": "晴空庄园街道",
           "tag": "活动",
-          "desc": "【南瓜乐翻天】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": ""
+          "desc": "晴空庄园街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_3.png"
         },
         {
           "name": "枕水听荷街道",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_road_4.png"
+          "desc": "枕水听荷街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_4.png"
         },
         {
           "name": "绿荫闲庭街道",
           "tag": "活动",
-          "desc": "【荷风十里蝉初鸣】活动限定装扮，可在【装扮】功能中进行装备。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_road_5.png"
+          "desc": "绿荫闲庭街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_5.png"
         },
         {
           "name": "夏野农家街道",
           "tag": "活动",
-          "desc": "在【商店】功能中进行购买。",
-          "img": "extraRes/gui/texture/skinIcon/icon_skin_road_6.png"
+          "desc": "夏野农家街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_6.png"
+        }
+      ]
+    },
+    {
+      "name": "围栏",
+      "icon": "🚪",
+      "desc": "围栏装饰",
+      "items": [
+        {
+          "name": "默认围栏",
+          "tag": "默认",
+          "desc": "默认围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence.png"
+        },
+        {
+          "name": "哈哈南瓜围栏",
+          "tag": "活动",
+          "desc": "哈哈南瓜围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_1.png"
+        },
+        {
+          "name": "嘻嘻南瓜围栏",
+          "tag": "活动",
+          "desc": "嘻嘻南瓜围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_2.png"
+        },
+        {
+          "name": "晴空庄园围栏",
+          "tag": "活动",
+          "desc": "晴空庄园围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_3.png"
+        },
+        {
+          "name": "枕水听荷围栏",
+          "tag": "活动",
+          "desc": "枕水听荷围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_4.png"
+        },
+        {
+          "name": "绿荫闲庭围栏",
+          "tag": "活动",
+          "desc": "绿荫闲庭围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_5.png"
+        },
+        {
+          "name": "夏野农家围栏",
+          "tag": "活动",
+          "desc": "夏野农家围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_6.png"
         }
       ]
     }

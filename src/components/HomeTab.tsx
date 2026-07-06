@@ -4,6 +4,8 @@ import { Sparkles, ArrowRight, Calculator, Sprout, Map, Dna, Home as HomeIcon, C
 import seedsData from '../data/seeds.json';
 import itemsData from '../data/items.json';
 import mutationData from '../data/mutation_atlas.json';
+import landsData from '../data/lands_atlas.json';
+import costumeData from '../data/costume_atlas.json';
 import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls, StatTile } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
 
@@ -147,16 +149,31 @@ export default function HomeTab({ onNavigate }: Props) {
 
   const result = useMemo(() => runQuickCalc(level, lands), [level, lands]);
 
-  // 统计
+  // 统计（全部从 JSON 动态读取）
   const stats = useMemo(() => {
     const seedCat = itemsData.categories.find(c => c.id === '05');
     const goldCat = itemsData.categories.find(c => c.id === '17');
+    const goldFruits = (mutationData.goldenAtlas?.goldenFruit?.length || 0) + (mutationData.goldenAtlas?.costumeFruit?.length || 0) + (mutationData.goldenAtlas?.eventFruit?.length || 0);
+    const costumeCount = (costumeData as any).categories?.reduce((s: number, c: any) => s + c.items.length, 0) || 0;
     return {
       seeds: seedCat?.items.length || 0,
-      goldFruits: (mutationData.goldenAtlas?.goldenFruit?.length || 0) + (mutationData.goldenAtlas?.costumeFruit?.length || 0) + (mutationData.goldenAtlas?.eventFruit?.length || 0),
+      goldFruits,
       mutations: mutationData.mutationTypes?.length || 0,
-      lands: 24,
+      lands: (landsData as any).plots?.length || 0,
+      landTypes: (landsData as any).landTypes?.length || 0,
+      costumes: costumeCount,
+      costumeCats: (costumeData as any).categories?.length || 0,
     };
+  }, []);
+
+  // 各道具分类的 count（从 items.json 动态读取）
+  const itemCount = useMemo(() => {
+    const m: Record<string, number> = {};
+    const HIDDEN = new Set([2101, 2102, 2103]);
+    for (const c of itemsData.categories) {
+      m[c.id] = (c.items || []).filter((it: any) => !HIDDEN.has(it.id)).length;
+    }
+    return m;
   }, []);
 
   // 黄金果实 top 3 (按 points 降序)
@@ -332,22 +349,22 @@ export default function HomeTab({ onNavigate }: Props) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
           <CategoryCard
-            emoji="🌿" label="作物图鉴" desc="134 种作物数据" accent="leaf"
+            emoji="🌿" label="作物图鉴" desc={`${stats.seeds} 种作物数据`} accent="leaf"
             count={stats.seeds}
             onClick={() => onNavigate('atlas')}
             icon={Sprout} />
           <CategoryCard
-            emoji="🏡" label="装扮图鉴" desc="6 大类 38 套" accent="sky"
-            count={38}
+            emoji="🏡" label="装扮图鉴" desc={`${stats.costumeCats} 大类 ${stats.costumes} 套`} accent="sky"
+            count={stats.costumes}
             onClick={() => onNavigate('atlas_costume')}
             icon={HomeIcon} />
           <CategoryCard
-            emoji="🏞️" label="土地图鉴" desc="5 种土壤 + 24 地块" accent="orange"
+            emoji="🏞️" label="土地图鉴" desc={`${stats.landTypes} 种土壤 + ${stats.lands} 地块`} accent="orange"
             count={stats.lands}
             onClick={() => onNavigate('atlas')}
             icon={Map} />
           <CategoryCard
-            emoji="🧬" label="变异图鉴" desc="10 变异 + 50 黄金果实" accent="berry"
+            emoji="🧬" label="变异图鉴" desc={`${stats.mutations} 变异 + ${stats.goldFruits} 黄金果实`} accent="berry"
             count={stats.mutations + stats.goldFruits}
             onClick={() => onNavigate('atlas_mutation')}
             icon={Dna} />
@@ -370,28 +387,28 @@ export default function HomeTab({ onNavigate }: Props) {
             count={stats.goldFruits}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="💰" label="货币与计数" desc="9 件" accent="sun"
-            count={9}
+            emoji="💰" label="货币与计数" desc={`${itemCount['02'] || 0} 件`} accent="sun"
+            count={itemCount['02'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="🛠️" label="操作工具" desc="8 件" accent="sky"
-            count={8}
+            emoji="🛠️" label="操作工具" desc={`${itemCount['04'] || 0} 件`} accent="sky"
+            count={itemCount['04'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="🧪" label="化肥道具" desc="8 件" accent="leaf"
-            count={8}
+            emoji="🧪" label="化肥道具" desc={`${itemCount['07'] || 0} 件`} accent="leaf"
+            count={itemCount['07'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="🎨" label="头像框与装饰" desc="14 件" accent="plum"
-            count={14}
+            emoji="🎨" label="头像框与装饰" desc={`${itemCount['10'] || 0} 件`} accent="plum"
+            count={itemCount['10'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="🐕" label="狗与看门犬" desc="5 件" accent="orange"
-            count={5}
+            emoji="🐕" label="狗与看门犬" desc={`${itemCount['08'] || 0} 件`} accent="orange"
+            count={itemCount['08'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="🦴" label="狗粮" desc="3 件" accent="orange"
-            count={3}
+            emoji="🦴" label="狗粮" desc={`${itemCount['09'] || 0} 件`} accent="orange"
+            count={itemCount['09'] || 0}
             onClick={() => onNavigate('items_gold')} />
         </div>
       </section>
