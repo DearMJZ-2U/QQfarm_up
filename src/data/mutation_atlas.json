@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-07-06T02:11:07.584Z",
+  "exportedAt": "2026-07-06T04:15:59.395Z",
   "mutationTypes": [
     {
       "name": "冰冻",
@@ -375,22 +375,14 @@
     },
     {
       "name": "黄金·哈哈南瓜",
-      "seedId": 29998,
+      "seedId": 0,
       "exp": 15360,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 40,
       "cropId": 416,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_416_6.png",
-        "plant/model/v4/gold/Crop_416_Seed.png",
-        "plant/model/v4/gold/Crop_416_2.png",
-        "plant/model/v4/gold/Crop_416_3.png",
-        "plant/model/v4/gold/Crop_416_4.png",
-        "plant/model/v4/gold/Crop_416_5.png",
-        "plant/model/v4/gold/Crop_416_6.png"
-      ],
+      "phaseImages": [],
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -879,22 +871,14 @@
     },
     {
       "name": "黄金·琉璃宝荷",
-      "seedId": 21032,
+      "seedId": 0,
       "exp": 7680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 40,
       "cropId": 1032,
-      "phaseImages": [
-        "plant/model/v4/gold/Crop_1032_6.png",
-        "plant/model/v4/gold/Crop_1032_Seed.png",
-        "plant/model/v4/gold/Crop_1032_2.png",
-        "plant/model/v4/gold/Crop_1032_3.png",
-        "plant/model/v4/gold/Crop_1032_4.png",
-        "plant/model/v4/gold/Crop_1032_5.png",
-        "plant/model/v4/gold/Crop_1032_6.png"
-      ],
+      "phaseImages": [],
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -1242,22 +1226,14 @@
       },
       {
         "name": "黄金·哈哈南瓜",
-        "seedId": 29998,
+        "seedId": 0,
         "exp": 15360,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 40,
         "cropId": 416,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_416_6.png",
-          "plant/model/v4/gold/Crop_416_Seed.png",
-          "plant/model/v4/gold/Crop_416_2.png",
-          "plant/model/v4/gold/Crop_416_3.png",
-          "plant/model/v4/gold/Crop_416_4.png",
-          "plant/model/v4/gold/Crop_416_5.png",
-          "plant/model/v4/gold/Crop_416_6.png"
-        ],
+        "phaseImages": [],
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1746,22 +1722,14 @@
       },
       {
         "name": "黄金·琉璃宝荷",
-        "seedId": 21032,
+        "seedId": 0,
         "exp": 7680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 40,
         "cropId": 1032,
-        "phaseImages": [
-          "plant/model/v4/gold/Crop_1032_6.png",
-          "plant/model/v4/gold/Crop_1032_Seed.png",
-          "plant/model/v4/gold/Crop_1032_2.png",
-          "plant/model/v4/gold/Crop_1032_3.png",
-          "plant/model/v4/gold/Crop_1032_4.png",
-          "plant/model/v4/gold/Crop_1032_5.png",
-          "plant/model/v4/gold/Crop_1032_6.png"
-        ],
+        "phaseImages": [],
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1850,22 +1818,14 @@
       },
       {
         "name": "黄金·哈哈小南瓜",
-        "seedId": 1049001,
+        "seedId": 0,
         "exp": 0,
         "fruit": 0,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 9001,
-        "phaseImages": [
-          "plant/model/v4/Crop_9001_6.png",
-          "plant/model/v4/Crop_9001_Seed.png",
-          "plant/model/v4/Crop_9001_2.png",
-          "plant/model/v4/Crop_9001_3.png",
-          "plant/model/v4/Crop_9001_4.png",
-          "plant/model/v4/Crop_9001_5.png",
-          "plant/model/v4/Crop_9001_6.png"
-        ],
+        "phaseImages": [],
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
       },
@@ -1892,22 +1852,14 @@
       },
       {
         "name": "月华宝荷",
-        "seedId": 204004,
+        "seedId": 0,
         "exp": 0,
         "fruit": 0,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8002,
-        "phaseImages": [
-          "plant/model/v4/Crop_8002_6.png",
-          "plant/model/v4/Crop_8002_Seed.png",
-          "plant/model/v4/Crop_8002_2.png",
-          "plant/model/v4/Crop_8002_3.png",
-          "plant/model/v4/Crop_8002_4.png",
-          "plant/model/v4/Crop_8002_5.png",
-          "plant/model/v4/Crop_8002_6.png"
-        ],
+        "phaseImages": [],
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
       }
@@ -1915,22 +1867,14 @@
     "eventFruit": [
       {
         "name": "哈哈小南瓜",
-        "seedId": 49001,
+        "seedId": 0,
         "exp": 0,
         "fruit": 0,
         "price": 0,
         "prob": 10,
         "points": 80,
         "cropId": 9001,
-        "phaseImages": [
-          "plant/model/v4/Crop_9001_6.png",
-          "plant/model/v4/Crop_9001_Seed.png",
-          "plant/model/v4/Crop_9001_2.png",
-          "plant/model/v4/Crop_9001_3.png",
-          "plant/model/v4/Crop_9001_4.png",
-          "plant/model/v4/Crop_9001_5.png",
-          "plant/model/v4/Crop_9001_6.png"
-        ],
+        "phaseImages": [],
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
       }

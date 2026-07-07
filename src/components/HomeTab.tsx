@@ -435,7 +435,7 @@ export default function HomeTab({ onNavigate }: Props) {
       {/* Footer hint */}
       <div className="text-center pt-2 pb-1">
         <div className="text-[10px] text-[var(--ink-mute)] tracking-wider">
-          📌 数据截至 2026-06 · 打开 <span className="font-bold text-[var(--ink-soft)]">侧边栏</span> 可快速跳转
+          📌 数据截至 2026-07 · 打开 <span className="font-bold text-[var(--ink-soft)]">侧边栏</span> 可快速跳转
         </div>
       </div>
     </div>

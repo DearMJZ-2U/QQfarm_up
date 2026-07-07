@@ -19,13 +19,13 @@ type ViewTab = 'functional' | 'set';
 function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
   return (
     <RowCard>
-      <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center flex-shrink-0"
+      <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl flex items-center justify-center flex-shrink-0"
         style={{ background: 'var(--surface)' }}>
-        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} className="w-16 h-16 sm:w-24 sm:h-24" rounded />
+        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} className="w-28 h-28 sm:w-36 sm:h-36" rounded />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-1">
-          <span className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{item.name}</span>
+          <span className="font-bold text-sm sm:text-base text-[var(--ink)]">{item.name}</span>
           <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.65rem' }}>
             {item.tag}
           </span>

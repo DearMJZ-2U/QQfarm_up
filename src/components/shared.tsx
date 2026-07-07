@@ -25,8 +25,24 @@ for (const m of seedMapping) {
   if (sid > 0 && m.name && m.name !== '未知') seedNameMap[sid] = m.name;
 }
 
+// 黄金作物 seedId → cropId 映射（修复 29xxx 教程种子的 cropNum 问题）
+const goldCropNumMap: Record<number, number> = (() => {
+  const map: Record<number, number> = {};
+  const ga = (mutationData as any).goldenAtlas;
+  if (ga) {
+    for (const key of ['goldenFruit', 'costumeFruit', 'eventFruit'] as const) {
+      for (const item of ga[key] || []) {
+        if (item.seedId && item.cropId) {
+          map[item.seedId] = item.cropId;
+        }
+      }
+    }
+  }
+  return map;
+})();
+
 function getCropNum(seedId: number): number {
-  return seedCropNumber[seedId] || (seedId % 10000);
+  return goldCropNumMap[seedId] || seedCropNumber[seedId] || (seedId % 10000);
 }
 
 function getSeedName(seedId: number): string {
@@ -205,25 +221,26 @@ for (const cat of costumeData.categories) {
 }
 
 export function goldenAtlasImageUrls(name: string): string[] {
-  const item = itemByName[name];
-  if (item) return itemImageUrls(item.iconFile, item.localFile);
-  const costumeImg = costumeImgByName[name];
-  if (costumeImg !== undefined) return costumeImageUrls(costumeImg, name);
-  // fallback: 从 mutation_atlas.goldenAtlas 按 name 找 cropId，构造 gold 路径图片 URL
+  const urls: string[] = [];
+  // 优先使用 gold/ 目录的 250x250 成熟阶段图(仅对真有成长阶段图的作物)
   const ga = (mutationData as any).goldenAtlas;
   if (ga) {
     for (const key of ['goldenFruit', 'costumeFruit', 'eventFruit'] as const) {
       const arr = ga[key] || [];
-      const found = arr.find((g: any) => g.name === name && g.cropId);
+      const found = arr.find((g: any) => g.name === name && g.cropId && g.phaseImages.length > 0);
       if (found) {
-        return [
-          `${CLEAN_BASE}item_images/17_0_${sanitize(name)}.png`,
-          `${CLEAN_BASE}seed_images_named/${found.seedId}_${name.replace(/^黄金·/, '')}_gold/Crop_${found.cropId}_Seed.png`,
-        ];
+        urls.push(`${CLEAN_BASE}seed_images_named/gold/Crop_${found.cropId}_6.png`);
+        break;
       }
     }
   }
-  return [];
+  // 兜底: items.json 里的本地文件(种子图 100x100)
+  const item = itemByName[name];
+  if (item) urls.push(...itemImageUrls(item.iconFile, item.localFile));
+  // 兜底: 装扮图片
+  const costumeImg = costumeImgByName[name];
+  if (costumeImg !== undefined) urls.push(...costumeImageUrls(costumeImg, name));
+  return urls;
 }
 
 // ── 超变图鉴成长阶段 ──────────────────────────────────────

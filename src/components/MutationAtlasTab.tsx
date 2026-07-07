@@ -82,7 +82,7 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
               <StatTile label="果实" value={`${item.fruit} 个`} color="leaf" />
             </div>
 
-            {showGrowth && (
+            {showGrowth ? (
               <div>
                 <div className="section-eyebrow mb-2">成长阶段 {isGold && '· 黄金变异'}</div>
                   <div className="sticker-soft p-3 sm:p-4">
@@ -93,6 +93,15 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
                         <RemoteImage urls={goldenAtlasImageUrls(item.name)} name={item.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
                       </div>
                     )}
+                  </div>
+              </div>
+            ) : detailUrls.length > 0 && (
+              <div>
+                <div className="section-eyebrow mb-2">成长阶段</div>
+                  <div className="sticker-soft p-3 sm:p-4">
+                    <div className="flex justify-center">
+                      <RemoteImage urls={detailUrls} name={item.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
+                    </div>
                   </div>
               </div>
             )}
