@@ -140,7 +140,7 @@ export default function MutationAtlasTab() {
           <Dna size={11} strokeWidth={2.5} /> 变异图鉴
         </span>
         <h2 className="page-header-title">稀有变种与超变</h2>
-        <p className="page-header-subtitle">10 种变异 · 50 件黄金/装扮/活动果实</p>
+        <p className="page-header-subtitle">10 种变异 · 40 件黄金/装扮/活动果实</p>
       </header>
 
       {/* Main tab toggle */}

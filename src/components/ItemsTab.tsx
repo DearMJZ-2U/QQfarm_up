@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, X } from 'lucide-react';
 import itemsData from '../data/items.json';
-import { CropImage, RemoteImage, itemImageUrls, goldenAtlasImageUrls, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade } from './shared';
+import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade } from './shared';
 import type { CategoryNavItem } from './shared';
 
 const categories = itemsData.categories;
@@ -166,11 +166,14 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
                 };
 
                 const grade = showGrade ? getGrade(item.rarity, item.rarityColor) : null;
+                const itemUrls = isGoldenFruit
+                  ? (() => { const u = atlasSeedImageUrl(item.name); return u ? [u] : itemImageUrls(item.iconFile, (item as any).localFile); })()
+                  : itemImageUrls(item.iconFile, (item as any).localFile);
                 return (
                   <RowCard key={item.id} onClick={openGold}>
                     <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{ background: isGoldenFruit ? 'var(--sun-bg)' : 'var(--bg-2)' }}>
-                      <RemoteImage urls={itemImageUrls(item.iconFile, (item as any).localFile)} name={item.name} className="w-14 h-14 sm:w-20 sm:h-20" rounded />
+                      <RemoteImage urls={itemUrls} name={item.name} className="w-14 h-14 sm:w-20 sm:h-20" rounded />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
@@ -216,7 +219,7 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl flex items-center justify-center"
                   style={{ background: 'var(--sun-bg)' }}>
-                  <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} className="w-16 h-16 sm:w-28 sm:h-28" rounded />
+                  <RemoteImage urls={(() => { const u = atlasSeedImageUrl(goldDetail.name); return u ? [u] : itemImageUrls(goldDetail.iconFile, goldDetail.localFile); })()} name={goldDetail.name} className="w-16 h-16 sm:w-28 sm:h-28" rounded />
                 </div>
                 <div>
                   {(() => {
@@ -263,7 +266,7 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
                 <div className="section-eyebrow mb-2">成长阶段</div>
                 <div className="sticker-soft p-3 sm:p-4">
                   <div className="flex justify-center">
-                    <RemoteImage urls={goldenAtlasImageUrls(goldDetail.name)} name={goldDetail.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
+                    <RemoteImage urls={(() => { const u = atlasSeedImageUrl(goldDetail.name); return u ? [u] : itemImageUrls(goldDetail.iconFile, goldDetail.localFile); })()} name={goldDetail.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
                   </div>
                 </div>
               </div>

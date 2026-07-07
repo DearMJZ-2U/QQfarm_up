@@ -229,7 +229,8 @@ export function goldenAtlasImageUrls(name: string): string[] {
       const arr = ga[key] || [];
       const found = arr.find((g: any) => g.name === name && g.cropId && g.phaseImages.length > 0);
       if (found) {
-        urls.push(`${CLEAN_BASE}seed_images_named/gold/Crop_${found.cropId}_6.png`);
+        const prefix = key === 'goldenFruit' ? 'gold/' : '';
+        urls.push(`${CLEAN_BASE}seed_images_named/${prefix}Crop_${found.cropId}_Seed.png`);
         break;
       }
     }
@@ -241,6 +242,21 @@ export function goldenAtlasImageUrls(name: string): string[] {
   const costumeImg = costumeImgByName[name];
   if (costumeImg !== undefined) urls.push(...costumeImageUrls(costumeImg, name));
   return urls;
+}
+
+export function atlasSeedImageUrl(name: string): string {
+  const ga = (mutationData as any).goldenAtlas;
+  if (ga) {
+    for (const key of ['goldenFruit', 'costumeFruit', 'eventFruit'] as const) {
+      const arr = ga[key] || [];
+      const found = arr.find((g: any) => g.name === name && g.cropId && g.phaseImages.length > 0);
+      if (found) {
+        const prefix = key === 'goldenFruit' ? 'gold/' : '';
+        return `${CLEAN_BASE}seed_images_named/${prefix}Crop_${found.cropId}_Seed.png`;
+      }
+    }
+  }
+  return '';
 }
 
 // ── 超变图鉴成长阶段 ──────────────────────────────────────
