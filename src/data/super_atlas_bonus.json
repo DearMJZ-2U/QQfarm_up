@@ -22,6 +22,11 @@
     { "level": 17, "leaves": 3920, "type": "steal",   "text": "有 7% 概率偷菜数量 x2倍" },
     { "level": 18, "leaves": 4360, "type": "exp",     "text": "收获经验产出 +4.5%" },
     { "level": 19, "leaves": 4830, "type": "steal",   "text": "有 8% 概率偷菜数量 x2倍" },
-    { "level": 20, "leaves": 5340, "type": "gold",    "text": "黄金变异最终产量 +3个" }
+    { "level": 20, "leaves": 5340, "type": "gold",    "text": "黄金变异最终产量 +3个" },
+    { "level": 21, "leaves": 5890, "type": "exp",     "text": "收获经验产出 +5%" },
+    { "level": 22, "leaves": 6480, "type": "steal",   "text": "有 9% 概率偷菜数量 x2倍" },
+    { "level": 23, "leaves": 7110, "type": "exp",     "text": "收获经验产出 +5.5%" },
+    { "level": 24, "leaves": 7780, "type": "steal",   "text": "有 10% 概率偷菜数量 x2倍" },
+    { "level": 25, "leaves": 8490, "type": "fert",    "text": "有 3% 概率节省 10% 肥料" }
   ]
 }

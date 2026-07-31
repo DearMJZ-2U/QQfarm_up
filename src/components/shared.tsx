@@ -140,14 +140,31 @@ function resolvePhaseUrls(seedId: number, phase: string, gold: boolean): string[
 function sanitize(n: string): string { return n.replace(/[<>:"/\\|?*]/g, '_'); }
 
 export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: boolean }) {
-  const phaseNames = [
-    { label: '种子', phase: 'Seed' },
-    { label: '阶段 2', phase: '2' },
-    { label: '阶段 3', phase: '3' },
-    { label: '阶段 4', phase: '4' },
-    { label: '阶段 5', phase: '5' },
-    { label: '成熟', phase: '6' },
-  ];
+  // 从 Plant.json 的 grow_phases 动态解析阶段名和阶段数（不同作物阶段数不同）
+  // 7 段作物（如含羞草：种子/发芽/小叶子/大叶子/花蕾/盛开/成熟）图片只有 _2~_6，最后阶段复用 _6
+  let phases: { name: string; sec: number }[] = [];
+  if (!gold) {
+    const pd = (plantData as any[]).find((p: any) => Number(p.seed_id) === seedId);
+    if (pd?.grow_phases) {
+      phases = pd.grow_phases.split(';').filter((x: string) => x.trim()).map((seg: string) => {
+        const [name, s] = seg.split(':');
+        return { name: name.trim(), sec: parseInt(s) || 0 };
+      });
+    }
+  }
+  const phaseNames = phases.length > 0
+    ? phases.map((p, i) => ({
+        label: p.name,
+        phase: i === 0 ? 'Seed' : String(Math.min(i + 1, 6)),
+      }))
+    : [
+        { label: '种子', phase: 'Seed' },
+        { label: '阶段 2', phase: '2' },
+        { label: '阶段 3', phase: '3' },
+        { label: '阶段 4', phase: '4' },
+        { label: '阶段 5', phase: '5' },
+        { label: '成熟', phase: '6' },
+      ];
 
   return (
     <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 overflow-x-auto sm:overflow-x-visible no-scrollbar pb-1">

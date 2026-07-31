@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-07-06T04:15:59.395Z",
+  "exportedAt": "2026-07-31T11:23:04.620Z",
   "categories": [
     {
       "name": "小屋",
@@ -47,6 +47,18 @@
           "tag": "活动",
           "desc": "夏野农家小屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_house_6.png"
+        },
+        {
+          "name": "萤火星房小屋",
+          "tag": "活动",
+          "desc": "萤火星房小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_7.png"
+        },
+        {
+          "name": "月光营地小屋",
+          "tag": "活动",
+          "desc": "月光营地小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_8.png"
         }
       ]
     },
@@ -90,6 +102,18 @@
           "tag": "活动",
           "desc": "夏野农家木牌",
           "img": "extraRes/gui/texture/skinDetail/img_skin_board_5.png"
+        },
+        {
+          "name": "萤火星房木牌",
+          "tag": "活动",
+          "desc": "萤火星房木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_6.png"
+        },
+        {
+          "name": "月光营地木牌",
+          "tag": "活动",
+          "desc": "月光营地木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_7.png"
         }
       ]
     },
@@ -139,6 +163,18 @@
           "tag": "活动",
           "desc": "夏野农家栅栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_6.png"
+        },
+        {
+          "name": "萤火星房栅栏",
+          "tag": "活动",
+          "desc": "萤火星房栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_7.png"
+        },
+        {
+          "name": "月光营地栅栏",
+          "tag": "活动",
+          "desc": "月光营地栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_8.png"
         }
       ]
     },
@@ -170,6 +206,18 @@
           "tag": "活动",
           "desc": "黄金·月华宝荷",
           "img": "extraRes/gui/texture/skinDetail/img_skin_tower_2_1.png"
+        },
+        {
+          "name": "蝶梦星铃",
+          "tag": "活动",
+          "desc": "蝶梦星铃",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_3.png"
+        },
+        {
+          "name": "黄金·蝶梦星铃",
+          "tag": "活动",
+          "desc": "黄金·蝶梦星铃",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_3_1.png"
         }
       ]
     },
@@ -213,6 +261,18 @@
           "tag": "活动",
           "desc": "夏野农家狗屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_5.png"
+        },
+        {
+          "name": "萤火星房狗屋",
+          "tag": "活动",
+          "desc": "萤火星房狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_6.png"
+        },
+        {
+          "name": "月光营地狗屋",
+          "tag": "活动",
+          "desc": "月光营地狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_7.png"
         }
       ]
     },
@@ -256,6 +316,18 @@
           "tag": "活动",
           "desc": "夏野农家仓库",
           "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_5.png"
+        },
+        {
+          "name": "萤火星房仓库",
+          "tag": "活动",
+          "desc": "萤火星房仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_6.png"
+        },
+        {
+          "name": "月光营地仓库",
+          "tag": "活动",
+          "desc": "月光营地仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_7.png"
         }
       ]
     },
@@ -305,6 +377,18 @@
           "tag": "活动",
           "desc": "夏野农家街道",
           "img": "extraRes/gui/texture/skinDetail/img_skin_road_6.png"
+        },
+        {
+          "name": "萤火星房街道",
+          "tag": "活动",
+          "desc": "萤火星房街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_7.png"
+        },
+        {
+          "name": "月光营地街道",
+          "tag": "活动",
+          "desc": "月光营地街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_8.png"
         }
       ]
     },
@@ -354,6 +438,18 @@
           "tag": "活动",
           "desc": "夏野农家围栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_fence_6.png"
+        },
+        {
+          "name": "萤火星房围栏",
+          "tag": "活动",
+          "desc": "萤火星房围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_7.png"
+        },
+        {
+          "name": "月光营地围栏",
+          "tag": "活动",
+          "desc": "月光营地围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_8.png"
         }
       ]
     }

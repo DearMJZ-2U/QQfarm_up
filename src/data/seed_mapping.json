@@ -798,6 +798,12 @@
     "fileName": "21542_新春红包_Crop_1542_Seed.png"
   },
   {
+    "cropNumber": 329,
+    "seedId": 20329,
+    "name": "发财红包",
+    "fileName": "20329_发财红包_Crop_329_Seed.png"
+  },
+  {
     "cropNumber": 112,
     "seedId": 20112,
     "name": "风信子",
@@ -1032,6 +1038,72 @@
     "fileName": "21221_青梅_Crop_1221_Seed.png"
   },
   {
+    "cropNumber": 264,
+    "seedId": 20264,
+    "name": "帝王血",
+    "fileName": "20264_帝王血_Crop_264_Seed.png"
+  },
+  {
+    "cropNumber": 108,
+    "seedId": 20108,
+    "name": "铃兰",
+    "fileName": "20108_铃兰_Crop_108_Seed.png"
+  },
+  {
+    "cropNumber": 6032,
+    "seedId": 26032,
+    "name": "月见草",
+    "fileName": "26032_月见草_Crop_6032_Seed.png"
+  },
+  {
+    "cropNumber": 1251,
+    "seedId": 21251,
+    "name": "紫茉莉",
+    "fileName": "21251_紫茉莉_Crop_1251_Seed.png"
+  },
+  {
+    "cropNumber": 1050,
+    "seedId": 21050,
+    "name": "萱草",
+    "fileName": "21050_萱草_Crop_1050_Seed.png"
+  },
+  {
+    "cropNumber": 1404,
+    "seedId": 21404,
+    "name": "月光花",
+    "fileName": "21404_月光花_Crop_1404_Seed.png"
+  },
+  {
+    "cropNumber": 1037,
+    "seedId": 21037,
+    "name": "银星海棠",
+    "fileName": "21037_银星海棠_Crop_1037_Seed.png"
+  },
+  {
+    "cropNumber": 1353,
+    "seedId": 21353,
+    "name": "紫薇",
+    "fileName": "21353_紫薇_Crop_1353_Seed.png"
+  },
+  {
+    "cropNumber": 1380,
+    "seedId": 21380,
+    "name": "梧桐",
+    "fileName": "21380_梧桐_Crop_1380_Seed.png"
+  },
+  {
+    "cropNumber": 129,
+    "seedId": 20129,
+    "name": "勿忘我",
+    "fileName": "20129_勿忘我_Crop_129_Seed.png"
+  },
+  {
+    "cropNumber": 375,
+    "seedId": 20375,
+    "name": "木槿",
+    "fileName": "20375_木槿_Crop_375_Seed.png"
+  },
+  {
     "cropNumber": 46,
     "seedId": 20046,
     "name": "爱心果",
@@ -1048,5 +1120,11 @@
     "seedId": 21032,
     "name": "琉璃宝荷",
     "fileName": "21032_琉璃宝荷_Crop_1032_Seed.png"
+  },
+  {
+    "cropNumber": 9003,
+    "seedId": 29003,
+    "name": "星语铃花",
+    "fileName": "29003_星语铃花_Crop_9003_Seed.png"
   }
 ]
