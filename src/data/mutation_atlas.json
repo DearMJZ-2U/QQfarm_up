@@ -1,33 +1,33 @@
 {
-  "exportedAt": "2026-08-26T10:09:23.021Z",
+  "exportedAt": "2026-08-26T10:58:46.034Z",
   "mutationTypes": [
     {
       "name": "冰冻",
       "icon": "extraRes/gui/texture/mutant/icon/frozen.png",
-      "effectType": "负面",
-      "effectValue": "3",
-      "desc": "作物生长过程中随机出现"
+      "effectType": "售价",
+      "effectValue": "售价 ×3",
+      "desc": "作物生长过程中随机出现。结冰的作物出售价格为普通作物的3倍。"
     },
     {
       "name": "爱心",
       "icon": "extraRes/gui/texture/mutant/icon/love.png",
-      "effectType": "外观",
-      "effectValue": "3",
-      "desc": "作物生长过程中随机出现"
+      "effectType": "产量",
+      "effectValue": "产量 ×3",
+      "desc": "作物生长过程中随机出现。冒出爱心的作物收获数量为普通的3倍。"
     },
     {
       "name": "暗化",
       "icon": "extraRes/gui/texture/mutant/icon/dark.png",
-      "effectType": "负面",
-      "effectValue": "2",
-      "desc": "作物生长过程中随机出现"
+      "effectType": "售价",
+      "effectValue": "售价 ×2",
+      "desc": "作物生长过程中随机出现。暗化作物的出售价格为普通作物的2倍。"
     },
     {
       "name": "湿润",
       "icon": "extraRes/gui/texture/mutant/icon/moist.png",
-      "effectType": "外观",
-      "effectValue": "2",
-      "desc": "作物生长过程中随机出现"
+      "effectType": "产量",
+      "effectValue": "产量 ×2",
+      "desc": "作物生长过程中随机出现。湿润作物的收获数量为普通的2倍。"
     },
     {
       "name": "黄金",
@@ -81,7 +81,7 @@
     {
       "name": "闪电",
       "icon": "extraRes/gui/texture/mutant/icon/lightning.png",
-      "effectType": "增益",
+      "effectType": "售价",
       "effectValue": "售价 ×4",
       "desc": "雷雨天气下随机出现（1、2品作物除外），基础概率18%；收获后可额外获得雷电徽章，气象研究节点可将概率提升至20%/22%，使用「闪电感应」每枚再+2%。"
     },
