@@ -566,20 +566,6 @@ export function StatTile({
   );
 }
 
-// ── LandSwatch — 统一土地色块 ───────────────────────────────
-
-export function LandSwatch({ type, size = 20 }: { type: 'normal' | 'red' | 'black' | 'gold' | 'purple'; size?: number }) {
-  const labels: Record<string, string> = { normal: '普', red: '红', black: '黑', gold: '金', purple: '紫' };
-  return (
-    <span
-      className={`land-swatch land-swatch-${type}`}
-      style={{ width: size, height: size, fontSize: size * 0.4 }}
-      aria-label={labels[type]}>
-      {labels[type]}
-    </span>
-  );
-}
-
 // ── ToggleCard — 农场风开关（复选框 + emoji + 标题 + 提示） ────
 // Calculator / CropAtlas 重复实现两次，现统一。
 

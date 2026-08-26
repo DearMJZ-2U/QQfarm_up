@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Trophy, Zap, Coins, Clock, TrendingUp, Wand2 } from 'lucide-react';
 import seedsData from '../data/seeds.json';
-import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, EmptyState, PillTabGroup, ToggleCard, LandSwatch } from './shared';
+import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, EmptyState, PillTabGroup, ToggleCard } from './shared';
 
 function longestPhase(seedId: number): number {
   const phases = plantAllPhasesMap[seedId];
@@ -296,8 +296,7 @@ export default function CalculatorTab() {
                       border: `1.5px solid ${tileBorder}`,
                       opacity: li.readonly ? 0.85 : 1,
                     }}>
-                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                      <LandSwatch type={li.key} size={22} />
+                    <div className="flex items-center justify-end mb-1.5 sm:mb-2">
                       <span className="chip" style={{ background: 'rgba(255,255,255,0.6)', color: 'var(--ink)' }}>
                         {li.readonly ? '剩余' : '配置'}
                       </span>

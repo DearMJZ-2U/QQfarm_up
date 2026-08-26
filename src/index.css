@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap');
 
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
@@ -622,32 +622,6 @@ body::after {
   font-size: 0.75rem;
   color: var(--ink-mute);
 }
-
-/* ──────────────────────────────────────────────────────────────
-   land-swatch — 统一的 5 种土地色块
-   - 取代 emoji 🟥⬛🟨🟪 平行编码
-   - 圆形小色块，用作 chip / list / pill 上的"土地类型"标识
-   ────────────────────────────────────────────────────────────── */
-
-.land-swatch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: white;
-  flex-shrink: 0;
-  font-family: var(--font-mono);
-}
-
-.land-swatch-normal { background: var(--earth); }
-.land-swatch-red    { background: var(--berry); }
-.land-swatch-black  { background: #1F2A1F; color: var(--ink-soft); }
-.land-swatch-gold   { background: var(--sun-deep); color: #5C3D00; }
-.land-swatch-purple { background: var(--plum); }
 
 /* ──────────────────────────────────────────────────────────────
    data-table — 统一的"假表"(div-grid)样式
