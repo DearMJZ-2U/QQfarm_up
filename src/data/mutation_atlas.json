@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-08-26T09:16:09.402Z",
+  "exportedAt": "2026-08-26T10:09:23.021Z",
   "mutationTypes": [
     {
       "name": "冰冻",
@@ -81,16 +81,16 @@
     {
       "name": "闪电",
       "icon": "extraRes/gui/texture/mutant/icon/lightning.png",
-      "effectType": "负面",
-      "effectValue": "4",
-      "desc": "雷雨天气下随机出现"
+      "effectType": "增益",
+      "effectValue": "售价 ×4",
+      "desc": "雷雨天气下随机出现（1、2品作物除外），基础概率18%；收获后可额外获得雷电徽章，气象研究节点可将概率提升至20%/22%，使用「闪电感应」每枚再+2%。"
     },
     {
       "name": "晶辉",
       "icon": "extraRes/gui/texture/mutant/icon/crystal.png",
       "effectType": "外观",
-      "effectValue": "4",
-      "desc": "紫晶土地上随机出现"
+      "effectValue": "变异经验 +25%",
+      "desc": "仅紫晶土地上出现：基础变异触发时约16.7%概率呈变为晶辉形态；紫晶土地变异概率+120%，且紫晶共鸣使土地上变异作物经验+25%。"
     }
   ],
   "goldenMutationCrops": [
