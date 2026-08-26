@@ -1,4 +1,5 @@
-// 变异规则与概率。来源：游戏内「变异说明」弹窗（2026-06）。
+// 变异规则与概率。来源：游戏内「变异说明」弹窗（2026-06），
+// 2026-08-26 补充：绵绵/蝶梦/闪电（数值取自 CDN MutantPublicity 表，与游戏内展示格式一致：概率=public_probability/10000）。
 // 与 mutation_atlas.json 分离：游戏 auto-sync 不会覆盖此文件。
 
 export const MUTATION_RULES: string[] = [
@@ -17,15 +18,19 @@ export interface MutationProbability {
 export const MUTATION_PROBABILITIES: MutationProbability[] = [
   { name: '月华', quality: '天工', rate: '6.6%' },
   { name: '塔塔', quality: '天工', rate: '6.6%' },
+  { name: '蝶梦', quality: '天工', rate: '7.7%' },
   { name: '荷华', quality: '珍品', rate: '13.28%' },
   { name: '荷华', quality: '稀有', rate: '9.63%' },
   { name: '黄金', quality: '天工', rate: '9.26%' },
   { name: '黄金', quality: '珍品', rate: '8.51%' },
   { name: '黄金', quality: '稀有', rate: '7.6%' },
+  { name: '绵绵', quality: '稀有', rate: '9.05%' },
   { name: '冰冻', quality: '无', rate: '3.2%' },
   { name: '爱心', quality: '无', rate: '3.2%' },
   { name: '暗化', quality: '无', rate: '4.8%' },
   { name: '湿润', quality: '无', rate: '4.8%' },
+  // 雨落成诗活动新增：雷雨天气下随机出现，基础概率 18%（配合闪电感应/闪电变异瓶可提升）
+  { name: '闪电', quality: '无', rate: '18%' },
 ];
 
 // name → 该变异的所有概率行（用于在变异卡片上挂概率 chip）

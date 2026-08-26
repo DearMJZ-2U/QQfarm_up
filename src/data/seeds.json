@@ -1,6 +1,6 @@
 {
-  "exportedAt": "2026-07-31T11:23:04.620Z",
-  "count": 188,
+  "exportedAt": "2026-08-26T09:16:09.402Z",
+  "count": 189,
   "rows": [
     {
       "seedId": 20046,
@@ -976,7 +976,7 @@
       "plantId": 1021221,
       "name": "青梅",
       "requiredLevel": 21,
-      "price": 1000,
+      "price": 0,
       "rarity": 2,
       "rarityColor": "A8C1F4",
       "unlocked": false,
@@ -987,7 +987,7 @@
       "growTimeSec": 43200,
       "growTimeStr": "12小时",
       "expPerHour": 120,
-      "expPerGold": 1.44,
+      "expPerGold": 0,
       "seasons": 1,
       "fruitId": 41221,
       "fruitCount": 48
@@ -1079,6 +1079,28 @@
       "seasons": 1,
       "fruitId": 41251,
       "fruitCount": 48
+    },
+    {
+      "seedId": 20883,
+      "goodsId": 0,
+      "plantId": 1020883,
+      "name": "小红花",
+      "requiredLevel": 21,
+      "price": 1000,
+      "rarity": 2,
+      "rarityColor": "A8C1F4",
+      "unlocked": false,
+      "limitCount": 0,
+      "boughtNum": 0,
+      "exp": 960,
+      "expPerCycle": 961,
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "expPerHour": 120,
+      "expPerGold": 0.96,
+      "seasons": 1,
+      "fruitId": 40883,
+      "fruitCount": 32
     },
     {
       "seedId": 20112,
