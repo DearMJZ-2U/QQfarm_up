@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-09-10T08:29:01.146Z",
+  "exportedAt": "2026-09-10T13:54:09.162Z",
   "mutationTypes": [
     {
       "name": "乐园",
@@ -126,7 +126,7 @@
     {
       "name": "黄金·风信子",
       "seedId": 20112,
-      "exp": 0,
+      "exp": 720,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -141,13 +141,42 @@
         "plant/model/v4/gold/Crop_112_5.png",
         "plant/model/v4/gold/Crop_112_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "初熟",
+          "sec": 7200
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·银杏树苗",
       "seedId": 20025,
-      "exp": 0,
+      "exp": 720,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -162,13 +191,42 @@
         "plant/model/v4/gold/Crop_25_5.png",
         "plant/model/v4/gold/Crop_25_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "长枝",
+          "sec": 7200
+        },
+        {
+          "name": "成苗",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·蔷薇",
       "seedId": 20121,
-      "exp": 0,
+      "exp": 720,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -183,13 +241,42 @@
         "plant/model/v4/gold/Crop_121_5.png",
         "plant/model/v4/gold/Crop_121_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "初熟",
+          "sec": 7200
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·蝴蝶兰",
       "seedId": 20109,
-      "exp": 0,
+      "exp": 720,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -204,13 +291,42 @@
         "plant/model/v4/gold/Crop_109_5.png",
         "plant/model/v4/gold/Crop_109_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "花蕾",
+          "sec": 7200
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·艾草",
       "seedId": 21135,
-      "exp": 0,
+      "exp": 720,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -225,13 +341,42 @@
         "plant/model/v4/gold/Crop_1135_5.png",
         "plant/model/v4/gold/Crop_1135_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "初熟",
+          "sec": 7200
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·卡特兰",
       "seedId": 20184,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -246,13 +391,42 @@
         "plant/model/v4/gold/Crop_184_5.png",
         "plant/model/v4/gold/Crop_184_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶",
+          "sec": 8640
+        },
+        {
+          "name": "大叶",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·红云飞片",
       "seedId": 20193,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -267,13 +441,42 @@
         "plant/model/v4/gold/Crop_193_5.png",
         "plant/model/v4/gold/Crop_193_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶",
+          "sec": 8640
+        },
+        {
+          "name": "大叶",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·石竹花",
       "seedId": 20256,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -288,13 +491,42 @@
         "plant/model/v4/gold/Crop_256_5.png",
         "plant/model/v4/gold/Crop_256_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶",
+          "sec": 8640
+        },
+        {
+          "name": "大叶",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·针垫花",
       "seedId": 20261,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -309,13 +541,42 @@
         "plant/model/v4/gold/Crop_261_5.png",
         "plant/model/v4/gold/Crop_261_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶",
+          "sec": 8640
+        },
+        {
+          "name": "大叶",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·欢乐糖果",
       "seedId": 20167,
-      "exp": 0,
+      "exp": 960,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -330,13 +591,42 @@
         "plant/model/v4/gold/Crop_167_5.png",
         "plant/model/v4/gold/Crop_167_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 5760
+        },
+        {
+          "name": "发芽",
+          "sec": 5760
+        },
+        {
+          "name": "小叶子",
+          "sec": 5760
+        },
+        {
+          "name": "大叶子",
+          "sec": 5760
+        },
+        {
+          "name": "开花",
+          "sec": 5760
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·似何莲",
       "seedId": 20185,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -351,13 +641,42 @@
         "plant/model/v4/gold/Crop_185_5.png",
         "plant/model/v4/gold/Crop_185_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·凤仙花",
       "seedId": 20133,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -372,13 +691,42 @@
         "plant/model/v4/gold/Crop_133_5.png",
         "plant/model/v4/gold/Crop_133_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·金银花",
       "seedId": 20176,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -393,13 +741,42 @@
         "plant/model/v4/gold/Crop_176_5.png",
         "plant/model/v4/gold/Crop_176_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·米兰",
       "seedId": 20186,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -414,13 +791,42 @@
         "plant/model/v4/gold/Crop_186_5.png",
         "plant/model/v4/gold/Crop_186_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·鹭草",
       "seedId": 20251,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -435,13 +841,42 @@
         "plant/model/v4/gold/Crop_251_5.png",
         "plant/model/v4/gold/Crop_251_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·青梅",
       "seedId": 21221,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -456,13 +891,42 @@
         "plant/model/v4/gold/Crop_1221_5.png",
         "plant/model/v4/gold/Crop_1221_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·帝王血",
       "seedId": 20264,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -477,13 +941,42 @@
         "plant/model/v4/gold/Crop_264_5.png",
         "plant/model/v4/gold/Crop_264_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·铃兰",
       "seedId": 20108,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -498,13 +991,42 @@
         "plant/model/v4/gold/Crop_108_5.png",
         "plant/model/v4/gold/Crop_108_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·月见草",
       "seedId": 26032,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -519,13 +1041,42 @@
         "plant/model/v4/gold/Crop_6032_5.png",
         "plant/model/v4/gold/Crop_6032_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·紫茉莉",
       "seedId": 21251,
-      "exp": 0,
+      "exp": 1440,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -540,6 +1091,35 @@
         "plant/model/v4/gold/Crop_1251_5.png",
         "plant/model/v4/gold/Crop_1251_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -561,13 +1141,42 @@
         "plant/model/v4/gold/Crop_516_5.png",
         "plant/model/v4/gold/Crop_516_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·昙花",
       "seedId": 20224,
-      "exp": 0,
+      "exp": 840,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -582,13 +1191,42 @@
         "plant/model/v4/gold/Crop_224_5.png",
         "plant/model/v4/gold/Crop_224_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "初熟",
+          "sec": 7200
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·荷包牡丹",
       "seedId": 20249,
-      "exp": 0,
+      "exp": 840,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -603,13 +1241,42 @@
         "plant/model/v4/gold/Crop_249_5.png",
         "plant/model/v4/gold/Crop_249_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "花蕾",
+          "sec": 7200
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·孔雀草",
       "seedId": 20257,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -624,13 +1291,42 @@
         "plant/model/v4/gold/Crop_257_5.png",
         "plant/model/v4/gold/Crop_257_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·欧石楠",
       "seedId": 20258,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -645,13 +1341,42 @@
         "plant/model/v4/gold/Crop_258_5.png",
         "plant/model/v4/gold/Crop_258_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶",
+          "sec": 8640
+        },
+        {
+          "name": "大叶",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·黄金果",
       "seedId": 20304,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -666,13 +1391,42 @@
         "plant/model/v4/gold/Crop_304_5.png",
         "plant/model/v4/gold/Crop_304_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·地涌金莲",
       "seedId": 20267,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -687,13 +1441,42 @@
         "plant/model/v4/gold/Crop_267_5.png",
         "plant/model/v4/gold/Crop_267_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·繁星花",
       "seedId": 21044,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -708,13 +1491,42 @@
         "plant/model/v4/gold/Crop_1044_5.png",
         "plant/model/v4/gold/Crop_1044_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·香彩雀",
       "seedId": 21038,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -729,13 +1541,42 @@
         "plant/model/v4/gold/Crop_1038_5.png",
         "plant/model/v4/gold/Crop_1038_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·荷青花",
       "seedId": 21474,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -750,13 +1591,42 @@
         "plant/model/v4/gold/Crop_1474_5.png",
         "plant/model/v4/gold/Crop_1474_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·芹叶铁线莲",
       "seedId": 20243,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -771,13 +1641,42 @@
         "plant/model/v4/gold/Crop_243_5.png",
         "plant/model/v4/gold/Crop_243_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·菖蒲",
       "seedId": 21134,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -792,13 +1691,42 @@
         "plant/model/v4/gold/Crop_1134_5.png",
         "plant/model/v4/gold/Crop_1134_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·凌霄花",
       "seedId": 26127,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -813,13 +1741,42 @@
         "plant/model/v4/gold/Crop_6127_5.png",
         "plant/model/v4/gold/Crop_6127_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·萱草",
       "seedId": 21050,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -834,13 +1791,42 @@
         "plant/model/v4/gold/Crop_1050_5.png",
         "plant/model/v4/gold/Crop_1050_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·月光花",
       "seedId": 21404,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -855,13 +1841,42 @@
         "plant/model/v4/gold/Crop_1404_5.png",
         "plant/model/v4/gold/Crop_1404_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·银星海棠",
       "seedId": 21037,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -876,13 +1891,42 @@
         "plant/model/v4/gold/Crop_1037_5.png",
         "plant/model/v4/gold/Crop_1037_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·紫薇",
       "seedId": 21353,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -897,13 +1941,42 @@
         "plant/model/v4/gold/Crop_1353_5.png",
         "plant/model/v4/gold/Crop_1353_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·梧桐",
       "seedId": 21380,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -918,13 +1991,42 @@
         "plant/model/v4/gold/Crop_1380_5.png",
         "plant/model/v4/gold/Crop_1380_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·勿忘我",
       "seedId": 20129,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -939,13 +2041,42 @@
         "plant/model/v4/gold/Crop_129_5.png",
         "plant/model/v4/gold/Crop_129_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·木槿",
       "seedId": 20375,
-      "exp": 0,
+      "exp": 1680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -960,6 +2091,35 @@
         "plant/model/v4/gold/Crop_375_5.png",
         "plant/model/v4/gold/Crop_375_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -981,6 +2141,35 @@
         "plant/model/v4/gold/Crop_5995_5.png",
         "plant/model/v4/gold/Crop_5995_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -1002,6 +2191,35 @@
         "plant/model/v4/gold/Crop_1625_5.png",
         "plant/model/v4/gold/Crop_1625_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -1023,6 +2241,35 @@
         "plant/model/v4/gold/Crop_154_5.png",
         "plant/model/v4/gold/Crop_154_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -1044,13 +2291,42 @@
         "plant/model/v4/gold/Crop_1072_5.png",
         "plant/model/v4/gold/Crop_1072_6.png"
       ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·爱心果",
       "seedId": 20046,
-      "exp": 0,
+      "exp": 3840,
       "fruit": 10,
       "price": 0,
       "prob": 10,
@@ -1065,45 +2341,161 @@
         "plant/model/v4/gold/Crop_46_5.png",
         "plant/model/v4/gold/Crop_46_6.png"
       ],
+      "growTimeSec": 28800,
+      "growTimeStr": "8小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 4800
+        },
+        {
+          "name": "发芽",
+          "sec": 4800
+        },
+        {
+          "name": "小叶子",
+          "sec": 4800
+        },
+        {
+          "name": "大叶子",
+          "sec": 7200
+        },
+        {
+          "name": "初熟",
+          "sec": 7200
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 2,
       "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·哈哈南瓜",
       "seedId": 0,
-      "exp": 0,
+      "exp": 15360,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 416,
       "phaseImages": [],
+      "growTimeSec": 86400,
+      "growTimeStr": "24小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 17280
+        },
+        {
+          "name": "发芽",
+          "sec": 17280
+        },
+        {
+          "name": "小叶子",
+          "sec": 17280
+        },
+        {
+          "name": "大叶子",
+          "sec": 17280
+        },
+        {
+          "name": "开花",
+          "sec": 17280
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·琉璃宝荷",
       "seedId": 0,
-      "exp": 0,
+      "exp": 7680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 1032,
       "phaseImages": [],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
       "name": "黄金·星语铃花",
       "seedId": 0,
-      "exp": 0,
+      "exp": 7680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 9003,
       "phaseImages": [],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "开花",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
@@ -1117,6 +2509,35 @@
       "points": 200,
       "cropId": 9004,
       "phaseImages": [],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
       "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     }
@@ -1126,7 +2547,7 @@
       {
         "name": "黄金·风信子",
         "seedId": 20112,
-        "exp": 0,
+        "exp": 720,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1141,13 +2562,42 @@
           "plant/model/v4/gold/Crop_112_5.png",
           "plant/model/v4/gold/Crop_112_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "初熟",
+            "sec": 7200
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·银杏树苗",
         "seedId": 20025,
-        "exp": 0,
+        "exp": 720,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1162,13 +2612,42 @@
           "plant/model/v4/gold/Crop_25_5.png",
           "plant/model/v4/gold/Crop_25_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "长枝",
+            "sec": 7200
+          },
+          {
+            "name": "成苗",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·蔷薇",
         "seedId": 20121,
-        "exp": 0,
+        "exp": 720,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1183,13 +2662,42 @@
           "plant/model/v4/gold/Crop_121_5.png",
           "plant/model/v4/gold/Crop_121_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "初熟",
+            "sec": 7200
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·蝴蝶兰",
         "seedId": 20109,
-        "exp": 0,
+        "exp": 720,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1204,13 +2712,42 @@
           "plant/model/v4/gold/Crop_109_5.png",
           "plant/model/v4/gold/Crop_109_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "花蕾",
+            "sec": 7200
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·艾草",
         "seedId": 21135,
-        "exp": 0,
+        "exp": 720,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1225,13 +2762,42 @@
           "plant/model/v4/gold/Crop_1135_5.png",
           "plant/model/v4/gold/Crop_1135_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "初熟",
+            "sec": 7200
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·卡特兰",
         "seedId": 20184,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1246,13 +2812,42 @@
           "plant/model/v4/gold/Crop_184_5.png",
           "plant/model/v4/gold/Crop_184_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶",
+            "sec": 8640
+          },
+          {
+            "name": "大叶",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·红云飞片",
         "seedId": 20193,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1267,13 +2862,42 @@
           "plant/model/v4/gold/Crop_193_5.png",
           "plant/model/v4/gold/Crop_193_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶",
+            "sec": 8640
+          },
+          {
+            "name": "大叶",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·石竹花",
         "seedId": 20256,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1288,13 +2912,42 @@
           "plant/model/v4/gold/Crop_256_5.png",
           "plant/model/v4/gold/Crop_256_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶",
+            "sec": 8640
+          },
+          {
+            "name": "大叶",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·针垫花",
         "seedId": 20261,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1309,13 +2962,42 @@
           "plant/model/v4/gold/Crop_261_5.png",
           "plant/model/v4/gold/Crop_261_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶",
+            "sec": 8640
+          },
+          {
+            "name": "大叶",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·欢乐糖果",
         "seedId": 20167,
-        "exp": 0,
+        "exp": 960,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1330,13 +3012,42 @@
           "plant/model/v4/gold/Crop_167_5.png",
           "plant/model/v4/gold/Crop_167_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 5760
+          },
+          {
+            "name": "发芽",
+            "sec": 5760
+          },
+          {
+            "name": "小叶子",
+            "sec": 5760
+          },
+          {
+            "name": "大叶子",
+            "sec": 5760
+          },
+          {
+            "name": "开花",
+            "sec": 5760
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·似何莲",
         "seedId": 20185,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1351,13 +3062,42 @@
           "plant/model/v4/gold/Crop_185_5.png",
           "plant/model/v4/gold/Crop_185_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·凤仙花",
         "seedId": 20133,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1372,13 +3112,42 @@
           "plant/model/v4/gold/Crop_133_5.png",
           "plant/model/v4/gold/Crop_133_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·金银花",
         "seedId": 20176,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1393,13 +3162,42 @@
           "plant/model/v4/gold/Crop_176_5.png",
           "plant/model/v4/gold/Crop_176_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·米兰",
         "seedId": 20186,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1414,13 +3212,42 @@
           "plant/model/v4/gold/Crop_186_5.png",
           "plant/model/v4/gold/Crop_186_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·鹭草",
         "seedId": 20251,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1435,13 +3262,42 @@
           "plant/model/v4/gold/Crop_251_5.png",
           "plant/model/v4/gold/Crop_251_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·青梅",
         "seedId": 21221,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1456,13 +3312,42 @@
           "plant/model/v4/gold/Crop_1221_5.png",
           "plant/model/v4/gold/Crop_1221_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·帝王血",
         "seedId": 20264,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1477,13 +3362,42 @@
           "plant/model/v4/gold/Crop_264_5.png",
           "plant/model/v4/gold/Crop_264_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·铃兰",
         "seedId": 20108,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1498,13 +3412,42 @@
           "plant/model/v4/gold/Crop_108_5.png",
           "plant/model/v4/gold/Crop_108_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·月见草",
         "seedId": 26032,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1519,13 +3462,42 @@
           "plant/model/v4/gold/Crop_6032_5.png",
           "plant/model/v4/gold/Crop_6032_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·紫茉莉",
         "seedId": 21251,
-        "exp": 0,
+        "exp": 1440,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1540,6 +3512,35 @@
           "plant/model/v4/gold/Crop_1251_5.png",
           "plant/model/v4/gold/Crop_1251_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -1561,13 +3562,42 @@
           "plant/model/v4/gold/Crop_516_5.png",
           "plant/model/v4/gold/Crop_516_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·昙花",
         "seedId": 20224,
-        "exp": 0,
+        "exp": 840,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1582,13 +3612,42 @@
           "plant/model/v4/gold/Crop_224_5.png",
           "plant/model/v4/gold/Crop_224_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "初熟",
+            "sec": 7200
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·荷包牡丹",
         "seedId": 20249,
-        "exp": 0,
+        "exp": 840,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1603,13 +3662,42 @@
           "plant/model/v4/gold/Crop_249_5.png",
           "plant/model/v4/gold/Crop_249_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "花蕾",
+            "sec": 7200
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·孔雀草",
         "seedId": 20257,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1624,13 +3712,42 @@
           "plant/model/v4/gold/Crop_257_5.png",
           "plant/model/v4/gold/Crop_257_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·欧石楠",
         "seedId": 20258,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1645,13 +3762,42 @@
           "plant/model/v4/gold/Crop_258_5.png",
           "plant/model/v4/gold/Crop_258_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶",
+            "sec": 8640
+          },
+          {
+            "name": "大叶",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·黄金果",
         "seedId": 20304,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1666,13 +3812,42 @@
           "plant/model/v4/gold/Crop_304_5.png",
           "plant/model/v4/gold/Crop_304_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·地涌金莲",
         "seedId": 20267,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1687,13 +3862,42 @@
           "plant/model/v4/gold/Crop_267_5.png",
           "plant/model/v4/gold/Crop_267_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·繁星花",
         "seedId": 21044,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1708,13 +3912,42 @@
           "plant/model/v4/gold/Crop_1044_5.png",
           "plant/model/v4/gold/Crop_1044_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·香彩雀",
         "seedId": 21038,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1729,13 +3962,42 @@
           "plant/model/v4/gold/Crop_1038_5.png",
           "plant/model/v4/gold/Crop_1038_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·荷青花",
         "seedId": 21474,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1750,13 +4012,42 @@
           "plant/model/v4/gold/Crop_1474_5.png",
           "plant/model/v4/gold/Crop_1474_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·芹叶铁线莲",
         "seedId": 20243,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1771,13 +4062,42 @@
           "plant/model/v4/gold/Crop_243_5.png",
           "plant/model/v4/gold/Crop_243_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·菖蒲",
         "seedId": 21134,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1792,13 +4112,42 @@
           "plant/model/v4/gold/Crop_1134_5.png",
           "plant/model/v4/gold/Crop_1134_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·凌霄花",
         "seedId": 26127,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1813,13 +4162,42 @@
           "plant/model/v4/gold/Crop_6127_5.png",
           "plant/model/v4/gold/Crop_6127_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·萱草",
         "seedId": 21050,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1834,13 +4212,42 @@
           "plant/model/v4/gold/Crop_1050_5.png",
           "plant/model/v4/gold/Crop_1050_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·月光花",
         "seedId": 21404,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1855,13 +4262,42 @@
           "plant/model/v4/gold/Crop_1404_5.png",
           "plant/model/v4/gold/Crop_1404_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·银星海棠",
         "seedId": 21037,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1876,13 +4312,42 @@
           "plant/model/v4/gold/Crop_1037_5.png",
           "plant/model/v4/gold/Crop_1037_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·紫薇",
         "seedId": 21353,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1897,13 +4362,42 @@
           "plant/model/v4/gold/Crop_1353_5.png",
           "plant/model/v4/gold/Crop_1353_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·梧桐",
         "seedId": 21380,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1918,13 +4412,42 @@
           "plant/model/v4/gold/Crop_1380_5.png",
           "plant/model/v4/gold/Crop_1380_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·勿忘我",
         "seedId": 20129,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1939,13 +4462,42 @@
           "plant/model/v4/gold/Crop_129_5.png",
           "plant/model/v4/gold/Crop_129_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·木槿",
         "seedId": 20375,
-        "exp": 0,
+        "exp": 1680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -1960,6 +4512,35 @@
           "plant/model/v4/gold/Crop_375_5.png",
           "plant/model/v4/gold/Crop_375_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -1981,6 +4562,35 @@
           "plant/model/v4/gold/Crop_5995_5.png",
           "plant/model/v4/gold/Crop_5995_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2002,6 +4612,35 @@
           "plant/model/v4/gold/Crop_1625_5.png",
           "plant/model/v4/gold/Crop_1625_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2023,6 +4662,35 @@
           "plant/model/v4/gold/Crop_154_5.png",
           "plant/model/v4/gold/Crop_154_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2044,13 +4712,42 @@
           "plant/model/v4/gold/Crop_1072_5.png",
           "plant/model/v4/gold/Crop_1072_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·爱心果",
         "seedId": 20046,
-        "exp": 0,
+        "exp": 3840,
         "fruit": 10,
         "price": 0,
         "prob": 10,
@@ -2065,45 +4762,161 @@
           "plant/model/v4/gold/Crop_46_5.png",
           "plant/model/v4/gold/Crop_46_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 4800
+          },
+          {
+            "name": "发芽",
+            "sec": 4800
+          },
+          {
+            "name": "小叶子",
+            "sec": 4800
+          },
+          {
+            "name": "大叶子",
+            "sec": 7200
+          },
+          {
+            "name": "初熟",
+            "sec": 7200
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 2,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·哈哈南瓜",
         "seedId": 0,
-        "exp": 0,
+        "exp": 15360,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 416,
         "phaseImages": [],
+        "growTimeSec": 86400,
+        "growTimeStr": "24小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 17280
+          },
+          {
+            "name": "发芽",
+            "sec": 17280
+          },
+          {
+            "name": "小叶子",
+            "sec": 17280
+          },
+          {
+            "name": "大叶子",
+            "sec": 17280
+          },
+          {
+            "name": "开花",
+            "sec": 17280
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·琉璃宝荷",
         "seedId": 0,
-        "exp": 0,
+        "exp": 7680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 1032,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
         "name": "黄金·星语铃花",
         "seedId": 0,
-        "exp": 0,
+        "exp": 7680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 9003,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2117,6 +4930,35 @@
         "points": 200,
         "cropId": 9004,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       }
@@ -2126,7 +4968,7 @@
         "name": "哈哈南瓜塔",
         "seedId": 204002,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
@@ -2140,6 +4982,35 @@
           "plant/model/v4/Crop_8001_5.png",
           "plant/model/v4/Crop_8001_6.png"
         ],
+        "growTimeSec": 86400,
+        "growTimeStr": "24小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 17280
+          },
+          {
+            "name": "发芽",
+            "sec": 17280
+          },
+          {
+            "name": "小叶子",
+            "sec": 17280
+          },
+          {
+            "name": "大叶子",
+            "sec": 17280
+          },
+          {
+            "name": "开花",
+            "sec": 17280
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
@@ -2148,12 +5019,41 @@
         "name": "黄金·哈哈南瓜塔",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8001,
         "phaseImages": [],
+        "growTimeSec": 86400,
+        "growTimeStr": "24小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 17280
+          },
+          {
+            "name": "发芽",
+            "sec": 17280
+          },
+          {
+            "name": "小叶子",
+            "sec": 17280
+          },
+          {
+            "name": "大叶子",
+            "sec": 17280
+          },
+          {
+            "name": "开花",
+            "sec": 17280
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。",
         "note": "活动结束后出售"
@@ -2162,12 +5062,41 @@
         "name": "月华宝荷",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8002,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。"
       },
@@ -2175,12 +5104,41 @@
         "name": "黄金·月华宝荷",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8002,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2188,12 +5146,41 @@
         "name": "蝶梦星铃",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8003,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。"
       },
@@ -2201,12 +5188,41 @@
         "name": "黄金·蝶梦星铃",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8003,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2214,12 +5230,41 @@
         "name": "比熊棉花糖",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8004,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。"
       },
@@ -2227,12 +5272,41 @@
         "name": "黄金·比熊棉花糖",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8004,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       }
@@ -2242,12 +5316,41 @@
         "name": "哈哈小南瓜",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 80,
         "cropId": 9001,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
@@ -2256,12 +5359,41 @@
         "name": "黄金·哈哈小南瓜",
         "seedId": 0,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 80,
         "cropId": 9001,
         "phaseImages": [],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "开花",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。",
         "note": "活动结束后出售"
@@ -2270,7 +5402,7 @@
         "name": "绵绵糖果",
         "seedId": 40804,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 40,
@@ -2284,6 +5416,35 @@
           "plant/model/v4/Crop_804_5.png",
           "plant/model/v4/Crop_804_6.png"
         ],
+        "growTimeSec": 28800,
+        "growTimeStr": "8小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 5760
+          },
+          {
+            "name": "发芽",
+            "sec": 5760
+          },
+          {
+            "name": "小叶子",
+            "sec": 5760
+          },
+          {
+            "name": "大叶子",
+            "sec": 5760
+          },
+          {
+            "name": "开花",
+            "sec": 5760
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
@@ -2291,7 +5452,7 @@
         "name": "荷花",
         "seedId": 46109,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 48,
         "price": 0,
         "prob": 10,
         "points": 80,
@@ -2305,6 +5466,35 @@
           "plant/model/v4/Crop_6109_5.png",
           "plant/model/v4/Crop_6109_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金币。"
       },
@@ -2312,7 +5502,7 @@
         "name": "黄金·荷花",
         "seedId": 1046109,
         "exp": 0,
-        "fruit": 0,
+        "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 80,
@@ -2326,6 +5516,35 @@
           "plant/model/v4/gold/Crop_6109_5.png",
           "plant/model/v4/gold/Crop_6109_6.png"
         ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
         "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       }

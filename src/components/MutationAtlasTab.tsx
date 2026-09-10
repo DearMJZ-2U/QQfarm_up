@@ -40,6 +40,9 @@ const BONUS_META: Record<BonusType, { label: string; color: 'leaf' | 'sky' | 'or
 interface GoldenEntry {
   name: string; seedId: number; cropId: number; points: number; exp: number; fruit: number;
   desc: string; note?: string;
+  /** 以下来自 Plant 表（提取脚本写入 mutation_atlas.json） */
+  growTimeSec?: number; growTimeStr?: string; seasons?: number;
+  growPhases?: Array<{ name: string; sec: number }>;
 }
 
 const GOLD_PREFIX_RE = /^黄金·?/;
@@ -100,16 +103,23 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
           </div>
 
           <div className="p-5 sm:p-6 space-y-4 sm:space-y-5">
-            <div className="grid grid-cols-2 gap-2 sm:gap-3">
-              <StatTile label="经验" value={item.exp} color="plum" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+              <StatTile label="经验" value={item.exp > 0 ? item.exp : '—'} color="plum" />
               <StatTile label="果实" value={`${item.fruit} 个`} color="leaf" />
+              <StatTile label="成长时长" value={item.growTimeStr || '—'} color="sun" />
+              <StatTile label="季数" value={`${item.seasons || 1} 季`} color="sky" />
             </div>
 
             {showGrowth ? (
               <div>
                 <div className="section-eyebrow mb-2">成长阶段 {isGold && '· 黄金变异'}</div>
                   <div className="sticker-soft p-3 sm:p-4">
-                    <GrowthPhases seedId={goldSeedIds[item.name]} cropNum={(item as any).cropId} gold={isGold} />
+                    <GrowthPhases
+                      seedId={goldSeedIds[item.name]}
+                      cropNum={item.cropId}
+                      gold={isGold}
+                      timings={item.growPhases}
+                    />
                   </div>
               </div>
             ) : detailUrls.length > 0 && (
@@ -356,9 +366,15 @@ export default function MutationAtlasTab() {
                         <span className="chip chip-sun flex-shrink-0">+{g.points}</span>
                       </div>
                       <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] font-mono tnum">
-                        经验 <span className="font-bold text-[var(--plum-deep)]">{g.exp}</span>
+                        经验 <span className="font-bold text-[var(--plum-deep)]">{g.exp > 0 ? g.exp : '—'}</span>
                         <span className="mx-1.5 opacity-40">·</span>
                         果实 <span className="font-bold text-[var(--leaf-deep)]">{g.fruit}</span>
+                        {g.growTimeStr && (
+                          <>
+                            <span className="mx-1.5 opacity-40">·</span>
+                            <span className="text-[var(--sun-deep)]">{g.growTimeStr}</span>
+                          </>
+                        )}
                       </div>
                       <div className="text-[10px] sm:text-[11px] text-[var(--ink-soft)] mt-0.5 sm:mt-1 line-clamp-1">{g.desc}</div>
                     </div>

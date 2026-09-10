@@ -147,11 +147,19 @@ function resolvePhaseUrls(opts: { seedId?: number; cropNum?: number; phase: stri
 
 function sanitize(n: string): string { return n.replace(/[<>:"/\\|?*]/g, '_'); }
 
-export function GrowthPhases({ seedId, cropNum, gold = false }: { seedId?: number; cropNum?: number; gold?: boolean }) {
+export function GrowthPhases({ seedId, cropNum, gold = false, timings }: {
+  seedId?: number; cropNum?: number; gold?: boolean;
+  /** 分阶段时长（来自 mutation_atlas 的 growPhases：阶段名 + 秒数）。有值时优先于 Plant.json */
+  timings?: Array<{ name: string; sec: number }>;
+}) {
   // 从 Plant.json 的 grow_phases 动态解析阶段名和阶段数（不同作物阶段数不同）
   // 7 段作物（如含羞草：种子/发芽/小叶子/大叶子/花蕾/盛开/成熟）图片只有 _2~_6，最后阶段复用 _6
   let phases: { name: string; sec: number }[] = [];
-  if (!gold) {
+  if (timings && timings.length > 0) {
+    // 超变图鉴的果实（黄金/装扮/活动）不在 Plant.json 里（seed_id 为 null），
+    // 其阶段名与时长由提取脚本从 Plant 表按名称取出，随条目一并下发。
+    phases = timings;
+  } else if (!gold) {
     const pd = (plantData as any[]).find((p: any) => Number(p.seed_id) === seedId);
     if (pd?.grow_phases) {
       phases = pd.grow_phases.split(';').filter((x: string) => x.trim()).map((seg: string) => {
@@ -164,14 +172,15 @@ export function GrowthPhases({ seedId, cropNum, gold = false }: { seedId?: numbe
     ? phases.map((p, i) => ({
         label: p.name,
         phase: i === 0 ? 'Seed' : String(Math.min(i + 1, 6)),
+        sec: p.sec,
       }))
     : [
-        { label: '种子', phase: 'Seed' },
-        { label: '阶段 2', phase: '2' },
-        { label: '阶段 3', phase: '3' },
-        { label: '阶段 4', phase: '4' },
-        { label: '阶段 5', phase: '5' },
-        { label: '成熟', phase: '6' },
+        { label: '种子', phase: 'Seed', sec: 0 },
+        { label: '阶段 2', phase: '2', sec: 0 },
+        { label: '阶段 3', phase: '3', sec: 0 },
+        { label: '阶段 4', phase: '4', sec: 0 },
+        { label: '阶段 5', phase: '5', sec: 0 },
+        { label: '成熟', phase: '6', sec: 0 },
       ];
 
   return (
@@ -189,6 +198,9 @@ export function GrowthPhases({ seedId, cropNum, gold = false }: { seedId?: numbe
               <MultiImage urls={resolvePhaseUrls({ seedId, cropNum, phase: p.phase, gold })} alt={p.label} size={96} className="hidden lg:block" rounded />
             </div>
             <div className="text-[10px] sm:text-xs font-bold text-[var(--ink-mute)] tracking-tight">{p.label}</div>
+            {p.sec > 0 && (
+              <div className="text-[9px] sm:text-[10px] text-[var(--ink-mute)]/75 -mt-1 tnum">{formatSec(p.sec)}</div>
+            )}
           </div>
           {i < phaseNames.length - 1 && (
             <span className="text-[var(--ink-mute)]/60 text-lg sm:text-xl lg:text-2xl flex-shrink-0 -mt-5 sm:-mt-6" aria-hidden>›</span>
@@ -254,7 +266,10 @@ export function goldenAtlasImageUrls(name: string): string[] {
       const arr = ga[key] || [];
       const found = arr.find((g: any) => g.name === name && g.cropId && g.phaseImages.length > 0);
       if (found) {
-        const prefix = key === 'goldenFruit' ? 'gold/' : '';
+        // 黄金版资源在 gold/ 子目录。注意不能只按所属 tab 判断 ——
+        // eventFruit/costumeFruit 里同样有「黄金·荷花」「黄金·哈哈南瓜塔」等黄金条目，
+        // 旧逻辑只给 goldenFruit 加前缀，导致黄金·荷花取到普通版的 Crop_6109_Seed.png。
+        const prefix = isGoldAssetEntry(found) ? 'gold/' : '';
         urls.push(`${CLEAN_BASE}seed_images_named/${prefix}Crop_${found.cropId}_Seed.png`);
         break;
       }
@@ -269,6 +284,13 @@ export function goldenAtlasImageUrls(name: string): string[] {
   return urls;
 }
 
+// 判断 goldenAtlas 条目是否是黄金版（资源位于 gold/ 子目录）
+function isGoldAssetEntry(entry: any): boolean {
+  if (String(entry?.name || '').startsWith('黄金')) return true;
+  const first = (entry?.phaseImages || [])[0] || '';
+  return first.includes('/gold/');
+}
+
 export function atlasSeedImageUrl(name: string): string {
   const ga = (mutationData as any).goldenAtlas;
   if (ga) {
@@ -276,7 +298,7 @@ export function atlasSeedImageUrl(name: string): string {
       const arr = ga[key] || [];
       const found = arr.find((g: any) => g.name === name && g.cropId && g.phaseImages.length > 0);
       if (found) {
-        const prefix = key === 'goldenFruit' ? 'gold/' : '';
+        const prefix = isGoldAssetEntry(found) ? 'gold/' : '';
         return `${CLEAN_BASE}seed_images_named/${prefix}Crop_${found.cropId}_Seed.png`;
       }
     }
