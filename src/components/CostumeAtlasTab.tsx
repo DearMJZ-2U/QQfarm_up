@@ -41,12 +41,10 @@ function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
           <ZoomIn size={13} className="text-[var(--ink-soft)]" />
         </span>
       </div>
-      {/* 文字区：名称最多两行（可换行，不再单行截断），描述另起两行 */}
+      {/* 文字区：只保留名称 —— costume_atlas.json 中 desc 与 name 完全相同（75/75），
+          再渲染一遍就是重复文案 */}
       <div className="px-0.5 pb-0.5">
         <div className="font-bold text-xs sm:text-sm text-[var(--ink)] leading-snug line-clamp-2">{item.name}</div>
-        {item.desc && (
-          <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] leading-snug mt-1 line-clamp-2">{item.desc}</div>
-        )}
       </div>
     </button>
   );
@@ -230,7 +228,7 @@ function CostumeZoom({ item, onClose }: { item: CostumeItem; onClose: () => void
             <span className="font-display italic text-lg sm:text-xl font-bold text-[var(--ink)]">{item.name}</span>
             <span className={`chip ${tagChip[item.tag] || tagChip['默认']}`}>{item.tag}</span>
           </div>
-          {item.desc && <p className="text-xs text-[var(--ink-soft)] text-center leading-relaxed">{item.desc}</p>}
+          {/* desc 与 name 相同，不再重复渲染 */}
         </motion.div>
       </motion.div>
     </Portal>
