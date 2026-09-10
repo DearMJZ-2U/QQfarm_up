@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-09-10T13:54:09.162Z",
+  "exportedAt": "2026-09-10T14:04:39.516Z",
   "mutationTypes": [
     {
       "name": "乐园",
@@ -2375,14 +2375,22 @@
     },
     {
       "name": "黄金·哈哈南瓜",
-      "seedId": 0,
+      "seedId": 29998,
       "exp": 15360,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 416,
-      "phaseImages": [],
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_416_6.png",
+        "plant/model/v4/gold/Crop_416_Seed.png",
+        "plant/model/v4/gold/Crop_416_2.png",
+        "plant/model/v4/gold/Crop_416_3.png",
+        "plant/model/v4/gold/Crop_416_4.png",
+        "plant/model/v4/gold/Crop_416_5.png",
+        "plant/model/v4/gold/Crop_416_6.png"
+      ],
       "growTimeSec": 86400,
       "growTimeStr": "24小时",
       "growPhases": [
@@ -2417,14 +2425,22 @@
     },
     {
       "name": "黄金·琉璃宝荷",
-      "seedId": 0,
+      "seedId": 21032,
       "exp": 7680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 1032,
-      "phaseImages": [],
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_1032_6.png",
+        "plant/model/v4/gold/Crop_1032_Seed.png",
+        "plant/model/v4/gold/Crop_1032_2.png",
+        "plant/model/v4/gold/Crop_1032_3.png",
+        "plant/model/v4/gold/Crop_1032_4.png",
+        "plant/model/v4/gold/Crop_1032_5.png",
+        "plant/model/v4/gold/Crop_1032_6.png"
+      ],
       "growTimeSec": 43200,
       "growTimeStr": "12小时",
       "growPhases": [
@@ -2459,14 +2475,22 @@
     },
     {
       "name": "黄金·星语铃花",
-      "seedId": 0,
+      "seedId": 29003,
       "exp": 7680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 9003,
-      "phaseImages": [],
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_9003_6.png",
+        "plant/model/v4/gold/Crop_9003_Seed.png",
+        "plant/model/v4/gold/Crop_9003_2.png",
+        "plant/model/v4/gold/Crop_9003_3.png",
+        "plant/model/v4/gold/Crop_9003_4.png",
+        "plant/model/v4/gold/Crop_9003_5.png",
+        "plant/model/v4/gold/Crop_9003_6.png"
+      ],
       "growTimeSec": 43200,
       "growTimeStr": "12小时",
       "growPhases": [
@@ -2501,14 +2525,22 @@
     },
     {
       "name": "黄金·泡泡棉花糖",
-      "seedId": 0,
+      "seedId": 29004,
       "exp": 7680,
       "fruit": 10,
       "price": 0,
       "prob": 10,
       "points": 200,
       "cropId": 9004,
-      "phaseImages": [],
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_9004_6.png",
+        "plant/model/v4/gold/Crop_9004_Seed.png",
+        "plant/model/v4/gold/Crop_9004_2.png",
+        "plant/model/v4/gold/Crop_9004_3.png",
+        "plant/model/v4/gold/Crop_9004_4.png",
+        "plant/model/v4/gold/Crop_9004_5.png",
+        "plant/model/v4/gold/Crop_9004_6.png"
+      ],
       "growTimeSec": 43200,
       "growTimeStr": "12小时",
       "growPhases": [
@@ -4796,14 +4828,22 @@
       },
       {
         "name": "黄金·哈哈南瓜",
-        "seedId": 0,
+        "seedId": 29998,
         "exp": 15360,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 416,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_416_6.png",
+          "plant/model/v4/gold/Crop_416_Seed.png",
+          "plant/model/v4/gold/Crop_416_2.png",
+          "plant/model/v4/gold/Crop_416_3.png",
+          "plant/model/v4/gold/Crop_416_4.png",
+          "plant/model/v4/gold/Crop_416_5.png",
+          "plant/model/v4/gold/Crop_416_6.png"
+        ],
         "growTimeSec": 86400,
         "growTimeStr": "24小时",
         "growPhases": [
@@ -4838,14 +4878,22 @@
       },
       {
         "name": "黄金·琉璃宝荷",
-        "seedId": 0,
+        "seedId": 21032,
         "exp": 7680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 1032,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_1032_6.png",
+          "plant/model/v4/gold/Crop_1032_Seed.png",
+          "plant/model/v4/gold/Crop_1032_2.png",
+          "plant/model/v4/gold/Crop_1032_3.png",
+          "plant/model/v4/gold/Crop_1032_4.png",
+          "plant/model/v4/gold/Crop_1032_5.png",
+          "plant/model/v4/gold/Crop_1032_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -4880,14 +4928,22 @@
       },
       {
         "name": "黄金·星语铃花",
-        "seedId": 0,
+        "seedId": 29003,
         "exp": 7680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 9003,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_9003_6.png",
+          "plant/model/v4/gold/Crop_9003_Seed.png",
+          "plant/model/v4/gold/Crop_9003_2.png",
+          "plant/model/v4/gold/Crop_9003_3.png",
+          "plant/model/v4/gold/Crop_9003_4.png",
+          "plant/model/v4/gold/Crop_9003_5.png",
+          "plant/model/v4/gold/Crop_9003_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -4922,14 +4978,22 @@
       },
       {
         "name": "黄金·泡泡棉花糖",
-        "seedId": 0,
+        "seedId": 29004,
         "exp": 7680,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 9004,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_9004_6.png",
+          "plant/model/v4/gold/Crop_9004_Seed.png",
+          "plant/model/v4/gold/Crop_9004_2.png",
+          "plant/model/v4/gold/Crop_9004_3.png",
+          "plant/model/v4/gold/Crop_9004_4.png",
+          "plant/model/v4/gold/Crop_9004_5.png",
+          "plant/model/v4/gold/Crop_9004_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5017,14 +5081,22 @@
       },
       {
         "name": "黄金·哈哈南瓜塔",
-        "seedId": 0,
+        "seedId": 204003,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8001,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_8001_6.png",
+          "plant/model/v4/gold/Crop_8001_Seed.png",
+          "plant/model/v4/gold/Crop_8001_2.png",
+          "plant/model/v4/gold/Crop_8001_3.png",
+          "plant/model/v4/gold/Crop_8001_4.png",
+          "plant/model/v4/gold/Crop_8001_5.png",
+          "plant/model/v4/gold/Crop_8001_6.png"
+        ],
         "growTimeSec": 86400,
         "growTimeStr": "24小时",
         "growPhases": [
@@ -5060,14 +5132,22 @@
       },
       {
         "name": "月华宝荷",
-        "seedId": 0,
+        "seedId": 204004,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8002,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/Crop_8002_6.png",
+          "plant/model/v4/Crop_8002_Seed.png",
+          "plant/model/v4/Crop_8002_2.png",
+          "plant/model/v4/Crop_8002_3.png",
+          "plant/model/v4/Crop_8002_4.png",
+          "plant/model/v4/Crop_8002_5.png",
+          "plant/model/v4/Crop_8002_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5102,14 +5182,22 @@
       },
       {
         "name": "黄金·月华宝荷",
-        "seedId": 0,
+        "seedId": 204005,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8002,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_8002_6.png",
+          "plant/model/v4/gold/Crop_8002_Seed.png",
+          "plant/model/v4/gold/Crop_8002_2.png",
+          "plant/model/v4/gold/Crop_8002_3.png",
+          "plant/model/v4/gold/Crop_8002_4.png",
+          "plant/model/v4/gold/Crop_8002_5.png",
+          "plant/model/v4/gold/Crop_8002_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5144,14 +5232,22 @@
       },
       {
         "name": "蝶梦星铃",
-        "seedId": 0,
+        "seedId": 204006,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8003,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/Crop_8003_6.png",
+          "plant/model/v4/Crop_8003_Seed.png",
+          "plant/model/v4/Crop_8003_2.png",
+          "plant/model/v4/Crop_8003_3.png",
+          "plant/model/v4/Crop_8003_4.png",
+          "plant/model/v4/Crop_8003_5.png",
+          "plant/model/v4/Crop_8003_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5186,14 +5282,22 @@
       },
       {
         "name": "黄金·蝶梦星铃",
-        "seedId": 0,
+        "seedId": 204007,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8003,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_8003_6.png",
+          "plant/model/v4/gold/Crop_8003_Seed.png",
+          "plant/model/v4/gold/Crop_8003_2.png",
+          "plant/model/v4/gold/Crop_8003_3.png",
+          "plant/model/v4/gold/Crop_8003_4.png",
+          "plant/model/v4/gold/Crop_8003_5.png",
+          "plant/model/v4/gold/Crop_8003_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5228,14 +5332,22 @@
       },
       {
         "name": "比熊棉花糖",
-        "seedId": 0,
+        "seedId": 204008,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8004,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/Crop_8004_6.png",
+          "plant/model/v4/Crop_8004_Seed.png",
+          "plant/model/v4/Crop_8004_2.png",
+          "plant/model/v4/Crop_8004_3.png",
+          "plant/model/v4/Crop_8004_4.png",
+          "plant/model/v4/Crop_8004_5.png",
+          "plant/model/v4/Crop_8004_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5270,14 +5382,22 @@
       },
       {
         "name": "黄金·比熊棉花糖",
-        "seedId": 0,
+        "seedId": 204009,
         "exp": 0,
         "fruit": 1,
         "price": 0,
         "prob": 10,
         "points": 200,
         "cropId": 8004,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_8004_6.png",
+          "plant/model/v4/gold/Crop_8004_Seed.png",
+          "plant/model/v4/gold/Crop_8004_2.png",
+          "plant/model/v4/gold/Crop_8004_3.png",
+          "plant/model/v4/gold/Crop_8004_4.png",
+          "plant/model/v4/gold/Crop_8004_5.png",
+          "plant/model/v4/gold/Crop_8004_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5314,14 +5434,22 @@
     "eventFruit": [
       {
         "name": "哈哈小南瓜",
-        "seedId": 0,
+        "seedId": 49001,
         "exp": 0,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 80,
         "cropId": 9001,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/Crop_9001_6.png",
+          "plant/model/v4/Crop_9001_Seed.png",
+          "plant/model/v4/Crop_9001_2.png",
+          "plant/model/v4/Crop_9001_3.png",
+          "plant/model/v4/Crop_9001_4.png",
+          "plant/model/v4/Crop_9001_5.png",
+          "plant/model/v4/Crop_9001_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
@@ -5357,14 +5485,22 @@
       },
       {
         "name": "黄金·哈哈小南瓜",
-        "seedId": 0,
+        "seedId": 1049001,
         "exp": 0,
         "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 80,
         "cropId": 9001,
-        "phaseImages": [],
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_9001_6.png",
+          "plant/model/v4/gold/Crop_9001_Seed.png",
+          "plant/model/v4/gold/Crop_9001_2.png",
+          "plant/model/v4/gold/Crop_9001_3.png",
+          "plant/model/v4/gold/Crop_9001_4.png",
+          "plant/model/v4/gold/Crop_9001_5.png",
+          "plant/model/v4/gold/Crop_9001_6.png"
+        ],
         "growTimeSec": 43200,
         "growTimeStr": "12小时",
         "growPhases": [
