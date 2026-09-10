@@ -1,9 +1,13 @@
 node_modules/
 build/
 dist/
+dist-verify/
 coverage/
 .DS_Store
 *.log
 .env*
 !.env.example
 docs/
+# 本地校验临时产物（数据采集工作区的快校 config 与预览页，非项目内容）
+vite.config.verify.ts
+public/__preview_*.html

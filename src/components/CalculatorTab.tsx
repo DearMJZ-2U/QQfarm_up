@@ -27,6 +27,7 @@ export default function CalculatorTab() {
   const [smartFert, setSmartFert] = useState(true);
   const [idealMode, setIdealMode] = useState(false);
   const [secondSeasonFert, setSecondSeasonFert] = useState(true);
+  const [hideSpecial, setHideSpecial] = useState(false);
   const [target, setTarget] = useState<'exp' | 'gold'>('exp');
 
   // 按当前等级自动配置土地（红 Lv28+/黑 Lv40+/金 Lv58+/紫 Lv90+）
@@ -84,7 +85,12 @@ export default function CalculatorTab() {
 
     const rows = [];
     for (const s of seedsList) {
-      if (s.requiredLevel > currentLevel) continue;
+      // 特殊作物（天工 / 活动限定）的 requiredLevel 是配置表里的占位值（200/201），
+      // 实际不靠等级解锁，而是靠活动产出种子，因此不参与等级门槛过滤。
+      // 常规作物仍按等级过滤：等级不够就不该出现在天梯榜里。
+      const isSpecial = !!(s as any).isSpecial;
+      if (!isSpecial && s.requiredLevel > currentLevel) continue;
+      if (isSpecial && hideSpecial) continue;
       const seedId = s.seedId;
       const growTimeSec = s.growTimeSec;
       const seasons = s.seasons || 1;
@@ -119,7 +125,7 @@ export default function CalculatorTab() {
       rows.push({ ...s, growTimeFert: totalGrowTimeFert, growTimeFertStr: seasons > 1 ? `${formatSec(totalGrowTimeFert)} (共${seasons}季)` : formatSec(totalGrowTimeFert), growTimeStr: totalGrowTimeStr, expPerHourNoFert, expPerHourFert, goldPerHourNoFert, goldPerHourFert, gainPercent });
     }
     return rows;
-  }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, smartFert, idealMode, secondSeasonFert]);
+  }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, smartFert, idealMode, secondSeasonFert, hideSpecial]);
 
   const sortedFert = [...calculatedRows].sort((a, b) => target === 'exp' ? b.expPerHourFert - a.expPerHourFert : b.goldPerHourFert - a.goldPerHourFert);
   const bestFert = sortedFert[0];
@@ -136,13 +142,13 @@ export default function CalculatorTab() {
     key: 'normal' | 'red' | 'black' | 'gold' | 'purple';
     label: string;
     sub: string;
-    accent: 'earth' | 'berry' | 'ink' | 'sun' | 'plum';
-    color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink' | 'earth';
+    accent: 'earth' | 'berry' | 'soil' | 'sun' | 'plum';
+    color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink' | 'earth' | 'soil';
     readonly?: boolean;
   }> = [
-    { key: 'normal', label: '普通地', sub: '无加成', accent: 'earth', color: 'ink', readonly: true },
+    { key: 'normal', label: '普通地', sub: '无加成', accent: 'earth', color: 'earth', readonly: true },
     { key: 'red',    label: '红土地', sub: '产 +100%',              accent: 'berry', color: 'berry' },
-    { key: 'black',  label: '黑土地', sub: '产 +200% · 速 -10%',    accent: 'ink',   color: 'ink' },
+    { key: 'black',  label: '黑土地', sub: '产 +200% · 速 -10%',    accent: 'soil',  color: 'soil' },
     { key: 'gold',   label: '金土地', sub: '产 +300% · 速 -20% · 经 +20%', accent: 'sun', color: 'sun' },
     { key: 'purple', label: '紫晶土地', sub: '产 +300% · 速 -20% · 经 +25%', accent: 'plum', color: 'plum' },
   ];
@@ -187,6 +193,18 @@ export default function CalculatorTab() {
             ? '需先开启智能施肥'
             : '第二季也跳过最长阶段',
       color: 'sky' as const,
+    },
+    {
+      id: 'hideSpecial',
+      checked: hideSpecial,
+      onChange: (v: boolean) => setHideSpecial(v),
+      disabled: false,
+      emoji: '🚫',
+      label: '屏蔽特殊作物',
+      hint: hideSpecial
+        ? '已只统计常规作物——活动结束后看这个更贴合实际'
+        : '隐藏活动限定/无购买入口的作物（含普通~天工全品级），只看常驻常规作物',
+      color: 'berry' as const,
     },
   ];
 
@@ -255,7 +273,7 @@ export default function CalculatorTab() {
         </div>
 
         {/* Toggles */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
           {toggles.map(t => (
             <ToggleCard
               key={t.id}
@@ -288,7 +306,8 @@ export default function CalculatorTab() {
               {landInputs.map(li => {
                 const value = li.key === 'red' ? redLands : li.key === 'black' ? blackLands : li.key === 'gold' ? goldLands : li.key === 'purple' ? purpleLands : 0;
                 const tileBg = `var(--${li.color}-bg)`;
-                const tileBorder = li.color === 'ink' ? 'var(--line-strong)' : `var(--${li.color})`;
+                // 黑土地用更深的描边强化「厚重感」，与普通地（earth）拉开层次
+                const tileBorder = li.color === 'soil' ? 'var(--soil-deep)' : `var(--${li.color})`;
                 return (
                   <div key={li.key} className="p-2 sm:p-3 rounded-xl sm:rounded-2xl"
                     style={{
@@ -369,7 +388,9 @@ export default function CalculatorTab() {
 
                 <div className="flex-1 min-w-0">
                   <div className="text-white/80 text-[10px] sm:text-xs font-bold tracking-wide mb-0.5">
-                    Lv{bestFert.requiredLevel} · {bestFert.seasons > 1 ? `${bestFert.seasons} 季作物` : '单季作物'}
+                    {(bestFert as any).isSpecial
+                      ? `特殊作物 · ${bestFert.seasons > 1 ? `${bestFert.seasons} 季作物` : '单季作物'}`
+                      : `Lv${bestFert.requiredLevel} · ${bestFert.seasons > 1 ? `${bestFert.seasons} 季作物` : '单季作物'}`}
                   </div>
                   <h2 className="font-display italic text-xl sm:text-3xl font-bold text-white truncate leading-tight">
                     {bestFert.name}
@@ -424,6 +445,11 @@ export default function CalculatorTab() {
                   {target === 'exp' ? '经验天梯榜' : '金币天梯榜'}
                 </span>
                 <span className="chip chip-ink">TOP 20</span>
+                {hideSpecial && (
+                  <span className="chip" style={{ background: 'var(--berry-bg)', color: 'var(--berry-deep)' }}>
+                    已屏蔽特殊作物
+                  </span>
+                )}
               </div>
               <span className="text-[10px] font-mono text-[var(--ink-mute)]">共 {sortedFert.length}</span>
             </div>
@@ -469,13 +495,21 @@ export default function CalculatorTab() {
                             <CropImage seedId={row.seedId} name={row.name} size={44} />
                             <div className="min-w-0">
                               <div className="font-bold text-sm text-[var(--ink)] leading-tight truncate">{row.name}</div>
-                              {row.seasons > 1 && <div className="text-[9px] text-[var(--berry-deep)] font-bold">{row.seasons} 季</div>}
+                              <div className="flex items-center gap-1.5">
+                                {(row as any).isSpecial && (
+                                  <span className="text-[9px] font-bold px-1.5 py-px rounded-full"
+                                    style={{ background: 'var(--berry-bg)', color: 'var(--berry-deep)' }}>
+                                    特殊
+                                  </span>
+                                )}
+                                {row.seasons > 1 && <div className="text-[9px] text-[var(--berry-deep)] font-bold">{row.seasons} 季</div>}
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td className="text-center">
                           <span className="font-mono tnum text-xs font-bold text-[var(--ink-soft)]">
-                            Lv{row.requiredLevel}
+                            {(row as any).isSpecial ? '活动' : `Lv${row.requiredLevel}`}
                           </span>
                         </td>
                         <td className="text-center text-[10px] font-mono text-[var(--ink-mute)] hidden sm:table-cell whitespace-nowrap">

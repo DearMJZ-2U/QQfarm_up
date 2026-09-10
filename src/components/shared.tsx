@@ -51,21 +51,23 @@ function getSeedName(seedId: number): string {
 
 // ── 通用多级图片组件 ────────────────────────────────────
 
-function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = false }: {
+function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = false, boxSize = false }: {
   urls: string[];
   alt: string;
   size?: number;
   className?: string;
   rounded?: boolean;
   pixel?: boolean;
+  boxSize?: boolean;
 }) {
   const [idx, setIdx] = React.useState(0);
-  const hasSize = className === '' && size != null;
+  const hasSize = (className === '' || boxSize) && size != null;
+  const sizeStyle = hasSize ? { width: size, height: size } : undefined;
   if (idx >= urls.length) {
     return (
       <div className={`inline-flex items-center justify-center shrink-0 ${rounded ? 'rounded-lg' : 'rounded-full'} ${className}`}
         style={hasSize ? { background: 'var(--bg-2)', width: size, height: size } : { background: 'var(--bg-2)' }}>
-        <Leaf size={(size || 32) * 0.5} style={{ color: 'var(--leaf)', opacity: 0.5 }} />
+        <Leaf size={(size ?? 32) * 0.5} style={{ color: 'var(--leaf)', opacity: 0.5 }} />
       </div>
     );
   }
@@ -73,7 +75,7 @@ function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = 
     <img src={urls[idx]} alt={alt}
       className={`object-contain shrink-0 ${rounded ? 'rounded-lg' : ''} ${pixel ? 'pixel-art' : ''} ${className}`}
       loading="lazy"
-      style={hasSize ? { width: size, height: size } : undefined}
+      style={sizeStyle}
       onError={() => setIdx(idx + 1)}
     />
   );
@@ -89,7 +91,12 @@ const MATURE_FORCE_SEED_IDS = new Set<number>([
   20416, // 哈哈南瓜
 ]);
 
-export function CropImage({ seedId, name, size = 32, className = '' }: {
+// 尺寸约定：
+//   - 传 size={n}  → 固定 n×n 像素（CropImage 传 boxSize，尺寸恒生效）
+//   - 不传 size    → 尺寸交给 className 的响应式类（如 "w-20 h-20 sm:w-32 sm:h-32"）
+//     注意：不传时**不能**注入内联 width/height，否则会盖掉 Tailwind 响应式类，
+//     导致图片被钉死在默认尺寸上（曾因此把图鉴/道具的图缩成 32px）
+export function CropImage({ seedId, name, size, className = '' }: {
   seedId?: number; name: string; size?: number; className?: string;
 }) {
   const sid = seedId || 0;
@@ -115,31 +122,32 @@ export function CropImage({ seedId, name, size = 32, className = '' }: {
     }
   }
 
-  return <MultiImage urls={urls} alt={sname || name} size={size} className={`drop-shadow-md ${className}`} />;
+  return <MultiImage urls={urls} alt={sname || name} size={size} boxSize className={`drop-shadow-md ${className}`} />;
 }
 
 // ── 生长阶段图 ──────────────────────────────────────────
 
-function resolvePhaseUrls(seedId: number, phase: string, gold: boolean): string[] {
-  const cn = getCropNum(seedId);
-  const sname = sanitize(getSeedName(seedId));
+function resolvePhaseUrls(opts: { seedId?: number; cropNum?: number; phase: string; gold: boolean }): string[] {
+  const { phase, gold } = opts;
+  const cn = opts.cropNum ?? (opts.seedId ? getCropNum(opts.seedId) : undefined);
+  const sname = opts.seedId ? sanitize(getSeedName(opts.seedId)) : '';
   const localPfx = `${CLEAN_BASE}seed_images_named/`;
 
   const urls: string[] = [];
-  if (gold) {
-    // 黄金变体: 优先 .cache 本地 gold/ 目录(extractor 已下载)
-    if (cn) urls.push(`${localPfx}gold/Crop_${cn}_${phase}.png`);
-    // 兜底: 正常版(extractor 漏下或 gold 缺失时, 如 CN=416/9001 缺 阶段 2-6)
-    if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
-  } else {
-    if (sname) urls.push(`${localPfx}${seedId}_${sname}_Crop_${cn}_${phase}.png`);
+  if (cn) {
+    // 1) 黄金变体优先取 gold/ 目录（spine 重渲的高清图）
+    if (gold) urls.push(`${localPfx}gold/Crop_${cn}_${phase}.png`);
+    // 2) 通用命名 cropId 直取（天工作物/活动作物的高清渲染图）
+    urls.push(`${localPfx}Crop_${cn}_${phase}.png`);
+    // 3) 传统「{seedId}_{名称}_Crop_x_阶段」命名
+    if (opts.seedId && sname) urls.push(`${localPfx}${opts.seedId}_${sname}_Crop_${cn}_${phase}.png`);
   }
   return urls;
 }
 
 function sanitize(n: string): string { return n.replace(/[<>:"/\\|?*]/g, '_'); }
 
-export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: boolean }) {
+export function GrowthPhases({ seedId, cropNum, gold = false }: { seedId?: number; cropNum?: number; gold?: boolean }) {
   // 从 Plant.json 的 grow_phases 动态解析阶段名和阶段数（不同作物阶段数不同）
   // 7 段作物（如含羞草：种子/发芽/小叶子/大叶子/花蕾/盛开/成熟）图片只有 _2~_6，最后阶段复用 _6
   let phases: { name: string; sec: number }[] = [];
@@ -176,9 +184,9 @@ export function GrowthPhases({ seedId, gold = false }: { seedId: number; gold?: 
                 background: gold ? 'var(--sun-bg)' : 'var(--leaf-bg)',
                 border: `1.5px solid ${gold ? 'var(--sun-soft)' : 'var(--leaf-soft)'}`,
               }}>
-              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={64} className="sm:hidden" rounded />
-              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={80} className="hidden sm:block lg:hidden" rounded />
-              <MultiImage urls={resolvePhaseUrls(seedId, p.phase, gold)} alt={p.label} size={96} className="hidden lg:block" rounded />
+              <MultiImage urls={resolvePhaseUrls({ seedId, cropNum, phase: p.phase, gold })} alt={p.label} size={64} className="sm:hidden" rounded />
+              <MultiImage urls={resolvePhaseUrls({ seedId, cropNum, phase: p.phase, gold })} alt={p.label} size={80} className="hidden sm:block lg:hidden" rounded />
+              <MultiImage urls={resolvePhaseUrls({ seedId, cropNum, phase: p.phase, gold })} alt={p.label} size={96} className="hidden lg:block" rounded />
             </div>
             <div className="text-[10px] sm:text-xs font-bold text-[var(--ink-mute)] tracking-tight">{p.label}</div>
           </div>

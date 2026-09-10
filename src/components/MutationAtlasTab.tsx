@@ -8,6 +8,28 @@ import { MUTATION_RULES, MUTATION_PROBABILITIES, getProbabilitiesFor } from '../
 
 type BonusType = 'exp' | 'steal' | 'fert' | 'gold';
 
+// 概率展示的品质配色：与游戏内稀有度一一对应。
+// 颜色依据 = 游戏自己的品质图标（extraRes `gui/texture/icon/img_item_rarity{n}` 实测均色）：
+//   rarity1 普通 #e2daca(灰白) · rarity2 稀有 #89daf6(蓝) · rarity3 珍品 #d6aafd(紫) · rarity4 天工 #f9d264(金)
+// 即 **金=天工 / 紫=珍品 / 蓝=稀有**（此前天工与珍品配色写反了，已修正）。
+const QUALITY_META: Record<string, { chip: string; bar: string; label: string }> = {
+  '天工': { chip: 'chip-sun',   bar: 'var(--sun)',   label: '天工' },
+  '珍品': { chip: 'chip-plum',  bar: 'var(--plum)',  label: '珍品' },
+  '稀有': { chip: 'chip-sky',   bar: 'var(--sky)',   label: '稀有' },
+  '普通': { chip: 'chip-leaf',  bar: 'var(--leaf)',  label: '普通' },
+  '无':   { chip: 'chip-ink',   bar: 'var(--ink-mute)', label: '不分品质' },
+};
+
+function qualityMeta(q: string) {
+  return QUALITY_META[q] || QUALITY_META['无'];
+}
+
+/** 由 "9.26%" 形式解析出数值，用于画概率条 */
+function rateValue(rate: string): number {
+  const n = parseFloat(rate.replace('%', ''));
+  return Number.isFinite(n) ? n : 0;
+}
+
 const BONUS_META: Record<BonusType, { label: string; color: 'leaf' | 'sky' | 'orange' | 'sun'; chip: string; emoji: string }> = {
   exp:   { label: '经验',  color: 'leaf',   chip: 'chip-leaf',   emoji: '🌱' },
   steal: { label: '偷菜',  color: 'sky',    chip: 'chip-sky',    emoji: '🥷' },
@@ -29,7 +51,8 @@ function stripGoldPrefix(name: string) {
 function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => void }) {
   const isGold = item.name.startsWith('黄金');
   const detailUrls = goldenAtlasImageUrls(item.name);
-  const showGrowth = goldSeedIds[item.name] !== undefined;
+  // 有高清 spine 渲染阶段图（hasRenderPhases）或能映射到种子时，展示成长阶段条
+  const showGrowth = goldSeedIds[item.name] !== undefined || !!(item as any).hasRenderPhases;
 
   return (
     <Portal>
@@ -87,7 +110,7 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
                 <div className="section-eyebrow mb-2">成长阶段 {isGold && '· 黄金变异'}</div>
                   <div className="sticker-soft p-3 sm:p-4">
                     {isGold ? (
-                      <GrowthPhases seedId={goldSeedIds[item.name]} gold={isGold} />
+                      <GrowthPhases seedId={goldSeedIds[item.name]} cropNum={(item as any).cropId} gold={isGold} />
                     ) : (
                       <div className="flex justify-center">
                         <RemoteImage urls={goldenAtlasImageUrls(item.name)} name={item.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
@@ -126,6 +149,23 @@ export default function MutationAtlasTab() {
 
   const { mutationTypes, goldenAtlas } = mutationData;
 
+  // 概率按品质分组：顺序固定为 天工 → 珍品 → 稀有 → 普通 → 不分品质（高稀有度在前）
+  // 概率分组：品质由高到低（天工>珍品>稀有>普通>不分品质）；
+  // 每档内部再按**变异发布新→旧**排序（releaseOrder = mutant_effect.id，越大越新）。
+  const probabilityGroups = React.useMemo(() => {
+    const ORDER = ['天工', '珍品', '稀有', '普通', '无'];
+    const map = new Map<string, typeof MUTATION_PROBABILITIES>();
+    for (const p of MUTATION_PROBABILITIES) {
+      const key = ORDER.includes(p.quality) ? p.quality : '无';
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(p);
+    }
+    for (const rows of map.values()) {
+      rows.sort((a, b) => (b.releaseOrder ?? 0) - (a.releaseOrder ?? 0));
+    }
+    return ORDER.filter((q) => map.has(q)).map((q) => ({ quality: q, rows: map.get(q)! }));
+  }, []);
+
   const goldenTabs: Array<{ id: 'goldenFruit' | 'costumeFruit' | 'eventFruit'; label: string; count: number }> = [
     { id: 'goldenFruit',  label: '黄金果实', count: goldenAtlas.goldenFruit.length },
     { id: 'costumeFruit', label: '装扮果实', count: goldenAtlas.costumeFruit.length },
@@ -140,7 +180,7 @@ export default function MutationAtlasTab() {
           <Dna size={11} strokeWidth={2.5} /> 变异图鉴
         </span>
         <h2 className="page-header-title">稀有变种与超变</h2>
-        <p className="page-header-subtitle">10 种变异 · 40 件黄金/装扮/活动果实</p>
+        <p className="page-header-subtitle">{mutationTypes.length} 种变异 · {goldenAtlas.goldenFruit.length + goldenAtlas.costumeFruit.length + goldenAtlas.eventFruit.length} 件黄金/装扮/活动果实</p>
       </header>
 
       {/* Main tab toggle */}
@@ -169,28 +209,33 @@ export default function MutationAtlasTab() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            {/* mutationTypes 已由提取脚本按「变异发布新→旧」排好（releaseOrder = mutant_effect.id 降序），
+                直接按数组序渲染即可，新的（比熊/乐园/晶辉…）排在前面 */}
             {mutationTypes.map((mt, i) => {
               const probs = getProbabilitiesFor(mt.name);
               return (
                 <motion.div key={mt.name}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: i * 0.04 }}
+                  transition={{ duration: 0.25, delay: i * 0.03 }}
                   className="sticker p-3 sm:p-4 flex items-start gap-3 sm:gap-4">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'var(--berry-bg)' }}>
-                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} className="w-14 h-14 sm:w-16 sm:h-16" pixel rounded />
+                    <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} className="w-14 h-14 sm:w-16 sm:h-16" rounded />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                       <span className="font-bold text-sm sm:text-base text-[var(--ink)]">{mt.name}</span>
                       <span className="chip chip-berry" style={{ fontSize: '0.65rem' }}>{mt.effectType}</span>
-                      {probs.map((p, k) => (
-                        <span key={k} className="chip chip-sun flex-shrink-0 font-mono tnum"
-                          style={{ fontSize: '0.65rem' }} title={`${p.quality} 品质触发概率`}>
-                          {p.quality !== '无' ? `${p.quality} ` : ''}{p.rate}
-                        </span>
-                      ))}
+                      {probs.map((p, k) => {
+                        const meta = qualityMeta(p.quality);
+                        return (
+                          <span key={k} className={`chip ${meta.chip} flex-shrink-0 font-mono tnum`}
+                            style={{ fontSize: '0.65rem' }} title={`${p.quality} 品质触发概率`}>
+                            {p.quality !== '无' ? `${p.quality} ` : ''}{p.rate}
+                          </span>
+                        );
+                      })}
                     </div>
                     <div className="text-[11px] sm:text-sm font-mono font-bold text-[var(--berry-deep)] tnum">{mt.effectValue}</div>
                     <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 sm:mt-1 leading-snug">{mt.desc}</div>
@@ -200,27 +245,80 @@ export default function MutationAtlasTab() {
             })}
           </div>
 
+          {/* ── 概率展示 ──
+              设计要点（提高区分度）：
+                1. 按品质分组（天工 / 珍品 / 稀有 / 不分品质），每组一个彩色标题条
+                2. 每行左侧放变异名，中间是概率条，右侧是概率数值
+                3. 概率条按该品质组内的最大值归一化，长度差异一眼可见 */}
           <div className="sticker overflow-hidden">
             <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2"
               style={{ background: 'var(--berry-bg)', borderBottom: '1.5px solid var(--berry-soft)' }}>
               <span className="text-base sm:text-lg">📊</span>
               <h3 className="font-display italic text-base sm:text-lg font-bold text-[var(--berry-deep)]">概率展示</h3>
-              <span className="chip chip-berry ml-auto" style={{ fontSize: '0.65rem' }}>{MUTATION_PROBABILITIES.length} 行</span>
+              <span className="chip chip-berry ml-auto" style={{ fontSize: '0.65rem' }}>
+                {MUTATION_PROBABILITIES.length} 行 · {probabilityGroups.length} 档品质
+              </span>
             </div>
-            <div className="px-4 sm:px-5 pt-3 pb-1.5 grid grid-cols-3 text-xs sm:text-sm font-bold uppercase tracking-wide text-[var(--ink-mute)]">
-              <div>变异类型</div>
-              <div>品质</div>
-              <div className="text-right">概率</div>
+
+            <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
+              {probabilityGroups.map((group) => {
+                const meta = qualityMeta(group.quality);
+                const maxRate = Math.max(...group.rows.map((r) => rateValue(r.rate)), 0.01);
+                return (
+                  <div key={group.quality} className="rounded-2xl overflow-hidden"
+                    style={{ border: '1.5px solid var(--line)' }}>
+                    {/* 组标题：品质徽标 + 该档行数 */}
+                    <div className="px-3 py-2 flex items-center gap-2"
+                      style={{ background: 'var(--bg-2)' }}>
+                      <span className={`chip ${meta.chip}`} style={{ fontSize: '0.7rem' }}>{meta.label}</span>
+                      <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">
+                        {group.quality === '无' ? '不区分品质' : '品质'}
+                      </span>
+                      <span className="ml-auto text-[10px] sm:text-[11px] font-mono tnum text-[var(--ink-mute)]">
+                        {group.rows.length} 项 · 发布新→旧
+                      </span>
+                    </div>
+
+                    {/* 组内每一行：按变异发布新→旧 */}
+                    <div className="divide-y" style={{ borderColor: 'var(--line)' }}>
+                      {group.rows.map((p, ri) => {
+                        const pct = (rateValue(p.rate) / maxRate) * 100;
+                        return (
+                          <div key={`${p.name}-${p.quality}-${ri}`}
+                            className="px-3 py-2.5 sm:py-3 flex items-center gap-2.5 sm:gap-3 transition-colors hover:bg-[var(--surface-soft)]">
+                            {/* 发布序次：第 1 项=最新 */}
+                            <div className="w-4 flex-shrink-0 text-center text-[9px] sm:text-[10px] font-mono tnum"
+                              style={{ color: ri === 0 ? meta.bar : 'var(--ink-mute)', opacity: ri === 0 ? 1 : 0.5 }}
+                              title={ri === 0 ? '本档最新发布' : `本档第 ${ri + 1} 新`}>
+                              {ri + 1}
+                            </div>
+                            {/* 变异名 */}
+                            <div className="w-14 sm:w-16 flex-shrink-0 font-bold text-sm sm:text-base text-[var(--ink)] truncate">
+                              {p.name}
+                            </div>
+                            {/* 概率条 */}
+                            <div className="flex-1 min-w-0 h-2.5 sm:h-3 rounded-full overflow-hidden"
+                              style={{ background: 'var(--line)' }}>
+                              <div className="h-full rounded-full transition-all duration-500"
+                                style={{ width: `${Math.max(pct, 2)}%`, background: meta.bar }} />
+                            </div>
+                            {/* 概率数值 */}
+                            <div className="w-14 sm:w-16 flex-shrink-0 text-right font-mono tnum font-bold text-sm sm:text-base"
+                              style={{ color: meta.bar === 'var(--ink-mute)' ? 'var(--ink)' : meta.bar }}>
+                              {p.rate}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-              {MUTATION_PROBABILITIES.map((p, i) => (
-                <div key={p.name} className="grid grid-cols-3 py-2.5 sm:py-3 text-sm sm:text-base items-center transition-colors hover:bg-[var(--surface-soft)]"
-                  style={{ borderTop: i === 0 ? 'none' : '1px solid var(--line)' }}>
-                  <div className="font-bold text-[var(--ink)]">{p.name}</div>
-                  <div><span className="chip chip-ink" style={{ fontSize: '0.65rem' }}>{p.quality}</span></div>
-                  <div className="text-right font-mono tnum font-bold text-[var(--berry-deep)]">{p.rate}</div>
-                </div>
-              ))}
+
+            <div className="px-4 sm:px-5 py-2.5 text-[10px] sm:text-[11px] text-[var(--ink-mute)] leading-relaxed"
+              style={{ background: 'var(--bg-2)', borderTop: '1.5px solid var(--line)' }}>
+              排序：品质由高到低（天工 &gt; 珍品 &gt; 稀有 &gt; 普通 &gt; 不分品质），同一品质内按变异发布新→旧（左侧序次，1 = 本档最新）。横条长度按该档最高概率归一化，只反映相对高低；数值来源为游戏 MutantPublicity 表（万分比换算）。
             </div>
           </div>
         </>

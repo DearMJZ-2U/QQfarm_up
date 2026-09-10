@@ -82,6 +82,14 @@
   /* 大地棕 */
   --earth: #8B6E4F;
   --earth-deep: #6B5236;
+  --earth-soft: #E6D5C0;
+  --earth-bg: #F5EBDA;
+
+  /* 黑土（黑土地专用：明显更深，与普通地拉开区分） */
+  --soil: #2E2620;
+  --soil-deep: #171310;
+  --soil-soft: #8C7F70;
+  --soil-bg: #D6C7B4;
 
   /* sticker 阴影系统 */
   --shadow-sticker: 0 2px 0 rgba(28, 42, 31, 0.10), 0 6px 16px -4px rgba(28, 42, 31, 0.14);
@@ -152,6 +160,14 @@
 
   --earth: #B89272;
   --earth-deep: #D4AE8A;
+  --earth-soft: #3A2F22;
+  --earth-bg: #241D15;
+
+  /* 黑土（黑土地专用：暗色模式下比普通地更深、更冷，区分度明显） */
+  --soil: #A89B8A;
+  --soil-deep: #E8DCCC;
+  --soil-soft: #241F1A;
+  --soil-bg: #120F0B;
 
   --shadow-sticker: 0 2px 0 rgba(0, 0, 0, 0.40), 0 6px 16px -4px rgba(0, 0, 0, 0.50);
   --shadow-sticker-lg: 0 4px 0 rgba(0, 0, 0, 0.40), 0 10px 24px -6px rgba(0, 0, 0, 0.55);

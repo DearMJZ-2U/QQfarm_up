@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, X } from 'lucide-react';
+import { ShoppingBag, X, Search } from 'lucide-react';
 import itemsData from '../data/items.json';
 import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade } from './shared';
 import type { CategoryNavItem } from './shared';
@@ -41,6 +41,7 @@ function categoryCount(c: any): number {
 export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: string } = {}) {
   const [catId, setCatId] = React.useState(initialCategoryId || '05');
   const [goldDetail, setGoldDetail] = React.useState<GoldDetail | null>(null);
+  const [query, setQuery] = React.useState('');
 
   // 当父组件传入新的 initialCategoryId 时切换分类
   React.useEffect(() => {
@@ -50,6 +51,7 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
   }, [initialCategoryId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const cat = categories.find(c => c.id === catId);
+  // 种子(05) 保持「品级优先」的作物图鉴习惯；其余分类统一按发布时间由新到旧。
   const isSeed = catId === '05';
   const isGoldenFruit = catId === '17';
   const showGrade = isSeed || isGoldenFruit;
@@ -68,17 +70,62 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
 
   const visibleItems = React.useMemo(() => {
     let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
-    // 种子和超变果实按品级降序：天工(4) > 珍品(3) > 稀有(2) > 普通(1)
-    if (isSeed || isGoldenFruit) {
-      items = [...items].sort((a, b) => {
+
+    // 排序口径（统一「发布由新到旧」）：
+    //   种子(05)      → 品级降序 + 等级升序（作物图鉴的既定习惯，不按发布时间打乱）
+    //   其余所有分类   → releaseOrder 降序（越大越新）；未知(0) 排最后，再按 id 兜底保证稳定
+    //   超变果实       → releaseOrder 相同（同批）时再按 品级 天工>珍品>稀有>普通、等级升序
+    if (!isSeed) {
+      items = [...items].sort((a: any, b: any) => {
+        const oa = a.releaseOrder || 0;
+        const ob = b.releaseOrder || 0;
+        if (ob !== oa) return ob - oa;
+        if (isGoldenFruit) {
+          const ra = a.rarity || 1;
+          const rb = b.rarity || 1;
+          if (rb !== ra) return rb - ra;
+          const la = a.level || 0;
+          const lb = b.level || 0;
+          if (la !== lb) return la - lb;
+        }
+        return (a.id || 0) - (b.id || 0);
+      });
+    } else {
+      items = [...items].sort((a: any, b: any) => {
         const ra = a.rarity || 1;
         const rb = b.rarity || 1;
         if (rb !== ra) return rb - ra;
         return (a.level || 0) - (b.level || 0);
       });
     }
+
+    // 搜索：命中则只留匹配项（并在下方展开跨分类命中，避免"明明有道具却找不到"）
+    const kw = query.trim().toLowerCase();
+    if (kw) {
+      const hit = (it: any) =>
+        String(it.name || '').toLowerCase().includes(kw) ||
+        String(it.desc || '').toLowerCase().includes(kw);
+      items = items.filter(hit);
+    }
     return items;
-  }, [cat, isSeed, isGoldenFruit]);
+  }, [cat, isSeed, isGoldenFruit, query]);
+
+  // 跨分类搜索结果：当前分类没有时，告诉用户它在哪个分类
+  const crossHits = React.useMemo(() => {
+    const kw = query.trim().toLowerCase();
+    if (!kw) return [];
+    const out: Array<{ catId: string; catName: string; catIcon: string; item: any }> = [];
+    for (const c of categories) {
+      for (const it of c.items || []) {
+        if (HIDDEN_ITEM_IDS.has(it.id)) continue;
+        if (String(it.name || '').toLowerCase().includes(kw)) {
+          out.push({ catId: c.id, catName: c.name, catIcon: c.icon, item: it });
+        }
+      }
+    }
+    return out;
+  }, [query]);
+
   const visibleCount = visibleItems.length;
 
   return (
@@ -93,6 +140,45 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
           {categories.length} 个分类 · {categories.reduce((s, c) => s + categoryCount(c), 0)} 件道具
         </p>
       </header>
+
+      {/* 搜索：跨分类按名称/描述查找，避免"道具明明收录了却在别的分类里找不到" */}
+      <div className="relative">
+        <input
+          type="search"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="搜索道具名称，如「挑战书」「头像框」…"
+          className="input-pop w-full pl-9"
+          aria-label="搜索道具"
+        />
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-mute)] pointer-events-none" />
+      </div>
+
+      {/* 跨分类命中提示 */}
+      {query.trim() && crossHits.length > 0 && (
+        <div className="sticker p-3 sm:p-4 space-y-2">
+          <div className="section-eyebrow">
+            全库命中 {crossHits.length} 件（点击跳转到所在分类）
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {crossHits.slice(0, 24).map(h => (
+              <button
+                key={`${h.catId}-${h.item.id}`}
+                type="button"
+                onClick={() => setCatId(h.catId)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-colors"
+                style={{
+                  background: h.catId === catId ? 'var(--berry)' : 'var(--bg-2)',
+                  color: h.catId === catId ? 'white' : 'var(--ink-soft)',
+                }}>
+                <span>{h.catIcon}</span>
+                <span>{h.item.name}</span>
+                <span className="opacity-70 font-mono">{h.catName}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="lg:w-52 lg:flex-shrink-0">
@@ -245,17 +331,18 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
               </button>
             </div>
 
-            {goldSeedIds[goldDetail.name] ? (() => {
+            {(goldSeedIds[goldDetail.name] || (goldDetail as any).hasRenderPhases) ? (() => {
               const isGoldItem = goldDetail.name.startsWith('黄金·');
+              const hasPhases = isGoldItem || (goldDetail as any).hasRenderPhases;
               return (
                 <div className="p-5 sm:p-6">
                   <div className="section-eyebrow mb-2">成长阶段{isGoldItem && ' · 黄金变异'}</div>
                   <div className="sticker-soft p-3 sm:p-4">
-                    {isGoldItem ? (
-                      <GrowthPhases seedId={goldSeedIds[goldDetail.name]} gold />
+                    {hasPhases ? (
+                      <GrowthPhases seedId={goldSeedIds[goldDetail.name]} cropNum={(goldDetail as any).cropNumber} gold={isGoldItem} />
                     ) : (
                       <div className="flex justify-center">
-                        <RemoteImage urls={itemImageUrls(goldDetail.iconFile, goldDetail.localFile)} name={goldDetail.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
+                        <RemoteImage urls={itemImageUrls(goldDetail.iconFile, (goldDetail as any).localFile)} name={goldDetail.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
                       </div>
                     )}
                   </div>

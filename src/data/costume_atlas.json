@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-08-26T10:58:46.034Z",
+  "exportedAt": "2026-09-10T08:29:01.146Z",
   "categories": [
     {
       "name": "小屋",
@@ -59,6 +59,12 @@
           "tag": "活动",
           "desc": "月光营地小屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_house_8.png"
+        },
+        {
+          "name": "比熊乐园小屋",
+          "tag": "活动",
+          "desc": "比熊乐园小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_9.png"
         }
       ]
     },
@@ -114,6 +120,12 @@
           "tag": "活动",
           "desc": "月光营地木牌",
           "img": "extraRes/gui/texture/skinDetail/img_skin_board_7.png"
+        },
+        {
+          "name": "比熊乐园木牌",
+          "tag": "活动",
+          "desc": "比熊乐园木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_8.png"
         }
       ]
     },
@@ -175,6 +187,12 @@
           "tag": "活动",
           "desc": "月光营地栅栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_8.png"
+        },
+        {
+          "name": "比熊乐园栅栏",
+          "tag": "活动",
+          "desc": "比熊乐园栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_9.png"
         }
       ]
     },
@@ -218,6 +236,18 @@
           "tag": "活动",
           "desc": "黄金·蝶梦星铃",
           "img": "extraRes/gui/texture/skinDetail/img_skin_tower_3_1.png"
+        },
+        {
+          "name": "比熊棉花糖",
+          "tag": "活动",
+          "desc": "比熊棉花糖",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_4.png"
+        },
+        {
+          "name": "黄金·比熊棉花糖",
+          "tag": "活动",
+          "desc": "黄金·比熊棉花糖",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_4_1.png"
         }
       ]
     },
@@ -273,6 +303,12 @@
           "tag": "活动",
           "desc": "月光营地狗屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_7.png"
+        },
+        {
+          "name": "比熊乐园狗屋",
+          "tag": "活动",
+          "desc": "比熊乐园狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_8.png"
         }
       ]
     },
@@ -328,6 +364,12 @@
           "tag": "活动",
           "desc": "月光营地仓库",
           "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_7.png"
+        },
+        {
+          "name": "比熊乐园仓库",
+          "tag": "活动",
+          "desc": "比熊乐园仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_8.png"
         }
       ]
     },
@@ -389,6 +431,12 @@
           "tag": "活动",
           "desc": "月光营地街道",
           "img": "extraRes/gui/texture/skinDetail/img_skin_road_8.png"
+        },
+        {
+          "name": "比熊乐园街道",
+          "tag": "活动",
+          "desc": "比熊乐园街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_9.png"
         }
       ]
     },
@@ -450,6 +498,12 @@
           "tag": "活动",
           "desc": "月光营地围栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_fence_8.png"
+        },
+        {
+          "name": "比熊乐园围栏",
+          "tag": "活动",
+          "desc": "比熊乐园围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_9.png"
         }
       ]
     }

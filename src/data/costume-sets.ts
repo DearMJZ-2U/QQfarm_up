@@ -39,32 +39,57 @@ function parseEventName(desc: string): string | null {
   return m[1];
 }
 
-// 顶级 section 排序键：YYYY-MM(-DD)。未列出的项排到末尾。
+// 顶级 section 排序键：YYYY-MM(-DD)。仅在「发布序号」相同时作为次级依据。
 const EVENT_DATES: Record<string, string> = {
   '荷风十里蝉初鸣': '2026-06',
   '夏野农家': '2026-05-30',
   '南瓜乐翻天': '2026-05',
 };
 
+// 顶级 section：活动套 or 主题套
 export type TopSection =
   | { kind: 'event'; event: EventGroup }
   | { kind: 'theme'; set: CostumeSet };
+
+// ── 发布顺序推断 ─────────────────────────────────────────────
+// 装扮图标路径形如 extraRes/gui/texture/skinDetail/img_skin_house_9.png，
+// 末尾数字是该部位的发布序号（越大越新，如 比熊乐园=8/9、哈哈南瓜=1）。
+// 用它推断发布顺序，新装扮上线后会自动排到最前，无需手工维护日期表。
+const RELEASE_RE = /img_skin_[a-z]+_(\d+)/i;
+
+export function itemReleaseIndex(item: { img?: string }): number {
+  const m = (item.img || '').match(RELEASE_RE);
+  return m ? parseInt(m[1], 10) : 0;
+}
+
+function sectionReleaseIndex(items: Array<{ img?: string }>): number {
+  return items.reduce((mx, it) => Math.max(mx, itemReleaseIndex(it)), 0);
+}
 
 export function buildOrderedSections(
   events: EventGroup[],
   themes: CostumeSet[]
 ): TopSection[] {
-  const items: { date: string; section: TopSection }[] = [
+  const items: { release: number; date: string; section: TopSection }[] = [
     ...events.map(e => ({
+      release: sectionReleaseIndex(e.sets.flatMap(s => s.items)),
       date: EVENT_DATES[e.name] || '0000-00',
       section: { kind: 'event', event: e } as TopSection,
     })),
     ...themes.map(s => ({
+      release: sectionReleaseIndex(s.items),
       date: EVENT_DATES[s.name] || '0000-00',
       section: { kind: 'theme', set: s } as TopSection,
     })),
   ];
-  return items.sort((a, b) => b.date.localeCompare(a.date)).map(x => x.section);
+  // 主序：发布序号降序（最新在前）；次序：日期降序；再次：名称
+  return items
+    .sort((a, b) => {
+      if (b.release !== a.release) return b.release - a.release;
+      if (b.date !== a.date) return b.date.localeCompare(a.date);
+      return 0;
+    })
+    .map(x => x.section);
 }
 
 export interface CostumeItem {

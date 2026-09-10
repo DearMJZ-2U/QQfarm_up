@@ -1,96 +1,125 @@
 {
-  "exportedAt": "2026-08-26T10:58:46.034Z",
+  "exportedAt": "2026-09-10T08:29:01.146Z",
   "mutationTypes": [
     {
-      "name": "冰冻",
-      "icon": "extraRes/gui/texture/mutant/icon/frozen.png",
-      "effectType": "售价",
-      "effectValue": "售价 ×3",
-      "desc": "作物生长过程中随机出现。结冰的作物出售价格为普通作物的3倍。"
+      "name": "乐园",
+      "icon": "extraRes/gui/texture/mutant/icon/leyuan.png",
+      "effectType": "其他",
+      "effectValue": "比熊棉花糖",
+      "desc": "种植泡泡棉花糖有概率出现",
+      "releaseOrder": 16
     },
     {
-      "name": "爱心",
-      "icon": "extraRes/gui/texture/mutant/icon/love.png",
-      "effectType": "产量",
-      "effectValue": "产量 ×3",
-      "desc": "作物生长过程中随机出现。冒出爱心的作物收获数量为普通的3倍。"
-    },
-    {
-      "name": "暗化",
-      "icon": "extraRes/gui/texture/mutant/icon/dark.png",
-      "effectType": "售价",
-      "effectValue": "售价 ×2",
-      "desc": "作物生长过程中随机出现。暗化作物的出售价格为普通作物的2倍。"
-    },
-    {
-      "name": "湿润",
-      "icon": "extraRes/gui/texture/mutant/icon/moist.png",
-      "effectType": "产量",
-      "effectValue": "产量 ×2",
-      "desc": "作物生长过程中随机出现。湿润作物的收获数量为普通的2倍。"
-    },
-    {
-      "name": "黄金",
-      "icon": "extraRes/gui/texture/mutant/icon/golden.png",
-      "effectType": "增益",
-      "effectValue": "黄金果实",
-      "desc": "稀有作物生长过程中随机出现"
-    },
-    {
-      "name": "哈哈",
-      "icon": "extraRes/gui/texture/mutant/icon/haha.png",
-      "effectType": "增益",
-      "effectValue": "哈哈小南瓜",
-      "desc": "种植本期活动稀有种子有概率出现"
-    },
-    {
-      "name": "塔塔",
-      "icon": "extraRes/gui/texture/mutant/icon/tata.png",
-      "effectType": "增益",
-      "effectValue": "哈哈南瓜塔",
-      "desc": "种植哈哈南瓜有概率出现"
-    },
-    {
-      "name": "荷华",
-      "icon": "extraRes/gui/texture/mutant/icon/lotus.png",
-      "effectType": "增益",
-      "effectValue": "荷花",
-      "desc": "种植荷风游记稀有种子有概率出现"
-    },
-    {
-      "name": "月华",
-      "icon": "extraRes/gui/texture/mutant/icon/moon.png",
-      "effectType": "增益",
-      "effectValue": "月华宝荷",
-      "desc": "种植琉璃宝荷有概率出现"
-    },
-    {
-      "name": "绵绵",
-      "icon": "extraRes/gui/texture/mutant/icon/mian.png",
-      "effectType": "增益",
-      "effectValue": "绵绵糖果",
-      "desc": "种植欢乐糖果有概率出现"
-    },
-    {
-      "name": "蝶梦",
-      "icon": "extraRes/gui/texture/mutant/icon/butterfly.png",
-      "effectType": "增益",
-      "effectValue": "蝶梦星铃",
-      "desc": "种植星语铃花有概率出现"
-    },
-    {
-      "name": "闪电",
-      "icon": "extraRes/gui/texture/mutant/icon/lightning.png",
-      "effectType": "售价",
-      "effectValue": "售价 ×4",
-      "desc": "雷雨天气下随机出现（1、2品作物除外），基础概率18%；收获后可额外获得雷电徽章，气象研究节点可将概率提升至20%/22%，使用「闪电感应」每枚再+2%。"
+      "name": "比熊",
+      "icon": "extraRes/gui/texture/mutant/icon/bichon.png",
+      "effectType": "其他",
+      "effectValue": "",
+      "desc": "比熊犬处于看护状态时概率触发",
+      "releaseOrder": 15
     },
     {
       "name": "晶辉",
       "icon": "extraRes/gui/texture/mutant/icon/crystal.png",
       "effectType": "外观",
       "effectValue": "变异经验 +25%",
-      "desc": "仅紫晶土地上出现：基础变异触发时约16.7%概率呈变为晶辉形态；紫晶土地变异概率+120%，且紫晶共鸣使土地上变异作物经验+25%。"
+      "desc": "仅紫晶土地上出现：基础变异触发时约16.7%概率呈变为晶辉形态；紫晶土地变异概率+120%，且紫晶共鸣使土地上变异作物经验+25%。",
+      "releaseOrder": 14
+    },
+    {
+      "name": "闪电",
+      "icon": "extraRes/gui/texture/mutant/icon/lightning.png",
+      "effectType": "其他",
+      "effectValue": "售价 ×4",
+      "desc": "雷雨天气下随机出现（1、2品作物除外），基础概率18%；收获后可额外获得雷电徽章，气象研究节点可将概率提升至20%/22%，使用「闪电感应」每枚再+2%。",
+      "releaseOrder": 12
+    },
+    {
+      "name": "蝶梦",
+      "icon": "extraRes/gui/texture/mutant/icon/butterfly.png",
+      "effectType": "其他",
+      "effectValue": "蝶梦星铃",
+      "desc": "种植星语铃花有概率出现",
+      "releaseOrder": 11
+    },
+    {
+      "name": "绵绵",
+      "icon": "extraRes/gui/texture/mutant/icon/mian.png",
+      "effectType": "其他",
+      "effectValue": "绵绵糖果",
+      "desc": "种植欢乐糖果有概率出现",
+      "releaseOrder": 10
+    },
+    {
+      "name": "月华",
+      "icon": "extraRes/gui/texture/mutant/icon/moon.png",
+      "effectType": "其他",
+      "effectValue": "月华宝荷",
+      "desc": "种植琉璃宝荷有概率出现",
+      "releaseOrder": 9
+    },
+    {
+      "name": "荷华",
+      "icon": "extraRes/gui/texture/mutant/icon/lotus.png",
+      "effectType": "其他",
+      "effectValue": "荷花",
+      "desc": "种植荷风游记稀有种子有概率出现",
+      "releaseOrder": 8
+    },
+    {
+      "name": "塔塔",
+      "icon": "extraRes/gui/texture/mutant/icon/tata.png",
+      "effectType": "其他",
+      "effectValue": "哈哈南瓜塔",
+      "desc": "种植哈哈南瓜有概率出现",
+      "releaseOrder": 7
+    },
+    {
+      "name": "哈哈",
+      "icon": "extraRes/gui/texture/mutant/icon/haha.png",
+      "effectType": "其他",
+      "effectValue": "哈哈小南瓜",
+      "desc": "种植本期活动稀有种子有概率出现",
+      "releaseOrder": 6
+    },
+    {
+      "name": "黄金",
+      "icon": "extraRes/gui/texture/mutant/icon/golden.png",
+      "effectType": "其他",
+      "effectValue": "黄金果实",
+      "desc": "稀有作物生长过程中随机出现",
+      "releaseOrder": 5
+    },
+    {
+      "name": "湿润",
+      "icon": "extraRes/gui/texture/mutant/icon/moist.png",
+      "effectType": "其他",
+      "effectValue": "产量 ×2",
+      "desc": "作物生长过程中随机出现。湿润作物的收获数量为普通的2倍。",
+      "releaseOrder": 4
+    },
+    {
+      "name": "暗化",
+      "icon": "extraRes/gui/texture/mutant/icon/dark.png",
+      "effectType": "其他",
+      "effectValue": "售价 ×2",
+      "desc": "作物生长过程中随机出现。暗化作物的出售价格为普通作物的2倍。",
+      "releaseOrder": 3
+    },
+    {
+      "name": "爱心",
+      "icon": "extraRes/gui/texture/mutant/icon/love.png",
+      "effectType": "其他",
+      "effectValue": "产量 ×3",
+      "desc": "作物生长过程中随机出现。冒出爱心的作物收获数量为普通的3倍。",
+      "releaseOrder": 2
+    },
+    {
+      "name": "冰冻",
+      "icon": "extraRes/gui/texture/mutant/icon/frozen.png",
+      "effectType": "其他",
+      "effectValue": "售价 ×3",
+      "desc": "作物生长过程中随机出现。结冰的作物出售价格为普通作物的3倍。",
+      "releaseOrder": 1
     }
   ],
   "goldenMutationCrops": [
@@ -112,6 +141,7 @@
         "plant/model/v4/gold/Crop_112_5.png",
         "plant/model/v4/gold/Crop_112_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -132,6 +162,7 @@
         "plant/model/v4/gold/Crop_25_5.png",
         "plant/model/v4/gold/Crop_25_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -152,6 +183,7 @@
         "plant/model/v4/gold/Crop_121_5.png",
         "plant/model/v4/gold/Crop_121_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -172,6 +204,7 @@
         "plant/model/v4/gold/Crop_109_5.png",
         "plant/model/v4/gold/Crop_109_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -192,6 +225,7 @@
         "plant/model/v4/gold/Crop_1135_5.png",
         "plant/model/v4/gold/Crop_1135_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -212,6 +246,7 @@
         "plant/model/v4/gold/Crop_184_5.png",
         "plant/model/v4/gold/Crop_184_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -232,6 +267,7 @@
         "plant/model/v4/gold/Crop_193_5.png",
         "plant/model/v4/gold/Crop_193_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -252,6 +288,7 @@
         "plant/model/v4/gold/Crop_256_5.png",
         "plant/model/v4/gold/Crop_256_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -272,6 +309,7 @@
         "plant/model/v4/gold/Crop_261_5.png",
         "plant/model/v4/gold/Crop_261_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -292,6 +330,7 @@
         "plant/model/v4/gold/Crop_167_5.png",
         "plant/model/v4/gold/Crop_167_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -312,6 +351,7 @@
         "plant/model/v4/gold/Crop_185_5.png",
         "plant/model/v4/gold/Crop_185_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -332,6 +372,7 @@
         "plant/model/v4/gold/Crop_133_5.png",
         "plant/model/v4/gold/Crop_133_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -352,6 +393,7 @@
         "plant/model/v4/gold/Crop_176_5.png",
         "plant/model/v4/gold/Crop_176_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -372,6 +414,7 @@
         "plant/model/v4/gold/Crop_186_5.png",
         "plant/model/v4/gold/Crop_186_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -392,6 +435,7 @@
         "plant/model/v4/gold/Crop_251_5.png",
         "plant/model/v4/gold/Crop_251_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -412,6 +456,7 @@
         "plant/model/v4/gold/Crop_1221_5.png",
         "plant/model/v4/gold/Crop_1221_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -432,6 +477,7 @@
         "plant/model/v4/gold/Crop_264_5.png",
         "plant/model/v4/gold/Crop_264_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -452,6 +498,7 @@
         "plant/model/v4/gold/Crop_108_5.png",
         "plant/model/v4/gold/Crop_108_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -472,6 +519,7 @@
         "plant/model/v4/gold/Crop_6032_5.png",
         "plant/model/v4/gold/Crop_6032_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -492,6 +540,28 @@
         "plant/model/v4/gold/Crop_1251_5.png",
         "plant/model/v4/gold/Crop_1251_6.png"
       ],
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·狗尾草",
+      "seedId": 20516,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 516,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_516_6.png",
+        "plant/model/v4/gold/Crop_516_Seed.png",
+        "plant/model/v4/gold/Crop_516_2.png",
+        "plant/model/v4/gold/Crop_516_3.png",
+        "plant/model/v4/gold/Crop_516_4.png",
+        "plant/model/v4/gold/Crop_516_5.png",
+        "plant/model/v4/gold/Crop_516_6.png"
+      ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -512,6 +582,7 @@
         "plant/model/v4/gold/Crop_224_5.png",
         "plant/model/v4/gold/Crop_224_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -532,6 +603,7 @@
         "plant/model/v4/gold/Crop_249_5.png",
         "plant/model/v4/gold/Crop_249_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -552,6 +624,7 @@
         "plant/model/v4/gold/Crop_257_5.png",
         "plant/model/v4/gold/Crop_257_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -572,6 +645,7 @@
         "plant/model/v4/gold/Crop_258_5.png",
         "plant/model/v4/gold/Crop_258_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -592,6 +666,7 @@
         "plant/model/v4/gold/Crop_304_5.png",
         "plant/model/v4/gold/Crop_304_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -612,6 +687,7 @@
         "plant/model/v4/gold/Crop_267_5.png",
         "plant/model/v4/gold/Crop_267_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -632,6 +708,7 @@
         "plant/model/v4/gold/Crop_1044_5.png",
         "plant/model/v4/gold/Crop_1044_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -652,6 +729,7 @@
         "plant/model/v4/gold/Crop_1038_5.png",
         "plant/model/v4/gold/Crop_1038_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -672,6 +750,7 @@
         "plant/model/v4/gold/Crop_1474_5.png",
         "plant/model/v4/gold/Crop_1474_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -692,6 +771,7 @@
         "plant/model/v4/gold/Crop_243_5.png",
         "plant/model/v4/gold/Crop_243_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -712,6 +792,7 @@
         "plant/model/v4/gold/Crop_1134_5.png",
         "plant/model/v4/gold/Crop_1134_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -732,6 +813,7 @@
         "plant/model/v4/gold/Crop_6127_5.png",
         "plant/model/v4/gold/Crop_6127_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -752,6 +834,7 @@
         "plant/model/v4/gold/Crop_1050_5.png",
         "plant/model/v4/gold/Crop_1050_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -772,6 +855,7 @@
         "plant/model/v4/gold/Crop_1404_5.png",
         "plant/model/v4/gold/Crop_1404_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -792,6 +876,7 @@
         "plant/model/v4/gold/Crop_1037_5.png",
         "plant/model/v4/gold/Crop_1037_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -812,6 +897,7 @@
         "plant/model/v4/gold/Crop_1353_5.png",
         "plant/model/v4/gold/Crop_1353_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -832,6 +918,7 @@
         "plant/model/v4/gold/Crop_1380_5.png",
         "plant/model/v4/gold/Crop_1380_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -852,6 +939,7 @@
         "plant/model/v4/gold/Crop_129_5.png",
         "plant/model/v4/gold/Crop_129_6.png"
       ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -872,6 +960,91 @@
         "plant/model/v4/gold/Crop_375_5.png",
         "plant/model/v4/gold/Crop_375_6.png"
       ],
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·芦苇",
+      "seedId": 25995,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 5995,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_5995_6.png",
+        "plant/model/v4/gold/Crop_5995_Seed.png",
+        "plant/model/v4/gold/Crop_5995_2.png",
+        "plant/model/v4/gold/Crop_5995_3.png",
+        "plant/model/v4/gold/Crop_5995_4.png",
+        "plant/model/v4/gold/Crop_5995_5.png",
+        "plant/model/v4/gold/Crop_5995_6.png"
+      ],
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·枸杞",
+      "seedId": 21625,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 1625,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_1625_6.png",
+        "plant/model/v4/gold/Crop_1625_Seed.png",
+        "plant/model/v4/gold/Crop_1625_2.png",
+        "plant/model/v4/gold/Crop_1625_3.png",
+        "plant/model/v4/gold/Crop_1625_4.png",
+        "plant/model/v4/gold/Crop_1625_5.png",
+        "plant/model/v4/gold/Crop_1625_6.png"
+      ],
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·月桂花",
+      "seedId": 20154,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 154,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_154_6.png",
+        "plant/model/v4/gold/Crop_154_Seed.png",
+        "plant/model/v4/gold/Crop_154_2.png",
+        "plant/model/v4/gold/Crop_154_3.png",
+        "plant/model/v4/gold/Crop_154_4.png",
+        "plant/model/v4/gold/Crop_154_5.png",
+        "plant/model/v4/gold/Crop_154_6.png"
+      ],
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·寒兰",
+      "seedId": 21072,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 1072,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_1072_6.png",
+        "plant/model/v4/gold/Crop_1072_Seed.png",
+        "plant/model/v4/gold/Crop_1072_2.png",
+        "plant/model/v4/gold/Crop_1072_3.png",
+        "plant/model/v4/gold/Crop_1072_4.png",
+        "plant/model/v4/gold/Crop_1072_5.png",
+        "plant/model/v4/gold/Crop_1072_6.png"
+      ],
+      "hasRenderPhases": false,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -892,6 +1065,7 @@
         "plant/model/v4/gold/Crop_46_5.png",
         "plant/model/v4/gold/Crop_46_6.png"
       ],
+      "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -904,6 +1078,7 @@
       "points": 200,
       "cropId": 416,
       "phaseImages": [],
+      "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -916,6 +1091,7 @@
       "points": 200,
       "cropId": 1032,
       "phaseImages": [],
+      "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     },
     {
@@ -928,6 +1104,20 @@
       "points": 200,
       "cropId": 9003,
       "phaseImages": [],
+      "hasRenderPhases": true,
+      "desc": "卖给商人后，可以获得金豆豆。"
+    },
+    {
+      "name": "黄金·泡泡棉花糖",
+      "seedId": 0,
+      "exp": 7680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 200,
+      "cropId": 9004,
+      "phaseImages": [],
+      "hasRenderPhases": true,
       "desc": "卖给商人后，可以获得金豆豆。"
     }
   ],
@@ -951,6 +1141,7 @@
           "plant/model/v4/gold/Crop_112_5.png",
           "plant/model/v4/gold/Crop_112_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -971,6 +1162,7 @@
           "plant/model/v4/gold/Crop_25_5.png",
           "plant/model/v4/gold/Crop_25_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -991,6 +1183,7 @@
           "plant/model/v4/gold/Crop_121_5.png",
           "plant/model/v4/gold/Crop_121_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1011,6 +1204,7 @@
           "plant/model/v4/gold/Crop_109_5.png",
           "plant/model/v4/gold/Crop_109_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1031,6 +1225,7 @@
           "plant/model/v4/gold/Crop_1135_5.png",
           "plant/model/v4/gold/Crop_1135_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1051,6 +1246,7 @@
           "plant/model/v4/gold/Crop_184_5.png",
           "plant/model/v4/gold/Crop_184_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1071,6 +1267,7 @@
           "plant/model/v4/gold/Crop_193_5.png",
           "plant/model/v4/gold/Crop_193_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1091,6 +1288,7 @@
           "plant/model/v4/gold/Crop_256_5.png",
           "plant/model/v4/gold/Crop_256_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1111,6 +1309,7 @@
           "plant/model/v4/gold/Crop_261_5.png",
           "plant/model/v4/gold/Crop_261_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1131,6 +1330,7 @@
           "plant/model/v4/gold/Crop_167_5.png",
           "plant/model/v4/gold/Crop_167_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1151,6 +1351,7 @@
           "plant/model/v4/gold/Crop_185_5.png",
           "plant/model/v4/gold/Crop_185_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1171,6 +1372,7 @@
           "plant/model/v4/gold/Crop_133_5.png",
           "plant/model/v4/gold/Crop_133_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1191,6 +1393,7 @@
           "plant/model/v4/gold/Crop_176_5.png",
           "plant/model/v4/gold/Crop_176_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1211,6 +1414,7 @@
           "plant/model/v4/gold/Crop_186_5.png",
           "plant/model/v4/gold/Crop_186_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1231,6 +1435,7 @@
           "plant/model/v4/gold/Crop_251_5.png",
           "plant/model/v4/gold/Crop_251_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1251,6 +1456,7 @@
           "plant/model/v4/gold/Crop_1221_5.png",
           "plant/model/v4/gold/Crop_1221_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1271,6 +1477,7 @@
           "plant/model/v4/gold/Crop_264_5.png",
           "plant/model/v4/gold/Crop_264_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1291,6 +1498,7 @@
           "plant/model/v4/gold/Crop_108_5.png",
           "plant/model/v4/gold/Crop_108_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1311,6 +1519,7 @@
           "plant/model/v4/gold/Crop_6032_5.png",
           "plant/model/v4/gold/Crop_6032_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1331,6 +1540,28 @@
           "plant/model/v4/gold/Crop_1251_5.png",
           "plant/model/v4/gold/Crop_1251_6.png"
         ],
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·狗尾草",
+        "seedId": 20516,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 516,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_516_6.png",
+          "plant/model/v4/gold/Crop_516_Seed.png",
+          "plant/model/v4/gold/Crop_516_2.png",
+          "plant/model/v4/gold/Crop_516_3.png",
+          "plant/model/v4/gold/Crop_516_4.png",
+          "plant/model/v4/gold/Crop_516_5.png",
+          "plant/model/v4/gold/Crop_516_6.png"
+        ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1351,6 +1582,7 @@
           "plant/model/v4/gold/Crop_224_5.png",
           "plant/model/v4/gold/Crop_224_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1371,6 +1603,7 @@
           "plant/model/v4/gold/Crop_249_5.png",
           "plant/model/v4/gold/Crop_249_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1391,6 +1624,7 @@
           "plant/model/v4/gold/Crop_257_5.png",
           "plant/model/v4/gold/Crop_257_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1411,6 +1645,7 @@
           "plant/model/v4/gold/Crop_258_5.png",
           "plant/model/v4/gold/Crop_258_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1431,6 +1666,7 @@
           "plant/model/v4/gold/Crop_304_5.png",
           "plant/model/v4/gold/Crop_304_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1451,6 +1687,7 @@
           "plant/model/v4/gold/Crop_267_5.png",
           "plant/model/v4/gold/Crop_267_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1471,6 +1708,7 @@
           "plant/model/v4/gold/Crop_1044_5.png",
           "plant/model/v4/gold/Crop_1044_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1491,6 +1729,7 @@
           "plant/model/v4/gold/Crop_1038_5.png",
           "plant/model/v4/gold/Crop_1038_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1511,6 +1750,7 @@
           "plant/model/v4/gold/Crop_1474_5.png",
           "plant/model/v4/gold/Crop_1474_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1531,6 +1771,7 @@
           "plant/model/v4/gold/Crop_243_5.png",
           "plant/model/v4/gold/Crop_243_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1551,6 +1792,7 @@
           "plant/model/v4/gold/Crop_1134_5.png",
           "plant/model/v4/gold/Crop_1134_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1571,6 +1813,7 @@
           "plant/model/v4/gold/Crop_6127_5.png",
           "plant/model/v4/gold/Crop_6127_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1591,6 +1834,7 @@
           "plant/model/v4/gold/Crop_1050_5.png",
           "plant/model/v4/gold/Crop_1050_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1611,6 +1855,7 @@
           "plant/model/v4/gold/Crop_1404_5.png",
           "plant/model/v4/gold/Crop_1404_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1631,6 +1876,7 @@
           "plant/model/v4/gold/Crop_1037_5.png",
           "plant/model/v4/gold/Crop_1037_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1651,6 +1897,7 @@
           "plant/model/v4/gold/Crop_1353_5.png",
           "plant/model/v4/gold/Crop_1353_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1671,6 +1918,7 @@
           "plant/model/v4/gold/Crop_1380_5.png",
           "plant/model/v4/gold/Crop_1380_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1691,6 +1939,7 @@
           "plant/model/v4/gold/Crop_129_5.png",
           "plant/model/v4/gold/Crop_129_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1711,6 +1960,91 @@
           "plant/model/v4/gold/Crop_375_5.png",
           "plant/model/v4/gold/Crop_375_6.png"
         ],
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·芦苇",
+        "seedId": 25995,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 5995,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_5995_6.png",
+          "plant/model/v4/gold/Crop_5995_Seed.png",
+          "plant/model/v4/gold/Crop_5995_2.png",
+          "plant/model/v4/gold/Crop_5995_3.png",
+          "plant/model/v4/gold/Crop_5995_4.png",
+          "plant/model/v4/gold/Crop_5995_5.png",
+          "plant/model/v4/gold/Crop_5995_6.png"
+        ],
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·枸杞",
+        "seedId": 21625,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 1625,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_1625_6.png",
+          "plant/model/v4/gold/Crop_1625_Seed.png",
+          "plant/model/v4/gold/Crop_1625_2.png",
+          "plant/model/v4/gold/Crop_1625_3.png",
+          "plant/model/v4/gold/Crop_1625_4.png",
+          "plant/model/v4/gold/Crop_1625_5.png",
+          "plant/model/v4/gold/Crop_1625_6.png"
+        ],
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·月桂花",
+        "seedId": 20154,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 154,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_154_6.png",
+          "plant/model/v4/gold/Crop_154_Seed.png",
+          "plant/model/v4/gold/Crop_154_2.png",
+          "plant/model/v4/gold/Crop_154_3.png",
+          "plant/model/v4/gold/Crop_154_4.png",
+          "plant/model/v4/gold/Crop_154_5.png",
+          "plant/model/v4/gold/Crop_154_6.png"
+        ],
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·寒兰",
+        "seedId": 21072,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 1072,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_1072_6.png",
+          "plant/model/v4/gold/Crop_1072_Seed.png",
+          "plant/model/v4/gold/Crop_1072_2.png",
+          "plant/model/v4/gold/Crop_1072_3.png",
+          "plant/model/v4/gold/Crop_1072_4.png",
+          "plant/model/v4/gold/Crop_1072_5.png",
+          "plant/model/v4/gold/Crop_1072_6.png"
+        ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1731,6 +2065,7 @@
           "plant/model/v4/gold/Crop_46_5.png",
           "plant/model/v4/gold/Crop_46_6.png"
         ],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1743,6 +2078,7 @@
         "points": 200,
         "cropId": 416,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1755,6 +2091,7 @@
         "points": 200,
         "cropId": 1032,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1767,6 +2104,20 @@
         "points": 200,
         "cropId": 9003,
         "phaseImages": [],
+        "hasRenderPhases": true,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "黄金·泡泡棉花糖",
+        "seedId": 0,
+        "exp": 7680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 9004,
+        "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       }
     ],
@@ -1789,6 +2140,7 @@
           "plant/model/v4/Crop_8001_5.png",
           "plant/model/v4/Crop_8001_6.png"
         ],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
       },
@@ -1802,6 +2154,7 @@
         "points": 200,
         "cropId": 8001,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。",
         "note": "活动结束后出售"
       },
@@ -1815,6 +2168,7 @@
         "points": 200,
         "cropId": 8002,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。"
       },
       {
@@ -1827,6 +2181,7 @@
         "points": 200,
         "cropId": 8002,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1839,6 +2194,7 @@
         "points": 200,
         "cropId": 8003,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。"
       },
       {
@@ -1851,6 +2207,33 @@
         "points": 200,
         "cropId": 8003,
         "phaseImages": [],
+        "hasRenderPhases": true,
+        "desc": "卖给商人后，可以获得金豆豆。"
+      },
+      {
+        "name": "比熊棉花糖",
+        "seedId": 0,
+        "exp": 0,
+        "fruit": 0,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 8004,
+        "phaseImages": [],
+        "hasRenderPhases": true,
+        "desc": "卖给商人后，可以获得金币。"
+      },
+      {
+        "name": "黄金·比熊棉花糖",
+        "seedId": 0,
+        "exp": 0,
+        "fruit": 0,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 8004,
+        "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       }
     ],
@@ -1865,6 +2248,7 @@
         "points": 80,
         "cropId": 9001,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。",
         "note": "活动结束后出售"
       },
@@ -1878,6 +2262,7 @@
         "points": 80,
         "cropId": 9001,
         "phaseImages": [],
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。",
         "note": "活动结束后出售"
       },
@@ -1899,6 +2284,7 @@
           "plant/model/v4/Crop_804_5.png",
           "plant/model/v4/Crop_804_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -1919,6 +2305,7 @@
           "plant/model/v4/Crop_6109_5.png",
           "plant/model/v4/Crop_6109_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金币。"
       },
       {
@@ -1939,8 +2326,173 @@
           "plant/model/v4/gold/Crop_6109_5.png",
           "plant/model/v4/gold/Crop_6109_6.png"
         ],
+        "hasRenderPhases": false,
         "desc": "卖给商人后，可以获得金豆豆。"
       }
     ]
-  }
+  },
+  "probabilities": [
+    {
+      "name": "乐园",
+      "quality": "天工",
+      "rate": "7.70%",
+      "qualityId": 4,
+      "order": 896,
+      "releaseOrder": 16,
+      "raw": 770
+    },
+    {
+      "name": "蝶梦",
+      "quality": "天工",
+      "rate": "7.70%",
+      "qualityId": 4,
+      "order": 897,
+      "releaseOrder": 11,
+      "raw": 770
+    },
+    {
+      "name": "月华",
+      "quality": "天工",
+      "rate": "6.60%",
+      "qualityId": 4,
+      "order": 898,
+      "releaseOrder": 9,
+      "raw": 660
+    },
+    {
+      "name": "塔塔",
+      "quality": "天工",
+      "rate": "6.60%",
+      "qualityId": 4,
+      "order": 899,
+      "releaseOrder": 7,
+      "raw": 660
+    },
+    {
+      "name": "黄金",
+      "quality": "天工",
+      "rate": "9.26%",
+      "qualityId": 4,
+      "order": 1000,
+      "releaseOrder": 5,
+      "raw": 926
+    },
+    {
+      "name": "荷华",
+      "quality": "珍品",
+      "rate": "13.28%",
+      "qualityId": 3,
+      "order": 998,
+      "releaseOrder": 8,
+      "raw": 1328
+    },
+    {
+      "name": "哈哈",
+      "quality": "珍品",
+      "rate": "13.28%",
+      "qualityId": 3,
+      "order": 999,
+      "releaseOrder": 6,
+      "raw": 1328
+    },
+    {
+      "name": "黄金",
+      "quality": "珍品",
+      "rate": "8.51%",
+      "qualityId": 3,
+      "order": 1000,
+      "releaseOrder": 5,
+      "raw": 851
+    },
+    {
+      "name": "绵绵",
+      "quality": "稀有",
+      "rate": "9.05%",
+      "qualityId": 2,
+      "order": 997,
+      "releaseOrder": 10,
+      "raw": 905
+    },
+    {
+      "name": "荷华",
+      "quality": "稀有",
+      "rate": "9.63%",
+      "qualityId": 2,
+      "order": 998,
+      "releaseOrder": 8,
+      "raw": 963
+    },
+    {
+      "name": "哈哈",
+      "quality": "稀有",
+      "rate": "9.63%",
+      "qualityId": 2,
+      "order": 999,
+      "releaseOrder": 6,
+      "raw": 963
+    },
+    {
+      "name": "黄金",
+      "quality": "稀有",
+      "rate": "7.60%",
+      "qualityId": 2,
+      "order": 1000,
+      "releaseOrder": 5,
+      "raw": 760
+    },
+    {
+      "name": "比熊",
+      "quality": "无",
+      "rate": "4%",
+      "qualityId": 0,
+      "order": 1001,
+      "releaseOrder": 15,
+      "raw": 400
+    },
+    {
+      "name": "闪电",
+      "quality": "无",
+      "rate": "18%",
+      "qualityId": 0,
+      "order": 1002,
+      "releaseOrder": 12,
+      "raw": 1800
+    },
+    {
+      "name": "湿润",
+      "quality": "无",
+      "rate": "4.80%",
+      "qualityId": 0,
+      "order": 1006,
+      "releaseOrder": 4,
+      "raw": 480
+    },
+    {
+      "name": "暗化",
+      "quality": "无",
+      "rate": "4.80%",
+      "qualityId": 0,
+      "order": 1005,
+      "releaseOrder": 3,
+      "raw": 480
+    },
+    {
+      "name": "爱心",
+      "quality": "无",
+      "rate": "3.20%",
+      "qualityId": 0,
+      "order": 1004,
+      "releaseOrder": 2,
+      "raw": 320
+    },
+    {
+      "name": "冰冻",
+      "quality": "无",
+      "rate": "3.20%",
+      "qualityId": 0,
+      "order": 1003,
+      "releaseOrder": 1,
+      "raw": 320
+    }
+  ]
 }

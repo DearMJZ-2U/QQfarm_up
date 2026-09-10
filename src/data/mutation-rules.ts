@@ -1,6 +1,12 @@
-// 变异规则与概率。来源：游戏内「变异说明」弹窗（2026-06），
-// 2026-08-26 补充：绵绵/蝶梦/闪电（数值取自 CDN MutantPublicity 表，与游戏内展示格式一致：概率=public_probability/10000）。
-// 与 mutation_atlas.json 分离：游戏 auto-sync 不会覆盖此文件。
+// 变异规则与概率。
+//   - MUTATION_RULES：手工整理（来自游戏内「变异说明」弹窗 + 官方公告），游戏 auto-sync 不覆盖此文件。
+//   - MUTATION_PROBABILITIES：**自动生成**，来自 mutation_atlas.json 的 probabilities 字段
+//     （提取脚本直接解 MutantPublicity 表，public_probability/100 = 百分比），
+//     新变异上线时随提取脚本自动更新，无需手工维护。
+//
+// 历史上 MUTATION_PROBABILITIES 是手写的常量，2026-09-10 的比熊乐园版本新增「比熊/乐园」
+// 两条变异时漏更新，导致概率展示缺行 —— 故改为从生成数据读取。
+import mutationData from './mutation_atlas.json';
 
 export const MUTATION_RULES: string[] = [
   '作物变异概率可通过【变异宝典-概率展示】查看。种植天工作物时，会有保底机制，具体规则如下：',
@@ -16,25 +22,25 @@ export interface MutationProbability {
   name: string;
   quality: string;
   rate: string;
+  /** 变异发布序（= mutant_effect.id，越大越新），用于同品质内按发布新→旧排序 */
+  releaseOrder?: number;
 }
 
-export const MUTATION_PROBABILITIES: MutationProbability[] = [
-  { name: '月华', quality: '天工', rate: '6.6%' },
-  { name: '塔塔', quality: '天工', rate: '6.6%' },
-  { name: '蝶梦', quality: '天工', rate: '7.7%' },
-  { name: '荷华', quality: '珍品', rate: '13.28%' },
-  { name: '荷华', quality: '稀有', rate: '9.63%' },
-  { name: '黄金', quality: '天工', rate: '9.26%' },
-  { name: '黄金', quality: '珍品', rate: '8.51%' },
-  { name: '黄金', quality: '稀有', rate: '7.6%' },
-  { name: '绵绵', quality: '稀有', rate: '9.05%' },
-  { name: '冰冻', quality: '无', rate: '3.2%' },
-  { name: '爱心', quality: '无', rate: '3.2%' },
-  { name: '暗化', quality: '无', rate: '4.8%' },
-  { name: '湿润', quality: '无', rate: '4.8%' },
-  // 雨落成诗活动新增：雷雨天气下随机出现，基础概率 18%（配合闪电感应/闪电变异瓶可提升）
-  { name: '闪电', quality: '无', rate: '18%' },
-];
+interface GeneratedProbability extends MutationProbability {
+  qualityId?: number;
+  order?: number;
+  raw?: number;
+}
+
+// 从提取脚本生成的 mutation_atlas.json 读取（游戏内「概率展示」的权威数据）
+// 生成时已按「品质降序 → 同品质内发布新→旧」排好，这里保持原序转发。
+export const MUTATION_PROBABILITIES: MutationProbability[] =
+  ((mutationData as any).probabilities as GeneratedProbability[] | undefined)?.map((p) => ({
+    name: p.name,
+    quality: p.quality,
+    rate: p.rate,
+    releaseOrder: p.releaseOrder,
+  })) ?? [];
 
 // name → 该变异的所有概率行（用于在变异卡片上挂概率 chip）
 const MUTATION_PROB_INDEX: Record<string, MutationProbability[]> = {};
