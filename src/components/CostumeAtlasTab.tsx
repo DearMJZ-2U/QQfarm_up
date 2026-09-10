@@ -1,9 +1,9 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { Home, Package, FolderTree } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Home, Package, FolderTree, X, ZoomIn } from 'lucide-react';
 import costumeData from '../data/costume_atlas.json';
 import { groupCostumesBySet, buildOrderedSections, type CostumeItem, type CostumeSet } from '../data/costume-sets';
-import { RemoteImage, costumeImageUrls, RowCard, EmptyState, PillTabGroup } from './shared';
+import { RemoteImage, costumeImageUrls, RowCard, EmptyState, PillTabGroup, Portal } from './shared';
 
 const tagChip: Record<string, string> = {
   '默认': 'chip-ink',
@@ -16,12 +16,21 @@ type Accent = typeof catAccents[number];
 
 type ViewTab = 'functional' | 'set';
 
+// 「点击看大图」用 Context 下发，避免逐层透传（Tab → SetView → Section → SetRow → ItemGrid）
+const ZoomCtx = React.createContext<(item: CostumeItem) => void>(() => {});
+
 function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
+  const onZoom = React.useContext(ZoomCtx);
   return (
-    <RowCard>
-      <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl flex items-center justify-center flex-shrink-0"
+    <RowCard onClick={() => onZoom(item)}>
+      <div className="w-44 h-44 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-2xl flex items-center justify-center flex-shrink-0 cursor-zoom-in relative group"
         style={{ background: 'var(--surface)' }}>
-        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name} className="w-28 h-28 sm:w-36 sm:h-36" rounded />
+        <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name}
+          className="w-40 h-40 sm:w-56 sm:h-56 lg:w-64 lg:h-64" rounded />
+        <span className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ background: 'rgba(255,255,255,0.92)', boxShadow: '0 1px 4px rgba(0,0,0,.12)' }}>
+          <ZoomIn size={13} className="text-[var(--ink-soft)]" />
+        </span>
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-1">
@@ -38,7 +47,7 @@ function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
 
 function ItemGrid({ items }: { items: CostumeItem[] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-3.5">
       {items.map((item, j) => (
         <ItemCard key={`${item.name}-${j}`} item={item} />
       ))}
@@ -182,35 +191,88 @@ function SetView() {
   );
 }
 
+// 点击卡片后的大图预览（装扮图源已是 500×500，这里给到 ~520px 展示）
+function CostumeZoom({ item, onClose }: { item: CostumeItem; onClose: () => void }) {
+  return (
+    <Portal>
+      <motion.div
+        key="costume-zoom"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+        onClick={onClose}>
+        <div className="absolute inset-0 bg-[var(--ink)]/45 backdrop-blur-sm" />
+        <motion.div
+          key="costume-zoom-panel"
+          initial={{ scale: 0.92, y: 14 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.96, opacity: 0 }}
+          transition={{ type: 'spring', damping: 26, stiffness: 300 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-[640px] rounded-3xl p-4 sm:p-6 flex flex-col items-center gap-3"
+          style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+          <button onClick={onClose}
+            className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center z-10"
+            style={{ background: 'var(--bg-2)' }} aria-label="关闭">
+            <X size={18} className="text-[var(--ink-soft)]" />
+          </button>
+          <div className="w-full flex items-center justify-center rounded-2xl py-2"
+            style={{ background: 'var(--surface)' }}>
+            <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name}
+              className="w-[62vw] h-[62vw] max-w-[520px] max-h-[520px]" rounded />
+          </div>
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            <span className="font-display italic text-lg sm:text-xl font-bold text-[var(--ink)]">{item.name}</span>
+            <span className={`chip ${tagChip[item.tag] || tagChip['默认']}`}>{item.tag}</span>
+          </div>
+          {item.desc && <p className="text-xs text-[var(--ink-soft)] text-center leading-relaxed">{item.desc}</p>}
+        </motion.div>
+      </motion.div>
+    </Portal>
+  );
+}
+
 export default function CostumeAtlasTab() {
   const [view, setView] = React.useState<ViewTab>('set');
+  const [zoom, setZoom] = React.useState<CostumeItem | null>(null);
   const { categories } = costumeData;
   const totalItems = categories.reduce((s, c) => s + c.items.length, 0);
 
+  // ESC 关闭大图
+  React.useEffect(() => {
+    if (!zoom) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setZoom(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [zoom]);
+
   return (
-    <div className="space-y-5 fade-in">
-      {/* Hero */}
-      <header className="page-header">
-        <span className="page-header-chip" style={{ background: 'var(--sky-bg)', color: 'var(--sky-deep)' }}>
-          <Home size={11} strokeWidth={2.5} /> 装扮图鉴
-        </span>
-        <h2 className="page-header-title">打扮你的农场</h2>
-        <p className="page-header-subtitle">{categories.length} 大类装扮共 {totalItems} 件</p>
-      </header>
+    <ZoomCtx.Provider value={setZoom}>
+      <div className="space-y-5 fade-in">
+        {/* Hero */}
+        <header className="page-header">
+          <span className="page-header-chip" style={{ background: 'var(--sky-bg)', color: 'var(--sky-deep)' }}>
+            <Home size={11} strokeWidth={2.5} /> 装扮图鉴
+          </span>
+          <h2 className="page-header-title">打扮你的农场</h2>
+          <p className="page-header-subtitle">{categories.length} 大类装扮共 {totalItems} 件 · 点击卡片可查看大图</p>
+        </header>
 
-      <PillTabGroup
-        items={[
-          { id: 'set',        label: '套装分类', emoji: '🎁' },
-          { id: 'functional', label: '功能分类', emoji: '🗂️' },
-        ]}
-        value={view}
-        onChange={(id) => setView(id as ViewTab)}
-        accent="orange"
-        size="md"
-      />
+        <PillTabGroup
+          items={[
+            { id: 'set',        label: '套装分类', emoji: '🎁' },
+            { id: 'functional', label: '功能分类', emoji: '🗂️' },
+          ]}
+          value={view}
+          onChange={(id) => setView(id as ViewTab)}
+          accent="orange"
+          size="md"
+        />
 
-      {view === 'set' && <SetView />}
-      {view === 'functional' && <FunctionalView />}
-    </div>
+        {view === 'set' && <SetView />}
+        {view === 'functional' && <FunctionalView />}
+      </div>
+
+      <AnimatePresence>
+        {zoom && <CostumeZoom item={zoom} onClose={() => setZoom(null)} />}
+      </AnimatePresence>
+    </ZoomCtx.Provider>
   );
 }
