@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Home, Package, FolderTree, X, ZoomIn } from 'lucide-react';
 import costumeData from '../data/costume_atlas.json';
 import { groupCostumesBySet, buildOrderedSections, type CostumeItem, type CostumeSet } from '../data/costume-sets';
-import { RemoteImage, costumeImageUrls, RowCard, EmptyState, PillTabGroup, Portal } from './shared';
+import { RemoteImage, costumeImageUrls, EmptyState, PillTabGroup, Portal } from './shared';
 
 const tagChip: Record<string, string> = {
   '默认': 'chip-ink',
@@ -22,32 +22,39 @@ const ZoomCtx = React.createContext<(item: CostumeItem) => void>(() => {});
 function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
   const onZoom = React.useContext(ZoomCtx);
   return (
-    <RowCard onClick={() => onZoom(item)}>
-      <div className="w-44 h-44 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-2xl flex items-center justify-center flex-shrink-0 cursor-zoom-in relative group"
-        style={{ background: 'var(--surface)' }}>
+    <button
+      type="button"
+      onClick={() => onZoom(item)}
+      className="sticker sticker-press p-2.5 sm:p-3 flex flex-col gap-2 sm:gap-2.5 text-left group cursor-zoom-in">
+      {/* 图片区：正方形自适应，随卡片宽度放大 */}
+      <div className="w-full aspect-square rounded-2xl flex items-center justify-center relative overflow-hidden"
+        style={{ background: 'var(--surface-soft)' }}>
         <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name}
-          className="w-40 h-40 sm:w-56 sm:h-56 lg:w-64 lg:h-64" rounded />
-        <span className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ background: 'rgba(255,255,255,0.92)', boxShadow: '0 1px 4px rgba(0,0,0,.12)' }}>
+          className="w-[86%] h-[86%]" rounded />
+        <span className="absolute bottom-2 right-2 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ background: 'rgba(255,255,255,0.94)', boxShadow: '0 1px 4px rgba(0,0,0,.14)' }}>
           <ZoomIn size={13} className="text-[var(--ink-soft)]" />
         </span>
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5 mb-1">
-          <span className="font-bold text-sm sm:text-base text-[var(--ink)]">{item.name}</span>
-          <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.65rem' }}>
+      {/* 文字区：名称 + 标签一行，描述另起一行 */}
+      <div className="min-w-0 px-0.5 pb-0.5">
+        <div className="flex items-center gap-1.5">
+          <span className="font-bold text-xs sm:text-sm text-[var(--ink)] leading-snug truncate flex-1 min-w-0">{item.name}</span>
+          <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.6rem' }}>
             {item.tag}
           </span>
         </div>
-        <div className="text-[11px] sm:text-xs text-[var(--ink-soft)] leading-snug">{item.desc}</div>
+        {item.desc && (
+          <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] leading-snug mt-1 line-clamp-2">{item.desc}</div>
+        )}
       </div>
-    </RowCard>
+    </button>
   );
 }
 
 function ItemGrid({ items }: { items: CostumeItem[] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-3.5">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
       {items.map((item, j) => (
         <ItemCard key={`${item.name}-${j}`} item={item} />
       ))}

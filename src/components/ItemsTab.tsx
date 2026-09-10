@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, X, Search } from 'lucide-react';
 import itemsData from '../data/items.json';
-import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade } from './shared';
+import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade, StatTile, parseGrowPhasesStr } from './shared';
 import type { CategoryNavItem } from './shared';
 
 const categories = itemsData.categories;
@@ -331,20 +331,28 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
               </button>
             </div>
 
-            {(goldSeedIds[goldDetail.name] || (goldDetail as any).hasRenderPhases) ? (() => {
+            {/* 详细作物数据（来自 Plant 表：经验 / 果实数量 / 成长时长 / 季数） */}
+            <div className="px-5 sm:px-6 pt-4 sm:pt-5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+                <StatTile label="经验" value={goldDetail.exp > 0 ? goldDetail.exp : '—'} color="plum" />
+                <StatTile label="果实" value={`${(goldDetail as any).fruitCount ?? 0} 个`} color="leaf" />
+                <StatTile label="成长时长" value={(goldDetail as any).growTimeStr || '—'} color="sun" />
+                <StatTile label="季数" value={`${(goldDetail as any).seasons || 1} 季`} color="sky" />
+              </div>
+            </div>
+
+            {(goldDetail as any).hasPhaseImages ? (() => {
               const isGoldItem = goldDetail.name.startsWith('黄金·');
-              const hasPhases = isGoldItem || (goldDetail as any).hasRenderPhases;
               return (
                 <div className="p-5 sm:p-6">
                   <div className="section-eyebrow mb-2">成长阶段{isGoldItem && ' · 黄金变异'}</div>
                   <div className="sticker-soft p-3 sm:p-4">
-                    {hasPhases ? (
-                      <GrowthPhases seedId={goldSeedIds[goldDetail.name]} cropNum={(goldDetail as any).cropNumber} gold={isGoldItem} />
-                    ) : (
-                      <div className="flex justify-center">
-                        <RemoteImage urls={itemImageUrls(goldDetail.iconFile, (goldDetail as any).localFile)} name={goldDetail.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
-                      </div>
-                    )}
+                    <GrowthPhases
+                      seedId={goldSeedIds[goldDetail.name]}
+                      cropNum={(goldDetail as any).cropNumber}
+                      gold={isGoldItem}
+                      timings={parseGrowPhasesStr((goldDetail as any).growPhases || '')}
+                    />
                   </div>
                 </div>
               );

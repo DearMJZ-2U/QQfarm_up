@@ -237,6 +237,15 @@ export function costumeImageUrls(_imgPath: string, name: string): string[] {
   return urls;
 }
 
+/** 解析 grow_phases 字符串（如 `种子:8640;发芽:8640;成熟:0;`）为 [{name, sec}]，供 GrowthPhases 的 timings 使用 */
+export function parseGrowPhasesStr(s: string): Array<{ name: string; sec: number }> {
+  if (!s) return [];
+  return s.split(';').filter((x) => x.trim()).map((seg) => {
+    const [n, sec] = seg.split(':');
+    return { name: (n || '').trim(), sec: parseInt(sec) || 0 };
+  });
+}
+
 // ── 超变图鉴图片查找 ──────────────────────────────────────
 
 const itemByName: Record<string, { iconFile: string; localFile: string }> = {};

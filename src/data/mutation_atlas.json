@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-09-10T14:04:39.516Z",
+  "exportedAt": "2026-09-10T14:28:18.981Z",
   "mutationTypes": [
     {
       "name": "乐园",
@@ -5581,7 +5581,7 @@
           }
         ],
         "seasons": 1,
-        "hasRenderPhases": false,
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       },
       {
@@ -5631,7 +5631,7 @@
           }
         ],
         "seasons": 1,
-        "hasRenderPhases": false,
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金币。"
       },
       {
@@ -5681,7 +5681,7 @@
           }
         ],
         "seasons": 1,
-        "hasRenderPhases": false,
+        "hasRenderPhases": true,
         "desc": "卖给商人后，可以获得金豆豆。"
       }
     ]
