@@ -31,19 +31,19 @@ function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
         style={{ background: 'var(--surface-soft)' }}>
         <RemoteImage urls={costumeImageUrls(item.img, item.name)} name={item.name}
           className="w-[86%] h-[86%]" rounded />
+        {/* 标签做成图片角标 —— 不再与名称争抢横向空间（PC 端窄列时曾挤掉大半名称） */}
+        <span className={`chip ${tagChip[item.tag] || tagChip['默认']} absolute top-2 left-2`}
+          style={{ fontSize: '0.6rem', padding: '0.1rem 0.45rem' }}>
+          {item.tag}
+        </span>
         <span className="absolute bottom-2 right-2 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
           style={{ background: 'rgba(255,255,255,0.94)', boxShadow: '0 1px 4px rgba(0,0,0,.14)' }}>
           <ZoomIn size={13} className="text-[var(--ink-soft)]" />
         </span>
       </div>
-      {/* 文字区：名称 + 标签一行，描述另起一行 */}
-      <div className="min-w-0 px-0.5 pb-0.5">
-        <div className="flex items-center gap-1.5">
-          <span className="font-bold text-xs sm:text-sm text-[var(--ink)] leading-snug truncate flex-1 min-w-0">{item.name}</span>
-          <span className={`chip ${tagChip[item.tag] || tagChip['默认']} flex-shrink-0`} style={{ fontSize: '0.6rem' }}>
-            {item.tag}
-          </span>
-        </div>
+      {/* 文字区：名称最多两行（可换行，不再单行截断），描述另起两行 */}
+      <div className="px-0.5 pb-0.5">
+        <div className="font-bold text-xs sm:text-sm text-[var(--ink)] leading-snug line-clamp-2">{item.name}</div>
         {item.desc && (
           <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] leading-snug mt-1 line-clamp-2">{item.desc}</div>
         )}
@@ -54,7 +54,8 @@ function ItemCard({ item }: { item: CostumeItem; key?: React.Key }) {
 
 function ItemGrid({ items }: { items: CostumeItem[] }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
+    // 页面容器上限 64rem(1024px)，4 列时每列约 230px —— 再往上加列就会挤到文字
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       {items.map((item, j) => (
         <ItemCard key={`${item.name}-${j}`} item={item} />
       ))}
