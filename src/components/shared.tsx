@@ -86,9 +86,10 @@ function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = 
 // 像 哈哈南瓜、琉璃宝荷 这种 seed 阶段几乎不可见的作物会优先展示成熟形态
 
 // 白名单：seed 阶段几乎不可见、必须展示成熟图的作物
+// 注意：琉璃宝荷(21032) 曾在此列，但其 Seed 图本身清晰可辨，
+//       卡片上应展示种子图（与其余作物一致），已移出。
 const MATURE_FORCE_SEED_IDS = new Set<number>([
-  21032, // 琉璃宝荷
-  20416, // 哈哈南瓜
+  20416, // 哈哈南瓜 —— Seed 阶段几乎不可见
 ]);
 
 // 尺寸约定：

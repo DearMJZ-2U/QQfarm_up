@@ -29,6 +29,16 @@ interface GoldDetail {
   localFile?: string;
   rarity?: number;
   rarityColor?: string;
+  /** 以下来自 Plant 表（提取脚本写入 items.json），详情页据此渲染数据面板与阶段条。
+   *  ⚠️ openGold() 必须把这些字段一并传入 —— 曾漏传导致详情页数据/阶段条全部缺失 */
+  cropNumber?: number;
+  hasPhaseImages?: boolean;
+  exp?: number;
+  fruitCount?: number;
+  growTimeSec?: number;
+  growTimeStr?: string;
+  growPhases?: string;
+  seasons?: number;
 }
 
 // 占位/无意义条目过滤（id 列表）
@@ -250,6 +260,15 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
                       localFile: (item as any).localFile,
                       rarity: item.rarity,
                       rarityColor: item.rarityColor,
+                      // 详情页数据面板与阶段条依赖这些字段，必须一并传入
+                      cropNumber: (item as any).cropNumber,
+                      hasPhaseImages: (item as any).hasPhaseImages,
+                      exp: item.exp,
+                      fruitCount: (item as any).fruitCount,
+                      growTimeSec: (item as any).growTimeSec,
+                      growTimeStr: (item as any).growTimeStr,
+                      growPhases: (item as any).growPhases,
+                      seasons: (item as any).seasons,
                     });
                   }
                 };
