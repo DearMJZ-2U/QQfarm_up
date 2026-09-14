@@ -1,0 +1,119 @@
+{
+  "exportedAt": "2026-09-14T06:49:29.768Z",
+  "mutation": "比熊",
+  "trigger": "比熊犬处于看护状态时概率触发",
+  "effect": "作物售价 ×4",
+  "stackable": [
+    "冰冻",
+    "爱心",
+    "暗化",
+    "湿润"
+  ],
+  "formCount": 7,
+  "formNote": "触发比熊变异后，作物外观会随机变成「比熊表情包」形态。游戏内这批美术位于 petdog bundle 的 gui/texture/petdog/mutant/dog90031/1..12，该路径当前未在公开 CDN 提供（索引外热加包 / 服务端下发），故此处以官方分享配图（ShareDoc activityId=2026090101）中的表情形象收录。",
+  "forms": [
+    {
+      "index": 1,
+      "name": "微笑",
+      "file": "mutation_forms/bichon_form_1_微笑.png",
+      "box": [
+        89,
+        47,
+        82,
+        58
+      ]
+    },
+    {
+      "index": 2,
+      "name": "大笑",
+      "file": "mutation_forms/bichon_form_2_大笑.png",
+      "box": [
+        290,
+        0,
+        93,
+        88
+      ]
+    },
+    {
+      "index": 3,
+      "name": "生气",
+      "file": "mutation_forms/bichon_form_3_生气.png",
+      "box": [
+        41,
+        227,
+        97,
+        84
+      ]
+    },
+    {
+      "index": 4,
+      "name": "大哭",
+      "file": "mutation_forms/bichon_form_4_大哭.png",
+      "box": [
+        35,
+        132,
+        81,
+        59
+      ]
+    },
+    {
+      "index": 5,
+      "name": "熟睡",
+      "file": "mutation_forms/bichon_form_5_熟睡.png",
+      "box": [
+        385,
+        66,
+        78,
+        59
+      ]
+    },
+    {
+      "index": 6,
+      "name": "墨镜",
+      "file": "mutation_forms/bichon_form_6_墨镜.png",
+      "box": [
+        101,
+        315,
+        80,
+        60
+      ]
+    },
+    {
+      "index": 7,
+      "name": "晕眩",
+      "file": "mutation_forms/bichon_form_7_晕眩.png",
+      "box": [
+        389,
+        161,
+        77,
+        59
+      ]
+    }
+  ],
+  "shares": [
+    {
+      "id": 63,
+      "face": "大笑",
+      "file": "mutation_forms/bichon_share_63.jpg",
+      "title": "咦？我的作物变成比熊表情包了！"
+    },
+    {
+      "id": 65,
+      "face": "生气",
+      "file": "mutation_forms/bichon_share_65.jpg",
+      "title": "咦？我的作物变成比熊表情包了！"
+    },
+    {
+      "id": 66,
+      "face": "墨镜",
+      "file": "mutation_forms/bichon_share_66.jpg",
+      "title": "咦？我的作物变成比熊表情包了！"
+    }
+  ],
+  "source": {
+    "shareDocActivityId": 2026090101,
+    "shareDocTitle": "咦？我的作物变成比熊表情包了！",
+    "assetPath": "petdog/gui/texture/petdog/mutant/dog90031/1..12",
+    "shareImage": "https://mmocgame.qpic.cn/wechatgame/  （ShareDoc.image）"
+  }
+}

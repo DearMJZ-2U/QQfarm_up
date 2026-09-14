@@ -161,10 +161,20 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="搜索道具名称，如「挑战书」「头像框」…"
-          className="input-pop w-full pl-9"
+          className="input-pop has-icon has-clear w-full"
           aria-label="搜索道具"
         />
         <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-mute)] pointer-events-none" />
+        {query && (
+          <button
+            type="button"
+            onClick={() => setQuery('')}
+            aria-label="清空搜索"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
+            style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
+            <X size={12} strokeWidth={3} />
+          </button>
+        )}
       </div>
 
       {/* 跨分类命中提示 */}

@@ -417,6 +417,16 @@ body::after {
 }
 .input-pop::placeholder { color: var(--ink-mute); font-weight: 500; }
 
+/* 带前置 / 后置图标的输入框。
+   必须写成「未分层」规则：本项目用的是 Tailwind v4，工具类都在 @layer utilities 里，
+   而未分层样式一律优先于任何 @layer —— 所以 `.input-pop` 的 padding 简写会盖掉组件上的
+   `pl-9` / `pr-9`，左侧放大镜就会压在文字上（道具搜索框曾因此看不清）。 */
+.input-pop.has-icon { padding-left: 2.4rem; }
+.input-pop.has-clear { padding-right: 2.4rem; }
+/* 浏览器原生 search 清除按钮画在右内边缘、会压住末尾文字，统一换成自绘按钮 */
+.input-pop::-webkit-search-cancel-button,
+.input-pop::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+
 .input-line {
   background: transparent;
   border: none;

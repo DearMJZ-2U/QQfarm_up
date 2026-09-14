@@ -343,6 +343,11 @@ export function mutationIconUrls(iconPath: string, name: string): string[] {
   return urls;
 }
 
+/** public/ 下的本地资源相对路径 → 带 base 前缀的可用 URL（支持子目录） */
+export function publicUrl(rel: string): string {
+  return CLEAN_BASE + rel.replace(/^\/+/, '');
+}
+
 // ── 阶段解析 ──────────────────────────────────────────────
 
 export function parseGrowPhases(growPhases: string) {

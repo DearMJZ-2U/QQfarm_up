@@ -1,10 +1,10 @@
 {
-  "exportedAt": "2026-09-11T11:45:38.516Z",
+  "exportedAt": "2026-09-14T06:50:13.679Z",
   "mutationTypes": [
     {
       "name": "乐园",
       "icon": "extraRes/gui/texture/mutant/icon/leyuan.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "比熊棉花糖",
       "desc": "种植泡泡棉花糖有概率出现",
       "releaseOrder": 16
@@ -12,9 +12,9 @@
     {
       "name": "比熊",
       "icon": "extraRes/gui/texture/mutant/icon/bichon.png",
-      "effectType": "其他",
-      "effectValue": "",
-      "desc": "比熊犬处于看护状态时概率触发",
+      "effectType": "售价",
+      "effectValue": "售价 ×4",
+      "desc": "比熊犬处于看护状态时概率触发。触发后作物售价为普通作物的4倍，外观会随机变为「比熊表情包」形态（微笑 / 大笑 / 生气 / 大哭 / 熟睡 / 墨镜 / 晕眩），并可与冰冻、爱心、暗化、湿润等变异叠加。",
       "releaseOrder": 15
     },
     {
@@ -28,7 +28,7 @@
     {
       "name": "闪电",
       "icon": "extraRes/gui/texture/mutant/icon/lightning.png",
-      "effectType": "其他",
+      "effectType": "售价",
       "effectValue": "售价 ×4",
       "desc": "雷雨天气下随机出现（1、2品作物除外），基础概率18%；收获后可额外获得雷电徽章，气象研究节点可将概率提升至20%/22%，使用「闪电感应」每枚再+2%。",
       "releaseOrder": 12
@@ -36,7 +36,7 @@
     {
       "name": "蝶梦",
       "icon": "extraRes/gui/texture/mutant/icon/butterfly.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "蝶梦星铃",
       "desc": "种植星语铃花有概率出现",
       "releaseOrder": 11
@@ -44,7 +44,7 @@
     {
       "name": "绵绵",
       "icon": "extraRes/gui/texture/mutant/icon/mian.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "绵绵糖果",
       "desc": "种植欢乐糖果有概率出现",
       "releaseOrder": 10
@@ -52,7 +52,7 @@
     {
       "name": "月华",
       "icon": "extraRes/gui/texture/mutant/icon/moon.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "月华宝荷",
       "desc": "种植琉璃宝荷有概率出现",
       "releaseOrder": 9
@@ -60,7 +60,7 @@
     {
       "name": "荷华",
       "icon": "extraRes/gui/texture/mutant/icon/lotus.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "荷花",
       "desc": "种植荷风游记稀有种子有概率出现",
       "releaseOrder": 8
@@ -68,7 +68,7 @@
     {
       "name": "塔塔",
       "icon": "extraRes/gui/texture/mutant/icon/tata.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "哈哈南瓜塔",
       "desc": "种植哈哈南瓜有概率出现",
       "releaseOrder": 7
@@ -76,7 +76,7 @@
     {
       "name": "哈哈",
       "icon": "extraRes/gui/texture/mutant/icon/haha.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "哈哈小南瓜",
       "desc": "种植本期活动稀有种子有概率出现",
       "releaseOrder": 6
@@ -84,7 +84,7 @@
     {
       "name": "黄金",
       "icon": "extraRes/gui/texture/mutant/icon/golden.png",
-      "effectType": "其他",
+      "effectType": "增益",
       "effectValue": "黄金果实",
       "desc": "稀有作物生长过程中随机出现",
       "releaseOrder": 5
@@ -92,7 +92,7 @@
     {
       "name": "湿润",
       "icon": "extraRes/gui/texture/mutant/icon/moist.png",
-      "effectType": "其他",
+      "effectType": "产量",
       "effectValue": "产量 ×2",
       "desc": "作物生长过程中随机出现。湿润作物的收获数量为普通的2倍。",
       "releaseOrder": 4
@@ -100,7 +100,7 @@
     {
       "name": "暗化",
       "icon": "extraRes/gui/texture/mutant/icon/dark.png",
-      "effectType": "其他",
+      "effectType": "售价",
       "effectValue": "售价 ×2",
       "desc": "作物生长过程中随机出现。暗化作物的出售价格为普通作物的2倍。",
       "releaseOrder": 3
@@ -108,7 +108,7 @@
     {
       "name": "爱心",
       "icon": "extraRes/gui/texture/mutant/icon/love.png",
-      "effectType": "其他",
+      "effectType": "产量",
       "effectValue": "产量 ×3",
       "desc": "作物生长过程中随机出现。冒出爱心的作物收获数量为普通的3倍。",
       "releaseOrder": 2
@@ -116,7 +116,7 @@
     {
       "name": "冰冻",
       "icon": "extraRes/gui/texture/mutant/icon/frozen.png",
-      "effectType": "其他",
+      "effectType": "售价",
       "effectValue": "售价 ×3",
       "desc": "作物生长过程中随机出现。结冰的作物出售价格为普通作物的3倍。",
       "releaseOrder": 1

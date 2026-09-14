@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Dna, Sparkles, X, BookOpen, TrendingUp } from 'lucide-react';
 import mutationData from '../data/mutation_atlas.json';
 import bonusData from '../data/super_atlas_bonus.json';
-import { CropImage, GrowthPhases, RemoteImage, mutationIconUrls, goldenAtlasImageUrls, goldSeedIds, Portal, StatTile, PillTabGroup, EmptyState } from './shared';
+import bichonForms from '../data/bichon_forms.json';
+import { CropImage, GrowthPhases, RemoteImage, mutationIconUrls, goldenAtlasImageUrls, goldSeedIds, Portal, StatTile, PillTabGroup, EmptyState, publicUrl } from './shared';
 import { MUTATION_RULES, MUTATION_PROBABILITIES, getProbabilitiesFor } from '../data/mutation-rules';
 
 type BonusType = 'exp' | 'steal' | 'fert' | 'gold';
@@ -146,10 +147,114 @@ function GoldenDetail({ item, onClose }: { item: GoldenEntry; onClose: () => voi
   );
 }
 
+// ── 比熊变异详情 ────────────────────────────────────────────────────
+// 比熊变异（mutant_effect#15）的特色是「作物外观会随机变成比熊表情包」，
+// 这批形态美术不在公开 CDN 上（原地 mo 在 petdog bundle 的 gui/texture/petdog/mutant/dog90031），
+// 因此这里用游戏自带的官方分享配图（ShareDoc activityId=2026090101）裁出的表情形象收录。
+function BichonDetail({ onClose }: { onClose: () => void }) {
+  const probs = getProbabilitiesFor('比熊');
+  const forms = (bichonForms as any).forms as Array<{ index: number; name: string; file: string }>;
+  const shares = (bichonForms as any).shares as Array<{ id: number; face: string; file: string }>;
+
+  return (
+    <Portal>
+      <motion.div
+        key="bichon-modal"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4"
+        onClick={onClose}>
+        <div className="absolute inset-0 bg-[var(--ink)]/40 backdrop-blur-sm" />
+        <motion.div
+          key="bichon-modal-panel"
+          initial={{ y: '100%', scale: 0.95 }}
+          animate={{ y: 0, scale: 1 }}
+          exit={{ y: '100%' }}
+          transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+          onClick={e => e.stopPropagation()}
+          className="relative w-full sm:max-w-4xl lg:max-w-5xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+          style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+
+          <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
+            style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'var(--berry-bg)' }}>
+                <RemoteImage urls={mutationIconUrls('extraRes/gui/texture/mutant/icon/bichon.png', '比熊')} name="比熊" className="w-12 h-12 sm:w-20 sm:h-20" rounded />
+              </div>
+              <div>
+                <h3 className="font-display italic text-lg sm:text-2xl font-bold text-[var(--ink)] leading-tight">比熊变异</h3>
+                <div className="flex items-center gap-1.5 mt-1 sm:mt-1.5 flex-wrap">
+                  <span className="chip chip-berry">售价 ×4</span>
+                  <span className="chip chip-sun">{forms.length} 款形态</span>
+                  {probs.map((p, k) => (
+                    <span key={k} className="chip chip-ink font-mono tnum">{p.rate}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <button onClick={onClose} className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'var(--bg-2)' }} aria-label="关闭">
+              <X size={16} className="text-[var(--ink-soft)] sm:hidden" />
+              <X size={20} className="text-[var(--ink-soft)] hidden sm:block" />
+            </button>
+          </div>
+
+          <div className="p-5 sm:p-6 space-y-4 sm:space-y-5">
+            <div className="rounded-2xl p-3 sm:p-4 text-[11px] sm:text-xs text-[var(--ink-soft)] leading-relaxed space-y-1.5"
+              style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
+              <div><span className="font-bold text-[var(--berry-deep)]">触发条件：</span>{(bichonForms as any).trigger}</div>
+              <div><span className="font-bold text-[var(--berry-deep)]">效果：</span>{(bichonForms as any).effect}（作物外观随机变为比熊表情包形态）</div>
+              <div>
+                <span className="font-bold text-[var(--berry-deep)]">可叠加：</span>
+                {((bichonForms as any).stackable as string[]).join(' / ')}
+              </div>
+            </div>
+
+            <div>
+              <div className="section-eyebrow mb-2">变异形态 · 共 {forms.length} 款（随机出现）</div>
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-3">
+                {forms.map((f) => (
+                  <div key={f.index} className="sticker-soft p-2 flex flex-col items-center gap-1.5">
+                    <img src={publicUrl(f.file)} alt={`比熊变异形态·${f.name}`}
+                      className="w-full aspect-square rounded-full object-cover"
+                      style={{ background: 'var(--surface)' }} loading="lazy" />
+                    <span className="text-[10px] sm:text-[11px] font-bold text-[var(--ink)]">{f.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="section-eyebrow mb-2">官方分享配图</div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+                {shares.map((s) => (
+                  <figure key={s.id} className="sticker-soft p-2">
+                    <img src={publicUrl(s.file)} alt={`比熊变异官方配图（${s.face}）`}
+                      className="w-full rounded-xl" loading="lazy" />
+                    <figcaption className="mt-1.5 text-[10px] sm:text-[11px] text-[var(--ink-mute)] text-center">
+                      中央形态：{s.face}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            <div className="px-4 sm:px-5 py-2.5 text-[10px] sm:text-[11px] text-[var(--ink-mute)] leading-relaxed rounded-2xl"
+              style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
+              {(bichonForms as any).formNote}
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </Portal>
+  );
+}
+
 export default function MutationAtlasTab() {
   const [tab, setTab] = React.useState<'types' | 'golden' | 'bonus'>('types');
   const [goldenTab, setGoldenTab] = React.useState<'goldenFruit' | 'costumeFruit' | 'eventFruit'>('goldenFruit');
   const [detail, setDetail] = React.useState<GoldenEntry | null>(null);
+  const [bichonOpen, setBichonOpen] = React.useState(false);
 
   const { mutationTypes, goldenAtlas } = mutationData;
 
@@ -217,12 +322,15 @@ export default function MutationAtlasTab() {
                 直接按数组序渲染即可，新的（比熊/乐园/晶辉…）排在前面 */}
             {mutationTypes.map((mt, i) => {
               const probs = getProbabilitiesFor(mt.name);
+              const hasForms = mt.name === '比熊';
+              const formCount = (bichonForms as any).formCount as number;
               return (
                 <motion.div key={mt.name}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, delay: i * 0.03 }}
-                  className="sticker p-3 sm:p-4 flex items-start gap-3 sm:gap-4">
+                  onClick={hasForms ? () => setBichonOpen(true) : undefined}
+                  className={`sticker p-3 sm:p-4 flex items-start gap-3 sm:gap-4 ${hasForms ? 'sticker-press cursor-pointer' : ''}`}>
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'var(--berry-bg)' }}>
                     <RemoteImage urls={mutationIconUrls(mt.icon, mt.name)} name={mt.name} className="w-14 h-14 sm:w-16 sm:h-16" rounded />
@@ -231,6 +339,12 @@ export default function MutationAtlasTab() {
                     <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                       <span className="font-bold text-sm sm:text-base text-[var(--ink)]">{mt.name}</span>
                       <span className="chip chip-berry" style={{ fontSize: '0.65rem' }}>{mt.effectType}</span>
+                      {hasForms && (
+                        <span className="chip chip-sun" style={{ fontSize: '0.65rem' }}
+                          title="触发后作物外观随机变为比熊表情包形态">
+                          ✨ {formCount} 款形态
+                        </span>
+                      )}
                       {probs.map((p, k) => {
                         const meta = qualityMeta(p.quality);
                         return (
@@ -243,6 +357,11 @@ export default function MutationAtlasTab() {
                     </div>
                     <div className="text-[11px] sm:text-sm font-mono font-bold text-[var(--berry-deep)] tnum">{mt.effectValue}</div>
                     <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 sm:mt-1 leading-snug">{mt.desc}</div>
+                    {hasForms && (
+                      <div className="text-[10px] sm:text-[11px] font-bold mt-1 text-[var(--berry-deep)]">
+                        点击查看 {formCount} 款变异形态 →
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
@@ -453,6 +572,7 @@ export default function MutationAtlasTab() {
 
       <AnimatePresence>
         {detail && <GoldenDetail item={detail} onClose={() => setDetail(null)} />}
+        {bichonOpen && <BichonDetail onClose={() => setBichonOpen(false)} />}
       </AnimatePresence>
     </div>
   );
