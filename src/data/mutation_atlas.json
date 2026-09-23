@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-09-14T06:50:13.679Z",
+  "exportedAt": "2026-09-23T16:40:36.721Z",
   "mutationTypes": [
     {
       "name": "乐园",
@@ -123,6 +123,94 @@
     }
   ],
   "goldenMutationCrops": [
+    {
+      "name": "黄金·比熊花",
+      "cropId": 6030,
+      "prob": 10,
+      "points": 200,
+      "hasGrowth": true,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_6030_6.png",
+        "plant/model/v4/gold/Crop_6030_Seed.png",
+        "plant/model/v4/gold/Crop_6030_2.png",
+        "plant/model/v4/gold/Crop_6030_3.png",
+        "plant/model/v4/gold/Crop_6030_4.png",
+        "plant/model/v4/gold/Crop_6030_5.png",
+        "plant/model/v4/gold/Crop_6030_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ]
+    },
+    {
+      "name": "黄金·嘉兰",
+      "cropId": 435,
+      "prob": 10,
+      "points": 80,
+      "hasGrowth": true,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_435_6.png",
+        "plant/model/v4/gold/Crop_435_Seed.png",
+        "plant/model/v4/gold/Crop_435_2.png",
+        "plant/model/v4/gold/Crop_435_3.png",
+        "plant/model/v4/gold/Crop_435_4.png",
+        "plant/model/v4/gold/Crop_435_5.png",
+        "plant/model/v4/gold/Crop_435_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "花蕾",
+          "sec": 8640
+        },
+        {
+          "name": "盛开",
+          "sec": 0
+        }
+      ]
+    },
     {
       "name": "黄金·风信子",
       "seedId": 20112,
@@ -2577,6 +2665,100 @@
   "goldenAtlas": {
     "goldenFruit": [
       {
+        "name": "黄金·比熊花",
+        "seedId": 149030,
+        "exp": 7680,
+        "fruit": 192,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 6030,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_6030_6.png",
+          "plant/model/v4/gold/Crop_6030_Seed.png",
+          "plant/model/v4/gold/Crop_6030_2.png",
+          "plant/model/v4/gold/Crop_6030_3.png",
+          "plant/model/v4/gold/Crop_6030_4.png",
+          "plant/model/v4/gold/Crop_6030_5.png",
+          "plant/model/v4/gold/Crop_6030_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ]
+      },
+      {
+        "name": "黄金·嘉兰",
+        "seedId": 1040435,
+        "exp": 1680,
+        "fruit": 200,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 435,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_435_6.png",
+          "plant/model/v4/gold/Crop_435_Seed.png",
+          "plant/model/v4/gold/Crop_435_2.png",
+          "plant/model/v4/gold/Crop_435_3.png",
+          "plant/model/v4/gold/Crop_435_4.png",
+          "plant/model/v4/gold/Crop_435_5.png",
+          "plant/model/v4/gold/Crop_435_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ]
+      },
+      {
         "name": "黄金·风信子",
         "seedId": 20112,
         "exp": 720,
@@ -5029,6 +5211,53 @@
     ],
     "costumeFruit": [
       {
+        "name": "比熊花",
+        "seedId": 49030,
+        "exp": 7680,
+        "fruit": 192,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 6030,
+        "phaseImages": [
+          "plant/model/v4/Crop_6030_6.png",
+          "plant/model/v4/Crop_6030_Seed.png",
+          "plant/model/v4/Crop_6030_2.png",
+          "plant/model/v4/Crop_6030_3.png",
+          "plant/model/v4/Crop_6030_4.png",
+          "plant/model/v4/Crop_6030_5.png",
+          "plant/model/v4/Crop_6030_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ]
+      },
+      {
         "name": "哈哈南瓜塔",
         "seedId": 204002,
         "exp": 0,
@@ -5432,6 +5661,53 @@
       }
     ],
     "eventFruit": [
+      {
+        "name": "嘉兰",
+        "seedId": 40435,
+        "exp": 1680,
+        "fruit": 200,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 435,
+        "phaseImages": [
+          "plant/model/v4/Crop_435_6.png",
+          "plant/model/v4/Crop_435_Seed.png",
+          "plant/model/v4/Crop_435_2.png",
+          "plant/model/v4/Crop_435_3.png",
+          "plant/model/v4/Crop_435_4.png",
+          "plant/model/v4/Crop_435_5.png",
+          "plant/model/v4/Crop_435_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "花蕾",
+            "sec": 8640
+          },
+          {
+            "name": "盛开",
+            "sec": 0
+          }
+        ]
+      },
       {
         "name": "哈哈小南瓜",
         "seedId": 49001,
