@@ -112,7 +112,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
         { icon: '🛠️', label: '操作工具', id: 'items_04', count: itemsCountFor('04'), color: 'sky' },
         { icon: '🧪', label: '化肥道具', id: 'items_07', count: itemsCountFor('07'), color: 'leaf' },
         { icon: '🎨', label: '头像框与装饰', id: 'items_10', count: itemsCountFor('10'), color: 'plum' },
-        { icon: '🐕', label: '狗与看门犬', id: 'items_08', count: itemsCountFor('08'), color: 'orange' },
+        { icon: '🐾', label: '宠物与装扮', id: 'items_08', count: itemsCountFor('08'), color: 'orange' },
         { icon: '🦴', label: '狗粮', id: 'items_09', count: itemsCountFor('09'), color: 'earth' },
         { icon: '🎟', label: '活动货币', id: 'items_19', count: itemsCountFor('19'), color: 'berry' },
         { icon: '💎', label: '充值货币', id: 'items_15', count: itemsCountFor('15'), frozen: true },

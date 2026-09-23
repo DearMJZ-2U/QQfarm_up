@@ -81,19 +81,9 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
   const visibleItems = React.useMemo(() => {
     let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
 
-    // 排序口径：
-    //   种子(05)      → 品级降序 + 等级升序（作物图鉴的既定习惯，不按发布时间打乱）
-    //   超变果实(17)  → 品级降序（天工>珍品>稀有>普通）→ 同品级内 releaseOrder 降序（发布由新到旧）
-    //   其余所有分类   → releaseOrder 降序（越大越新）；未知(0) 排最后，再按 id 兜底保证稳定
-    if (isSeed) {
-      items = [...items].sort((a: any, b: any) => {
-        const ra = a.rarity || 1;
-        const rb = b.rarity || 1;
-        if (rb !== ra) return rb - ra;
-        return (a.level || 0) - (b.level || 0);
-      });
-    } else if (isGoldenFruit) {
-      // 超变果实：品级降序（天工 > 珍品 > 稀有 > 普通）→ 同品级内发布由新到旧 → 等级升序兜底
+    // 排序口径（所有有作物的分类统一）：
+    //   品级降序（天工>珍品>稀有>普通）→ 同品级内 releaseOrder 降序（发布由新到旧）→ 等级升序兜底
+    if (isSeed || isGoldenFruit) {
       items = [...items].sort((a: any, b: any) => {
         const ra = a.rarity || 1;
         const rb = b.rarity || 1;

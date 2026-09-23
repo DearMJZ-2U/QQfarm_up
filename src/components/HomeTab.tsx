@@ -403,7 +403,7 @@ export default function HomeTab({ onNavigate }: Props) {
             count={itemCount['10'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard
-            emoji="🐕" label="狗与看门犬" desc={`${itemCount['08'] || 0} 件`} accent="orange"
+            emoji="🐾" label="宠物与装扮" desc={`${itemCount['08'] || 0} 件`} accent="orange"
             count={itemCount['08'] || 0}
             onClick={() => onNavigate('items_gold')} />
           <CategoryCard

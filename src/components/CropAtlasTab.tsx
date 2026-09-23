@@ -39,11 +39,13 @@ export default function CropAtlasTab() {
       return true;
     })
     .sort((a: any, b: any) => {
-      // 按品级降序：天工(4) > 珍品(3) > 稀有(2) > 普通(1)
+      // 统一口径：品级降序（天工>珍品>稀有>普通）→ 同品级发布由新到旧 → 等级升序兜底
       const ra = a.rarity || 1;
       const rb = b.rarity || 1;
       if (rb !== ra) return rb - ra;
-      // 同品级内按等级升序
+      const oa = (a as any).releaseOrder || 0;
+      const ob = (b as any).releaseOrder || 0;
+      if (ob !== oa) return ob - oa;
       return (a.requiredLevel || 0) - (b.requiredLevel || 0);
     });
 

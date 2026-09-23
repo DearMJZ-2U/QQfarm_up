@@ -461,7 +461,13 @@ export default function MutationAtlasTab() {
             {((goldenAtlas[goldenTab] || []) as any[]).length === 0 ? (
               <EmptyState emoji="✨" title="该分类暂无数据" />
             ) : (
-              ((goldenAtlas[goldenTab] || []) as any[]).slice().reverse().map((g, i) => {
+              ((goldenAtlas[goldenTab] || []) as any[]).slice().sort((a, b) => {
+                // 与「道具-超变果实」统一：品级降序 → 发布由新到旧
+                const ra = (a as any).rarity || 1;
+                const rb = (b as any).rarity || 1;
+                if (rb !== ra) return rb - ra;
+                return ((b as any).releaseOrder || 0) - ((a as any).releaseOrder || 0);
+              }).map((g, i) => {
                 const atlasUrls = goldenAtlasImageUrls(g.name);
                 const isGold = g.name.startsWith('黄金');
                 return (
