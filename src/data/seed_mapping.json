@@ -1174,5 +1174,17 @@
     "seedId": 29003,
     "name": "星语铃花",
     "fileName": "29003_星语铃花_Crop_9003_Seed.png"
+  },
+  {
+    "cropNumber": 435,
+    "seedId": 20435,
+    "name": "嘉兰",
+    "fileName": "20435_嘉兰_Crop_435_Seed.png"
+  },
+  {
+    "cropNumber": 6030,
+    "seedId": 26030,
+    "name": "比熊花",
+    "fileName": "26030_比熊花_Crop_6030_Seed.png"
   }
 ]

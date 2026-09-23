@@ -1,11 +1,17 @@
 {
-  "exportedAt": "2026-09-14T06:50:13.679Z",
+  "exportedAt": "2026-09-23T16:26:05.749Z",
   "categories": [
     {
       "name": "小屋",
       "icon": "🏠",
       "desc": "农场小屋外观",
       "items": [
+        {
+          "name": "中秋小屋",
+          "tag": "活动",
+          "desc": "中秋小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_10.png"
+        },
         {
           "name": "默认小屋",
           "tag": "默认",
@@ -74,6 +80,12 @@
       "desc": "农场木牌",
       "items": [
         {
+          "name": "中秋木牌",
+          "tag": "活动",
+          "desc": "中秋木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_9.png"
+        },
+        {
           "name": "默认木牌",
           "tag": "默认",
           "desc": "默认木牌",
@@ -134,6 +146,12 @@
       "icon": "🚧",
       "desc": "农场栅栏",
       "items": [
+        {
+          "name": "中秋栅栏",
+          "tag": "活动",
+          "desc": "中秋栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_10.png"
+        },
         {
           "name": "默认栅栏",
           "tag": "默认",
@@ -202,6 +220,12 @@
       "desc": "装饰盆栽",
       "items": [
         {
+          "name": "中秋塔",
+          "tag": "活动",
+          "desc": "中秋塔",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_5.png"
+        },
+        {
           "name": "哈哈南瓜塔",
           "tag": "活动",
           "desc": "哈哈南瓜塔",
@@ -256,6 +280,12 @@
       "icon": "🐕",
       "desc": "狗屋外观",
       "items": [
+        {
+          "name": "中秋狗屋",
+          "tag": "活动",
+          "desc": "中秋狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_9.png"
+        },
         {
           "name": "默认狗屋",
           "tag": "默认",
@@ -318,6 +348,12 @@
       "desc": "仓库外观",
       "items": [
         {
+          "name": "中秋仓库",
+          "tag": "活动",
+          "desc": "中秋仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_9.png"
+        },
+        {
           "name": "默认仓库",
           "tag": "默认",
           "desc": "默认仓库",
@@ -378,6 +414,12 @@
       "icon": "🛣️",
       "desc": "道路装饰",
       "items": [
+        {
+          "name": "中秋街道",
+          "tag": "活动",
+          "desc": "中秋街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_10.png"
+        },
         {
           "name": "默认街道",
           "tag": "默认",
