@@ -115,6 +115,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
         { icon: '🐾', label: '宠物与装扮', id: 'items_08', count: itemsCountFor('08'), color: 'orange' },
         { icon: '🦴', label: '狗粮', id: 'items_09', count: itemsCountFor('09'), color: 'earth' },
         { icon: '🎟', label: '活动货币', id: 'items_19', count: itemsCountFor('19'), color: 'berry' },
+        { icon: '🎮', label: '活动玩法', id: 'items_32', count: itemsCountFor('32'), color: 'sky' },
         { icon: '💎', label: '充值货币', id: 'items_15', count: itemsCountFor('15'), frozen: true },
       ]
     },

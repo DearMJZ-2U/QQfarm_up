@@ -1,0 +1,157 @@
+{
+  "exportedAt": "2026-09-24T05:03:54.348Z",
+  "activityId": 2026090101,
+  "source": "config 35581 + 游戏内锦囊总览截图补全（共 10 枚）",
+  "count": 10,
+  "types": [
+    {
+      "type": "进攻类",
+      "emoji": "⚔️",
+      "badge": "img_s3_skillType4.png",
+      "charms": [
+        {
+          "charm_id": 104,
+          "name": "胜利加成",
+          "type": "进攻类",
+          "summary": "掠夺成功收益 +10%，失败收益 -30%",
+          "detail": "【类型】进攻类\n【效果】掠夺成功时你获得的收益 +10%；掠夺失败时，败方（对方）收益 −30%。\n【触发】每次掠夺结算自动生效。\n【限用】无次数限制。\n【场景】主攻位提高期望收益；失败时也能压低对面收益。",
+          "official": "掠夺成功时收益 +10%，掠夺失败时收益 -30%。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType4.png",
+          "fromScreenshot": false
+        },
+        {
+          "charm_id": 109,
+          "name": "掠夺胜率",
+          "type": "进攻类",
+          "summary": "掠夺宝藏时初始胜率 +10%",
+          "detail": "【类型】进攻类\n【效果】比熊犬掠夺宝藏时，【初始胜率 +10%】。\n【触发】发起掠夺进入战斗时生效。\n【限用】无次数限制。\n【场景】稳定提高抢宝成功率，适合常驻进攻位。",
+          "official": "比熊犬掠夺宝藏时，初始胜率+10%。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType4.png",
+          "fromScreenshot": true
+        },
+        {
+          "charm_id": 110,
+          "name": "全力争夺",
+          "type": "进攻类",
+          "summary": "夺宝决胜负：胜全额得/败全额扣挑战书价值",
+          "detail": "【类型】进攻类\n【效果】发起夺宝进入进攻判定时：\n　• 我方获胜 → 全额获得挑战书价值；\n　• 我方失败 → 全额扣除挑战书价值。\n【触发】仅在主动夺宝的进攻结算时生效。\n【限用】无次数限制。\n【场景】高风险高回报的进攻位，适合打关键局。",
+          "official": "发起夺宝时：我方获胜，全额获得挑战书价值；我方失败，全额扣除挑战书价值。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType4.png",
+          "fromScreenshot": true
+        }
+      ]
+    },
+    {
+      "type": "防御类",
+      "emoji": "🛡️",
+      "badge": "img_s3_skillType3.png",
+      "charms": [
+        {
+          "charm_id": 103,
+          "name": "复仇机制",
+          "type": "防御类",
+          "summary": "被夺后 8h 内复仇，成功率 +25%",
+          "detail": "【类型】防御类\n【效果】宝藏被好友抢走后，8 小时内前往该好友农场夺宝，成功率 +25%。\n【触发】处于遭夺后 8 小时复仇窗口，目标为抢走你宝藏的好友。\n【限用】无次数限制（窗口内每次复仇均享受加成）。\n【场景】防守反击位：被抢立刻打回去。",
+          "official": "宝藏被好友抢走，8 小时内前往他家夺宝，成功率 + 25%。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType3.png",
+          "fromScreenshot": false
+        },
+        {
+          "charm_id": 107,
+          "name": "全力御守",
+          "type": "防御类",
+          "summary": "被夺决胜负：胜全额得/败全额扣挑战书价值",
+          "detail": "【类型】防御类\n【效果】宝藏被夺进入防守判定时：\n　• 我方获胜 → 全额获得挑战书价值；\n　• 我方失败 → 全额扣除挑战书价值。\n【触发】仅在宝藏被夺的防守结算时生效。\n【限用】无次数限制。\n【场景】高风险高回报的防守位，适合对自身守备有信心时携带。",
+          "official": "宝藏被夺时：我方获胜，全额获得挑战书价值；我方失败，全额扣除挑战书价值。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType3.png",
+          "fromScreenshot": true
+        },
+        {
+          "charm_id": 108,
+          "name": "防守胜率",
+          "type": "防御类",
+          "summary": "守护宝藏时初始胜率 +10%",
+          "detail": "【类型】防御类\n【效果】比熊犬守护宝藏时，【初始胜率 +10%】。\n【触发】进入宝藏守护战斗时生效。\n【限用】无次数限制。\n【场景】稳定提升守备成功率，适合常驻防守位。",
+          "official": "比熊犬守护宝藏时，初始胜率+10%。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType3.png",
+          "fromScreenshot": true
+        }
+      ]
+    },
+    {
+      "type": "寻宝类",
+      "emoji": "🔍",
+      "badge": "img_s3_skillType1.png",
+      "charms": [
+        {
+          "charm_id": 101,
+          "name": "惜糕探宝",
+          "type": "寻宝类",
+          "summary": "寻宝时元气糕消耗 -10%",
+          "detail": "【类型】寻宝类\n【效果】寻宝时，每次消耗的萌宠元气糕减少 10%。\n【触发】仅作用于寻宝消耗，不改变每日寻宝次数上限。\n【限用】无次数限制。\n【场景】省下元气糕，同一天能多探几次宝。",
+          "official": "寻宝时元气糕消耗 -10%。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType1.png",
+          "fromScreenshot": false
+        }
+      ]
+    },
+    {
+      "type": "宝藏类",
+      "emoji": "💎",
+      "badge": "img_s3_skillType2.png",
+      "charms": [
+        {
+          "charm_id": 102,
+          "name": "奖池上限",
+          "type": "宝藏类",
+          "summary": "宝藏价值 +50，增值不可被掠夺",
+          "detail": "【类型】宝藏类\n【效果】宝藏护送时，宝藏价值额外 +50；其中增值部分【不可被好友掠夺】。\n【触发】护送全程生效。\n【限用】无次数限制。\n【场景】即使半路被夺，也至少能锁住增值的 50 价值。",
+          "official": "宝藏护送时宝藏价值 + 50，增值部分不可被掠夺。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType2.png",
+          "fromScreenshot": false
+        },
+        {
+          "charm_id": 106,
+          "name": "分身护宝",
+          "type": "宝藏类",
+          "summary": "护送时 30% 分身，同时护 2 个宝藏",
+          "detail": "【类型】宝藏类\n【效果】比熊开启宝藏护送时，有 30% 概率触发分身，【同时护送 2 个宝藏】。\n【触发】每次开启护送时判定一次。\n【限用】无次数限制。\n【场景】高风险路段双倍产出；注意分身也可能一起被盯上。",
+          "official": "比熊开启宝藏护送时，有30%概率触发分身，同时护送 2 个宝藏。",
+          "use_limit": -1,
+          "icon": "img_s3_skillType2.png",
+          "fromScreenshot": true
+        }
+      ]
+    },
+    {
+      "type": "整蛊类",
+      "emoji": "😈",
+      "badge": "img_s3_skillType5.png",
+      "charms": [
+        {
+          "charm_id": 105,
+          "name": "移花接木",
+          "type": "整蛊类",
+          "summary": "被夺时 50% 放假宝藏，最多 2 次",
+          "detail": "【类型】整蛊类\n【效果】宝藏遭抢夺时，50% 概率放出【假宝藏】，让对手扑空（只拿到败方低倍收益）。\n【触发】仅在自己的宝藏被掠夺判定时触发。\n【限用】最多生效 2 次（次数限制：2），用完失效。\n【战斗播报】「触发锦囊[移花接木]，狼狈离场。」\n【场景】防守兼整蛊：既护真宝，又恶心对面。",
+          "official": "宝藏遭抢夺时，50% 概率放出假宝藏，让对手扑空，最多生效 2 次。",
+          "use_limit": 2,
+          "icon": "img_s3_skillType5.png",
+          "fromScreenshot": false
+        }
+      ]
+    }
+  ],
+  "fight": {
+    "daily_battle_limit": 20,
+    "treasure_capacity": 50
+  }
+}

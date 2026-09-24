@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-09-23T17:32:14.559Z",
+  "exportedAt": "2026-09-24T05:03:54.341Z",
   "categories": [
     {
       "id": "05",
@@ -161,20 +161,20 @@
           "level": 41,
           "seasons": 1,
           "growthStages": 6,
-          "exp": 7680,
-          "expPerMin": 2.963,
+          "exp": 1680,
+          "expPerMin": 0.6481,
           "growTimeSec": 43200,
           "growTimeStr": "12小时",
-          "fruitCount": 192,
+          "fruitCount": 200,
           "assetName": "Crop_6030",
           "iconFile": "plant/model/v4/Crop_6030_6.png",
           "growPhases": "种子:8640;发芽:8640;小叶子:8640;大叶子:8640;花蕾:8640;盛开:0;",
-          "sells": "1001:12000",
+          "sells": "1001:840",
           "cropNumber": 6030,
           "localFile": "26030_月下美人_Crop_6030_Seed.png",
-          "isSpecial": true,
-          "specialReason": "活动限定",
-          "activityId": 2026092300,
+          "isSpecial": false,
+          "specialReason": "",
+          "activityId": null,
           "releaseOrder": 20260923,
           "releaseSource": "manual",
           "illustratedType": null,
@@ -6134,7 +6134,7 @@
           "expPerMin": 0,
           "growTimeSec": 43200,
           "growTimeStr": "12小时",
-          "fruitCount": 192,
+          "fruitCount": 200,
           "assetName": "gold/Crop_6030",
           "iconFile": "",
           "growPhases": "种子:8640;发芽:8640;小叶子:8640;大叶子:8640;花蕾:8640;盛开:0;",
@@ -10164,6 +10164,1880 @@
       ]
     },
     {
+      "id": "32",
+      "name": "活动玩法",
+      "icon": "🎮",
+      "count": 23,
+      "items": [
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_qian.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "manual",
+          "id": 72000,
+          "name": "心愿签",
+          "desc": "活动 2026092401，每日 3 次，每次选 3 签。\n签文共 252 条，6 个方向各 42 条。\n下方为游戏内签筒原画；点方向查看该方向全部签文。",
+          "kind": "mode",
+          "modeId": "wish",
+          "emoji": "🎋",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_wish_wishSign_1.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "wish_sign",
+          "id": 72101,
+          "name": "财运",
+          "desc": "方向「财运」，共 42 条签文。\n示例：鸿运将至，所行皆顺；云开月明，好事渐近；时来运转，诸事可期…\n配图：img_wish_wishSign_1.png（游戏内签面原画）",
+          "kind": "wishDir",
+          "modeId": "wish",
+          "chooseId": 1,
+          "texts": [
+            {
+              "text_id": 1,
+              "desc": "鸿运将至，所行皆顺"
+            },
+            {
+              "text_id": 2,
+              "desc": "云开月明，好事渐近"
+            },
+            {
+              "text_id": 3,
+              "desc": "时来运转，诸事可期"
+            },
+            {
+              "text_id": 4,
+              "desc": "福星相照，近日多有喜事"
+            },
+            {
+              "text_id": 5,
+              "desc": "顺风而行，前路自有惊喜"
+            },
+            {
+              "text_id": 6,
+              "desc": "积累已久的好运，正在路上"
+            },
+            {
+              "text_id": 7,
+              "desc": "万事渐入佳境，不必急于求成"
+            },
+            {
+              "text_id": 8,
+              "desc": "命运已悄然转向"
+            },
+            {
+              "text_id": 9,
+              "desc": "你正在靠近属于你的答案"
+            },
+            {
+              "text_id": 10,
+              "desc": "冥冥之中，自有安排"
+            },
+            {
+              "text_id": 11,
+              "desc": "此刻的等待，皆有意义"
+            },
+            {
+              "text_id": 12,
+              "desc": "命运会为你留下线索"
+            },
+            {
+              "text_id": 13,
+              "desc": "不经意的选择，或将改变未来"
+            },
+            {
+              "text_id": 14,
+              "desc": "你所经历的一切，都在铺垫下一段旅程"
+            },
+            {
+              "text_id": 15,
+              "desc": "前路虽未明，但方向不会错"
+            },
+            {
+              "text_id": 16,
+              "desc": "你的故事，正在翻开新的篇章"
+            },
+            {
+              "text_id": 17,
+              "desc": "一念所向，万事皆有可能"
+            },
+            {
+              "text_id": 18,
+              "desc": "竹影摇风，前路渐明"
+            },
+            {
+              "text_id": 19,
+              "desc": "柳暗花明，转机将现"
+            },
+            {
+              "text_id": 20,
+              "desc": "春风已至，万物复苏"
+            },
+            {
+              "text_id": 21,
+              "desc": "明月在前，不必迷茫"
+            },
+            {
+              "text_id": 22,
+              "desc": "云散之后，自见青天"
+            },
+            {
+              "text_id": 23,
+              "desc": "一个新的开始正在发生"
+            },
+            {
+              "text_id": 24,
+              "desc": "曾经错过的，或许会换种方式回来"
+            },
+            {
+              "text_id": 25,
+              "desc": "你的直觉，正在提醒你"
+            },
+            {
+              "text_id": 26,
+              "desc": "留意身边的小小暗示"
+            },
+            {
+              "text_id": 27,
+              "desc": "今日种下的因，会结出未来的果"
+            },
+            {
+              "text_id": 28,
+              "desc": "你的坚持，终会得到回应"
+            },
+            {
+              "text_id": 29,
+              "desc": "所有积累，都不会消失"
+            },
+            {
+              "text_id": 30,
+              "desc": "现在的努力，正在改变未来"
+            },
+            {
+              "text_id": 31,
+              "desc": "花开有期，果熟有时"
+            },
+            {
+              "text_id": 32,
+              "desc": "不急于一时，静候收获"
+            },
+            {
+              "text_id": 33,
+              "desc": "呼吸一下新鲜空气"
+            },
+            {
+              "text_id": 34,
+              "desc": "天机不可泄露"
+            },
+            {
+              "text_id": 35,
+              "desc": "感恩，运气会越来越好"
+            },
+            {
+              "text_id": 36,
+              "desc": "不要忘记微笑"
+            },
+            {
+              "text_id": 37,
+              "desc": "不必为你无法控制的事情担心"
+            },
+            {
+              "text_id": 38,
+              "desc": "复杂的事情简单做"
+            },
+            {
+              "text_id": 39,
+              "desc": "自信起来吧"
+            },
+            {
+              "text_id": 40,
+              "desc": "奇迹"
+            },
+            {
+              "text_id": 41,
+              "desc": "给自己一个肯定"
+            },
+            {
+              "text_id": 42,
+              "desc": "或许需要突破"
+            }
+          ],
+          "textCount": 42,
+          "emoji": "💰",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_wish_wishSign_2.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "wish_sign",
+          "id": 72102,
+          "name": "感情",
+          "desc": "方向「感情」，共 42 条签文。\n示例：近日或有好消息；缘分正在靠近；冥冥之中，终会遇见…\n配图：img_wish_wishSign_2.png（游戏内签面原画）",
+          "kind": "wishDir",
+          "modeId": "wish",
+          "chooseId": 2,
+          "texts": [
+            {
+              "text_id": 1,
+              "desc": "近日或有好消息"
+            },
+            {
+              "text_id": 2,
+              "desc": "缘分正在靠近"
+            },
+            {
+              "text_id": 3,
+              "desc": "冥冥之中，终会遇见"
+            },
+            {
+              "text_id": 4,
+              "desc": "藏于日常，留意身边"
+            },
+            {
+              "text_id": 5,
+              "desc": "心存好感，尚未言明"
+            },
+            {
+              "text_id": 6,
+              "desc": "旧缘未散，新缘将至"
+            },
+            {
+              "text_id": 7,
+              "desc": "或许就在不经意间"
+            },
+            {
+              "text_id": 8,
+              "desc": "并非无意，仍在观望"
+            },
+            {
+              "text_id": 9,
+              "desc": "正在升温"
+            },
+            {
+              "text_id": 10,
+              "desc": "一个意外的消息正在靠近"
+            },
+            {
+              "text_id": 11,
+              "desc": "或许会有意外收获"
+            },
+            {
+              "text_id": 12,
+              "desc": "真心需要一点勇气"
+            },
+            {
+              "text_id": 13,
+              "desc": "需重新审视"
+            },
+            {
+              "text_id": 14,
+              "desc": "不妨给一次机会"
+            },
+            {
+              "text_id": 15,
+              "desc": "最美丽的一天"
+            },
+            {
+              "text_id": 16,
+              "desc": "结局仍取决于选择"
+            },
+            {
+              "text_id": 17,
+              "desc": "请耐心等待"
+            },
+            {
+              "text_id": 18,
+              "desc": "来得猝不及防"
+            },
+            {
+              "text_id": 19,
+              "desc": "一场温柔的相遇即将发生"
+            },
+            {
+              "text_id": 20,
+              "desc": "只待花开"
+            },
+            {
+              "text_id": 21,
+              "desc": "月满之时，答案自现"
+            },
+            {
+              "text_id": 22,
+              "desc": "取暖"
+            },
+            {
+              "text_id": 23,
+              "desc": "自我欣赏"
+            },
+            {
+              "text_id": 24,
+              "desc": "小小的坚持，会带来大的改变"
+            },
+            {
+              "text_id": 25,
+              "desc": "心有所念，终会有所回应"
+            },
+            {
+              "text_id": 26,
+              "desc": "正在悄悄发生"
+            },
+            {
+              "text_id": 27,
+              "desc": "真正的相遇，总会恰逢其时"
+            },
+            {
+              "text_id": 28,
+              "desc": "时机已在靠近，请保持期待"
+            },
+            {
+              "text_id": 29,
+              "desc": "命运的齿轮，已经开始转动"
+            },
+            {
+              "text_id": 30,
+              "desc": "你与答案之间，只差一个契机"
+            },
+            {
+              "text_id": 31,
+              "desc": "有些相遇，早已注定"
+            },
+            {
+              "text_id": 32,
+              "desc": "有些答案，需要时间揭晓"
+            },
+            {
+              "text_id": 33,
+              "desc": "该来的会来，该走的会走"
+            },
+            {
+              "text_id": 34,
+              "desc": "天意留有转机"
+            },
+            {
+              "text_id": 35,
+              "desc": "星辰正在为你指引方向"
+            },
+            {
+              "text_id": 36,
+              "desc": "属于你的机会，不会悄然错过"
+            },
+            {
+              "text_id": 37,
+              "desc": "命运正在悄悄修正轨迹"
+            },
+            {
+              "text_id": 38,
+              "desc": "一切安排，皆有深意"
+            },
+            {
+              "text_id": 39,
+              "desc": "一个决定，将开启新的道路"
+            },
+            {
+              "text_id": 40,
+              "desc": "一颗属于你的星辰，正在闪耀"
+            },
+            {
+              "text_id": 41,
+              "desc": "学会珍惜"
+            },
+            {
+              "text_id": 42,
+              "desc": "想念重逢"
+            }
+          ],
+          "textCount": 42,
+          "emoji": "💗",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_wish_wishSign_3.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "wish_sign",
+          "id": 72103,
+          "name": "前程",
+          "desc": "方向「前程」，共 42 条签文。\n示例：你正在经历成长的必经之路；每一步，都算数；你走过的路，都会成为力量…\n配图：img_wish_wishSign_3.png（游戏内签面原画）",
+          "kind": "wishDir",
+          "modeId": "wish",
+          "chooseId": 3,
+          "texts": [
+            {
+              "text_id": 1,
+              "desc": "你正在经历成长的必经之路"
+            },
+            {
+              "text_id": 2,
+              "desc": "每一步，都算数"
+            },
+            {
+              "text_id": 3,
+              "desc": "你走过的路，都会成为力量"
+            },
+            {
+              "text_id": 4,
+              "desc": "时间会证明你的选择"
+            },
+            {
+              "text_id": 5,
+              "desc": "请保持神秘"
+            },
+            {
+              "text_id": 6,
+              "desc": "你的付出，正在被命运记录"
+            },
+            {
+              "text_id": 7,
+              "desc": "等待不是停留，而是在积蓄力量"
+            },
+            {
+              "text_id": 8,
+              "desc": "根扎得越深，花开得越盛"
+            },
+            {
+              "text_id": 9,
+              "desc": "你正在成为更好的自己"
+            },
+            {
+              "text_id": 10,
+              "desc": "答案就在答案里"
+            },
+            {
+              "text_id": 11,
+              "desc": "你已经知道答案了"
+            },
+            {
+              "text_id": 12,
+              "desc": "这件事，主要看你"
+            },
+            {
+              "text_id": 13,
+              "desc": "相信第一感觉"
+            },
+            {
+              "text_id": 14,
+              "desc": "一切都是最好的安排"
+            },
+            {
+              "text_id": 15,
+              "desc": "未来正在回应你的期待"
+            },
+            {
+              "text_id": 16,
+              "desc": "不宜冲动，三思而后行"
+            },
+            {
+              "text_id": 17,
+              "desc": "小心一时心急，错过好机会"
+            },
+            {
+              "text_id": 18,
+              "desc": "有些事情慢一点，反而更顺"
+            },
+            {
+              "text_id": 19,
+              "desc": "清空大脑，转移注意力"
+            },
+            {
+              "text_id": 20,
+              "desc": "莫为小事扰心，真正重要的事正在靠近"
+            },
+            {
+              "text_id": 21,
+              "desc": "运势平稳，静候佳音"
+            },
+            {
+              "text_id": 22,
+              "desc": "小有波折，不改整体顺势"
+            },
+            {
+              "text_id": 23,
+              "desc": "今日宜稳，不宜急"
+            },
+            {
+              "text_id": 24,
+              "desc": "好运正在积攒，稍后到账"
+            },
+            {
+              "text_id": 25,
+              "desc": "先难后易，耐心自有回报"
+            },
+            {
+              "text_id": 26,
+              "desc": "或藏小小惊喜"
+            },
+            {
+              "text_id": 27,
+              "desc": "问问朋友的意见"
+            },
+            {
+              "text_id": 28,
+              "desc": "可以期待的未来"
+            },
+            {
+              "text_id": 29,
+              "desc": "平平安安"
+            },
+            {
+              "text_id": 30,
+              "desc": "挥别错的"
+            },
+            {
+              "text_id": 31,
+              "desc": "接受那些消失的"
+            },
+            {
+              "text_id": 32,
+              "desc": "成为了事实"
+            },
+            {
+              "text_id": 33,
+              "desc": "清风送信，好事将近"
+            },
+            {
+              "text_id": 34,
+              "desc": "有一些重要的事"
+            },
+            {
+              "text_id": 35,
+              "desc": "冷静下来，好好做个决定"
+            },
+            {
+              "text_id": 36,
+              "desc": "演好你的角色"
+            },
+            {
+              "text_id": 37,
+              "desc": "老天也许在给你准备惊喜"
+            },
+            {
+              "text_id": 38,
+              "desc": "相信自己"
+            },
+            {
+              "text_id": 39,
+              "desc": "最好的总会在不经意的时候出现"
+            },
+            {
+              "text_id": 40,
+              "desc": "得到了多数支持"
+            },
+            {
+              "text_id": 41,
+              "desc": "保持乐观没错"
+            },
+            {
+              "text_id": 42,
+              "desc": "你等待的回应，正在靠近"
+            }
+          ],
+          "textCount": 42,
+          "emoji": "📈",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_wish_wishSign_4.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "wish_sign",
+          "id": 72104,
+          "name": "生活",
+          "desc": "方向「生活」，共 42 条签文。\n示例：一步之遥；转机往往出现在意料之外；星光已为你留下答案…\n配图：img_wish_wishSign_4.png（游戏内签面原画）",
+          "kind": "wishDir",
+          "modeId": "wish",
+          "chooseId": 4,
+          "texts": [
+            {
+              "text_id": 1,
+              "desc": "一步之遥"
+            },
+            {
+              "text_id": 2,
+              "desc": "转机往往出现在意料之外"
+            },
+            {
+              "text_id": 3,
+              "desc": "星光已为你留下答案"
+            },
+            {
+              "text_id": 4,
+              "desc": "给人依赖"
+            },
+            {
+              "text_id": 5,
+              "desc": "对未知前途的期盼"
+            },
+            {
+              "text_id": 6,
+              "desc": "用平淡的心态去追求"
+            },
+            {
+              "text_id": 7,
+              "desc": "一切皆有可能"
+            },
+            {
+              "text_id": 8,
+              "desc": "控制自己的情绪"
+            },
+            {
+              "text_id": 9,
+              "desc": "一切顺其自然"
+            },
+            {
+              "text_id": 10,
+              "desc": "一条有鲜花的道路"
+            },
+            {
+              "text_id": 11,
+              "desc": "不要刻意隐藏"
+            },
+            {
+              "text_id": 12,
+              "desc": "暂且不要判断"
+            },
+            {
+              "text_id": 13,
+              "desc": "不要一成不变"
+            },
+            {
+              "text_id": 14,
+              "desc": "星光不问赶路人，但会照亮前方"
+            },
+            {
+              "text_id": 15,
+              "desc": "你祈求的一切顺利"
+            },
+            {
+              "text_id": 16,
+              "desc": "享受全心全意的付出"
+            },
+            {
+              "text_id": 17,
+              "desc": "站在最重要的地方"
+            },
+            {
+              "text_id": 18,
+              "desc": "捕风捉影"
+            },
+            {
+              "text_id": 19,
+              "desc": "欢天喜地"
+            },
+            {
+              "text_id": 20,
+              "desc": "近期会遇见改变"
+            },
+            {
+              "text_id": 21,
+              "desc": "星河漫漫，终会遇见属于你的光"
+            },
+            {
+              "text_id": 22,
+              "desc": "十分好的预感"
+            },
+            {
+              "text_id": 23,
+              "desc": "山重水复之后，自有柳暗花明"
+            },
+            {
+              "text_id": 24,
+              "desc": "盛开"
+            },
+            {
+              "text_id": 25,
+              "desc": "学会改变什么"
+            },
+            {
+              "text_id": 26,
+              "desc": "最划算的交换"
+            },
+            {
+              "text_id": 27,
+              "desc": "退后一厘米"
+            },
+            {
+              "text_id": 28,
+              "desc": "这真是一个奇怪的问题"
+            },
+            {
+              "text_id": 29,
+              "desc": "夜空中的星辰，正在回应"
+            },
+            {
+              "text_id": 30,
+              "desc": "成长"
+            },
+            {
+              "text_id": 31,
+              "desc": "最好的事情正要发生"
+            },
+            {
+              "text_id": 32,
+              "desc": "放轻松这很简单"
+            },
+            {
+              "text_id": 33,
+              "desc": "改变心情"
+            },
+            {
+              "text_id": 34,
+              "desc": "今日之后，或有新的变化"
+            },
+            {
+              "text_id": 35,
+              "desc": "必须努力奔跑起来"
+            },
+            {
+              "text_id": 36,
+              "desc": "会有人陪着你"
+            },
+            {
+              "text_id": 37,
+              "desc": "心诚则灵，愿有所应"
+            },
+            {
+              "text_id": 38,
+              "desc": "站起来去奋斗"
+            },
+            {
+              "text_id": 39,
+              "desc": "不要看轻别人"
+            },
+            {
+              "text_id": 40,
+              "desc": "对读一本书"
+            },
+            {
+              "text_id": 41,
+              "desc": "下一页才是你人生的答案"
+            },
+            {
+              "text_id": 42,
+              "desc": "出发"
+            }
+          ],
+          "textCount": 42,
+          "emoji": "🏠",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_wish_wishSign_5.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "wish_sign",
+          "id": 72105,
+          "name": "农耕",
+          "desc": "方向「农耕」，共 42 条签文。\n示例：顺应天时；种下满足，收获幸福；现在是最好的开始…\n配图：img_wish_wishSign_5.png（游戏内签面原画）",
+          "kind": "wishDir",
+          "modeId": "wish",
+          "chooseId": 5,
+          "texts": [
+            {
+              "text_id": 1,
+              "desc": "顺应天时"
+            },
+            {
+              "text_id": 2,
+              "desc": "种下满足，收获幸福"
+            },
+            {
+              "text_id": 3,
+              "desc": "现在是最好的开始"
+            },
+            {
+              "text_id": 4,
+              "desc": "让它晒晒太阳"
+            },
+            {
+              "text_id": 5,
+              "desc": "自然有自己的平衡"
+            },
+            {
+              "text_id": 6,
+              "desc": "风往南吹，再等等"
+            },
+            {
+              "text_id": 7,
+              "desc": "深耕一寸，多收一成"
+            },
+            {
+              "text_id": 8,
+              "desc": "种子不会骗你"
+            },
+            {
+              "text_id": 9,
+              "desc": "现在正是时候"
+            },
+            {
+              "text_id": 10,
+              "desc": "水到渠成"
+            },
+            {
+              "text_id": 11,
+              "desc": "该除草了"
+            },
+            {
+              "text_id": 12,
+              "desc": "杂草也是信号"
+            },
+            {
+              "text_id": 13,
+              "desc": "该放手时就放手"
+            },
+            {
+              "text_id": 14,
+              "desc": "静观其变"
+            },
+            {
+              "text_id": 15,
+              "desc": "八分收成就很好"
+            },
+            {
+              "text_id": 16,
+              "desc": "留一些给鸟和风"
+            },
+            {
+              "text_id": 17,
+              "desc": "好收成藏在细节里"
+            },
+            {
+              "text_id": 18,
+              "desc": "别急着全部收完"
+            },
+            {
+              "text_id": 19,
+              "desc": "最好的正在路上"
+            },
+            {
+              "text_id": 20,
+              "desc": "颗粒归仓"
+            },
+            {
+              "text_id": 21,
+              "desc": "收成不是唯一的答案"
+            },
+            {
+              "text_id": 22,
+              "desc": "土地不会辜负老实人"
+            },
+            {
+              "text_id": 23,
+              "desc": "慢些，会更稳"
+            },
+            {
+              "text_id": 24,
+              "desc": "你比想象中更懂土地"
+            },
+            {
+              "text_id": 25,
+              "desc": "脚踩大地，心就定了"
+            },
+            {
+              "text_id": 26,
+              "desc": "农活是最好的修行"
+            },
+            {
+              "text_id": 27,
+              "desc": "种子在你看不见的地方生长"
+            },
+            {
+              "text_id": 28,
+              "desc": "秋日不缺丰收"
+            },
+            {
+              "text_id": 29,
+              "desc": "土地沉默，但从未骗你"
+            },
+            {
+              "text_id": 30,
+              "desc": "总有收获在秋天等你"
+            },
+            {
+              "text_id": 31,
+              "desc": "答案就在你脚下"
+            },
+            {
+              "text_id": 32,
+              "desc": "月光所照，皆有希望"
+            },
+            {
+              "text_id": 33,
+              "desc": "星辰指引，前路可期"
+            },
+            {
+              "text_id": 34,
+              "desc": "天上的星，正在记录你的愿望"
+            },
+            {
+              "text_id": 35,
+              "desc": "你的幸运，正在星辰之间汇聚"
+            },
+            {
+              "text_id": 36,
+              "desc": "天光将至，不必畏惧黑夜"
+            },
+            {
+              "text_id": 37,
+              "desc": "等一场星辰回应"
+            },
+            {
+              "text_id": 38,
+              "desc": "你即将发现隐藏的惊喜"
+            },
+            {
+              "text_id": 39,
+              "desc": " 一个正在到来的晴天"
+            },
+            {
+              "text_id": 40,
+              "desc": " 好天气"
+            },
+            {
+              "text_id": 41,
+              "desc": "早点儿开始"
+            },
+            {
+              "text_id": 42,
+              "desc": "福缘已种，只待花开"
+            }
+          ],
+          "textCount": 42,
+          "emoji": "🌾",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_wish_wishSign_6.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "wish_sign",
+          "id": 72106,
+          "name": "人际",
+          "desc": "方向「人际」，共 42 条签文。\n示例：细水长流；答案正在靠近；相信你的第一直觉…\n配图：img_wish_wishSign_6.png（游戏内签面原画）",
+          "kind": "wishDir",
+          "modeId": "wish",
+          "chooseId": 6,
+          "texts": [
+            {
+              "text_id": 1,
+              "desc": "细水长流"
+            },
+            {
+              "text_id": 2,
+              "desc": "答案正在靠近"
+            },
+            {
+              "text_id": 3,
+              "desc": "相信你的第一直觉"
+            },
+            {
+              "text_id": 4,
+              "desc": "命运已经给出提示"
+            },
+            {
+              "text_id": 5,
+              "desc": "时机尚未成熟，请耐心等待"
+            },
+            {
+              "text_id": 6,
+              "desc": "你心中的答案，就是答案"
+            },
+            {
+              "text_id": 7,
+              "desc": "这件事值得期待"
+            },
+            {
+              "text_id": 8,
+              "desc": "不要回头，继续前行"
+            },
+            {
+              "text_id": 9,
+              "desc": "一切正在向好的方向发展"
+            },
+            {
+              "text_id": 10,
+              "desc": "再坚持一下，好消息将至"
+            },
+            {
+              "text_id": 11,
+              "desc": "你的努力不会被辜负"
+            },
+            {
+              "text_id": 12,
+              "desc": "此刻的选择，将开启新的篇章"
+            },
+            {
+              "text_id": 13,
+              "desc": "缘分正在安排一场相遇"
+            },
+            {
+              "text_id": 14,
+              "desc": "未来会给你一个满意的回应"
+            },
+            {
+              "text_id": 15,
+              "desc": "现在播下的种子，终会开花结果"
+            },
+            {
+              "text_id": 16,
+              "desc": "不必寻找答案，你正在成为答案"
+            },
+            {
+              "text_id": 17,
+              "desc": "有些事情，晚一点发生会更好"
+            },
+            {
+              "text_id": 18,
+              "desc": "你已经走在正确的路上"
+            },
+            {
+              "text_id": 19,
+              "desc": "迷雾终会散去，方向自然出现"
+            },
+            {
+              "text_id": 20,
+              "desc": "该来的，正在来的路上。"
+            },
+            {
+              "text_id": 21,
+              "desc": "你的故事，才刚刚开始。"
+            },
+            {
+              "text_id": 22,
+              "desc": "有些人开始慌乱"
+            },
+            {
+              "text_id": 23,
+              "desc": "找回自己"
+            },
+            {
+              "text_id": 24,
+              "desc": " 结束倒计时"
+            },
+            {
+              "text_id": 25,
+              "desc": "慢些，我们会更快"
+            },
+            {
+              "text_id": 26,
+              "desc": " 等待"
+            },
+            {
+              "text_id": 27,
+              "desc": " 寻寻觅觅"
+            },
+            {
+              "text_id": 28,
+              "desc": "下一个天亮"
+            },
+            {
+              "text_id": 29,
+              "desc": " 开心的肯定"
+            },
+            {
+              "text_id": 30,
+              "desc": "月亮会照亮未明的方向"
+            },
+            {
+              "text_id": 31,
+              "desc": "某个被忽略的机会，将重新出现"
+            },
+            {
+              "text_id": 32,
+              "desc": "把握现在"
+            },
+            {
+              "text_id": 33,
+              "desc": "善待自己"
+            },
+            {
+              "text_id": 34,
+              "desc": "云开见月，福运渐临"
+            },
+            {
+              "text_id": 35,
+              "desc": "银河有渡，未来有期"
+            },
+            {
+              "text_id": 36,
+              "desc": "回头看看"
+            },
+            {
+              "text_id": 37,
+              "desc": "唤醒沉睡的你"
+            },
+            {
+              "text_id": 38,
+              "desc": "也许会有好转"
+            },
+            {
+              "text_id": 39,
+              "desc": "烦恼快要消失"
+            },
+            {
+              "text_id": 40,
+              "desc": "一无所有"
+            },
+            {
+              "text_id": 41,
+              "desc": "显得有点唐突"
+            },
+            {
+              "text_id": 42,
+              "desc": "迷人的危险"
+            }
+          ],
+          "textCount": 42,
+          "emoji": "🤝",
+          "releaseOrder": 20260924,
+          "activityId": 2026092401
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType4.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "manual",
+          "id": 73000,
+          "name": "宝藏护送",
+          "desc": "夺宝对决锦囊总览，共 10 枚。\n分类：进攻类 / 防御类 / 寻宝类 / 宝藏类 / 整蛊类。\n徽章图标与游戏内「锦囊总览」一致（按类型复用 S3 徽章）。\n每日夺宝上限 20 次，宝箱容量 50。",
+          "kind": "mode",
+          "modeId": "treasure",
+          "emoji": "💎",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType4.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 73200,
+          "name": "进攻类",
+          "desc": "进攻类 · 3 枚：胜利加成、掠夺胜率、全力争夺\n徽章图与游戏锦囊总览一致。",
+          "kind": "charmCat",
+          "modeId": "treasure",
+          "charmType": "进攻类",
+          "emoji": "⚔️",
+          "childIds": [
+            74104,
+            74109,
+            74110
+          ],
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType3.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 73201,
+          "name": "防御类",
+          "desc": "防御类 · 3 枚：复仇机制、全力御守、防守胜率\n徽章图与游戏锦囊总览一致。",
+          "kind": "charmCat",
+          "modeId": "treasure",
+          "charmType": "防御类",
+          "emoji": "🛡️",
+          "childIds": [
+            74103,
+            74107,
+            74108
+          ],
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType1.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 73202,
+          "name": "寻宝类",
+          "desc": "寻宝类 · 1 枚：惜糕探宝\n徽章图与游戏锦囊总览一致。",
+          "kind": "charmCat",
+          "modeId": "treasure",
+          "charmType": "寻宝类",
+          "emoji": "🔍",
+          "childIds": [
+            74101
+          ],
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType2.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 73203,
+          "name": "宝藏类",
+          "desc": "宝藏类 · 2 枚：奖池上限、分身护宝\n徽章图与游戏锦囊总览一致。",
+          "kind": "charmCat",
+          "modeId": "treasure",
+          "charmType": "宝藏类",
+          "emoji": "💎",
+          "childIds": [
+            74102,
+            74106
+          ],
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType5.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 73204,
+          "name": "整蛊类",
+          "desc": "整蛊类 · 1 枚：移花接木\n徽章图与游戏锦囊总览一致。",
+          "kind": "charmCat",
+          "modeId": "treasure",
+          "charmType": "整蛊类",
+          "emoji": "😈",
+          "childIds": [
+            74105
+          ],
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType1.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 74101,
+          "name": "惜糕探宝",
+          "desc": "【类型】寻宝类\n【效果】寻宝时，每次消耗的萌宠元气糕减少 10%。\n【触发】仅作用于寻宝消耗，不改变每日寻宝次数上限。\n【限用】无次数限制。\n【场景】省下元气糕，同一天能多探几次宝。\n\n【一句话】寻宝时元气糕消耗 -10%\n\n【正式文案】寻宝时元气糕消耗 -10%。",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "寻宝类",
+          "charmId": 101,
+          "useLimit": -1,
+          "shortDesc": "寻宝时元气糕消耗 -10%",
+          "officialDesc": "寻宝时元气糕消耗 -10%。",
+          "emoji": "🔍",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType2.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 74102,
+          "name": "奖池上限",
+          "desc": "【类型】宝藏类\n【效果】宝藏护送时，宝藏价值额外 +50；其中增值部分【不可被好友掠夺】。\n【触发】护送全程生效。\n【限用】无次数限制。\n【场景】即使半路被夺，也至少能锁住增值的 50 价值。\n\n【一句话】宝藏价值 +50，增值不可被掠夺\n\n【正式文案】宝藏护送时宝藏价值 + 50，增值部分不可被掠夺。",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "宝藏类",
+          "charmId": 102,
+          "useLimit": -1,
+          "shortDesc": "宝藏价值 +50，增值不可被掠夺",
+          "officialDesc": "宝藏护送时宝藏价值 + 50，增值部分不可被掠夺。",
+          "emoji": "💎",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType3.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 74103,
+          "name": "复仇机制",
+          "desc": "【类型】防御类\n【效果】宝藏被好友抢走后，8 小时内前往该好友农场夺宝，成功率 +25%。\n【触发】处于遭夺后 8 小时复仇窗口，目标为抢走你宝藏的好友。\n【限用】无次数限制（窗口内每次复仇均享受加成）。\n【场景】防守反击位：被抢立刻打回去。\n\n【一句话】被夺后 8h 内复仇，成功率 +25%\n\n【正式文案】宝藏被好友抢走，8 小时内前往他家夺宝，成功率 + 25%。",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "防御类",
+          "charmId": 103,
+          "useLimit": -1,
+          "shortDesc": "被夺后 8h 内复仇，成功率 +25%",
+          "officialDesc": "宝藏被好友抢走，8 小时内前往他家夺宝，成功率 + 25%。",
+          "emoji": "🛡️",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 4,
+          "rarityColor": "D1A21E",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType4.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 74104,
+          "name": "胜利加成",
+          "desc": "【类型】进攻类\n【效果】掠夺成功时你获得的收益 +10%；掠夺失败时，败方（对方）收益 −30%。\n【触发】每次掠夺结算自动生效。\n【限用】无次数限制。\n【场景】主攻位提高期望收益；失败时也能压低对面收益。\n\n【一句话】掠夺成功收益 +10%，失败收益 -30%\n\n【正式文案】掠夺成功时收益 +10%，掠夺失败时收益 -30%。",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "进攻类",
+          "charmId": 104,
+          "useLimit": -1,
+          "shortDesc": "掠夺成功收益 +10%，失败收益 -30%",
+          "officialDesc": "掠夺成功时收益 +10%，掠夺失败时收益 -30%。",
+          "emoji": "⚔️",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType5.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "ActivityPetTreasureHuntCharm",
+          "id": 74105,
+          "name": "移花接木",
+          "desc": "【类型】整蛊类\n【效果】宝藏遭抢夺时，50% 概率放出【假宝藏】，让对手扑空（只拿到败方低倍收益）。\n【触发】仅在自己的宝藏被掠夺判定时触发。\n【限用】最多生效 2 次（次数限制：2），用完失效。\n【战斗播报】「触发锦囊[移花接木]，狼狈离场。」\n【场景】防守兼整蛊：既护真宝，又恶心对面。\n\n【一句话】被夺时 50% 放假宝藏，最多 2 次\n\n【正式文案】宝藏遭抢夺时，50% 概率放出假宝藏，让对手扑空，最多生效 2 次。",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "整蛊类",
+          "charmId": 105,
+          "useLimit": 2,
+          "shortDesc": "被夺时 50% 放假宝藏，最多 2 次",
+          "officialDesc": "宝藏遭抢夺时，50% 概率放出假宝藏，让对手扑空，最多生效 2 次。",
+          "emoji": "😈",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType2.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "screenshot+config",
+          "id": 74106,
+          "name": "分身护宝",
+          "desc": "【类型】宝藏类\n【效果】比熊开启宝藏护送时，有 30% 概率触发分身，【同时护送 2 个宝藏】。\n【触发】每次开启护送时判定一次。\n【限用】无次数限制。\n【场景】高风险路段双倍产出；注意分身也可能一起被盯上。\n\n【一句话】护送时 30% 分身，同时护 2 个宝藏\n\n【正式文案】比熊开启宝藏护送时，有30%概率触发分身，同时护送 2 个宝藏。\n\n【来源】游戏内锦囊总览截图（配置表未收录，已按截图补全）",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "宝藏类",
+          "charmId": 106,
+          "useLimit": -1,
+          "shortDesc": "护送时 30% 分身，同时护 2 个宝藏",
+          "officialDesc": "比熊开启宝藏护送时，有30%概率触发分身，同时护送 2 个宝藏。",
+          "emoji": "💎",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType3.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "screenshot+config",
+          "id": 74107,
+          "name": "全力御守",
+          "desc": "【类型】防御类\n【效果】宝藏被夺进入防守判定时：\n　• 我方获胜 → 全额获得挑战书价值；\n　• 我方失败 → 全额扣除挑战书价值。\n【触发】仅在宝藏被夺的防守结算时生效。\n【限用】无次数限制。\n【场景】高风险高回报的防守位，适合对自身守备有信心时携带。\n\n【一句话】被夺决胜负：胜全额得/败全额扣挑战书价值\n\n【正式文案】宝藏被夺时：我方获胜，全额获得挑战书价值；我方失败，全额扣除挑战书价值。\n\n【来源】游戏内锦囊总览截图（配置表未收录，已按截图补全）",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "防御类",
+          "charmId": 107,
+          "useLimit": -1,
+          "shortDesc": "被夺决胜负：胜全额得/败全额扣挑战书价值",
+          "officialDesc": "宝藏被夺时：我方获胜，全额获得挑战书价值；我方失败，全额扣除挑战书价值。",
+          "emoji": "🛡️",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 3,
+          "rarityColor": "B09DED",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType3.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "screenshot+config",
+          "id": 74108,
+          "name": "防守胜率",
+          "desc": "【类型】防御类\n【效果】比熊犬守护宝藏时，【初始胜率 +10%】。\n【触发】进入宝藏守护战斗时生效。\n【限用】无次数限制。\n【场景】稳定提升守备成功率，适合常驻防守位。\n\n【一句话】守护宝藏时初始胜率 +10%\n\n【正式文案】比熊犬守护宝藏时，初始胜率+10%。\n\n【来源】游戏内锦囊总览截图（配置表未收录，已按截图补全）",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "防御类",
+          "charmId": 108,
+          "useLimit": -1,
+          "shortDesc": "守护宝藏时初始胜率 +10%",
+          "officialDesc": "比熊犬守护宝藏时，初始胜率+10%。",
+          "emoji": "🛡️",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 4,
+          "rarityColor": "D1A21E",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType4.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "screenshot+config",
+          "id": 74109,
+          "name": "掠夺胜率",
+          "desc": "【类型】进攻类\n【效果】比熊犬掠夺宝藏时，【初始胜率 +10%】。\n【触发】发起掠夺进入战斗时生效。\n【限用】无次数限制。\n【场景】稳定提高抢宝成功率，适合常驻进攻位。\n\n【一句话】掠夺宝藏时初始胜率 +10%\n\n【正式文案】比熊犬掠夺宝藏时，初始胜率+10%。\n\n【来源】游戏内锦囊总览截图（配置表未收录，已按截图补全）",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "进攻类",
+          "charmId": 109,
+          "useLimit": -1,
+          "shortDesc": "掠夺宝藏时初始胜率 +10%",
+          "officialDesc": "比熊犬掠夺宝藏时，初始胜率+10%。",
+          "emoji": "⚔️",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        },
+        {
+          "type": 71,
+          "rarity": 4,
+          "rarityColor": "D1A21E",
+          "level": 0,
+          "seasons": 0,
+          "growthStages": 0,
+          "exp": 0,
+          "expPerMin": 0,
+          "growTimeSec": 0,
+          "growTimeStr": "0秒",
+          "fruitCount": 0,
+          "assetName": "",
+          "iconFile": "",
+          "growPhases": "",
+          "sells": "0:0",
+          "cropNumber": 0,
+          "localFile": "img_s3_skillType4.png",
+          "isSpecial": true,
+          "specialReason": "活动限定",
+          "illustratedType": null,
+          "hasRenderPhases": false,
+          "hasPhaseImages": false,
+          "releaseSource": "screenshot+config",
+          "id": 74110,
+          "name": "全力争夺",
+          "desc": "【类型】进攻类\n【效果】发起夺宝进入进攻判定时：\n　• 我方获胜 → 全额获得挑战书价值；\n　• 我方失败 → 全额扣除挑战书价值。\n【触发】仅在主动夺宝的进攻结算时生效。\n【限用】无次数限制。\n【场景】高风险高回报的进攻位，适合打关键局。\n\n【一句话】夺宝决胜负：胜全额得/败全额扣挑战书价值\n\n【正式文案】发起夺宝时：我方获胜，全额获得挑战书价值；我方失败，全额扣除挑战书价值。\n\n【来源】游戏内锦囊总览截图（配置表未收录，已按截图补全）",
+          "kind": "charm",
+          "modeId": "treasure",
+          "charmType": "进攻类",
+          "charmId": 110,
+          "useLimit": -1,
+          "shortDesc": "夺宝决胜负：胜全额得/败全额扣挑战书价值",
+          "officialDesc": "发起夺宝时：我方获胜，全额获得挑战书价值；我方失败，全额扣除挑战书价值。",
+          "emoji": "⚔️",
+          "releaseOrder": 20260910,
+          "activityId": 2026090101
+        }
+      ]
+    },
+    {
       "id": "23",
       "name": "活动互动道具",
       "icon": "🌦️",
@@ -10261,7 +12135,7 @@
         },
         {
           "id": 6005,
-          "name": "烟花·倾心",
+          "name": "烟花·心心相印",
           "desc": "",
           "type": 23,
           "rarity": 2,
@@ -10279,7 +12153,7 @@
           "growPhases": "",
           "sells": "0:0",
           "cropNumber": 0,
-          "localFile": "23_6005_烟花·倾心.png",
+          "localFile": "23_6005_烟花·心心相印.png",
           "isSpecial": true,
           "specialReason": "活动限定",
           "activityId": 2026092300,

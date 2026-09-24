@@ -17,6 +17,7 @@ const catAccent: Record<string, 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'p
   '08': 'orange',
   '09': 'berry',
   '19': 'berry',
+  '32': 'sky',
   '01': 'ink',
   '03': 'plum',
   '15': 'plum',
@@ -52,6 +53,10 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
   const [catId, setCatId] = React.useState(initialCategoryId || '05');
   const [goldDetail, setGoldDetail] = React.useState<GoldDetail | null>(null);
   const [query, setQuery] = React.useState('');
+  // 活动玩法(32) 多级导航：玩法 → 子分类 → 内容
+  const [playMode, setPlayMode] = React.useState<'wish' | 'treasure'>('wish');
+  const [wishDirId, setWishDirId] = React.useState(1);
+  const [charmTypeId, setCharmTypeId] = React.useState('进攻类');
 
   // 当父组件传入新的 initialCategoryId 时切换分类
   React.useEffect(() => {
@@ -64,7 +69,46 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
   // 种子(05) 保持「品级优先」的作物图鉴习惯；其余分类统一按发布时间由新到旧。
   const isSeed = catId === '05';
   const isGoldenFruit = catId === '17';
+  const isPlay = catId === '32';
   const showGrade = isSeed || isGoldenFruit;
+
+  const playItems = React.useMemo(() => (cat?.items || []) as any[], [cat]);
+  const wishDirs = React.useMemo(
+    () => playItems.filter((i) => i.kind === 'wishDir'),
+    [playItems],
+  );
+  const charmCats = React.useMemo(
+    () => playItems.filter((i) => i.kind === 'charmCat'),
+    [playItems],
+  );
+  const selectedWishDir = React.useMemo(
+    () => wishDirs.find((d) => d.chooseId === wishDirId) || wishDirs[0],
+    [wishDirs, wishDirId],
+  );
+  const selectedCharmCat = React.useMemo(
+    () => charmCats.find((c) => c.charmType === charmTypeId) || charmCats[0],
+    [charmCats, charmTypeId],
+  );
+  const wishTextRows = React.useMemo(() => {
+    if (!isPlay || playMode !== 'wish' || !selectedWishDir) return [];
+    const dirImg = selectedWishDir.localFile || 'img_wish_wishSign_select.png';
+    return (selectedWishDir.texts || []).map((t: any) => ({
+      id: 80000 + (selectedWishDir.chooseId || 0) * 100 + t.text_id,
+      name: `第 ${t.text_id} 签`,
+      desc: t.desc,
+      kind: 'wishText',
+      localFile: dirImg,
+      iconFile: '',
+      level: 0,
+      rarity: 3,
+      rarityColor: 'B09DED',
+      emoji: '',
+    }));
+  }, [isPlay, playMode, selectedWishDir]);
+  const charmRows = React.useMemo(() => {
+    if (!isPlay || playMode !== 'treasure') return [];
+    return playItems.filter((i) => i.kind === 'charm' && i.charmType === (selectedCharmCat?.charmType || charmTypeId));
+  }, [isPlay, playMode, playItems, selectedCharmCat, charmTypeId]);
 
   // 给 CategoryNav 用的简化数据
   const navItems: CategoryNavItem[] = React.useMemo(
@@ -79,6 +123,12 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
   );
 
   const visibleItems = React.useMemo(() => {
+    // 活动玩法：按多级导航取叶子内容
+    if (isPlay) {
+      if (playMode === 'wish') return wishTextRows;
+      return charmRows;
+    }
+
     let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
 
     // 排序口径（所有有作物的分类统一）：
@@ -111,7 +161,7 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
       items = items.filter(hit);
     }
     return items;
-  }, [cat, isSeed, isGoldenFruit, query]);
+  }, [cat, isSeed, isGoldenFruit, isPlay, playMode, wishTextRows, charmRows, query]);
 
   // 跨分类搜索结果：当前分类没有时，告诉用户它在哪个分类
   const crossHits = React.useMemo(() => {
@@ -214,8 +264,102 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
               style={{ background: 'var(--bg-2)', borderBottom: '1.5px solid var(--line)' }}>
               <span className="text-lg sm:text-xl">{cat?.icon}</span>
               <span className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)]">{cat?.name}</span>
+              {isPlay && (
+                <span className="chip chip-sky ml-1">
+                  {playMode === 'wish' ? `心愿签 · ${selectedWishDir?.name || ''}` : `宝藏护送 · ${selectedCharmCat?.charmType || ''}`}
+                </span>
+              )}
               <span className="chip chip-ink ml-auto">{visibleCount} 件</span>
             </div>
+
+            {/* 活动玩法：三级导航（图标用游戏原图，不用 emoji） */}
+            {isPlay && (
+              <div className="px-3 pt-3 pb-1 space-y-2" style={{ borderBottom: '1px solid var(--line)' }}>
+                <div className="section-eyebrow">玩法</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {(playItems.filter((i) => i.kind === 'mode') as any[]).map((m) => (
+                    <button
+                      key={m.modeId}
+                      type="button"
+                      onClick={() => setPlayMode(m.modeId as 'wish' | 'treasure')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+                      style={
+                        playMode === m.modeId
+                          ? { background: 'var(--sky)', color: 'white', boxShadow: '0 2px 0 var(--sky-deep)' }
+                          : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                      }
+                    >
+                      <RemoteImage
+                        urls={itemImageUrls(m.iconFile, m.localFile)}
+                        name={m.name}
+                        className="w-4 h-4"
+                        rounded
+                      />
+                      <span>{m.name}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="section-eyebrow pt-1">
+                  {playMode === 'wish' ? '选签方向' : '锦囊分类'}
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {playMode === 'wish'
+                    ? wishDirs.map((d) => (
+                        <button
+                          key={d.chooseId}
+                          type="button"
+                          onClick={() => setWishDirId(d.chooseId)}
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-all"
+                          style={
+                            wishDirId === d.chooseId
+                              ? { background: 'var(--plum)', color: 'white' }
+                              : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                          }
+                        >
+                          <RemoteImage
+                            urls={itemImageUrls(d.iconFile, d.localFile)}
+                            name={d.name}
+                            className="w-4 h-4"
+                            rounded
+                          />
+                          <span>{d.name}</span>
+                          <span className="opacity-70 font-mono">{d.textCount}</span>
+                        </button>
+                      ))
+                    : charmCats.map((c) => (
+                        <button
+                          key={c.charmType}
+                          type="button"
+                          onClick={() => setCharmTypeId(c.charmType)}
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-all"
+                          style={
+                            charmTypeId === c.charmType
+                              ? { background: 'var(--sun)', color: 'white' }
+                              : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                          }
+                        >
+                          <RemoteImage
+                            urls={itemImageUrls(c.iconFile, c.localFile)}
+                            name={c.charmType}
+                            className="w-4 h-4"
+                            rounded
+                          />
+                          <span>{c.charmType}</span>
+                        </button>
+                      ))}
+                </div>
+                {playMode === 'wish' && selectedWishDir && (
+                  <p className="text-[11px] text-[var(--ink-mute)] leading-snug">
+                    {selectedWishDir.desc?.split('\n')[0]}
+                  </p>
+                )}
+                {playMode === 'treasure' && selectedCharmCat && (
+                  <p className="text-[11px] text-[var(--ink-mute)] leading-snug">
+                    {selectedCharmCat.desc}
+                  </p>
+                )}
+              </div>
+            )}
 
             <div className="p-2.5 sm:p-3 space-y-1.5 sm:space-y-2 max-h-[70vh] overflow-y-auto">
               {!cat ? (
@@ -247,6 +391,63 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
                       <span className="font-mono tnum text-xs sm:text-sm font-bold text-[var(--sun-deep)] flex-shrink-0">
                         💰 {seedPrice}
                       </span>
+                    </RowCard>
+                  );
+                }
+
+                // 心愿签签文行（用当前方向的签面原画）
+                if ((item as any).kind === 'wishText' || (isPlay && playMode === 'wish')) {
+                  const wishImg = (item as any).localFile || selectedWishDir?.localFile || 'img_wish_wishSign_select.png';
+                  return (
+                    <RowCard key={item.id}>
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                        style={{ background: 'var(--plum-bg)' }}>
+                        <RemoteImage
+                          urls={itemImageUrls('', wishImg)}
+                          name={item.name}
+                          className="w-12 h-12 sm:w-14 sm:h-14"
+                          rounded
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm sm:text-base font-bold">{item.name}</div>
+                        <div className="text-[11px] sm:text-xs text-[var(--ink-soft)] mt-0.5">{item.desc}</div>
+                      </div>
+                    </RowCard>
+                  );
+                }
+
+                // 宝藏护送锦囊行（带图标）
+                if ((item as any).kind === 'charm' || (isPlay && playMode === 'treasure')) {
+                  const charmGrade = getGrade(item.rarity, item.rarityColor);
+                  return (
+                    <RowCard key={item.id}>
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'var(--sun-bg)' }}>
+                        <RemoteImage
+                          urls={itemImageUrls(item.iconFile, (item as any).localFile)}
+                          name={item.name}
+                          className="w-12 h-12 sm:w-14 sm:h-14"
+                          rounded
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div
+                          className="text-sm sm:text-base font-bold"
+                          style={{ color: `#${charmGrade.color}` }}
+                          title={`类型：${charmGrade.name}`}>
+                          {(item as any).emoji ? `${(item as any).emoji} ` : ''}
+                          {item.name}
+                        </div>
+                        {item.desc && (
+                          <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 line-clamp-2 whitespace-pre-line">
+                            {item.desc}
+                          </div>
+                        )}
+                      </div>
+                      {(item as any).charmType && (
+                        <span className="chip chip-sun flex-shrink-0">{(item as any).charmType}</span>
+                      )}
                     </RowCard>
                   );
                 }
