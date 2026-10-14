@@ -1,6 +1,14 @@
 {
-  "exportedAt": "2026-09-23T16:40:36.721Z",
+  "exportedAt": "2026-10-14T15:30:06.285Z",
   "mutationTypes": [
+    {
+      "name": "奶茶",
+      "icon": "extraRes/gui/texture/mutant/icon/naicha.png",
+      "effectType": "增益",
+      "effectValue": "金露云酪",
+      "desc": "种植森野黄金芽有概率出现",
+      "releaseOrder": 17
+    },
     {
       "name": "乐园",
       "icon": "extraRes/gui/texture/mutant/icon/leyuan.png",
@@ -123,6 +131,58 @@
     }
   ],
   "goldenMutationCrops": [
+    {
+      "name": "黄金·森野黄金芽",
+      "seedId": 29005,
+      "exp": 7680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 200,
+      "cropId": 9005,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_9005_6.png",
+        "plant/model/v4/gold/Crop_9005_Seed.png",
+        "plant/model/v4/gold/Crop_9005_2.png",
+        "plant/model/v4/gold/Crop_9005_3.png",
+        "plant/model/v4/gold/Crop_9005_4.png",
+        "plant/model/v4/gold/Crop_9005_5.png",
+        "plant/model/v4/gold/Crop_9005_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": true,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 4,
+      "releaseOrder": 10440006
+    },
     {
       "name": "黄金·泡泡棉花糖",
       "seedId": 29004,
@@ -384,11 +444,222 @@
       "releaseOrder": 10440001
     },
     {
-      "name": "黄金·山丹丹",
-      "cropId": 435,
+      "name": "黄金·天山红枫",
+      "seedId": 22254,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
       "prob": 10,
       "points": 80,
-      "hasGrowth": true,
+      "cropId": 2254,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_2254_6.png",
+        "plant/model/v4/gold/Crop_2254_Seed.png",
+        "plant/model/v4/gold/Crop_2254_2.png",
+        "plant/model/v4/gold/Crop_2254_3.png",
+        "plant/model/v4/gold/Crop_2254_4.png",
+        "plant/model/v4/gold/Crop_2254_5.png",
+        "plant/model/v4/gold/Crop_2254_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330036
+    },
+    {
+      "name": "黄金·茱萸",
+      "seedId": 20165,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 165,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_165_6.png",
+        "plant/model/v4/gold/Crop_165_Seed.png",
+        "plant/model/v4/gold/Crop_165_2.png",
+        "plant/model/v4/gold/Crop_165_3.png",
+        "plant/model/v4/gold/Crop_165_4.png",
+        "plant/model/v4/gold/Crop_165_5.png",
+        "plant/model/v4/gold/Crop_165_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330035
+    },
+    {
+      "name": "黄金·森野芭乐",
+      "seedId": 20529,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 529,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_529_6.png",
+        "plant/model/v4/gold/Crop_529_Seed.png",
+        "plant/model/v4/gold/Crop_529_2.png",
+        "plant/model/v4/gold/Crop_529_3.png",
+        "plant/model/v4/gold/Crop_529_4.png",
+        "plant/model/v4/gold/Crop_529_5.png",
+        "plant/model/v4/gold/Crop_529_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330034
+    },
+    {
+      "name": "黄金·森野柿子",
+      "seedId": 21435,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 1435,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_1435_6.png",
+        "plant/model/v4/gold/Crop_1435_Seed.png",
+        "plant/model/v4/gold/Crop_1435_2.png",
+        "plant/model/v4/gold/Crop_1435_3.png",
+        "plant/model/v4/gold/Crop_1435_4.png",
+        "plant/model/v4/gold/Crop_1435_5.png",
+        "plant/model/v4/gold/Crop_1435_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330033
+    },
+    {
+      "name": "黄金·山丹丹",
+      "seedId": 20435,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 435,
       "phaseImages": [
         "plant/model/v4/gold/Crop_435_6.png",
         "plant/model/v4/gold/Crop_435_Seed.png",
@@ -426,15 +697,21 @@
           "sec": 0
         }
       ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
       "rarity": 3,
-      "releaseOrder": 10900002
+      "releaseOrder": 10330032
     },
     {
       "name": "黄金·月下美人",
-      "cropId": 6030,
+      "seedId": 26030,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
       "prob": 10,
-      "points": 200,
-      "hasGrowth": true,
+      "points": 80,
+      "cropId": 6030,
       "phaseImages": [
         "plant/model/v4/gold/Crop_6030_6.png",
         "plant/model/v4/gold/Crop_6030_Seed.png",
@@ -472,8 +749,11 @@
           "sec": 0
         }
       ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
       "rarity": 3,
-      "releaseOrder": 10900001
+      "releaseOrder": 10330031
     },
     {
       "name": "黄金·寒兰",
@@ -1672,6 +1952,266 @@
       "releaseOrder": 10330001
     },
     {
+      "name": "黄金·森野可可豆",
+      "seedId": 20021,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 21,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_21_6.png",
+        "plant/model/v4/gold/Crop_21_Seed.png",
+        "plant/model/v4/gold/Crop_21_2.png",
+        "plant/model/v4/gold/Crop_21_3.png",
+        "plant/model/v4/gold/Crop_21_4.png",
+        "plant/model/v4/gold/Crop_21_5.png",
+        "plant/model/v4/gold/Crop_21_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 2,
+      "releaseOrder": 10220036
+    },
+    {
+      "name": "黄金·森野红柚",
+      "seedId": 20528,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 528,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_528_6.png",
+        "plant/model/v4/gold/Crop_528_Seed.png",
+        "plant/model/v4/gold/Crop_528_2.png",
+        "plant/model/v4/gold/Crop_528_3.png",
+        "plant/model/v4/gold/Crop_528_4.png",
+        "plant/model/v4/gold/Crop_528_5.png",
+        "plant/model/v4/gold/Crop_528_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 2,
+      "releaseOrder": 10220035
+    },
+    {
+      "name": "黄金·森野甜橙",
+      "seedId": 20527,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 527,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_527_6.png",
+        "plant/model/v4/gold/Crop_527_Seed.png",
+        "plant/model/v4/gold/Crop_527_2.png",
+        "plant/model/v4/gold/Crop_527_3.png",
+        "plant/model/v4/gold/Crop_527_4.png",
+        "plant/model/v4/gold/Crop_527_5.png",
+        "plant/model/v4/gold/Crop_527_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 2,
+      "releaseOrder": 10220034
+    },
+    {
+      "name": "黄金·森野白桃",
+      "seedId": 20526,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 526,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_526_6.png",
+        "plant/model/v4/gold/Crop_526_Seed.png",
+        "plant/model/v4/gold/Crop_526_2.png",
+        "plant/model/v4/gold/Crop_526_3.png",
+        "plant/model/v4/gold/Crop_526_4.png",
+        "plant/model/v4/gold/Crop_526_5.png",
+        "plant/model/v4/gold/Crop_526_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 2,
+      "releaseOrder": 10220033
+    },
+    {
+      "name": "黄金·森野甜莓",
+      "seedId": 20525,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 525,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_525_6.png",
+        "plant/model/v4/gold/Crop_525_Seed.png",
+        "plant/model/v4/gold/Crop_525_2.png",
+        "plant/model/v4/gold/Crop_525_3.png",
+        "plant/model/v4/gold/Crop_525_4.png",
+        "plant/model/v4/gold/Crop_525_5.png",
+        "plant/model/v4/gold/Crop_525_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 2,
+      "releaseOrder": 10220032
+    },
+    {
       "name": "黄金·狗尾草",
       "seedId": 20516,
       "exp": 1440,
@@ -2767,6 +3307,58 @@
   "goldenAtlas": {
     "goldenFruit": [
       {
+        "name": "黄金·森野黄金芽",
+        "seedId": 29005,
+        "exp": 7680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 9005,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_9005_6.png",
+          "plant/model/v4/gold/Crop_9005_Seed.png",
+          "plant/model/v4/gold/Crop_9005_2.png",
+          "plant/model/v4/gold/Crop_9005_3.png",
+          "plant/model/v4/gold/Crop_9005_4.png",
+          "plant/model/v4/gold/Crop_9005_5.png",
+          "plant/model/v4/gold/Crop_9005_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": true,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 4,
+        "releaseOrder": 10440006
+      },
+      {
         "name": "黄金·泡泡棉花糖",
         "seedId": 29004,
         "exp": 7680,
@@ -3027,10 +3619,218 @@
         "releaseOrder": 10440001
       },
       {
-        "name": "黄金·山丹丹",
-        "seedId": 1040435,
+        "name": "黄金·天山红枫",
+        "seedId": 22254,
         "exp": 1680,
-        "fruit": 200,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 2254,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_2254_6.png",
+          "plant/model/v4/gold/Crop_2254_Seed.png",
+          "plant/model/v4/gold/Crop_2254_2.png",
+          "plant/model/v4/gold/Crop_2254_3.png",
+          "plant/model/v4/gold/Crop_2254_4.png",
+          "plant/model/v4/gold/Crop_2254_5.png",
+          "plant/model/v4/gold/Crop_2254_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330036
+      },
+      {
+        "name": "黄金·茱萸",
+        "seedId": 20165,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 165,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_165_6.png",
+          "plant/model/v4/gold/Crop_165_Seed.png",
+          "plant/model/v4/gold/Crop_165_2.png",
+          "plant/model/v4/gold/Crop_165_3.png",
+          "plant/model/v4/gold/Crop_165_4.png",
+          "plant/model/v4/gold/Crop_165_5.png",
+          "plant/model/v4/gold/Crop_165_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330035
+      },
+      {
+        "name": "黄金·森野芭乐",
+        "seedId": 20529,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 529,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_529_6.png",
+          "plant/model/v4/gold/Crop_529_Seed.png",
+          "plant/model/v4/gold/Crop_529_2.png",
+          "plant/model/v4/gold/Crop_529_3.png",
+          "plant/model/v4/gold/Crop_529_4.png",
+          "plant/model/v4/gold/Crop_529_5.png",
+          "plant/model/v4/gold/Crop_529_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330034
+      },
+      {
+        "name": "黄金·森野柿子",
+        "seedId": 21435,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 1435,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_1435_6.png",
+          "plant/model/v4/gold/Crop_1435_Seed.png",
+          "plant/model/v4/gold/Crop_1435_2.png",
+          "plant/model/v4/gold/Crop_1435_3.png",
+          "plant/model/v4/gold/Crop_1435_4.png",
+          "plant/model/v4/gold/Crop_1435_5.png",
+          "plant/model/v4/gold/Crop_1435_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330033
+      },
+      {
+        "name": "黄金·山丹丹",
+        "seedId": 20435,
+        "exp": 1680,
+        "fruit": 10,
         "price": 0,
         "prob": 10,
         "points": 80,
@@ -3072,17 +3872,20 @@
             "sec": 0
           }
         ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
         "rarity": 3,
-        "releaseOrder": 10900002
+        "releaseOrder": 10330032
       },
       {
         "name": "黄金·月下美人",
-        "seedId": 149030,
-        "exp": 7680,
-        "fruit": 192,
+        "seedId": 26030,
+        "exp": 1680,
+        "fruit": 10,
         "price": 0,
         "prob": 10,
-        "points": 200,
+        "points": 80,
         "cropId": 6030,
         "phaseImages": [
           "plant/model/v4/gold/Crop_6030_6.png",
@@ -3121,8 +3924,11 @@
             "sec": 0
           }
         ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
         "rarity": 3,
-        "releaseOrder": 10900001
+        "releaseOrder": 10330031
       },
       {
         "name": "黄金·寒兰",
@@ -4321,6 +5127,266 @@
         "releaseOrder": 10330001
       },
       {
+        "name": "黄金·森野可可豆",
+        "seedId": 20021,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 21,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_21_6.png",
+          "plant/model/v4/gold/Crop_21_Seed.png",
+          "plant/model/v4/gold/Crop_21_2.png",
+          "plant/model/v4/gold/Crop_21_3.png",
+          "plant/model/v4/gold/Crop_21_4.png",
+          "plant/model/v4/gold/Crop_21_5.png",
+          "plant/model/v4/gold/Crop_21_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 2,
+        "releaseOrder": 10220036
+      },
+      {
+        "name": "黄金·森野红柚",
+        "seedId": 20528,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 528,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_528_6.png",
+          "plant/model/v4/gold/Crop_528_Seed.png",
+          "plant/model/v4/gold/Crop_528_2.png",
+          "plant/model/v4/gold/Crop_528_3.png",
+          "plant/model/v4/gold/Crop_528_4.png",
+          "plant/model/v4/gold/Crop_528_5.png",
+          "plant/model/v4/gold/Crop_528_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 2,
+        "releaseOrder": 10220035
+      },
+      {
+        "name": "黄金·森野甜橙",
+        "seedId": 20527,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 527,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_527_6.png",
+          "plant/model/v4/gold/Crop_527_Seed.png",
+          "plant/model/v4/gold/Crop_527_2.png",
+          "plant/model/v4/gold/Crop_527_3.png",
+          "plant/model/v4/gold/Crop_527_4.png",
+          "plant/model/v4/gold/Crop_527_5.png",
+          "plant/model/v4/gold/Crop_527_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 2,
+        "releaseOrder": 10220034
+      },
+      {
+        "name": "黄金·森野白桃",
+        "seedId": 20526,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 526,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_526_6.png",
+          "plant/model/v4/gold/Crop_526_Seed.png",
+          "plant/model/v4/gold/Crop_526_2.png",
+          "plant/model/v4/gold/Crop_526_3.png",
+          "plant/model/v4/gold/Crop_526_4.png",
+          "plant/model/v4/gold/Crop_526_5.png",
+          "plant/model/v4/gold/Crop_526_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 2,
+        "releaseOrder": 10220033
+      },
+      {
+        "name": "黄金·森野甜莓",
+        "seedId": 20525,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 525,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_525_6.png",
+          "plant/model/v4/gold/Crop_525_Seed.png",
+          "plant/model/v4/gold/Crop_525_2.png",
+          "plant/model/v4/gold/Crop_525_3.png",
+          "plant/model/v4/gold/Crop_525_4.png",
+          "plant/model/v4/gold/Crop_525_5.png",
+          "plant/model/v4/gold/Crop_525_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 2,
+        "releaseOrder": 10220032
+      },
+      {
         "name": "黄金·狗尾草",
         "seedId": 20516,
         "exp": 1440,
@@ -5415,6 +6481,130 @@
     ],
     "costumeFruit": [
       {
+        "name": "玉兔邀月",
+        "seedId": 0,
+        "exp": 0,
+        "fruit": 0,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 8005,
+        "phaseImages": [],
+        "growTimeSec": 0,
+        "growTimeStr": "0秒",
+        "growPhases": [],
+        "seasons": 1,
+        "hasRenderPhases": true,
+        "desc": "【秋祈良愿】活动限定装扮，可在【装扮】功能中进行装备。",
+        "rarity": 4,
+        "releaseOrder": 20260924,
+        "officialListed": false
+      },
+      {
+        "name": "黄金·金露云酪",
+        "seedId": 204012,
+        "exp": 7680,
+        "fruit": 1,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 8005,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_8005_6.png",
+          "plant/model/v4/gold/Crop_8005_Seed.png",
+          "plant/model/v4/gold/Crop_8005_2.png",
+          "plant/model/v4/gold/Crop_8005_3.png",
+          "plant/model/v4/gold/Crop_8005_4.png",
+          "plant/model/v4/gold/Crop_8005_5.png",
+          "plant/model/v4/gold/Crop_8005_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": true,
+        "desc": "【奶茶热销中】活动限定装扮，可在【装扮】功能中进行装备。",
+        "rarity": 4,
+        "releaseOrder": 10606002
+      },
+      {
+        "name": "金露云酪",
+        "seedId": 204011,
+        "exp": 7680,
+        "fruit": 1,
+        "price": 0,
+        "prob": 10,
+        "points": 200,
+        "cropId": 8005,
+        "phaseImages": [
+          "plant/model/v4/Crop_8005_6.png",
+          "plant/model/v4/Crop_8005_Seed.png",
+          "plant/model/v4/Crop_8005_2.png",
+          "plant/model/v4/Crop_8005_3.png",
+          "plant/model/v4/Crop_8005_4.png",
+          "plant/model/v4/Crop_8005_5.png",
+          "plant/model/v4/Crop_8005_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": true,
+        "desc": "【奶茶热销中】活动限定装扮，可在【装扮】功能中进行装备。",
+        "rarity": 4,
+        "releaseOrder": 10606001
+      },
+      {
         "name": "黄金·比熊棉花糖",
         "seedId": 204009,
         "exp": 0,
@@ -5831,107 +7021,9 @@
         "note": "活动结束后出售",
         "rarity": 4,
         "releaseOrder": 10101001
-      },
-      {
-        "name": "月下美人",
-        "seedId": 49030,
-        "exp": 7680,
-        "fruit": 192,
-        "price": 0,
-        "prob": 10,
-        "points": 200,
-        "cropId": 6030,
-        "phaseImages": [
-          "plant/model/v4/Crop_6030_6.png",
-          "plant/model/v4/Crop_6030_Seed.png",
-          "plant/model/v4/Crop_6030_2.png",
-          "plant/model/v4/Crop_6030_3.png",
-          "plant/model/v4/Crop_6030_4.png",
-          "plant/model/v4/Crop_6030_5.png",
-          "plant/model/v4/Crop_6030_6.png"
-        ],
-        "growTimeSec": 43200,
-        "growTimeStr": "12小时",
-        "growPhases": [
-          {
-            "name": "种子",
-            "sec": 8640
-          },
-          {
-            "name": "发芽",
-            "sec": 8640
-          },
-          {
-            "name": "小叶子",
-            "sec": 8640
-          },
-          {
-            "name": "大叶子",
-            "sec": 8640
-          },
-          {
-            "name": "花蕾",
-            "sec": 8640
-          },
-          {
-            "name": "盛开",
-            "sec": 0
-          }
-        ],
-        "rarity": 3,
-        "releaseOrder": 10900003
       }
     ],
     "eventFruit": [
-      {
-        "name": "山丹丹",
-        "seedId": 40435,
-        "exp": 1680,
-        "fruit": 200,
-        "price": 0,
-        "prob": 10,
-        "points": 80,
-        "cropId": 435,
-        "phaseImages": [
-          "plant/model/v4/Crop_435_6.png",
-          "plant/model/v4/Crop_435_Seed.png",
-          "plant/model/v4/Crop_435_2.png",
-          "plant/model/v4/Crop_435_3.png",
-          "plant/model/v4/Crop_435_4.png",
-          "plant/model/v4/Crop_435_5.png",
-          "plant/model/v4/Crop_435_6.png"
-        ],
-        "growTimeSec": 43200,
-        "growTimeStr": "12小时",
-        "growPhases": [
-          {
-            "name": "种子",
-            "sec": 8640
-          },
-          {
-            "name": "发芽",
-            "sec": 8640
-          },
-          {
-            "name": "小叶子",
-            "sec": 8640
-          },
-          {
-            "name": "大叶子",
-            "sec": 8640
-          },
-          {
-            "name": "花蕾",
-            "sec": 8640
-          },
-          {
-            "name": "盛开",
-            "sec": 0
-          }
-        ],
-        "rarity": 3,
-        "releaseOrder": 10900004
-      },
       {
         "name": "黄金·荷花",
         "seedId": 1046109,
@@ -6197,6 +7289,15 @@
     ]
   },
   "probabilities": [
+    {
+      "name": "奶茶",
+      "quality": "天工",
+      "rate": "7.70%",
+      "qualityId": 4,
+      "order": 895,
+      "releaseOrder": 17,
+      "raw": 770
+    },
     {
       "name": "乐园",
       "quality": "天工",

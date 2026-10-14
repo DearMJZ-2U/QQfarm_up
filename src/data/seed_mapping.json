@@ -1176,6 +1176,54 @@
     "fileName": "29003_星语铃花_Crop_9003_Seed.png"
   },
   {
+    "cropNumber": 525,
+    "seedId": 20525,
+    "name": "森野甜莓",
+    "fileName": "20525_森野甜莓_Crop_525_Seed.png"
+  },
+  {
+    "cropNumber": 526,
+    "seedId": 20526,
+    "name": "森野白桃",
+    "fileName": "20526_森野白桃_Crop_526_Seed.png"
+  },
+  {
+    "cropNumber": 527,
+    "seedId": 20527,
+    "name": "森野甜橙",
+    "fileName": "20527_森野甜橙_Crop_527_Seed.png"
+  },
+  {
+    "cropNumber": 528,
+    "seedId": 20528,
+    "name": "森野红柚",
+    "fileName": "20528_森野红柚_Crop_528_Seed.png"
+  },
+  {
+    "cropNumber": 21,
+    "seedId": 20021,
+    "name": "森野可可豆",
+    "fileName": "20021_森野可可豆_Crop_21_Seed.png"
+  },
+  {
+    "cropNumber": 1435,
+    "seedId": 21435,
+    "name": "森野柿子",
+    "fileName": "21435_森野柿子_Crop_1435_Seed.png"
+  },
+  {
+    "cropNumber": 529,
+    "seedId": 20529,
+    "name": "森野芭乐",
+    "fileName": "20529_森野芭乐_Crop_529_Seed.png"
+  },
+  {
+    "cropNumber": 9005,
+    "seedId": 29005,
+    "name": "森野黄金芽",
+    "fileName": "29005_森野黄金芽_Crop_9005_Seed.png"
+  },
+  {
     "cropNumber": 435,
     "seedId": 20435,
     "name": "山丹丹",
@@ -1186,5 +1234,17 @@
     "seedId": 26030,
     "name": "月下美人",
     "fileName": "26030_月下美人_Crop_6030_Seed.png"
+  },
+  {
+    "cropNumber": 165,
+    "seedId": 20165,
+    "name": "茱萸",
+    "fileName": "20165_茱萸_Crop_165_Seed.png"
+  },
+  {
+    "cropNumber": 2254,
+    "seedId": 22254,
+    "name": "天山红枫",
+    "fileName": "22254_天山红枫_Crop_2254_Seed.png"
   }
 ]

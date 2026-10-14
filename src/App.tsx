@@ -11,6 +11,7 @@ import CropAtlasTab from './components/CropAtlasTab';
 import ItemsTab from './components/ItemsTab';
 import MutationAtlasTab from './components/MutationAtlasTab';
 import CostumeAtlasTab from './components/CostumeAtlasTab';
+import RanchAtlasTab from './components/RanchAtlasTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
 import { CategoryNav, type CategoryNavItem } from './components/shared';
@@ -21,9 +22,10 @@ import itemsData from './data/items.json';
 import landsData from './data/lands_atlas.json';
 import costumeData from './data/costume_atlas.json';
 import mutationData from './data/mutation_atlas.json';
+import ranchData from './data/ranch_atlas.json';
 
 type BottomTab = 'home' | 'calc' | 'atlas' | 'items' | 'tools';
-type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume';
+type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume' | 'ranch';
 type ToolsSubTab = 'level' | 'land';
 type ItemCategoryId = string;
 
@@ -49,6 +51,7 @@ const atlasSubTabCount = (id: AtlasSubTab): number => {
   if (id === 'crops') return (seedsData as any).count || (seedsData as any).rows?.length || 0;
   if (id === 'lands') return (landsData as any).plots?.length || 0;
   if (id === 'costume') return (costumeData as any).categories?.reduce((s: number, c: any) => s + c.items.length, 0) || 0;
+  if (id === 'ranch') return (ranchData as any).count || (ranchData as any).animals?.length || 0;
   // mutation: 变异类型 + 黄金果实 + 装扮果实 + 活动果实
   const m = mutationData as any;
   const golden = m.goldenAtlas ? (m.goldenAtlas.goldenFruit?.length || 0) + (m.goldenAtlas.costumeFruit?.length || 0) + (m.goldenAtlas.eventFruit?.length || 0) : 0;
@@ -57,6 +60,7 @@ const atlasSubTabCount = (id: AtlasSubTab): number => {
 
 const atlasSubTabsDef: Array<{ id: AtlasSubTab; label: string; emoji: string; color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' }> = [
   { id: 'crops', label: '作物', emoji: '🌿', color: 'leaf' },
+  { id: 'ranch', label: '牧场', emoji: '🐾', color: 'sun' },
   { id: 'costume', label: '装扮', emoji: '🏡', color: 'sky' },
   { id: 'lands', label: '土地', emoji: '🏞️', color: 'orange' },
   { id: 'mutation', label: '变异', emoji: '🧬', color: 'berry' },
@@ -84,6 +88,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
   const costumeCount = (costumeData as any).categories?.reduce((s: number, c: any) => s + c.items.length, 0) || 0;
   const landsCount = (landsData as any).plots?.length || 0;
   const mutationCount = atlasSubTabCount('mutation');
+  const ranchCount = atlasSubTabCount('ranch');
 
   return [
     {
@@ -98,6 +103,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
       title: '图鉴',
       items: [
         { icon: '🌿', label: '作物图鉴', id: 'crops', count: cropsCount, color: 'leaf' },
+        { icon: '🐾', label: '牧场图鉴', id: 'atlas_ranch', count: ranchCount, color: 'sun' },
         { icon: '🏡', label: '装扮图鉴', id: 'atlas_costume', count: costumeCount, color: 'sky' },
         { icon: '🏞️', label: '土地图鉴', id: 'lands', count: landsCount, color: 'orange' },
         { icon: '🧬', label: '变异图鉴', id: 'atlas_mutation', count: mutationCount, color: 'berry' },
@@ -108,6 +114,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
       items: [
         { icon: '🌱', label: '种子', id: 'items_05', count: itemsCountFor('05'), color: 'leaf' },
         { icon: '✨', label: '黄金果实', id: 'items_17', count: itemsCountFor('17'), color: 'sun' },
+        { icon: '🧋', label: '奶茶店装修', id: 'items_33', count: itemsCountFor('33'), color: 'sun' },
         { icon: '💰', label: '货币与计数', id: 'items_02', count: itemsCountFor('02'), color: 'sun' },
         { icon: '🛠️', label: '操作工具', id: 'items_04', count: itemsCountFor('04'), color: 'sky' },
         { icon: '🧪', label: '化肥道具', id: 'items_07', count: itemsCountFor('07'), color: 'leaf' },
@@ -211,6 +218,7 @@ export default function App() {
     if (id === 'lands') { navigate('atlas', 'lands'); return; }
     if (id === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
     if (id === 'atlas_costume') { navigate('atlas', 'costume'); return; }
+    if (id === 'atlas_ranch') { navigate('atlas', 'ranch'); return; }
     // 商店道具直达分类：items_05 → navigate('items', '05')
     if (id.startsWith('items_')) {
       const catId = id.substring(6);
@@ -225,6 +233,7 @@ export default function App() {
     if (target === 'atlas') { navigate('atlas', 'crops'); return; }
     if (target === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
     if (target === 'atlas_costume') { navigate('atlas', 'costume'); return; }
+    if (target === 'atlas_ranch') { navigate('atlas', 'ranch'); return; }
     if (target === 'items_seed') { navigate('items', '05'); return; }
     if (target === 'items_gold') { navigate('items', '17'); return; }
     if (target === 'more_level') { navigate('tools', 'level'); return; }
@@ -265,6 +274,7 @@ export default function App() {
                     {atlasSubTab === 'lands' && <LandAtlasTab />}
                     {atlasSubTab === 'mutation' && <MutationAtlasTab />}
                     {atlasSubTab === 'costume' && <CostumeAtlasTab />}
+                    {atlasSubTab === 'ranch' && <RanchAtlasTab />}
                   </div>
                 </div>
               </div>

@@ -1,17 +1,11 @@
 {
-  "exportedAt": "2026-09-23T16:26:05.749Z",
+  "exportedAt": "2026-10-14T15:30:06.285Z",
   "categories": [
     {
       "name": "小屋",
       "icon": "🏠",
       "desc": "农场小屋外观",
       "items": [
-        {
-          "name": "中秋小屋",
-          "tag": "活动",
-          "desc": "中秋小屋",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_house_10.png"
-        },
         {
           "name": "默认小屋",
           "tag": "默认",
@@ -49,9 +43,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_house_5.png"
         },
         {
-          "name": "夏野农家小屋",
+          "name": "青野农家小屋",
           "tag": "活动",
-          "desc": "夏野农家小屋",
+          "desc": "青野农家小屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_house_6.png"
         },
         {
@@ -71,6 +65,18 @@
           "tag": "活动",
           "desc": "比熊乐园小屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_house_9.png"
+        },
+        {
+          "name": "桂月华庭小屋",
+          "tag": "活动",
+          "desc": "桂月华庭小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_10.png"
+        },
+        {
+          "name": "缤纷奶茶小屋",
+          "tag": "活动",
+          "desc": "缤纷奶茶小屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_house_11.png"
         }
       ]
     },
@@ -79,12 +85,6 @@
       "icon": "🪧",
       "desc": "农场木牌",
       "items": [
-        {
-          "name": "中秋木牌",
-          "tag": "活动",
-          "desc": "中秋木牌",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_board_9.png"
-        },
         {
           "name": "默认木牌",
           "tag": "默认",
@@ -116,9 +116,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_board_4.png"
         },
         {
-          "name": "夏野农家木牌",
+          "name": "青野农家木牌",
           "tag": "活动",
-          "desc": "夏野农家木牌",
+          "desc": "青野农家木牌",
           "img": "extraRes/gui/texture/skinDetail/img_skin_board_5.png"
         },
         {
@@ -138,6 +138,18 @@
           "tag": "活动",
           "desc": "比熊乐园木牌",
           "img": "extraRes/gui/texture/skinDetail/img_skin_board_8.png"
+        },
+        {
+          "name": "桂月华庭木牌",
+          "tag": "活动",
+          "desc": "桂月华庭木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_9.png"
+        },
+        {
+          "name": "缤纷奶茶木牌",
+          "tag": "活动",
+          "desc": "缤纷奶茶木牌",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_board_10.png"
         }
       ]
     },
@@ -146,12 +158,6 @@
       "icon": "🚧",
       "desc": "农场栅栏",
       "items": [
-        {
-          "name": "中秋栅栏",
-          "tag": "活动",
-          "desc": "中秋栅栏",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_10.png"
-        },
         {
           "name": "默认栅栏",
           "tag": "默认",
@@ -189,9 +195,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_5.png"
         },
         {
-          "name": "夏野农家栅栏",
+          "name": "青野农家栅栏",
           "tag": "活动",
-          "desc": "夏野农家栅栏",
+          "desc": "青野农家栅栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_6.png"
         },
         {
@@ -211,6 +217,18 @@
           "tag": "活动",
           "desc": "比熊乐园栅栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_9.png"
+        },
+        {
+          "name": "桂月华庭栅栏",
+          "tag": "活动",
+          "desc": "桂月华庭栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_10.png"
+        },
+        {
+          "name": "缤纷奶茶栅栏",
+          "tag": "活动",
+          "desc": "缤纷奶茶栅栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_barrier_11.png"
         }
       ]
     },
@@ -219,12 +237,6 @@
       "icon": "🪴",
       "desc": "装饰盆栽",
       "items": [
-        {
-          "name": "中秋塔",
-          "tag": "活动",
-          "desc": "中秋塔",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_5.png"
-        },
         {
           "name": "哈哈南瓜塔",
           "tag": "活动",
@@ -272,6 +284,24 @@
           "tag": "活动",
           "desc": "黄金·比熊棉花糖",
           "img": "extraRes/gui/texture/skinDetail/img_skin_tower_4_1.png"
+        },
+        {
+          "name": "玉兔邀月",
+          "tag": "活动",
+          "desc": "玉兔邀月",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_5.png"
+        },
+        {
+          "name": "金露云酪",
+          "tag": "活动",
+          "desc": "金露云酪",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_6.png"
+        },
+        {
+          "name": "黄金·金露云酪",
+          "tag": "活动",
+          "desc": "黄金·金露云酪",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_6_1.png"
         }
       ]
     },
@@ -280,12 +310,6 @@
       "icon": "🐕",
       "desc": "狗屋外观",
       "items": [
-        {
-          "name": "中秋狗屋",
-          "tag": "活动",
-          "desc": "中秋狗屋",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_9.png"
-        },
         {
           "name": "默认狗屋",
           "tag": "默认",
@@ -317,9 +341,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_4.png"
         },
         {
-          "name": "夏野农家狗屋",
+          "name": "青野农家狗屋",
           "tag": "活动",
-          "desc": "夏野农家狗屋",
+          "desc": "青野农家狗屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_5.png"
         },
         {
@@ -339,6 +363,18 @@
           "tag": "活动",
           "desc": "比熊乐园狗屋",
           "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_8.png"
+        },
+        {
+          "name": "桂月华庭狗屋",
+          "tag": "活动",
+          "desc": "桂月华庭狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_9.png"
+        },
+        {
+          "name": "缤纷奶茶狗屋",
+          "tag": "活动",
+          "desc": "缤纷奶茶狗屋",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_doghouse_10.png"
         }
       ]
     },
@@ -347,12 +383,6 @@
       "icon": "🏚️",
       "desc": "仓库外观",
       "items": [
-        {
-          "name": "中秋仓库",
-          "tag": "活动",
-          "desc": "中秋仓库",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_9.png"
-        },
         {
           "name": "默认仓库",
           "tag": "默认",
@@ -384,9 +414,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_4.png"
         },
         {
-          "name": "夏野农家仓库",
+          "name": "青野农家仓库",
           "tag": "活动",
-          "desc": "夏野农家仓库",
+          "desc": "青野农家仓库",
           "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_5.png"
         },
         {
@@ -406,6 +436,18 @@
           "tag": "活动",
           "desc": "比熊乐园仓库",
           "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_8.png"
+        },
+        {
+          "name": "桂月华庭仓库",
+          "tag": "活动",
+          "desc": "桂月华庭仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_9.png"
+        },
+        {
+          "name": "缤纷奶茶仓库",
+          "tag": "活动",
+          "desc": "缤纷奶茶仓库",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_warehouse_10.png"
         }
       ]
     },
@@ -414,12 +456,6 @@
       "icon": "🛣️",
       "desc": "道路装饰",
       "items": [
-        {
-          "name": "中秋街道",
-          "tag": "活动",
-          "desc": "中秋街道",
-          "img": "extraRes/gui/texture/skinDetail/img_skin_road_10.png"
-        },
         {
           "name": "默认街道",
           "tag": "默认",
@@ -457,9 +493,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_road_5.png"
         },
         {
-          "name": "夏野农家街道",
+          "name": "青野农家街道",
           "tag": "活动",
-          "desc": "夏野农家街道",
+          "desc": "青野农家街道",
           "img": "extraRes/gui/texture/skinDetail/img_skin_road_6.png"
         },
         {
@@ -479,6 +515,18 @@
           "tag": "活动",
           "desc": "比熊乐园街道",
           "img": "extraRes/gui/texture/skinDetail/img_skin_road_9.png"
+        },
+        {
+          "name": "桂月华庭街道",
+          "tag": "活动",
+          "desc": "桂月华庭街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_10.png"
+        },
+        {
+          "name": "缤纷奶茶街道",
+          "tag": "活动",
+          "desc": "缤纷奶茶街道",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_road_11.png"
         }
       ]
     },
@@ -524,9 +572,9 @@
           "img": "extraRes/gui/texture/skinDetail/img_skin_fence_5.png"
         },
         {
-          "name": "夏野农家围栏",
+          "name": "青野农家围栏",
           "tag": "活动",
-          "desc": "夏野农家围栏",
+          "desc": "青野农家围栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_fence_6.png"
         },
         {
@@ -546,6 +594,18 @@
           "tag": "活动",
           "desc": "比熊乐园围栏",
           "img": "extraRes/gui/texture/skinDetail/img_skin_fence_9.png"
+        },
+        {
+          "name": "桂月华庭围栏",
+          "tag": "活动",
+          "desc": "桂月华庭围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_10.png"
+        },
+        {
+          "name": "缤纷奶茶围栏",
+          "tag": "活动",
+          "desc": "缤纷奶茶围栏",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_fence_11.png"
         }
       ]
     }

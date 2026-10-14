@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, X, Search } from 'lucide-react';
+import { ShoppingBag, X, Search, ZoomIn } from 'lucide-react';
 import itemsData from '../data/items.json';
 import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade, StatTile, parseGrowPhasesStr } from './shared';
 import type { CategoryNavItem } from './shared';
@@ -18,6 +18,7 @@ const catAccent: Record<string, 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'p
   '09': 'berry',
   '19': 'berry',
   '32': 'sky',
+  '33': 'sun',
   '01': 'ink',
   '03': 'plum',
   '15': 'plum',
@@ -45,6 +46,154 @@ interface GoldDetail {
 // 占位/无意义条目过滤（id 列表）
 const HIDDEN_ITEM_IDS = new Set([2101, 2102, 2103]);
 
+// ── 奶茶店装修（cat 33）───────────────────────────────────────────
+// 36 件部件 = 5 套主题 × 7 个槽位（屋顶/门/窗/墙面/地板/桌椅/装饰）+ 人气装饰。
+// 槽位名与主题序号来自提取脚本写入的 item.decoration 字段（SkinPartCfg / SkinSlotTypeCfg）。
+const DECOR_SET_META = [
+  { name: '基础', emoji: '🏠' },
+  { name: '椰风', emoji: '🌴' },
+  { name: '森野', emoji: '🌿' },
+  { name: '可可', emoji: '🍫' },
+  { name: '蜜熊', emoji: '🧸' },
+];
+
+// 大图预览：装修部件原图是 500×500，卡片上只有 ~120px，看不清细节，点开看大图。
+// 支持 ←/→ 在全部部件间翻页、ESC / 点背景关闭。
+function DecorZoom({ items, index, onClose, onIndex }: {
+  items: any[]; index: number; onClose: () => void; onIndex: (i: number) => void;
+}) {
+  const item = items[index];
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') onIndex((index - 1 + items.length) % items.length);
+      if (e.key === 'ArrowRight') onIndex((index + 1) % items.length);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [index, items.length, onClose, onIndex]);
+  if (!item) return null;
+  return (
+    <Portal>
+      <motion.div
+        key="decor-zoom"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+        onClick={onClose}>
+        <div className="absolute inset-0 bg-[var(--ink)]/45 backdrop-blur-sm" />
+        <motion.div
+          key="decor-zoom-panel"
+          initial={{ scale: 0.92, y: 14 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.96, opacity: 0 }}
+          transition={{ type: 'spring', damping: 26, stiffness: 300 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-[640px] rounded-3xl p-4 sm:p-6 flex flex-col items-center gap-3"
+          style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+          <button onClick={onClose}
+            className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center z-10"
+            style={{ background: 'var(--bg-2)' }} aria-label="关闭">
+            <X size={18} className="text-[var(--ink-soft)]" />
+          </button>
+          <div className="w-full flex items-center justify-center rounded-2xl py-2"
+            style={{ background: 'var(--surface)' }}>
+            <RemoteImage urls={itemImageUrls(item.iconFile, item.localFile)} name={item.name}
+              className="w-[64vw] h-[64vw] max-w-[520px] max-h-[520px]" rounded />
+          </div>
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            <span className="font-display italic text-lg sm:text-xl font-bold text-[var(--ink)]">{item.name}</span>
+            {item.decoration?.setName && <span className="chip chip-sun">{item.decoration.setName}套</span>}
+            {item.decoration?.slotName && <span className="chip chip-ink">{item.decoration.slotName}</span>}
+          </div>
+          {items.length > 1 && (
+            <div className="flex items-center gap-3">
+              <button type="button" onClick={() => onIndex((index - 1 + items.length) % items.length)}
+                className="w-9 h-9 rounded-full flex items-center justify-center"
+                style={{ background: 'var(--bg-2)' }} aria-label="上一个">‹</button>
+              <span className="text-[11px] font-mono text-[var(--ink-mute)] tnum">{index + 1} / {items.length}</span>
+              <button type="button" onClick={() => onIndex((index + 1) % items.length)}
+                className="w-9 h-9 rounded-full flex items-center justify-center"
+                style={{ background: 'var(--bg-2)' }} aria-label="下一个">›</button>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </Portal>
+  );
+}
+
+function DecorView({ items }: { items: any[] }) {
+  const [zoomIndex, setZoomIndex] = React.useState(-1);
+  const ordered = React.useMemo(() => {
+    const groups = new Map<number, any[]>();
+    for (const it of items) {
+      const si = it.decoration?.setIndex ?? -1;
+      if (!groups.has(si)) groups.set(si, []);
+      groups.get(si)!.push(it);
+    }
+    return [...groups.keys()].sort((a, b) => a - b).map((si) => ({
+      si,
+      meta: DECOR_SET_META[si] || { name: '其它', emoji: '🎨' },
+      list: [...(groups.get(si) || [])].sort(
+        (a, b) => (a.decoration?.sortOrder || 0) - (b.decoration?.sortOrder || 0) || (a.id || 0) - (b.id || 0),
+      ),
+    }));
+  }, [items]);
+  // 全部部件按展示顺序拍平，供大图 ←/→ 跨套装翻页
+  const flat = React.useMemo(() => ordered.flatMap((g) => g.list), [ordered]);
+
+  return (
+    <>
+      <div className="p-3 sm:p-4 space-y-5">
+        {ordered.map(({ si, meta, list }) => (
+          <div key={si} className="space-y-2">
+            <div className="flex items-center gap-2 px-1">
+              <span className="text-base">{meta.emoji}</span>
+              <span className="font-bold text-sm text-[var(--ink)]">{meta.name}套</span>
+              <span className="chip chip-ink" style={{ fontSize: '0.65rem' }}>{list.length} 件</span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+              {list.map((it) => {
+                const canZoom = !!(it.localFile && it.iconFile);
+                return (
+                  <button
+                    key={it.id}
+                    type="button"
+                    onClick={() => canZoom && setZoomIndex(flat.indexOf(it))}
+                    className={`sticker p-2 flex flex-col gap-1.5 text-left group ${canZoom ? 'sticker-press cursor-zoom-in' : 'cursor-default'}`}>
+                    <div className="w-full aspect-square rounded-xl flex items-center justify-center overflow-hidden relative"
+                      style={{ background: 'var(--surface-soft)' }}>
+                      {canZoom
+                        ? <RemoteImage urls={itemImageUrls(it.iconFile, it.localFile)} name={it.name} className="w-[88%] h-[88%]" rounded />
+                        : <span className="text-[var(--ink-mute)] text-xs font-bold">空</span>}
+                      {canZoom && (
+                        <span className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ background: 'rgba(255,255,255,0.94)', boxShadow: '0 1px 4px rgba(0,0,0,.14)' }}>
+                          <ZoomIn size={13} className="text-[var(--ink-soft)]" />
+                        </span>
+                      )}
+                    </div>
+                    <div className="px-0.5">
+                      <div className="text-[11px] font-bold text-[var(--ink)] truncate" title={it.name}>{it.name}</div>
+                      {it.decoration?.slotName && (
+                        <div className="text-[9px] text-[var(--ink-mute)]">{it.decoration.slotName}</div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {zoomIndex >= 0 && zoomIndex < flat.length && (
+          <DecorZoom items={flat} index={zoomIndex} onClose={() => setZoomIndex(-1)} onIndex={setZoomIndex} />
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 function categoryCount(c: any): number {
   return (c.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id)).length;
 }
@@ -70,6 +219,8 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
   const isSeed = catId === '05';
   const isGoldenFruit = catId === '17';
   const isPlay = catId === '32';
+  // 奶茶店装修（cat 33）：按 5 套主题 + 槽位分组展示，不走通用行卡片
+  const isDecor = catId === '33';
   const showGrade = isSeed || isGoldenFruit;
 
   const playItems = React.useMemo(() => (cat?.items || []) as any[], [cat]);
@@ -361,6 +512,13 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
               </div>
             )}
 
+            {isDecor ? (
+              visibleCount === 0 ? (
+                <div className="p-6"><EmptyState emoji="🫙" title="该分类暂无数据" /></div>
+              ) : (
+                <div className="max-h-[70vh] overflow-y-auto"><DecorView items={visibleItems} /></div>
+              )
+            ) : (
             <div className="p-2.5 sm:p-3 space-y-1.5 sm:space-y-2 max-h-[70vh] overflow-y-auto">
               {!cat ? (
                 <EmptyState emoji="🛒" title="数据整理中" />
@@ -500,6 +658,7 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
                 );
               })}
             </div>
+            )}
           </motion.div>
         </div>
       </div>
