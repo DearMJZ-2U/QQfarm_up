@@ -1,0 +1,565 @@
+{
+  "exportedAt": "2026-10-15T10:51:39.638Z",
+  "activityId": 2026110101,
+  "activityName": "奶茶热销中",
+  "currency": {
+    "id": 1041,
+    "name": "奶茶券",
+    "note": "活动代币，可兑换奖励；活动结束后可出售为金币"
+  },
+  "boostItem": {
+    "id": 1042,
+    "name": "宣传喇叭",
+    "note": "使用后立即获得 1 小时基础营业销量（不叠加员工特长和互动效果）"
+  },
+  "formula": {
+    "sales": "销量（杯/小时）= 热卖值 = 店铺等级基础热卖值 × (1 + Σ 员工热卖值特长 + 互动加成)",
+    "revenue": "奶茶券/小时 = 热卖值 × 单杯奶茶券单价 × (1 + 店铺高级定价% + 互动售价%)",
+    "note": "「销量 = 热卖值」与「招牌试饮 +20% 使 45 券 → 54 券」均由活动实测数据交叉验证；金币折算公式在服务端执行。"
+  },
+  "recipes": [
+    {
+      "id": 1,
+      "name": "普通奶茶",
+      "price": 3,
+      "priceCurrencyId": 1041,
+      "fruitId": 0,
+      "fruitName": "",
+      "fruitPerCup": 0,
+      "fruitGold": 0,
+      "fruitRarity": 1,
+      "fruitRarityColor": "",
+      "fruitRequiredLevel": 0,
+      "seedId": 0,
+      "seedName": "",
+      "seedGold": 0,
+      "growTimeSec": 0,
+      "fruitPerHarvest": 0,
+      "normalOutputCount": 0,
+      "coinFormula": [
+        0,
+        0,
+        0
+      ],
+      "unlockLevel": 1,
+      "drinkIcon": "milktea_1.png",
+      "desc": "普通奶茶，不限量供应，每杯售价奶茶券x3。"
+    },
+    {
+      "id": 2,
+      "name": "甜莓奶茶",
+      "price": 10,
+      "priceCurrencyId": 1041,
+      "fruitId": 40525,
+      "fruitName": "森野甜莓",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20525,
+      "seedName": "森野甜莓种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 1,
+      "drinkIcon": "milktea_2.png",
+      "desc": "消耗森野甜莓制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 3,
+      "name": "白桃乌龙",
+      "price": 11,
+      "priceCurrencyId": 1041,
+      "fruitId": 40526,
+      "fruitName": "森野白桃",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20526,
+      "seedName": "森野白桃种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 3,
+      "drinkIcon": "milktea_3.png",
+      "desc": "消耗森野白桃制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 4,
+      "name": "摇摇甜橙",
+      "price": 12,
+      "priceCurrencyId": 1041,
+      "fruitId": 40527,
+      "fruitName": "森野甜橙",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20527,
+      "seedName": "森野甜橙种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 5,
+      "drinkIcon": "milktea_4.png",
+      "desc": "消耗森野甜橙制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 5,
+      "name": "馥香红柚",
+      "price": 13,
+      "priceCurrencyId": 1041,
+      "fruitId": 40528,
+      "fruitName": "森野红柚",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20528,
+      "seedName": "森野红柚种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 7,
+      "drinkIcon": "milktea_5.png",
+      "desc": "消耗森野红柚制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 6,
+      "name": "厚乳可可",
+      "price": 14,
+      "priceCurrencyId": 1041,
+      "fruitId": 40021,
+      "fruitName": "森野可可豆",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20021,
+      "seedName": "森野可可豆种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 9,
+      "drinkIcon": "milktea_6.png",
+      "desc": "消耗森野可可豆制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 7,
+      "name": "柿柿如意",
+      "price": 15,
+      "priceCurrencyId": 1041,
+      "fruitId": 41435,
+      "fruitName": "森野柿子",
+      "fruitPerCup": 1,
+      "fruitGold": 10000,
+      "fruitRarity": 3,
+      "fruitRarityColor": "B09DED",
+      "fruitRequiredLevel": 41,
+      "seedId": 21435,
+      "seedName": "森野柿子种子",
+      "seedGold": 2000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1276,
+        2,
+        957
+      ],
+      "unlockLevel": 11,
+      "drinkIcon": "milktea_7.png",
+      "desc": "消耗森野柿子制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 8,
+      "name": "芭乐冰奶",
+      "price": 16,
+      "priceCurrencyId": 1041,
+      "fruitId": 40529,
+      "fruitName": "森野芭乐",
+      "fruitPerCup": 1,
+      "fruitGold": 10000,
+      "fruitRarity": 3,
+      "fruitRarityColor": "B09DED",
+      "fruitRequiredLevel": 41,
+      "seedId": 20529,
+      "seedName": "森野芭乐种子",
+      "seedGold": 2000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1276,
+        2,
+        957
+      ],
+      "unlockLevel": 13,
+      "drinkIcon": "milktea_8.png",
+      "desc": "消耗森野芭乐制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 9,
+      "name": "金露云酪",
+      "price": 45,
+      "priceCurrencyId": 1041,
+      "fruitId": 49005,
+      "fruitName": "森野黄金芽",
+      "fruitPerCup": 1,
+      "fruitGold": 50000,
+      "fruitRarity": 4,
+      "fruitRarityColor": "D1A21E",
+      "fruitRequiredLevel": 200,
+      "seedId": 29005,
+      "seedName": "森野黄金芽种子",
+      "seedGold": 12000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1459,
+        2,
+        1094
+      ],
+      "unlockLevel": 1,
+      "drinkIcon": "milktea_9.png",
+      "desc": "消耗森野黄金芽制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    }
+  ],
+  "storeLevels": [
+    {
+      "level": 1,
+      "revenueRequired": 0,
+      "basePopularity": 40,
+      "advancedPricePercent": 0,
+      "employeeSlots": 1,
+      "recipeIds": [
+        1,
+        2,
+        9
+      ]
+    },
+    {
+      "level": 2,
+      "revenueRequired": 14000,
+      "basePopularity": 45,
+      "advancedPricePercent": 0,
+      "employeeSlots": 1,
+      "recipeIds": [
+        1,
+        2,
+        9
+      ]
+    },
+    {
+      "level": 3,
+      "revenueRequired": 33000,
+      "basePopularity": 50,
+      "advancedPricePercent": 0,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "level": 4,
+      "revenueRequired": 53000,
+      "basePopularity": 55,
+      "advancedPricePercent": 500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "level": 5,
+      "revenueRequired": 75000,
+      "basePopularity": 60,
+      "advancedPricePercent": 1000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "level": 6,
+      "revenueRequired": 102000,
+      "basePopularity": 65,
+      "advancedPricePercent": 1500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "level": 7,
+      "revenueRequired": 157000,
+      "basePopularity": 70,
+      "advancedPricePercent": 2000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "level": 8,
+      "revenueRequired": 222000,
+      "basePopularity": 75,
+      "advancedPricePercent": 2000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "level": 9,
+      "revenueRequired": 291000,
+      "basePopularity": 80,
+      "advancedPricePercent": 2500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "level": 10,
+      "revenueRequired": 372000,
+      "basePopularity": 85,
+      "advancedPricePercent": 3000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "level": 11,
+      "revenueRequired": 457000,
+      "basePopularity": 90,
+      "advancedPricePercent": 3000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "level": 12,
+      "revenueRequired": 560000,
+      "basePopularity": 95,
+      "advancedPricePercent": 3500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "level": 13,
+      "revenueRequired": 694000,
+      "basePopularity": 100,
+      "advancedPricePercent": 4000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
+  "talents": [
+    {
+      "id": 9001,
+      "name": "金牌销售",
+      "type": 1,
+      "desc": "金币收入+10%"
+    },
+    {
+      "id": 9002,
+      "name": "金牌宣传",
+      "type": 2,
+      "desc": "热卖值+10%"
+    },
+    {
+      "id": 9003,
+      "name": "金牌服务",
+      "type": 3,
+      "desc": "每售出100杯奶茶，有10%概率获得宣传喇叭x1"
+    },
+    {
+      "id": 9004,
+      "name": "默默搬砖",
+      "type": 4,
+      "desc": "热卖值+5%"
+    }
+  ],
+  "hireDurations": [
+    {
+      "id": 1,
+      "sec": 14400,
+      "hours": 4,
+      "cost": 40,
+      "costCurrencyId": 1041,
+      "costPerHour": 10,
+      "minRemainSec": 600
+    },
+    {
+      "id": 2,
+      "sec": 43200,
+      "hours": 12,
+      "cost": 130,
+      "costCurrencyId": 1041,
+      "costPerHour": 10.83,
+      "minRemainSec": 14401
+    },
+    {
+      "id": 3,
+      "sec": 86400,
+      "hours": 24,
+      "cost": 270,
+      "costCurrencyId": 1041,
+      "costPerHour": 11.25,
+      "minRemainSec": 43201
+    }
+  ],
+  "interactions": [
+    {
+      "id": 1,
+      "name": "宣传推广",
+      "desc": "帮助老板立即卖出{0}杯奶茶，你将获得本班工资20%的奖金",
+      "winWord": "推广大成功！来的客人越来越多了！",
+      "loseWord": ""
+    },
+    {
+      "id": 2,
+      "name": "花式摇杯",
+      "desc": "老板未来3小时的奶茶券收益+10%，你将获得本班工资30%的奖金",
+      "winWord": "眼花缭乱！你的神奇手法惊呆顾客！",
+      "loseWord": ""
+    },
+    {
+      "id": 3,
+      "name": "招牌试饮",
+      "desc": "老板未来2小时的奶茶券收益+20%，你将随机获得{0}杯高级奶茶",
+      "winWord": "争先恐后！试饮奶茶爆炸好喝！",
+      "loseWord": ""
+    },
+    {
+      "id": 4,
+      "name": "划水摸鱼",
+      "desc": "有40%概率获得宣传喇叭x1，有60%概率工资减半",
+      "winWord": "悠然自得！没有人发现你在快乐！",
+      "loseWord": "不！快乐离你而去！"
+    },
+    {
+      "id": 5,
+      "name": "申请涨薪",
+      "desc": "有60%概率工资翻倍，有40%概率工资减半",
+      "winWord": "人生巅峰！薪资暴涨100%！",
+      "loseWord": "心痛！马内离你而去！"
+    }
+  ],
+  "tasteDrinkCount": [
+    {
+      "durationId": 1,
+      "count": 4
+    },
+    {
+      "durationId": 2,
+      "count": 12
+    },
+    {
+      "durationId": 3,
+      "count": 24
+    }
+  ]
+}

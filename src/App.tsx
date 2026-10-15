@@ -12,6 +12,7 @@ import ItemsTab from './components/ItemsTab';
 import MutationAtlasTab from './components/MutationAtlasTab';
 import CostumeAtlasTab from './components/CostumeAtlasTab';
 import RanchAtlasTab from './components/RanchAtlasTab';
+import MilkteaTab from './components/MilkteaTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
 import { CategoryNav, type CategoryNavItem } from './components/shared';
@@ -23,10 +24,11 @@ import landsData from './data/lands_atlas.json';
 import costumeData from './data/costume_atlas.json';
 import mutationData from './data/mutation_atlas.json';
 import ranchData from './data/ranch_atlas.json';
+import milkteaData from './data/milktea_atlas.json';
 
 type BottomTab = 'home' | 'calc' | 'atlas' | 'items' | 'tools';
 type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume' | 'ranch';
-type ToolsSubTab = 'level' | 'land';
+type ToolsSubTab = 'level' | 'land' | 'milktea';
 type ItemCategoryId = string;
 
 interface TabDef {
@@ -95,6 +97,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
       items: [
         { icon: '🏠', label: '首页', id: 'home', color: 'leaf' },
         { icon: '🧮', label: '经验计算器', id: 'calc', color: 'leaf' },
+        { icon: '🧋', label: '奶茶店收益', id: 'tools_milktea', color: 'orange' },
         { icon: '📊', label: '等级查询', id: 'tools_level', color: 'plum' },
         { icon: '🟪', label: '土地升级所需', id: 'tools_land', color: 'plum' },
       ]
@@ -139,7 +142,7 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
   const [atlasSubTab, setAtlasSubTab] = useState<AtlasSubTab>('crops');
-  const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('level');
+  const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('milktea');
   const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
 
   const sidebarSections = useMemo(() => buildSidebarSections(), []);
@@ -214,6 +217,7 @@ export default function App() {
     if (id === 'calc') { navigate('calc'); return; }
     if (id === 'tools_level') { navigate('tools', 'level'); return; }
     if (id === 'tools_land') { navigate('tools', 'land'); return; }
+    if (id === 'tools_milktea') { navigate('tools', 'milktea'); return; }
     if (id === 'crops') { navigate('atlas', 'crops'); return; }
     if (id === 'lands') { navigate('atlas', 'lands'); return; }
     if (id === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
@@ -238,6 +242,7 @@ export default function App() {
     if (target === 'items_gold') { navigate('items', '17'); return; }
     if (target === 'more_level') { navigate('tools', 'level'); return; }
     if (target === 'more_land') { navigate('tools', 'land'); return; }
+    if (target === 'more_milktea') { navigate('tools', 'milktea'); return; }
   };
 
   const renderContent = () => {
@@ -290,23 +295,28 @@ export default function App() {
       case 'tools':
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4">
-            <div className="flex gap-1.5 p-1.5 sticker-pop rounded-full mb-4">
-              <button onClick={() => navigate('tools', 'level')}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
-                style={toolsSubTab === 'level'
-                  ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
-                  : { color: 'var(--ink-soft)' }}>
-                📊 等级查询
-              </button>
-              <button onClick={() => navigate('tools', 'land')}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full font-bold text-xs transition-all"
-                style={toolsSubTab === 'land'
-                  ? { background: 'var(--plum)', color: 'white', boxShadow: '0 2px 0 var(--plum-deep)' }
-                  : { color: 'var(--ink-soft)' }}>
-                🟪 土地升级所需
-              </button>
+            <div className="flex gap-1 p-1.5 sticker-pop rounded-full mb-4">
+              {([
+                { id: 'milktea', emoji: '🧋', label: '奶茶店收益' },
+                { id: 'level', emoji: '📊', label: '等级查询' },
+                { id: 'land', emoji: '🟪', label: '土地升级所需' },
+              ] as Array<{ id: ToolsSubTab; emoji: string; label: string }>).map((t) => {
+                const active = toolsSubTab === t.id;
+                const accent = t.id === 'milktea' ? 'orange' : 'plum';
+                return (
+                  <button key={t.id} onClick={() => navigate('tools', t.id)}
+                    className="flex-1 flex items-center justify-center gap-1 py-2 rounded-full font-bold text-[11px] sm:text-xs transition-all whitespace-nowrap"
+                    style={active
+                      ? { background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }
+                      : { color: 'var(--ink-soft)' }}>
+                    <span>{t.emoji}</span><span>{t.label}</span>
+                  </button>
+                );
+              })}
             </div>
-            {toolsSubTab === 'level' ? <LevelSearchTab /> : <LandUpgradeCalcTab />}
+            {toolsSubTab === 'level' && <LevelSearchTab />}
+            {toolsSubTab === 'land' && <LandUpgradeCalcTab />}
+            {toolsSubTab === 'milktea' && <MilkteaTab />}
           </div>
         );
       default:
