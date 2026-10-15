@@ -139,57 +139,94 @@ function Td({ children, className = '', style }: { children: React.ReactNode; cl
   );
 }
 
-// ── 收益计算器 ──────────────────────────────────────────────
+// ── 奶茶收益计算器 ──────────────────────────────────────────
+//
+// 供给口径 = 你背包里**实际有的果实**（按种类逐项填数量），不再用「24 块地」这种估法。
+//
+// 模型：
+//   ① 1 果实 → 1 杯（带售价倍率的果实按倍率翻倍，这里按 1:1 保守计）；
+//   ② 只有**店铺等级已解锁**的配方能开工，没解锁的果实算不进去（会在下面单独提示）；
+//   ③ 店铺自动售卖，速度恒为「热卖值」（杯/小时）；高级奶茶**高价优先**售出，
+//      卖完后由不限量的普通奶茶（3 券/杯）兜底 —— 所以售卖顺序不影响总收益，只影响瞬时单价；
+//   ④ 因此「库存期」的奶茶券/小时 = 热卖值 × 加权平均单价（= 总收益 ÷ 总杯数）。
+
+/** 背包默认示例数量（按你实际情况改；点「清空」可归零） */
+const DEMO_STOCK: Record<number, number> = { 2: 120, 3: 120, 4: 80, 5: 60, 6: 60, 7: 40, 8: 40, 9: 20 };
+
+function formatHours(h: number): string {
+  if (!isFinite(h) || h <= 0) return '—';
+  if (h < 1) return `${Math.round(h * 60)} 分钟`;
+  if (h < 48) return `${h.toFixed(1)} 小时`;
+  return `${(h / 24).toFixed(1)} 天`;
+}
 
 function Calculator() {
   const [lv, setLv] = React.useState<number>(MAX_LEVEL);
-  const [recipeId, setRecipeId] = React.useState<number>(9);
   const [t1, setT1] = React.useState<string>('金牌宣传');
   const [t2, setT2] = React.useState<string>('金牌宣传');
   const [interactionId, setInteractionId] = React.useState<number>(3);
-  const [useSupply, setUseSupply] = React.useState<boolean>(true);
+  const [stock, setStock] = React.useState<Record<number, number>>({ ...DEMO_STOCK });
 
   const level = LEVELS.find((l) => l.level === lv) || LEVELS[0];
-  const recipe = RECIPES.find((r) => r.id === recipeId) || RECIPES[0];
   const interaction = INTERACTIONS.find((i) => i.id === interactionId);
 
   // 互动对「老板收益」的价格加成
   const interactionPriceBonus = interactionId === 2 ? 0.10 : interactionId === 3 ? 0.20 : 0;
-
-  const popBonus = (level.employeeSlots >= 2 ? (TALENT_POP_BONUS[t1] || 0) + (TALENT_POP_BONUS[t2] || 0) : (TALENT_POP_BONUS[t1] || 0));
+  const popBonus = level.employeeSlots >= 2
+    ? (TALENT_POP_BONUS[t1] || 0) + (TALENT_POP_BONUS[t2] || 0)
+    : (TALENT_POP_BONUS[t1] || 0);
   const popularity = level.basePopularity * (1 + popBonus);
-  const unitPrice = recipe.price * (1 + level.advancedPricePercent / 10000 + interactionPriceBonus);
+  const priceCoeff = 1 + level.advancedPricePercent / 10000 + interactionPriceBonus;
 
-  // 供给：24 块地全部种该作物 → 每块地 fruitPerHarvest 杯 / growTimeSec
-  const supplyCups = useSupply && recipe.growTimeSec > 0
-    ? (recipe.fruitPerHarvest * PLOT_COUNT) / (recipe.growTimeSec / 3600)
-    : Infinity;
-  const cups = Math.min(popularity, supplyCups);
-  const perHour = cups * unitPrice;
-  const supplyLimited = supplyCups < popularity;
+  // 逐种奶茶结算（普通奶茶不消耗果实，单独作保底）
+  const rows = React.useMemo(() => RECIPES.filter((r) => r.id > 1).map((r) => {
+    const unlocked = level.level >= r.unlockLevel;
+    const fruit = Math.max(0, Math.floor(stock[r.id] || 0));
+    const perCup = Math.max(1, r.fruitPerCup);
+    const cups = unlocked ? Math.floor(fruit / perCup) : 0;
+    const unitPrice = r.price * priceCoeff;
+    return { recipe: r, fruit, unlocked, cups, unitPrice, subtotal: cups * unitPrice };
+  }), [level.level, stock, priceCoeff]);
+
+  const sellable = rows.filter((x) => x.cups > 0).sort((a, b) => b.unitPrice - a.unitPrice);
+  const totalCups = rows.reduce((s, x) => s + x.cups, 0);
+  const totalCoin = rows.reduce((s, x) => s + x.subtotal, 0);
+  const avgPrice = totalCups > 0 ? totalCoin / totalCups : 0;
+  const perHour = popularity * avgPrice;
+  const hours = popularity > 0 ? totalCups / popularity : 0;
+  const baselinePerHour = popularity * RECIPES[0].price;   // 普通奶茶 3 券/杯 保底
+  const lockedWithStock = rows.filter((x) => !x.unlocked && x.fruit > 0);
+  const maxSubtotal = Math.max(...sellable.map((x) => x.subtotal), 1);
+
+  const setCount = (id: number, v: number) =>
+    setStock((s) => ({ ...s, [id]: Math.max(0, Math.floor(Number.isFinite(v) ? v : 0)) }));
+
+  const btnCls = 'px-2 py-1 rounded-full text-[10px] font-bold transition-colors';
+
+  // 参数下拉：.input-pop 是为「数字输入框」设计的（1.1rem + 等宽字体），拿它装中文选项会撑爆，
+  // 这里局部覆盖成小号正文体 —— 只作用于本页的 select，不动全局样式。
+  const selStyle: React.CSSProperties = {
+    fontSize: '0.8rem',
+    fontFamily: 'var(--font-body)',
+    fontWeight: 700,
+    padding: '0.55rem 0.55rem',
+  };
 
   return (
     <div className="space-y-3">
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+      {/* 店铺 / 员工参数 */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
         <label className="block">
           <div className={`${LABEL_CLS} mb-1.5`}>店铺等级</div>
-          <select className="input-pop" value={lv} onChange={(e) => setLv(Number(e.target.value))}>
+          <select className="input-pop" style={selStyle} value={lv} onChange={(e) => setLv(Number(e.target.value))}>
             {LEVELS.map((l) => (
-              <option key={l.level} value={l.level}>Lv{l.level} · 热卖值 {l.basePopularity}</option>
-            ))}
-          </select>
-        </label>
-        <label className="block">
-          <div className={`${LABEL_CLS} mb-1.5`}>主售奶茶</div>
-          <select className="input-pop" value={recipeId} onChange={(e) => setRecipeId(Number(e.target.value))}>
-            {RECIPES.map((r) => (
-              <option key={r.id} value={r.id}>{r.name}（{r.price} 券/杯）</option>
+              <option key={l.level} value={l.level}>Lv{l.level} · 热卖 {l.basePopularity}</option>
             ))}
           </select>
         </label>
         <label className="block">
           <div className={`${LABEL_CLS} mb-1.5`}>员工互动</div>
-          <select className="input-pop" value={interactionId} onChange={(e) => setInteractionId(Number(e.target.value))}>
+          <select className="input-pop" style={selStyle} value={interactionId} onChange={(e) => setInteractionId(Number(e.target.value))}>
             <option value={0}>无</option>
             {INTERACTIONS.map((i) => (
               <option key={i.id} value={i.id}>{i.name}</option>
@@ -198,37 +235,82 @@ function Calculator() {
         </label>
         <label className="block">
           <div className={`${LABEL_CLS} mb-1.5`}>员工 1 特长{level.employeeSlots < 2 && '（仅 1 个员工位）'}</div>
-          <select className="input-pop" value={t1} onChange={(e) => setT1(e.target.value)}>
+          <select className="input-pop" style={selStyle} value={t1} onChange={(e) => setT1(e.target.value)}>
             <option value="无">无</option>
-            {TALENTS.map((t) => <option key={t.id} value={t.name}>{t.name}（{t.desc}）</option>)}
+            {TALENTS.map((t) => <option key={t.id} value={t.name} title={t.desc}>{t.name}</option>)}
           </select>
         </label>
         <label className="block">
           <div className={`${LABEL_CLS} mb-1.5`}>员工 2 特长</div>
-          <select className="input-pop" value={t2} disabled={level.employeeSlots < 2}
-            style={level.employeeSlots < 2 ? { opacity: 0.5 } : {}} onChange={(e) => setT2(e.target.value)}>
+          <select className="input-pop" style={level.employeeSlots < 2 ? { ...selStyle, opacity: 0.5 } : selStyle}
+            value={t2} disabled={level.employeeSlots < 2}
+            onChange={(e) => setT2(e.target.value)}>
             <option value="无">无</option>
-            {TALENTS.map((t) => <option key={t.id} value={t.name}>{t.name}（{t.desc}）</option>)}
-          </select>
-        </label>
-        <label className="block">
-          <div className={`${LABEL_CLS} mb-1.5`}>供给口径</div>
-          <select className="input-pop" value={useSupply ? '1' : '0'} onChange={(e) => setUseSupply(e.target.value === '1')}>
-            <option value="1">24 块地全种（按实际产量）</option>
-            <option value="0">库存充足（只看热卖值上限）</option>
+            {TALENTS.map((t) => <option key={t.id} value={t.name} title={t.desc}>{t.name}</option>)}
           </select>
         </label>
       </div>
 
-      <motion.div key={`${lv}-${recipeId}-${t1}-${t2}-${interactionId}-${useSupply}`}
+      {/* 背包果实 */}
+      <div>
+        <div className="flex items-center justify-between gap-2 mb-1.5">
+          <div className={LABEL_CLS}>背包果实 · 按种类填数量</div>
+          <div className="flex items-center gap-1.5">
+            <button type="button" className={btnCls}
+              style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}
+              onClick={() => setStock({ ...DEMO_STOCK })}>示例</button>
+            <button type="button" className={btnCls}
+              style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}
+              onClick={() => setStock({})}>清空</button>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+          {rows.map((x) => (
+            <div key={x.recipe.id} className="rounded-xl p-2.5"
+              style={{
+                background: x.unlocked ? 'var(--bg-2)' : 'var(--surface-soft)',
+                border: `1.5px solid ${x.unlocked && x.cups > 0 ? 'var(--orange)' : 'var(--line)'}`,
+                opacity: x.unlocked ? 1 : 0.55,
+              }}>
+              <div className="flex items-center gap-2">
+                <DrinkIcon recipe={x.recipe} size={36} />
+                <div className="min-w-0 flex-1">
+                  <div className="font-bold text-xs text-[var(--ink)] truncate">{x.recipe.name}</div>
+                  <div className="text-[10px] text-[var(--ink-mute)] truncate">
+                    {x.unlocked ? `${x.recipe.fruitName} · ${x.recipe.price} 券/杯` : `Lv${x.recipe.unlockLevel} 解锁`}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                <input type="number" min={0} disabled={!x.unlocked}
+                  className="input-pop text-center flex-1 tnum"
+                  style={{ padding: '0.35rem 0.4rem', fontSize: '0.85rem' }}
+                  value={x.unlocked ? (stock[x.recipe.id] ?? 0) : ''}
+                  placeholder={x.unlocked ? '0' : '未解锁'}
+                  onChange={(e) => setCount(x.recipe.id, Number(e.target.value))}
+                  aria-label={`${x.recipe.fruitName}数量`} />
+                <span className="text-[10px] font-bold whitespace-nowrap"
+                  style={{ color: x.cups > 0 ? 'var(--orange-deep)' : 'var(--ink-mute)' }}>
+                  → {x.cups} 杯
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 结果 */}
+      <motion.div key={`${lv}-${t1}-${t2}-${interactionId}-${totalCups}-${totalCoin}`}
         initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
         className="rounded-2xl p-3.5 sm:p-4"
         style={{ background: 'linear-gradient(135deg, var(--orange-bg) 0%, var(--sun-bg) 100%)', border: '1.5px solid var(--orange-soft)' }}>
 
         <div className="flex items-center gap-3">
-          <DrinkIcon recipe={recipe} size={56} />
+          <DrinkIcon recipe={(sellable[0]?.recipe) || RECIPES[0]} size={56} />
           <div className="min-w-0 flex-1">
-            <div className={`${LABEL_CLS}`} style={{ color: 'var(--orange-deep)' }}>预估收益 · {recipe.name}</div>
+            <div className={LABEL_CLS} style={{ color: 'var(--orange-deep)' }}>
+              预估收益 · 库存期平均{sellable[0] && totalCups > 0 ? ` · 高价优先卖 ${sellable[0].recipe.name}` : ''}
+            </div>
             <div className="flex items-baseline gap-1.5 flex-wrap">
               <span className="font-mono tnum text-3xl sm:text-4xl font-black text-[var(--orange-deep)] leading-none">
                 {Math.round(perHour).toLocaleString()}
@@ -239,34 +321,71 @@ function Calculator() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
-          <StatTile label="热卖值（销量上限）" value={`${popularity.toFixed(1)} 杯/时`} color="sun" />
-          <StatTile label="单杯实收" value={`${unitPrice.toFixed(1)} 券`} color="orange" />
-          <StatTile label="实际可卖" value={supplyCups === Infinity ? `≤ ${popularity.toFixed(0)} 杯/时` : `${cups.toFixed(1)} 杯/时`} color="sky" />
-          <StatTile label="收银台 48h 上限" value={`${Math.round(perHour * 48).toLocaleString()} 券`} color="leaf" />
+          <StatTile label="可做高级奶茶" value={`${totalCups} 杯`} color="sky" />
+          <StatTile label="这批果子总收益" value={`${Math.round(totalCoin).toLocaleString()} 券`} color="orange" />
+          <StatTile label="卖完耗时" value={formatHours(hours)} color="sun" />
+          <StatTile label="卖完后保底" value={`${Math.round(baselinePerHour).toLocaleString()} 券/时`} color="leaf" />
         </div>
+
+        {totalCups > 0 && (
+          <div className="mt-3 space-y-2">
+            {sellable.map((x) => (
+              <div key={x.recipe.id} className="flex items-center gap-2.5">
+                <DrinkIcon recipe={x.recipe} size={32} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-bold text-xs text-[var(--ink)] truncate">{x.recipe.name}</span>
+                    <span className="font-mono tnum text-xs font-bold flex-shrink-0" style={{ color: 'var(--ink-soft)' }}>
+                      {x.cups} 杯 × {x.unitPrice.toFixed(1)} = {Math.round(x.subtotal).toLocaleString()} 券
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full mt-1 overflow-hidden" style={{ background: 'rgba(255,255,255,0.6)' }}>
+                    <div className="h-full rounded-full"
+                      style={{ width: `${Math.max(3, (x.subtotal / maxSubtotal) * 100)}%`, background: 'var(--orange)', transition: 'width .3s' }} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <p className="text-xs text-[var(--ink-soft)] leading-relaxed mt-3">
           热卖值 = <span className="font-mono tnum">{level.basePopularity}</span> × (1 +{' '}
           <span className="font-mono tnum">{(popBonus * 100).toFixed(0)}%</span>) ={' '}
-          <b className="font-mono tnum">{popularity.toFixed(1)}</b> 杯/时；单杯 ={' '}
-          <span className="font-mono tnum">{recipe.price}</span> × (1 +{' '}
+          <b className="font-mono tnum">{popularity.toFixed(1)}</b> 杯/时；价格系数 = 1 +{' '}
           <span className="font-mono tnum">{(level.advancedPricePercent / 100).toFixed(0)}%</span> 定价 +{' '}
-          <span className="font-mono tnum">{(interactionPriceBonus * 100).toFixed(0)}%</span> 互动) ={' '}
-          <b className="font-mono tnum">{unitPrice.toFixed(1)}</b> 券。
-          {useSupply && recipe.growTimeSec > 0 && (
-            <> 24 块地全种「{recipe.fruitName}」约产 <b className="font-mono tnum">{supplyCups.toFixed(1)}</b> 杯/时。</>
+          <span className="font-mono tnum">{(interactionPriceBonus * 100).toFixed(0)}%</span> 互动。
+          {totalCups > 0 ? (
+            <>
+              {' '}你这批果子共 <b className="font-mono tnum">{totalCups}</b> 杯，加权平均单价{' '}
+              <b className="font-mono tnum">{avgPrice.toFixed(1)}</b> 券/杯，按 {popularity.toFixed(0)} 杯/时 的售速约{' '}
+              <b>{formatHours(hours)}</b> 卖完。
+            </>
+          ) : (
+            <> 把背包里每种果实的数量填进去，就能算出这批果子能赚多少、要卖多久。</>
           )}
-          {useSupply && recipe.id === 1 && <> 普通奶茶不消耗果实、不限量，也不吃高级定价加成，仅作保底。</>}
           {interaction && <> 当前互动「{interaction.name}」。</>}
         </p>
 
-        {supplyLimited && (
+        {lockedWithStock.length > 0 && (
+          <div className="flex items-start gap-2 mt-3 p-2.5 rounded-xl"
+            style={{ background: 'rgba(255,255,255,0.7)', border: '1.5px solid var(--sky-soft)' }}>
+            <Info size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--sky-deep)' }} />
+            <div className="text-xs text-[var(--ink-soft)] leading-relaxed">
+              背包里的 <b>{lockedWithStock.map((x) => x.recipe.fruitName).join('、')}</b> 因为店铺等级不够暂时做不了，
+              已排除在外：{lockedWithStock.map((x) => `${x.recipe.name}需 Lv${x.recipe.unlockLevel}`).join('，')}。
+            </div>
+          </div>
+        )}
+
+        {totalCups === 0 && (
           <div className="flex items-start gap-2 mt-3 p-2.5 rounded-xl"
             style={{ background: 'rgba(255,255,255,0.7)', border: '1.5px solid var(--berry-soft)' }}>
             <AlertTriangle size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--berry-deep)' }} />
             <div className="text-xs text-[var(--ink-soft)] leading-relaxed">
-              <b style={{ color: 'var(--berry-deep)' }}>产量低于热卖值上限</b> —— 此时销量被果子卡住，加「热卖值」不会多赚，
-              应优先抬「单价」（升店铺等级 / 用天工果做金露云酪 / 让员工打招牌试饮）。
+              还没有可做的高级奶茶 —— 此时店铺只能卖不限量的普通奶茶，收益恒为{' '}
+              <b className="font-mono tnum">{Math.round(baselinePerHour).toLocaleString()}</b> 券/小时。
+              想提收益就去种活动作物（推荐天工「森野黄金芽」做金露云酪，45 券/杯）。
             </div>
           </div>
         )}
@@ -305,8 +424,8 @@ export default function MilkteaTab() {
         </p>
       </header>
 
-      {/* 单位时间收益计算器 —— 置顶，进页即可调参 */}
-      <SectionCard icon={<span>🧮</span>} title="单位时间收益计算器" sub="调参看「奶茶券 / 小时」如何变化">
+      {/* 奶茶收益计算器 —— 置顶，进页即可调参 */}
+      <SectionCard icon={<span>🧮</span>} title="奶茶收益计算器" sub="按背包里的果实数量算，看能赚多少 / 卖多久">
         <Calculator />
       </SectionCard>
 
