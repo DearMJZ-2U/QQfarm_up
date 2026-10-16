@@ -76,7 +76,47 @@ const SHOP = (DATA.exchangeShop ?? null) as null | {
 const VERDICT = (DATA.seedVerdict ?? null) as null | {
   seedName: string;
   price: number;
+  dailyLimit?: number;
   rows: Array<{ k: string; v: string }>;
+  conclusion: string;
+};
+
+// ── 2026-10-16 新增：心愿保底 / 种子来源审计 / 账号推演 ──────────
+const WISH = (DATA.wishGuarantee ?? null) as null | {
+  source: string;
+  crop: string;
+  rule: string[];
+  needPlantings: number;
+  targets: Array<{ name: string; itemId: number; illustratedValue: number; guarantee: number; note: string }>;
+  why: string;
+  naturalRate: Array<{ name: string; prob: string; expect: string; within30: string; within60: string }>;
+  naturalNote: string;
+};
+
+const SEED_SRC = (DATA.seedSources ?? null) as null | {
+  auditedAt: string;
+  method: string;
+  freeTotal: number;
+  needTotal: number;
+  rows: Array<{
+    source: string; where: string; content: string; cost: string; limit: string;
+    seeds: number; paid: boolean; zeroCost: boolean;
+  }>;
+  findings: string[];
+  note: string;
+};
+
+const PROJ = (DATA.accountProjection ?? null) as null | {
+  measuredAt: string;
+  ratePoints: Array<{ account: string; time: string; revenue: number; rate: string }>;
+  rateNote: string;
+  model: string;
+  costNote: string;
+  rows: Array<{
+    account: string; scenario: string; revenue: number; afterCost: number;
+    seedsBuyable: number; plantings: number; result: string; ok: boolean;
+  }>;
+  thresholds: Array<{ label: string; rate: number; note: string }>;
   conclusion: string;
 };
 
@@ -97,20 +137,25 @@ const SHOP_TIERS = (() => {
   });
 })();
 
-/** 30 天收入情景 + 全套装目标线（合并后按金额降序） */
+/** 收入情景 + 全套装目标线（合并后按金额降序） */
 type ShopProj = { label: string; total: number; note?: string; color: string; isTarget?: boolean };
 const SHOP_PROJ: ShopProj[] = (() => {
   if (!SHOP) return [];
-  const colors = ['var(--leaf)', 'var(--sun)', 'var(--ink-mute)'];
+  const palette = ['var(--leaf)', 'var(--sun)', 'var(--sky)', 'var(--ink-mute)'];
   const items: ShopProj[] = SHOP.projection.scenarios.map((s, i) => ({
-    label: s.label, total: s.total, note: s.note, color: colors[i] ?? 'var(--ink-mute)',
+    label: s.label, total: s.total, note: s.note, color: palette[i] ?? 'var(--ink-mute)',
   }));
   items.push({ label: '全套装目标', total: SHOP.costumeTotal, color: 'var(--orange)', isTarget: true });
   return items.sort((a, b) => b.total - a.total);
 })();
-const SHOP_PROJ_MAX = 1400000;
+const SHOP_PROJ_MAX = Math.max(...SHOP_PROJ.map((x) => x.total), 1);
 
-/** 1360000 → "136"；631000 → "63.1" */
+/** 总预算 = 13 件装扮 + 24 颗补购种子（8,000/颗） */
+const TOTAL_BUDGET = (SHOP?.costumeTotal ?? 0) + 24 * (VERDICT?.price ?? 8000);
+/** 小号（不氪金）现状收入 / 全拿所需（总预算 + 雇员工资 540 券/天 × 704h） */
+const SMALL_NOW = PROJ?.rows.find((r) => r.account.includes('小号') && r.scenario.includes('现状'))?.revenue ?? 0;
+const SMALL_NEED = TOTAL_BUDGET + 15850;
+/** 1000000 → "100"；631000 → "63.1" */
 function fmtWan(n: number): string {
   return n % 10000 === 0 ? String(n / 10000) : (n / 10000).toFixed(1);
 }
@@ -193,6 +238,83 @@ function Th({ children, className = '' }: { children: React.ReactNode; className
 function Td({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
     <td className={`px-3 py-2 text-xs text-[var(--ink-soft)] whitespace-nowrap ${className}`} style={style}>{children}</td>
+  );
+}
+
+/** 卡片里的「小标签 + 等宽数字」原子（宽表在窄屏会被挤变形，改用卡片） */
+function Metric({ label, value, color }: { label: string; value: React.ReactNode; color?: string }) {
+  return (
+    <div className="min-w-0">
+      <div className="text-[10px] text-[var(--ink-mute)] leading-tight">{label}</div>
+      <div className="font-mono tnum text-xs font-bold truncate" style={{ color: color || 'var(--ink)' }}>{value}</div>
+    </div>
+  );
+}
+
+/** 卡片右上角的语义徽标 */
+function Badge({ tone, children }: { tone: 'leaf' | 'berry' | 'sun' | 'sky' | 'orange' | 'plum'; children: React.ReactNode }) {
+  return (
+    <span className="chip flex-shrink-0"
+      style={{ fontSize: '0.6rem', background: `var(--${tone})`, color: 'white', whiteSpace: 'nowrap' }}>
+      {children}
+    </span>
+  );
+}
+
+type SeedRow = {
+  source: string; where: string; content: string; cost: string; limit: string;
+  seeds: number; paid: boolean; zeroCost: boolean;
+};
+
+/** 种子来源卡（窄屏友好，替代宽表格） */
+function SeedSourceCard({ row }: { row: SeedRow; key?: React.Key }) {
+  const tone = row.paid ? 'berry' : row.zeroCost ? 'leaf' : 'sun';
+  return (
+    <div className="rounded-2xl p-3"
+      style={{ background: `var(--${tone}-bg)`, border: `1.5px solid var(--${tone}-soft)` }}>
+      <div className="flex items-start gap-2.5">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="font-bold text-sm text-[var(--ink)]">{row.source}</span>
+            <Badge tone={tone}>{row.paid ? '需充值' : row.zeroCost ? '零成本' : '花券'}</Badge>
+          </div>
+          <div className="text-[10px] text-[var(--ink-mute)] mt-0.5">{row.where}</div>
+        </div>
+        <div className="text-right flex-shrink-0">
+          <div className="font-mono tnum text-2xl font-black leading-none"
+            style={{ color: `var(--${tone}-deep)` }}>{row.seeds}</div>
+          <div className="text-[10px] font-bold text-[var(--ink-mute)] mt-0.5">颗种子</div>
+        </div>
+      </div>
+      <div className="text-[11px] text-[var(--ink-soft)] leading-relaxed mt-2">{row.content}</div>
+      <div className="text-[10px] text-[var(--ink-mute)] mt-1.5">
+        代价 <b className="font-mono tnum text-[var(--ink-soft)]">{row.cost}</b>
+        <span className="mx-1.5 opacity-50">·</span>
+        限购 <b className="text-[var(--ink-soft)]">{row.limit}</b>
+      </div>
+    </div>
+  );
+}
+
+/** 需求进度条：白送 vs 自购 */
+function SeedNeedBar({ free, need }: { free: number; need: number }) {
+  const gap = Math.max(need - free, 0);
+  const freePct = (free / need) * 100;
+  return (
+    <div className="mt-2.5">
+      <div className="flex h-7 rounded-lg overflow-hidden" style={{ border: '1.5px solid var(--line)' }}>
+        <div className="flex items-center justify-center text-[10px] font-bold whitespace-nowrap"
+          style={{ width: `${freePct}%`, background: 'var(--leaf)', color: 'white' }}>白送 {free}</div>
+        {gap > 0 && (
+          <div className="flex items-center justify-center text-[10px] font-bold whitespace-nowrap"
+            style={{ width: `${100 - freePct}%`, background: 'var(--orange)', color: 'white' }}>自购 {gap}</div>
+        )}
+      </div>
+      <div className="flex justify-between text-[10px] text-[var(--ink-mute)] mt-1">
+        <span>0</span>
+        <span>心愿保底线 {need} 颗</span>
+      </div>
+    </div>
   );
 }
 
@@ -477,7 +599,8 @@ export default function MilkteaTab() {
         </span>
         <h2 className="page-header-title">奶茶工坊，哪种方式最赚？</h2>
         <p className="page-header-subtitle">
-          {RECIPES.length} 种奶茶 · 店铺 Lv1→{MAX_LEVEL} · {TALENTS.length} 种员工特长 · {INTERACTIONS.length} 种打工互动 · 数据来自游戏配置表
+          {RECIPES.length} 种奶茶 · 店铺 Lv1→{MAX_LEVEL} · {TALENTS.length} 种员工特长 · {INTERACTIONS.length} 种打工互动 ·
+          兑换商店 + 变异心愿保底 · 数据来自游戏配置表与活动实测
         </p>
       </header>
 
@@ -652,10 +775,10 @@ export default function MilkteaTab() {
         <SectionCard icon={<span>🛍️</span>} title="兑换商店：全套成本与兑换路线"
           sub={`13 件装扮合计 ${SHOP.costumeTotal.toLocaleString()} 券 · ${SHOP.exportedAt} 游戏内实录`}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-            <StatTile label="全套装成本" value={`${SHOP.costumeTotal.toLocaleString()} 券`} color="orange" />
-            <StatTile label="装扮件数" value={`${SHOP.costumes.length} 件`} color="sky" />
-            <StatTile label="解锁门槛" value="最高 Lv12" color="sun" />
-            <StatTile label="30 天预计收入" value="90~136 万券" color="leaf" />
+            <StatTile label={`${SHOP.costumes.length} 件装扮合计`} value={`${SHOP.costumeTotal.toLocaleString()} 券`} color="orange" />
+            <StatTile label="补购 24 颗种子" value={`${(24 * (VERDICT?.price ?? 8000)).toLocaleString()} 券`} color="sun" />
+            <StatTile label="总预算" value={`${fmtWan(TOTAL_BUDGET)} 万券`} color="berry" />
+            <StatTile label="解锁门槛" value="最高 Lv12" color="sky" />
           </div>
 
           <TableWrap>
@@ -680,14 +803,8 @@ export default function MilkteaTab() {
               ))}
             </tbody>
           </TableWrap>
-          <p className="text-[11px] text-[var(--ink-mute)] mt-2.5 leading-relaxed">
-            每件永久限购 1/1，点开锁定商品提示「商品未解锁」。缤纷奶茶小屋为开店免费奖励，不计入套装价。
-            {SHOP.note}
-          </p>
 
           <div className="mt-4">
-            <div className={`${LABEL_CLS} mb-1.5`}>30 天收入预期 vs 全套装目标</div>
-            <p className="text-[11px] text-[var(--ink-soft)] leading-relaxed mb-2.5">{SHOP.projection.anchor}</p>
             <div className="space-y-2.5">
               {SHOP_PROJ.map((x) => {
                 const pct = Math.max(3, Math.min(100, (x.total / SHOP_PROJ_MAX) * 100));
@@ -726,39 +843,258 @@ export default function MilkteaTab() {
             style={{ background: 'var(--leaf-bg)', border: '1.5px solid var(--leaf-soft)' }}>
             <Info size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--leaf-deep)' }} />
             <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
-              按实测节奏，631,000 券基本可以全换完；即使节奏腰斩也离目标只差一线（保底拿 Lv10 档 435,000）。
-              装扮不影响经营数值——建议留到 <b>11-13 ~ 11-16 结算期前统一采购</b>；11-14 24:00 后停止营业与种子购买，
-              兑换持续到 11-16 24:00。
+              装扮不影响经营数值 —— 建议留到 <b>11-13 ~ 11-16 结算期按余额一次性采购</b>。
+              真正有「时间墙」的是黄金芽种子（每日限购 1 颗），必须先买，详见下面两节。
+              <br />
+              <b>11-14 24:00</b> 后停止营业与种子购买，<b>兑换持续到 11-16 24:00</b>。
             </p>
           </div>
         </SectionCard>
       )}
 
-      {/* 黄金芽种子判定 */}
-      {VERDICT && (
-        <SectionCard icon={<span>🌱</span>} title={`${VERDICT.seedName}（${VERDICT.price.toLocaleString()} 券）值不值得买？`}
-          sub="结论：先不买 —— 升级奖励白送 32 颗">
+      {/* 变异装扮 · 心愿保底 */}
+      {WISH && (
+        <SectionCard icon={<span>🎯</span>} title="变异装扮 · 心愿保底"
+          sub={`${WISH.crop} · 种满 ${WISH.needPlantings} 次，保底拿 2 件变异装扮果实`}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+            <StatTile label="需要种植" value={`${WISH.needPlantings} 次`} color="berry" />
+            <StatTile label="不氪金免费种子" value={`${SEED_SRC?.freeTotal ?? 36} 颗`} color="leaf" />
+            <StatTile label="需补购" value={`${WISH.needPlantings - (SEED_SRC?.freeTotal ?? 36)} 颗`} color="sun" />
+            <StatTile label="补购成本"
+              value={`${((WISH.needPlantings - (SEED_SRC?.freeTotal ?? 36)) * (VERDICT?.price ?? 8000)).toLocaleString()} 券`}
+              color="orange" />
+          </div>
+
+          <div className="rounded-xl p-3 mb-3" style={{ background: 'var(--berry-bg)', border: '1.5px solid var(--berry-soft)' }}>
+            <div className="flex items-center gap-1.5 mb-1">
+              <AlertTriangle size={14} className="flex-shrink-0" style={{ color: 'var(--berry-deep)' }} />
+              <span className="font-display italic text-sm font-bold" style={{ color: 'var(--berry-deep)' }}>一句话看懂</span>
+            </div>
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
+              种<span className="font-bold text-[var(--ink)]">森野黄金芽</span>每 1 颗 = 两条心愿各 +1：
+              种满 <b>30 颗</b> 必出【金露云酪】，种满 <b>60 颗</b> 必出【黄金·金露云酪】。
+              <b>两条计数同步走，所以种满 60 颗 = 两件一起到手</b>（最坏 61 颗）。
+            </p>
+          </div>
+
           <TableWrap>
             <thead>
               <tr>
-                <Th className="text-left">维度</Th>
-                <Th className="text-left">结果</Th>
+                <Th className="text-left">目标装扮果实</Th>
+                <Th>道具 id</Th>
+                <Th>图鉴进度值</Th>
+                <Th>心愿保底</Th>
               </tr>
             </thead>
             <tbody>
-              {VERDICT.rows.map((r, i) => (
-                <tr key={r.k} style={{ borderTop: i === 0 ? 'none' : '1.5px solid var(--line)' }}>
-                  <Td className="text-left font-bold text-[var(--ink)]" style={{ whiteSpace: 'normal' }}>{r.k}</Td>
-                  <Td className="text-left" style={{ whiteSpace: 'normal' }}>{r.v}</Td>
+              {WISH.targets.map((t, i) => (
+                <tr key={t.itemId} style={{ borderTop: i === 0 ? 'none' : '1.5px solid var(--line)' }}>
+                  <Td className="text-left" style={{ whiteSpace: 'normal' }}>
+                    <div className="font-bold text-[var(--ink)]">{t.name}</div>
+                    <div className="text-[10px] text-[var(--ink-mute)] mt-0.5">{t.note}</div>
+                  </Td>
+                  <Td className="font-mono tnum">{t.itemId}</Td>
+                  <Td className="font-mono tnum">{t.illustratedValue}</Td>
+                  <Td className="font-mono tnum font-bold" style={{ color: 'var(--berry-deep)' }}>{t.guarantee} 颗</Td>
                 </tr>
               ))}
             </tbody>
           </TableWrap>
-          <div className="mt-3 flex items-start gap-2 p-3 rounded-xl"
-            style={{ background: 'var(--sun-bg)', border: '1.5px solid var(--sun-soft)' }}>
-            <AlertTriangle size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--sun-deep)' }} />
-            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">{VERDICT.conclusion}</p>
+
+          <div className="mt-4">
+            <div className={`${LABEL_CLS} mb-1.5`}>如果不用保底，靠自然变异要多久？</div>
+            <TableWrap>
+              <thead>
+                <tr>
+                  <Th className="text-left">变异（公布概率）</Th>
+                  <Th>期望次数</Th>
+                  <Th>30 次内出</Th>
+                  <Th>60 次内出</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {WISH.naturalRate.map((n, i) => (
+                  <tr key={n.name} style={{ borderTop: i === 0 ? 'none' : '1.5px solid var(--line)' }}>
+                    <Td className="text-left" style={{ whiteSpace: 'normal' }}>
+                      <div className="font-bold text-[var(--ink)]">{n.name}</div>
+                      <div className="font-mono tnum text-[10px] text-[var(--ink-mute)] mt-0.5">{n.prob}</div>
+                    </Td>
+                    <Td className="font-mono tnum">{n.expect}</Td>
+                    <Td className="font-mono tnum">{n.within30}</Td>
+                    <Td className="font-mono tnum font-bold" style={{ color: 'var(--leaf-deep)' }}>{n.within60}</Td>
+                  </tr>
+                ))}
+              </tbody>
+            </TableWrap>
+            <p className="text-[11px] text-[var(--ink-mute)] mt-2.5 leading-relaxed">{WISH.naturalNote}</p>
           </div>
+        </SectionCard>
+      )}
+
+      {/* 黄金芽种子：从哪来 + 要不要买 */}
+      {(SEED_SRC || VERDICT) && (
+        <SectionCard icon={<span>🌱</span>} title="森野黄金芽种子：从哪来？"
+          sub={SEED_SRC ? `${SEED_SRC.method} · 不氪金免费 ${SEED_SRC.freeTotal} 颗` : undefined}>
+          {SEED_SRC && (
+            <>
+              {/* 痛点卡：先把「不够用 + 有时间墙」摆出来 */}
+              <div className="rounded-2xl p-3.5 mb-3"
+                style={{ background: 'var(--berry-bg)', border: '1.5px solid var(--berry-soft)' }}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <AlertTriangle size={14} className="flex-shrink-0" style={{ color: 'var(--berry-deep)' }} />
+                  <span className="font-display italic text-sm font-bold" style={{ color: 'var(--berry-deep)' }}>
+                    痛点：白送的种子不够用，而且买它有「时间墙」
+                  </span>
+                </div>
+                <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
+                  心愿保底要 <b className="text-[var(--ink)]">{SEED_SRC.needTotal} 颗</b>，白送只有
+                  <b className="text-[var(--ink)]"> {SEED_SRC.freeTotal} 颗</b> → 剩下
+                  <b className="text-[var(--ink)]"> {SEED_SRC.needTotal - SEED_SRC.freeTotal} 颗</b>只能去兑换商店买，
+                  共 <b className="font-mono tnum text-[var(--ink)]">
+                    {((SEED_SRC.needTotal - SEED_SRC.freeTotal) * (VERDICT?.price ?? 8000)).toLocaleString()}
+                  </b> 券。
+                </p>
+                <p className="text-xs text-[var(--ink-soft)] leading-relaxed mt-1.5">
+                  ⏰ 更关键的是<b>每天限购 1 颗</b> —— 想买满 {SEED_SRC.needTotal - SEED_SRC.freeTotal} 颗就得买满
+                  {' '}{SEED_SRC.needTotal - SEED_SRC.freeTotal} 天，<b className="text-[var(--ink)]">10-21 就得开始每天买</b>，
+                  拖到 11 月初就来不及了（11-14 停止购买，11-16 停止兑换）。
+                </p>
+                <SeedNeedBar free={SEED_SRC.freeTotal} need={SEED_SRC.needTotal} />
+              </div>
+
+              <div className={`${LABEL_CLS} mb-1.5`}>白送（零成本）· 合计 {SEED_SRC.freeTotal} 颗</div>
+              <div className="space-y-2 mb-3">
+                {SEED_SRC.rows.filter((r) => r.zeroCost).map((r) => <SeedSourceCard key={r.source} row={r} />)}
+              </div>
+
+              <div className={`${LABEL_CLS} mb-1.5`}>要花钱的（不氪金可跳过）</div>
+              <div className="space-y-2">
+                {SEED_SRC.rows.filter((r) => !r.zeroCost).map((r) => <SeedSourceCard key={r.source} row={r} />)}
+              </div>
+            </>
+          )}
+
+          {VERDICT && (
+            <div className="mt-4">
+              {/* 痛点：单价 + 每日限购 */}
+              <div className="rounded-2xl p-3.5 mb-3"
+                style={{ background: 'var(--sun-bg)', border: '1.5px solid var(--sun-soft)' }}>
+                <div className="flex items-center gap-1.5 mb-2.5">
+                  <AlertTriangle size={15} className="flex-shrink-0" style={{ color: 'var(--sun-deep)' }} />
+                  <span className="font-display italic text-base font-black text-[var(--ink)]">那要不要买？</span>
+                </div>
+                <div className="flex items-end gap-4 flex-wrap">
+                  <div>
+                    <div className="font-mono tnum text-3xl font-black leading-none text-[var(--ink)]">
+                      {VERDICT.price.toLocaleString()}
+                    </div>
+                    <div className="text-xs font-bold text-[var(--ink-soft)] mt-1">券 / 颗</div>
+                  </div>
+                  <div className="w-px self-stretch" style={{ background: 'var(--sun-soft)' }} />
+                  <div>
+                    <div className="font-mono tnum text-3xl font-black leading-none"
+                      style={{ color: 'var(--berry-deep)' }}>{VERDICT.dailyLimit ?? 1}</div>
+                    <div className="text-xs font-bold mt-1" style={{ color: 'var(--berry-deep)' }}>颗 / 天（限购）</div>
+                  </div>
+                </div>
+                <p className="text-xs font-bold leading-relaxed mt-2.5" style={{ color: 'var(--berry-deep)' }}>
+                  ⏰ 买 24 颗要买满 24 天 —— 10-21 就得开买，晚了钱再多也补不回来。
+                </p>
+              </div>
+              <TableWrap>
+                <thead>
+                  <tr>
+                    <Th className="text-left">维度</Th>
+                    <Th className="text-left">结果</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {VERDICT.rows.map((r, i) => (
+                    <tr key={r.k} style={{ borderTop: i === 0 ? 'none' : '1.5px solid var(--line)' }}>
+                      <Td className="text-left font-bold text-[var(--ink)]" style={{ whiteSpace: 'normal' }}>{r.k}</Td>
+                      <Td className="text-left" style={{ whiteSpace: 'normal' }}>{r.v}</Td>
+                    </tr>
+                  ))}
+                </tbody>
+              </TableWrap>
+              <div className="mt-3 flex items-start gap-2 p-3 rounded-xl"
+                style={{ background: 'var(--sun-bg)', border: '1.5px solid var(--sun-soft)' }}>
+                <AlertTriangle size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--sun-deep)' }} />
+                <p className="text-xs text-[var(--ink-soft)] leading-relaxed">{VERDICT.conclusion}</p>
+              </div>
+            </div>
+          )}
+        </SectionCard>
+      )}
+
+      {/* 能拿到吗：大号 / 小号双轨推演 */}
+      {PROJ && (
+        <SectionCard icon={<span>📈</span>} title="能拿到吗？不氪金 vs 氪金"
+          sub={`实测标定 ${PROJ.measuredAt} · 边际速率 ≈490 券/小时`}>
+          {/* 一句话结论 */}
+          <div className="rounded-2xl p-3.5 mb-3"
+            style={{ background: 'linear-gradient(135deg, var(--sun-bg), var(--orange-bg))', border: '1.5px solid var(--sun-soft)' }}>
+            <div className="flex items-center gap-1.5 mb-1">
+              <Info size={14} className="flex-shrink-0" style={{ color: 'var(--orange-deep)' }} />
+              <span className="font-display italic text-sm font-bold" style={{ color: 'var(--orange-deep)' }}>一句话结论</span>
+            </div>
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">{PROJ.conclusion}</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 mb-3">
+            <StatTile label="实测速率" value="≈490" hint="券 / 小时" color="sky" />
+            <StatTile label="小号预计收入" value={fmtWan(SMALL_NOW)} hint="万券" color="sun" />
+            <StatTile label="全拿需要" value={fmtWan(SMALL_NEED)} hint="万券" color="berry" />
+          </div>
+
+          {/* 账号对比卡：只留 3 个关键数字 */}
+          <div className="space-y-2">
+            {PROJ.rows.filter((r) => !r.scenario.includes('恒定')).map((r) => (
+              <div key={r.account + r.scenario} className="rounded-2xl p-3"
+                style={{
+                  background: r.ok ? 'var(--leaf-bg)' : 'var(--berry-bg)',
+                  border: `1.5px solid ${r.ok ? 'var(--leaf-soft)' : 'var(--berry-soft)'}`,
+                }}>
+                <div className="flex items-start gap-2">
+                  <div className="min-w-0 flex-1">
+                    <div className="font-bold text-sm text-[var(--ink)]">{r.account}</div>
+                    <div className="text-[11px] text-[var(--ink-mute)] mt-0.5">{r.scenario}</div>
+                  </div>
+                  <Badge tone={r.ok ? 'leaf' : 'berry'}>
+                    {r.ok ? '能全拿' : `差 ${(SEED_SRC?.needTotal ?? 60) - r.plantings} 颗`}
+                  </Badge>
+                </div>
+                <div className="text-[11px] font-bold mt-2 leading-relaxed"
+                  style={{ color: r.ok ? 'var(--leaf-deep)' : 'var(--berry-deep)' }}>{r.result}</div>
+                <div className="grid grid-cols-3 gap-x-3 gap-y-1.5 mt-2.5">
+                  <Metric label="预计收入" value={`${fmtWan(r.revenue)} 万`} />
+                  <Metric label="买完装扮后剩" value={`${fmtWan(r.afterCost)} 万`} />
+                  <Metric label="能买种子" value={`${r.seedsBuyable} 颗`} color="var(--orange-deep)" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 差在哪、怎么补 */}
+          <div className="mt-3 rounded-2xl p-3.5"
+            style={{ background: 'var(--sky-bg)', border: '1.5px solid var(--sky-soft)' }}>
+            <div className="font-display italic text-sm font-bold mb-1" style={{ color: 'var(--sky-deep)' }}>
+              差 6%，怎么补上？
+            </div>
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
+              全拿需要 <b className="font-mono tnum text-[var(--ink)]">≥520 券/时</b>，现在实测
+              <b className="font-mono tnum text-[var(--ink)]"> 490</b> —— 只差 <b>6%</b>。<br />
+              雇 <b>2 个「金牌宣传」好友</b>（热卖值 +20%，工资 540 券/天已算进成本）→ 小号收入跳到
+              <b className="font-mono tnum text-[var(--ink)]"> 97.2 万</b>，全拿还有富余。
+              <span className="text-[var(--ink-mute)]">（若速率一直贴在 490 不涨，只能到 36.7 万券 —— 所以抬热卖值是必选项。）</span>
+            </p>
+          </div>
+
+          <p className="text-[10px] text-[var(--ink-mute)] mt-3 leading-relaxed">
+            口径：速率由 13:16 / 15:01 / 15:33 三个读数两两算出（488~491 券/时，稳定）；累计均值 980 是开服爆发期拉高的，不能用来外推。
+            推演按「券/小时 ∝ 热卖值 ×(1 + 高级定价%)」从 10-16 15:33 推到 11-14 24:00（704 小时），
+            已扣掉 13 件装扮 631,000 与雇员工资 15,850。
+          </p>
         </SectionCard>
       )}
 
@@ -872,6 +1208,7 @@ export default function MilkteaTab() {
               <li>· 员工特长首选 <b>金牌宣传（热卖值 +10%）</b>，Lv3 起放 2 个 = +20%</li>
               <li>· 库存吃紧时改堆 <b>单价</b>，加「热卖值」无效</li>
               <li>· <b>宣传喇叭</b>留到卖金露云酪时用（白送 1 小时基础销量）</li>
+              <li>· <b>10-21 起每天买 1 颗黄金芽种子</b>（限购 1/1，过期就买不到了）→ 冲 60 次心愿保底</li>
             </ul>
           </div>
           <div className="rounded-2xl p-3.5" style={{ background: 'var(--sky-bg)', border: '1.5px solid var(--sky-soft)' }}>
@@ -891,6 +1228,19 @@ export default function MilkteaTab() {
             雇 2 个「金牌宣传」好友（热卖值 +20%）→ 高峰期打「招牌试饮（+20%）」并用宣传喇叭清库存。
           </p>
         </div>
+
+        {PROJ && (
+          <div className="mt-3 rounded-2xl p-3.5"
+            style={{ background: 'var(--berry-bg)', border: '1.5px solid var(--berry-soft)' }}>
+            <div className="font-display italic text-sm font-bold text-[var(--berry-deep)] mb-1.5">活动目标：能不能拿全？</div>
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
+              两个目标 —— <b>13 件缤纷奶茶装扮（{SHOP?.costumeTotal.toLocaleString()} 券）</b> ＋
+              <b> 2 件变异装扮果实（种满 {WISH?.needPlantings ?? 60} 次）</b>，
+              总预算 <b className="font-mono tnum">{TOTAL_BUDGET.toLocaleString()}</b> 券（含补购 24 颗种子）。
+            </p>
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed mt-1.5">{PROJ.conclusion}</p>
+          </div>
+        )}
       </SectionCard>
     </div>
   );
