@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Info, TrendingUp, Users, Clock, Sparkles, AlertTriangle } from 'lucide-react';
+import { Info, TrendingUp, Users, Clock, Sparkles, AlertTriangle, ChevronDown } from 'lucide-react';
 import milkteaData from '../data/milktea_atlas.json';
 import { RemoteImage, StatTile, getGrade, publicUrl } from './shared';
 
@@ -179,29 +179,61 @@ const TALENT_POP_BONUS: Record<string, number> = { '金牌宣传': 0.10, '默默
 // ── 排版原子 ────────────────────────────────────────────────
 
 const LABEL_CLS = 'text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)]';
+const MINI_BTN = 'px-2.5 py-1 rounded-full text-[11px] font-bold transition-colors';
 
-function SectionCard({ icon, title, sub, accent = 'orange', action, children }: {
+// ── 卡片折叠 ────────────────────────────────────────────────
+// 每张卡片默认收起（整页 11 张全展开太长、太乱），点标题或右侧箭头展开。
+// 「全部展开 / 全部收起」由页面下发一个信号（对象身份变化即触发），卡片各自持有开合状态，
+// 这样单张手动点开/收起不会被其它卡片的动作带偏。
+// 折叠用 grid-template-rows 0fr↔1fr 做动画，内容始终挂在 DOM 里 ——
+// 计算器里填过的数字不会因为收起再展开而丢失。
+type BulkSignal = { v: boolean; n: number };
+const BulkCtx = React.createContext<BulkSignal | null>(null);
+
+function SectionCard({ icon, title, sub, accent = 'orange', action, children, collapsible = true }: {
   icon: React.ReactNode;
   title: string;
   sub?: string;
   accent?: 'orange' | 'leaf' | 'sky' | 'sun' | 'plum' | 'berry';
   action?: React.ReactNode;
   children: React.ReactNode;
+  collapsible?: boolean;
 }) {
+  const bulk = React.useContext(BulkCtx);
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => { if (bulk) setOpen(bulk.v); }, [bulk]);
+  const expanded = collapsible ? open : true;
+  const toggle = () => { if (collapsible) setOpen((v) => !v); };
+
   return (
     <section className="sticker p-4 sm:p-5">
-      <div className="flex items-center gap-2.5 mb-3">
-        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-[15px]"
-          style={{ background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }}>
-          {icon}
-        </div>
-        <div className="min-w-0 flex-1">
-          <h3 className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] leading-tight">{title}</h3>
-          {sub && <div className="text-[11px] text-[var(--ink-mute)] truncate">{sub}</div>}
-        </div>
+      <div className="flex items-center gap-2.5">
+        <button type="button" onClick={toggle} aria-expanded={expanded}
+          className={`flex items-center gap-2.5 min-w-0 flex-1 text-left ${collapsible ? 'cursor-pointer' : 'cursor-default'}`}>
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-[15px]"
+            style={{ background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }}>
+            {icon}
+          </div>
+          <div className="min-w-0 flex-1">
+            <span className="block font-display italic text-base sm:text-lg font-bold text-[var(--ink)] leading-tight">{title}</span>
+            {sub && <span className="block text-[11px] text-[var(--ink-mute)] truncate">{sub}</span>}
+          </div>
+        </button>
         {action}
+        {collapsible && (
+          <button type="button" onClick={toggle} aria-label={expanded ? `收起「${title}」` : `展开「${title}」`}
+            className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"
+            style={{ background: 'var(--bg-2)', color: 'var(--ink-mute)' }}>
+            <ChevronDown size={14} strokeWidth={2.5}
+              style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .3s ease' }} />
+          </button>
+        )}
       </div>
-      {children}
+      <div style={{ display: 'grid', gridTemplateRows: expanded ? '1fr' : '0fr', transition: 'grid-template-rows .3s ease' }}>
+        <div className="overflow-hidden">
+          <div className="pt-3">{children}</div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -591,7 +623,12 @@ export default function MilkteaTab() {
 
   const maxAll = Math.max(...ranked.map((r) => r.coinPerHourAllPlots), 1);
 
+  // 全部展开 / 收起：靠对象身份变化把信号广播给每张卡片
+  const [bulk, setBulk] = React.useState<BulkSignal | null>(null);
+  const bulkAll = (v: boolean) => setBulk((s) => ({ v, n: (s?.n ?? 0) + 1 }));
+
   return (
+    <BulkCtx.Provider value={bulk}>
     <div className="space-y-5 fade-in">
       <header className="page-header">
         <span className="page-header-chip" style={{ background: 'var(--orange-bg)', color: 'var(--orange-deep)' }}>
@@ -603,6 +640,19 @@ export default function MilkteaTab() {
           兑换商店 + 变异心愿保底 · 数据来自游戏配置表与活动实测
         </p>
       </header>
+
+      {/* 折叠提示 + 一键开合 */}
+      <div className="flex items-center justify-between gap-2 -mt-3">
+        <span className="text-[11px] text-[var(--ink-mute)]">点卡片标题即可展开 / 收起</span>
+        <div className="flex items-center gap-1.5">
+          <button type="button" className={MINI_BTN}
+            style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}
+            onClick={() => bulkAll(true)}>全部展开</button>
+          <button type="button" className={MINI_BTN}
+            style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}
+            onClick={() => bulkAll(false)}>全部收起</button>
+        </div>
+      </div>
 
       {/* 奶茶收益计算器 —— 置顶，进页即可调参 */}
       <SectionCard icon={<span>🧮</span>} title="奶茶收益计算器" sub="按背包里的果实数量算，看能赚多少 / 卖多久">
@@ -1027,9 +1077,9 @@ export default function MilkteaTab() {
         </SectionCard>
       )}
 
-      {/* 能拿到吗：大号 / 小号双轨推演 */}
+      {/* 全套装扮能拿到吗：大号 / 小号双轨推演 */}
       {PROJ && (
-        <SectionCard icon={<span>📈</span>} title="能拿到吗？不氪金 vs 氪金"
+        <SectionCard icon={<span>📈</span>} title="全套装扮能拿到吗？不氪金 vs 氪金"
           sub={`实测标定 ${PROJ.measuredAt} · 边际速率 ≈490 券/小时`}>
           {/* 一句话结论 */}
           <div className="rounded-2xl p-3.5 mb-3"
@@ -1243,5 +1293,6 @@ export default function MilkteaTab() {
         )}
       </SectionCard>
     </div>
+    </BulkCtx.Provider>
   );
 }
