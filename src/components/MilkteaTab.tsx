@@ -6,6 +6,7 @@ import { RemoteImage, StatTile, getGrade, publicUrl } from './shared';
 
 // 奶茶店收益（S4「奶茶热销中」）—— 数据来自 milktea_atlas.json
 // 数据源：delayRes 明文配置表 MilkTea*（配方/店铺等级/特长/雇佣时长/互动）
+// 兑换商店价目（2026-10-16 游戏内实录）+ 黄金芽种子判定：exchangeShop / seedVerdict 字段
 // 图标：extraRes 的 gui/texture/icon/icon_s4_milktea_N（public/item_images/milktea_N.png）
 // ⚠ 玩法公式（销量 = 热卖值）在服务端执行，此处展示的是「配置口径 + 活动实测交叉验证」的结果。
 //
@@ -57,6 +58,62 @@ const DURATIONS: HireDuration[] = DATA.hireDurations;
 const INTERACTIONS: Interaction[] = DATA.interactions;
 const TASTE_COUNT: Array<{ durationId: number; count: number }> = DATA.tasteDrinkCount;
 const FORMULA: { sales: string; revenue: string; note: string } = DATA.formula;
+
+// ── 兑换商店（价目为 2026-10-16 游戏内实录） ─────────────────
+interface ExchangeItem { name: string; price: number; unlockLevel: number; limit: string }
+
+const SHOP = (DATA.exchangeShop ?? null) as null | {
+  exportedAt: string;
+  note: string;
+  costumeTotal: number;
+  costumes: ExchangeItem[];
+  projection: {
+    anchor: string;
+    scenarios: Array<{ label: string; total: number; note: string }>;
+    levelTimeline: Array<{ level: number; day: number }>;
+  };
+};
+const VERDICT = (DATA.seedVerdict ?? null) as null | {
+  seedName: string;
+  price: number;
+  rows: Array<{ k: string; v: string }>;
+  conclusion: string;
+};
+
+/** 装扮按解锁等级聚合为档位（无锁 → Lv4 → …），带小计与累计 */
+const SHOP_TIERS = (() => {
+  if (!SHOP) return [] as Array<{ unlockLevel: number; label: string; items: ExchangeItem[]; subtotal: number; cumulative: number }>;
+  const groups = new Map<number, ExchangeItem[]>();
+  for (const c of SHOP.costumes) {
+    const lv = c.unlockLevel || 0;
+    if (!groups.has(lv)) groups.set(lv, []);
+    groups.get(lv)!.push(c);
+  }
+  let acc = 0;
+  return [...groups.entries()].sort((a, b) => a[0] - b[0]).map(([lv, items]) => {
+    const subtotal = items.reduce((s, x) => s + x.price, 0);
+    acc += subtotal;
+    return { unlockLevel: lv, label: lv === 0 ? '无锁（Lv1 起）' : `店铺 Lv${lv}`, items, subtotal, cumulative: acc };
+  });
+})();
+
+/** 30 天收入情景 + 全套装目标线（合并后按金额降序） */
+type ShopProj = { label: string; total: number; note?: string; color: string; isTarget?: boolean };
+const SHOP_PROJ: ShopProj[] = (() => {
+  if (!SHOP) return [];
+  const colors = ['var(--leaf)', 'var(--sun)', 'var(--ink-mute)'];
+  const items: ShopProj[] = SHOP.projection.scenarios.map((s, i) => ({
+    label: s.label, total: s.total, note: s.note, color: colors[i] ?? 'var(--ink-mute)',
+  }));
+  items.push({ label: '全套装目标', total: SHOP.costumeTotal, color: 'var(--orange)', isTarget: true });
+  return items.sort((a, b) => b.total - a.total);
+})();
+const SHOP_PROJ_MAX = 1400000;
+
+/** 1360000 → "136"；631000 → "63.1" */
+function fmtWan(n: number): string {
+  return n % 10000 === 0 ? String(n / 10000) : (n / 10000).toFixed(1);
+}
 
 const MAX_LEVEL = LEVELS[LEVELS.length - 1]?.level ?? 13;
 const PLOT_COUNT = 24;
@@ -589,6 +646,121 @@ export default function MilkteaTab() {
           </tbody>
         </TableWrap>
       </SectionCard>
+
+      {/* 兑换商店：全套成本与兑换路线（2026-10-16 实录价目） */}
+      {SHOP && (
+        <SectionCard icon={<span>🛍️</span>} title="兑换商店：全套成本与兑换路线"
+          sub={`13 件装扮合计 ${SHOP.costumeTotal.toLocaleString()} 券 · ${SHOP.exportedAt} 游戏内实录`}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+            <StatTile label="全套装成本" value={`${SHOP.costumeTotal.toLocaleString()} 券`} color="orange" />
+            <StatTile label="装扮件数" value={`${SHOP.costumes.length} 件`} color="sky" />
+            <StatTile label="解锁门槛" value="最高 Lv12" color="sun" />
+            <StatTile label="30 天预计收入" value="90~136 万券" color="leaf" />
+          </div>
+
+          <TableWrap>
+            <thead>
+              <tr>
+                <Th className="text-left">档位</Th>
+                <Th className="text-left">包含装扮</Th>
+                <Th>小计</Th>
+                <Th>累计</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {SHOP_TIERS.map((t, i) => (
+                <tr key={t.unlockLevel} style={{ borderTop: i === 0 ? 'none' : '1.5px solid var(--line)' }}>
+                  <Td className="text-left font-bold text-[var(--ink)]">{t.label}</Td>
+                  <Td className="text-left" style={{ whiteSpace: 'normal' }}>
+                    {t.items.map((x) => `${x.name} ${x.price.toLocaleString()}`).join(' · ')}
+                  </Td>
+                  <Td className="font-mono tnum">{t.subtotal.toLocaleString()}</Td>
+                  <Td className="font-mono tnum font-bold">{t.cumulative.toLocaleString()}</Td>
+                </tr>
+              ))}
+            </tbody>
+          </TableWrap>
+          <p className="text-[11px] text-[var(--ink-mute)] mt-2.5 leading-relaxed">
+            每件永久限购 1/1，点开锁定商品提示「商品未解锁」。缤纷奶茶小屋为开店免费奖励，不计入套装价。
+            {SHOP.note}
+          </p>
+
+          <div className="mt-4">
+            <div className={`${LABEL_CLS} mb-1.5`}>30 天收入预期 vs 全套装目标</div>
+            <p className="text-[11px] text-[var(--ink-soft)] leading-relaxed mb-2.5">{SHOP.projection.anchor}</p>
+            <div className="space-y-2.5">
+              {SHOP_PROJ.map((x) => {
+                const pct = Math.max(3, Math.min(100, (x.total / SHOP_PROJ_MAX) * 100));
+                return (
+                  <div key={x.label} className="flex items-center gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-bold text-xs"
+                          style={{ color: x.isTarget ? 'var(--orange-deep)' : 'var(--ink)' }}>
+                          {x.label}{x.note ? <span className="font-normal text-[var(--ink-mute)]"> · {x.note}</span> : null}
+                        </span>
+                        <span className="font-mono tnum text-xs font-bold flex-shrink-0"
+                          style={{ color: x.isTarget ? 'var(--orange-deep)' : 'var(--ink-soft)' }}>
+                          {fmtWan(x.total)} 万券
+                        </span>
+                      </div>
+                      <div className="h-1.5 rounded-full mt-1 overflow-hidden" style={{ background: 'var(--bg-2)' }}>
+                        <div className="h-full rounded-full"
+                          style={{ width: `${pct}%`, background: x.color, transition: 'width .3s' }} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex flex-wrap gap-1.5 mt-3">
+              {SHOP.projection.levelTimeline.map((t) => (
+                <span key={t.level} className="chip" style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
+                  Lv{t.level} · 约第 {t.day} 天
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-3 flex items-start gap-2 p-3 rounded-xl"
+            style={{ background: 'var(--leaf-bg)', border: '1.5px solid var(--leaf-soft)' }}>
+            <Info size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--leaf-deep)' }} />
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
+              按实测节奏，631,000 券基本可以全换完；即使节奏腰斩也离目标只差一线（保底拿 Lv10 档 435,000）。
+              装扮不影响经营数值——建议留到 <b>11-13 ~ 11-16 结算期前统一采购</b>；11-14 24:00 后停止营业与种子购买，
+              兑换持续到 11-16 24:00。
+            </p>
+          </div>
+        </SectionCard>
+      )}
+
+      {/* 黄金芽种子判定 */}
+      {VERDICT && (
+        <SectionCard icon={<span>🌱</span>} title={`${VERDICT.seedName}（${VERDICT.price.toLocaleString()} 券）值不值得买？`}
+          sub="结论：先不买 —— 升级奖励白送 32 颗">
+          <TableWrap>
+            <thead>
+              <tr>
+                <Th className="text-left">维度</Th>
+                <Th className="text-left">结果</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {VERDICT.rows.map((r, i) => (
+                <tr key={r.k} style={{ borderTop: i === 0 ? 'none' : '1.5px solid var(--line)' }}>
+                  <Td className="text-left font-bold text-[var(--ink)]" style={{ whiteSpace: 'normal' }}>{r.k}</Td>
+                  <Td className="text-left" style={{ whiteSpace: 'normal' }}>{r.v}</Td>
+                </tr>
+              ))}
+            </tbody>
+          </TableWrap>
+          <div className="mt-3 flex items-start gap-2 p-3 rounded-xl"
+            style={{ background: 'var(--sun-bg)', border: '1.5px solid var(--sun-soft)' }}>
+            <AlertTriangle size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--sun-deep)' }} />
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">{VERDICT.conclusion}</p>
+          </div>
+        </SectionCard>
+      )}
 
       {/* 员工特长 */}
       <SectionCard icon={<Users size={15} strokeWidth={2.5} />} title="员工「特长」" sub="好友每天刷新；Lv3 起有 2 个员工位">
