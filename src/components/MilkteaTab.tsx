@@ -686,17 +686,55 @@ export default function MilkteaTab() {
             最后还剩 <b className="font-mono tnum">{SMALL_LEFT.toLocaleString()}</b> 券。
           </p>
           <p className="text-xs text-[var(--ink-soft)] leading-relaxed mt-2">
-            关键就一条：<b className="text-[var(--ink)]">每日任务白送 {DAILY_COUPONS.toLocaleString()} 券/天</b>，
-            到营业期结束共 <b className="font-mono tnum text-[var(--ink)]">{DAILY_TOTAL.toLocaleString()}</b> 券。
-            之前那版（v3）没算这笔钱，所以得出「差 6%、必须雇 2 个金牌宣传」——
-            这 6% 正好就是这 3,000 券/天填上的。
+            注意：<b className="text-[var(--ink)]">这 {DAILY_TOTAL.toLocaleString()} 券只是「每日任务」这一项，不是全部收入。</b>
+            真正的大头是店铺经营本身（约 {fmtWan(SMALL_NOW)} 万券）。下面把这笔账拆开给你看。
           </p>
+        </div>
+
+        {/* 收支账本：钱从哪来 → 花到哪去 */}
+        <div className="rounded-2xl p-3.5 mb-3" style={{ background: 'var(--surface-soft)', border: '1.5px solid var(--line)' }}>
+          <div className={LABEL_CLS}>到 11-14 营业期结束，钱从哪来</div>
+          <div className="mt-1.5 space-y-1">
+            <div className="flex items-center justify-between gap-2 text-xs">
+              <span className="text-[var(--ink-soft)]">店铺经营累计（含当前余额，随升级越卖越快）</span>
+              <span className="font-mono tnum font-bold text-[var(--ink)] flex-shrink-0">+{SMALL_NOW.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 text-xs">
+              <span className="text-[var(--ink-soft)]">每日任务（{DAILY_COUPONS.toLocaleString()} 券/天 × {DAILY?.totalDays ?? 28} 天）</span>
+              <span className="font-mono tnum font-bold flex-shrink-0" style={{ color: 'var(--leaf-deep)' }}>+{DAILY_TOTAL.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 text-xs pt-1.5" style={{ borderTop: '1.5px dashed var(--line)' }}>
+              <span className="font-bold text-[var(--ink)]">合计可用余额</span>
+              <span className="font-mono tnum font-black flex-shrink-0" style={{ color: 'var(--ink)' }}>{(SMALL_NOW + DAILY_TOTAL).toLocaleString()}</span>
+            </div>
+          </div>
+
+          <div className={`${LABEL_CLS} mt-3`}>钱花到哪去</div>
+          <div className="mt-1.5 space-y-1">
+            <div className="flex items-center justify-between gap-2 text-xs">
+              <span className="text-[var(--ink-soft)]">{SHOP?.costumes?.length ?? 13} 件缤纷奶茶装扮（全都要）</span>
+              <span className="font-mono tnum font-bold flex-shrink-0" style={{ color: 'var(--berry-deep)' }}>−{SHOP?.costumeTotal?.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 text-xs">
+              <span className="text-[var(--ink-soft)]">补购 24 颗黄金芽种子（{VERDICT?.price?.toLocaleString() ?? '8,000'} 券/颗）</span>
+              <span className="font-mono tnum font-bold flex-shrink-0" style={{ color: 'var(--berry-deep)' }}>−{(24 * (VERDICT?.price ?? 8000)).toLocaleString()}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 text-xs pt-1.5" style={{ borderTop: '1.5px dashed var(--line)' }}>
+              <span className="font-bold text-[var(--ink)]">合计要花</span>
+              <span className="font-mono tnum font-black flex-shrink-0" style={{ color: 'var(--ink)' }}>−{TOTAL_BUDGET.toLocaleString()}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-2 mt-2.5 pt-2.5" style={{ borderTop: '1.5px solid var(--line)' }}>
+            <span className="text-xs font-bold text-[var(--ink)]">最后还剩</span>
+            <span className="font-mono tnum font-black text-base" style={{ color: 'var(--leaf-deep)' }}>{SMALL_LEFT.toLocaleString()} 券</span>
+          </div>
         </div>
 
         {/* 四个关键数字 */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
           <StatTile label="每日任务" value={DAILY_COUPONS.toLocaleString()} hint="券 / 天（白给）" color="leaf" />
-          <StatTile label={`${DAILY?.totalDays ?? 28} 天合计`} value={DAILY_TOTAL.toLocaleString()} hint="券" color="sun" />
+          <StatTile label={`${DAILY?.totalDays ?? 28} 天任务合计`} value={DAILY_TOTAL.toLocaleString()} hint="券（只占一小部分）" color="sun" />
           <StatTile label="全拿总预算" value={TOTAL_BUDGET.toLocaleString()} hint="券（装扮 + 种子）" color="orange" />
           <StatTile label="全拿后还剩" value={SMALL_LEFT.toLocaleString()} hint="券（小号 · 0 员工）" color="berry" />
         </div>
@@ -746,6 +784,12 @@ export default function MilkteaTab() {
             </div>
             <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
               {DAILY.why}
+            </p>
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed mt-2 pt-2" style={{ borderTop: '1.5px dashed var(--line)' }}>
+              <b className="text-[var(--ink)]">别误会：{DAILY_TOTAL.toLocaleString()} 券不是「全活动的钱」。</b>
+              全拿要 {TOTAL_BUDGET.toLocaleString()} 券，其中约 {fmtWan(SMALL_NOW)} 万来自店铺经营，
+              这 {fmtWan(DAILY_TOTAL)} 万只是<b className="text-[var(--ink)]">补上最后缺口</b>的那一笔 ——
+              但恰恰是这笔，把「差 6%」变成了「刚好够」。
             </p>
           </div>
 
@@ -860,8 +904,8 @@ export default function MilkteaTab() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
             <StatTile label="实测速率" value="≈490" hint="券 / 小时" color="sky" />
-            <StatTile label="小号卖奶茶" value={fmtWan(SMALL_NOW)} hint="万券（不含任务）" color="sun" />
-            <StatTile label="+ 每日任务" value={fmtWan(DAILY_TOTAL)} hint="万券" color="leaf" />
+            <StatTile label="小号店铺经营" value={fmtWan(SMALL_NOW)} hint="万券（大头）" color="sun" />
+            <StatTile label="+ 每日任务" value={fmtWan(DAILY_TOTAL)} hint="万券（补缺口）" color="leaf" />
             <StatTile label="全拿需要" value={fmtWan(SMALL_NEED)} hint="万券" color="berry" />
           </div>
 
@@ -885,7 +929,7 @@ export default function MilkteaTab() {
                 <div className="text-[11px] font-bold mt-2 leading-relaxed"
                   style={{ color: r.ok ? 'var(--leaf-deep)' : 'var(--berry-deep)' }}>{r.result}</div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-3 gap-y-1.5 mt-2.5">
-                  <Metric label="卖奶茶收入" value={`${fmtWan(r.revenue)} 万`} />
+                  <Metric label="店铺经营收入" value={`${fmtWan(r.revenue)} 万`} />
                   <Metric label="每日任务" value={r.taskCoupons ? `+${fmtWan(r.taskCoupons)} 万` : '—'} color="var(--leaf-deep)" />
                   <Metric label="买完装扮后剩" value={`${fmtWan(r.afterCost)} 万`} />
                   <Metric label="能买种子" value={`${r.seedsBuyable} 颗`} color="var(--orange-deep)" />
@@ -894,7 +938,22 @@ export default function MilkteaTab() {
             ))}
           </div>
 
-          {/* 之前那版为什么错了 / 现在为什么够了 */}
+          {/* 算式对账：把「为什么够」摊开成一行加法 */}
+          <div className="mt-3 rounded-2xl p-3 text-xs leading-relaxed"
+            style={{ background: 'var(--surface-soft)', border: '1.5px solid var(--line)' }}>
+            <div className={LABEL_CLS}>小号这笔账，加一遍就清楚了</div>
+            <div className="mt-1.5 font-mono tnum text-[var(--ink-soft)] space-y-0.5">
+              <div>店铺经营 <b className="text-[var(--ink)]">{SMALL_NOW.toLocaleString()}</b></div>
+              <div>+ 每日任务 <b style={{ color: 'var(--leaf-deep)' }}>{DAILY_TOTAL.toLocaleString()}</b></div>
+              <div className="pt-1" style={{ borderTop: '1.5px dashed var(--line)' }}>
+                = 可用 <b className="text-[var(--ink)]">{(SMALL_NOW + DAILY_TOTAL).toLocaleString()}</b>
+                <span className="text-[var(--ink-mute)]"> ＞ 要花 {TOTAL_BUDGET.toLocaleString()}</span>
+              </div>
+              <div>余 <b style={{ color: 'var(--leaf-deep)' }}>{SMALL_LEFT.toLocaleString()}</b></div>
+            </div>
+          </div>
+
+
           <div className="mt-3 rounded-2xl p-3.5"
             style={{ background: 'var(--sky-bg)', border: '1.5px solid var(--sky-soft)' }}>
             <div className="font-display italic text-sm font-bold mb-1.5" style={{ color: 'var(--sky-deep)' }}>
@@ -953,6 +1012,17 @@ export default function MilkteaTab() {
             <StatTile label="补购 24 颗种子" value={`${(24 * (VERDICT?.price ?? 8000)).toLocaleString()} 券`} color="sun" />
             <StatTile label="总预算" value={`${fmtWan(TOTAL_BUDGET)} 万券`} color="berry" />
             <StatTile label="解锁门槛" value="最高 Lv12" color="sky" />
+          </div>
+
+          <div className="mb-3 flex items-start gap-2 p-3 rounded-xl"
+            style={{ background: 'var(--sky-bg)', border: '1.5px solid var(--sky-soft)' }}>
+            <Info size={14} className="flex-shrink-0 mt-0.5" style={{ color: 'var(--sky-deep)' }} />
+            <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
+              这 {TOTAL_BUDGET.toLocaleString()} 券不是靠每日任务凑的 ——
+              每日任务总共只给 <b className="font-mono tnum text-[var(--ink)]">{DAILY_TOTAL.toLocaleString()}</b> 券（占 {Math.round(DAILY_TOTAL / TOTAL_BUDGET * 100)}%），
+              大头是<b className="text-[var(--ink)]">店铺经营攒下的约 {fmtWan(SMALL_NOW)} 万券</b>。
+              每日任务的作用是「补上最后那点缺口」，让不氪金也能刚好够。
+            </p>
           </div>
 
           <TableWrap>
