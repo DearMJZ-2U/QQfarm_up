@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Wrench, Github, Home as HomeIcon } from 'lucide-react';
 
 const GITHUB_REPO_URL = 'https://github.com/DearMJZ-2U/QQfarm_up';
+
+// 加 QQ 群弹窗：开屏自动弹过就算「已提示」，避免每次刷新/跳转都糊在脸上
+const QQ_GROUP_SHOWN_KEY = 'qqfarm_qqgroup_shown';
+
 import CalculatorTab from './components/CalculatorTab';
 import LevelSearchTab from './components/LevelSearchTab';
 import LandUpgradeCalcTab from './components/LandUpgradeCalcTab';
@@ -15,6 +19,7 @@ import RanchAtlasTab from './components/RanchAtlasTab';
 import MilkteaTab from './components/MilkteaTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
+import QQGroupModal, { QQGroupIcon } from './components/QQGroupModal';
 import { CategoryNav, type CategoryNavItem } from './components/shared';
 
 // 动态数据：count 从 JSON 实时读取，不再硬编码
@@ -144,6 +149,7 @@ export default function App() {
   const [atlasSubTab, setAtlasSubTab] = useState<AtlasSubTab>('crops');
   const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('milktea');
   const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
+  const [qqGroupOpen, setQqGroupOpen] = useState(false);
 
   const sidebarSections = useMemo(() => buildSidebarSections(), []);
 
@@ -166,6 +172,18 @@ export default function App() {
     const next = theme === 'light' ? 'dark' : 'light';
     setTheme(next);
     localStorage.setItem('qqfarm_theme', next);
+  };
+
+  // 开屏自动弹「加 QQ 群」：整个浏览器只弹一次（用户点「我懂了」后才记已提示）
+  React.useEffect(() => {
+    if (localStorage.getItem(QQ_GROUP_SHOWN_KEY)) return;
+    const t = window.setTimeout(() => setQqGroupOpen(true), 600);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  const closeQqGroup = () => {
+    setQqGroupOpen(false);
+    try { localStorage.setItem(QQ_GROUP_SHOWN_KEY, '1'); } catch { /* 隐私模式写不进去就算了 */ }
   };
 
   // 统一导航入口：写入浏览器历史 + 切换 tab + 滚到顶部
@@ -455,6 +473,13 @@ export default function App() {
                 <Github size={16} strokeWidth={2.5} className="text-[var(--ink-soft)] flex-shrink-0" />
                 <span className="text-[var(--ink-soft)] hidden sm:inline">GitHub</span>
               </a>
+              <button onClick={() => setQqGroupOpen(true)}
+                className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
+                aria-label="加 QQ 群"
+                title="加 QQ 群">
+                <QQGroupIcon size={16} className="flex-shrink-0" style={{ color: 'var(--sky-deep)' }} />
+                <span className="text-[var(--ink-soft)] hidden sm:inline">加QQ群</span>
+              </button>
               <button onClick={toggleTheme}
                 className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
                 aria-label="切换主题"
@@ -516,6 +541,9 @@ export default function App() {
 
       {/* Back to top — PC only */}
       <BackToTop />
+
+      {/* 加 QQ 群弹窗：开屏自动弹 + 顶栏图标手动打开 */}
+      <QQGroupModal open={qqGroupOpen} onClose={closeQqGroup} />
     </div>
   );
 }
