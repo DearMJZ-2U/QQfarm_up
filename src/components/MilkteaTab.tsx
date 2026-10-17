@@ -645,7 +645,7 @@ export default function MilkteaTab() {
         <span className="page-header-chip" style={{ background: 'var(--orange-bg)', color: 'var(--orange-deep)' }}>
           <Sparkles size={11} strokeWidth={2.5} /> 奶茶店收益
         </span>
-        <h2 className="page-header-title">奶茶工坊，不氪金能不能全拿？</h2>
+        <h2 className="page-header-title">奶茶工坊，能赚多少、能不能全拿？</h2>
         <p className="page-header-subtitle">
           {RECIPES.length} 种奶茶 · 店铺 Lv1→{MAX_LEVEL} · 兑换商店 13 件装扮 + 变异心愿保底 ·
           已计入每日任务 {DAILY_COUPONS.toLocaleString()} 券/天 · 数据来自游戏配置表与活动实测
@@ -664,6 +664,11 @@ export default function MilkteaTab() {
             onClick={() => bulkAll(false)}>全部收起</button>
         </div>
       </div>
+
+      {/* 奶茶收益计算器 —— 置顶，进页即可调参 */}
+      <SectionCard icon={<span>🧮</span>} title="奶茶收益计算器" sub="按背包里的果实数量算，看能赚多少 / 卖多久">
+        <Calculator />
+      </SectionCard>
 
       {/* 先看这里：一句话答案 + 活动目标总览 */}
       <SectionCard icon={<span>⭐</span>} title="先看这里：不氪金能不能全拿？" accent="sun"
@@ -718,12 +723,12 @@ export default function MilkteaTab() {
 
         {/* 阅读顺序 */}
         <div className="rounded-2xl p-3.5" style={{ background: 'var(--sky-bg)', border: '1.5px solid var(--sky-soft)' }}>
-          <div className="font-display italic text-sm font-bold mb-2" style={{ color: 'var(--sky-deep)' }}>这页怎么读（按顺序看 4 步）</div>
+          <div className="font-display italic text-sm font-bold mb-2" style={{ color: 'var(--sky-deep)' }}>这页怎么读</div>
           <ol className="text-xs text-[var(--ink-soft)] space-y-1.5 leading-relaxed">
-            <li><b className="text-[var(--ink)]">① 每日任务</b> —— 先搞清楚每天白拿的 3,000 券从哪来，这是结论翻转的原因。</li>
-            <li><b className="text-[var(--ink)]">② 全套装扮能拿到吗</b> —— 4 种打法逐个对账，看你自己属于哪一行。</li>
-            <li><b className="text-[var(--ink)]">③ 兑换商店 / 心愿保底 / 种子从哪来</b> —— 钱怎么花、种子怎么凑、什么时候必须开买。</li>
-            <li><b className="text-[var(--ink)]">④ 计算器 / 价格 / 等级 / 员工</b> —— 想自己算、想抠细节时再翻，攻略党看前三步就够。</li>
+            <li><b className="text-[var(--ink)]">① 想先算自己的收益</b> —— 最上面的「奶茶收益计算器」直接调，填背包里的果实数量就能出数。</li>
+            <li><b className="text-[var(--ink)]">② 想知道活动能不能全拿</b> —— 看「每日任务」和「全套装扮能拿到吗」，这两张是攻略核心。</li>
+            <li><b className="text-[var(--ink)]">③ 想知道钱怎么花、种子怎么凑</b> —— 看兑换商店 / 心愿保底 / 种子从哪来。</li>
+            <li><b className="text-[var(--ink)]">④ 想抠细节</b> —— 价格、等级、员工、公式在最后，按需翻。</li>
           </ol>
         </div>
       </SectionCard>
@@ -1195,11 +1200,6 @@ export default function MilkteaTab() {
           )}
         </SectionCard>
       )}
-
-      {/* 奶茶收益计算器 —— 置顶，进页即可调参 */}
-      <SectionCard icon={<span>🧮</span>} title="奶茶收益计算器" sub="按背包里的果实数量算，看能赚多少 / 卖多久">
-        <Calculator />
-      </SectionCard>
 
       {/* 店铺等级 */}
       <SectionCard icon={<span>🏪</span>} title="店铺等级表" sub={`升到 Lv${MAX_LEVEL} 共需 69.4 万营业额`}>
