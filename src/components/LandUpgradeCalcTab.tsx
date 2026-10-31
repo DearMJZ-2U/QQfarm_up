@@ -5,21 +5,23 @@ import levelExpData from '../data/level_exp.json';
 import landsData from '../data/lands_atlas.json';
 import { EmptyState, StatTile } from './shared';
 
-type LandType = '红土地' | '黑土地' | '金土地' | '紫晶土地';
+type LandType = '红土地' | '黑土地' | '金土地' | '紫晶土地' | '蓝晶土地';
 
-const landTypeKey: Record<LandType, 'red' | 'black' | 'gold' | 'purple'> = {
+const landTypeKey: Record<LandType, 'red' | 'black' | 'gold' | 'purple' | 'blue'> = {
   '红土地': 'red',
   '黑土地': 'black',
   '金土地': 'gold',
   '紫晶土地': 'purple',
+  '蓝晶土地': 'blue',
 };
-const landTypeColor: Record<LandType, 'berry' | 'ink' | 'sun' | 'plum'> = {
+const landTypeColor: Record<LandType, 'berry' | 'ink' | 'sun' | 'plum' | 'sky'> = {
   '红土地': 'berry',
   '黑土地': 'ink',
   '金土地': 'sun',
   '紫晶土地': 'plum',
+  '蓝晶土地': 'sky',
 };
-const landTypeOrder: LandType[] = ['红土地', '黑土地', '金土地', '紫晶土地'];
+const landTypeOrder: LandType[] = ['红土地', '黑土地', '金土地', '紫晶土地', '蓝晶土地'];
 
 interface UpgradeEvent {
   plotId: number;
@@ -89,6 +91,7 @@ export default function LandUpgradeCalcTab() {
       '黑土地': { count: 0, gold: 0, beans: 0 },
       '金土地': { count: 0, gold: 0, beans: 0 },
       '紫晶土地': { count: 0, gold: 0, beans: 0 },
+      '蓝晶土地': { count: 0, gold: 0, beans: 0 },
     };
     for (const e of events) {
       map[e.type].count += 1;
@@ -98,12 +101,15 @@ export default function LandUpgradeCalcTab() {
     return map;
   }, [events]);
 
-  const quickPicks: Array<{ label: string; from: number; to: number; type: 'red' | 'black' | 'gold' | 'purple' }> = [
+  const quickPicks: Array<{ label: string; from: number; to: number; type: 'red' | 'black' | 'gold' | 'purple' | 'blue' }> = [
     { label: '红土阶段',  from: 28,  to: 40,  type: 'red'    },
     { label: '黑土阶段',  from: 40,  to: 58,  type: 'black'  },
     { label: '金土阶段',  from: 58,  to: 90,  type: 'gold'   },
     { label: '紫晶起步',  from: 90,  to: 120, type: 'purple' },
     { label: '满级紫晶',  from: 120, to: 160, type: 'purple' },
+    // 2026-10-31：蓝晶土地 125 级起可升，最高 240
+    { label: '蓝晶起步',  from: 125, to: 180, type: 'blue'   },
+    { label: '满级蓝晶',  from: 180, to: 240, type: 'blue'   },
   ];
 
   return (
@@ -124,7 +130,7 @@ export default function LandUpgradeCalcTab() {
               onChange={e => setCurrentLevel(Number(e.target.value) || 1)}
               className="w-full input-pop text-center font-mono font-bold"
               style={{ padding: '0.7rem 0.5rem', fontSize: '1.1rem' }}
-              min={1} max={200} />
+              min={1} max={240} />
           </div>
           <div className="flex items-end pb-3">
             <div className="w-9 h-9 rounded-full flex items-center justify-center"
@@ -142,7 +148,7 @@ export default function LandUpgradeCalcTab() {
                 fontSize: '1.1rem',
                 borderColor: rangeInvalid ? 'var(--berry)' : 'var(--plum-soft)',
               }}
-              min={1} max={200} />
+              min={1} max={240} />
           </div>
         </div>
 

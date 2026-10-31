@@ -20,7 +20,7 @@ function LandImage({ file, alt, className = '', dim = false }: {
   );
 }
 
-type LandKey = 'normal' | 'red' | 'black' | 'gold' | 'purple';
+type LandKey = 'normal' | 'red' | 'black' | 'gold' | 'purple' | 'blue';
 
 // NOTE: 数值字段（y/t/e/m）与 landsData.landTypes 一致，由 extract_from_wxapkg.ts 同步生成。
 // 图片文件名和颜色为显示配置，不在 JSON 中。如游戏更新土地等级数值，重新跑 sync 即可。
@@ -34,6 +34,9 @@ const landTypes: Array<{
   { name: '黑土地',   lv: 'Lv.3', accent: 'ink',   tile: 'tile-orange', key: 'black',  valid: 'land_valid3.png', dry: 'land_dry3.png', y: '+200%',  t: '-10%', e: '0%',  m: '0%' },
   { name: '金土地',   lv: 'Lv.4', accent: 'sun',   tile: 'tile-sun',    key: 'gold',   valid: 'land_valid4.png', dry: 'land_dry4.png', y: '+300%',  t: '-20%', e: '+20%', m: '0%' },
   { name: '紫晶土地', lv: 'Lv.5', accent: 'plum',  tile: 'tile-plum',   key: 'purple', valid: 'land_valid5.png', dry: 'land_dry5.png', y: '+300%',  t: '-20%', e: '+25%', m: '+120%', note: '启用时间 2026-04-15' },
+  // 2026-10-31 新增第 6 档：蓝晶土地（enable_time 2026-11-02 10:00）
+  // 贴图与紫晶一样复用金土地底图，靠染色区分 → land_valid6.png / land_dry6.png 由 land_valid4 色相旋转生成
+  { name: '蓝晶土地', lv: 'Lv.6', accent: 'sky',   tile: 'tile-sky',    key: 'blue',   valid: 'land_valid6.png', dry: 'land_dry6.png', y: '+400%',  t: '-20%', e: '+30%', m: '+125%', note: '启用时间 2026-11-02' },
 ];
 
 const specialStates = [
@@ -42,20 +45,21 @@ const specialStates = [
   { name: '选中', icon: '✅', desc: '当前选中的地块外观', file: 'land_valid_selected.png' },
 ];
 
-type UpgradeType = '红土地' | '黑土地' | '金土地' | '紫晶土地';
+type UpgradeType = '红土地' | '黑土地' | '金土地' | '紫晶土地' | '蓝晶土地';
 const upgradeKey: Record<UpgradeType, LandKey> = {
-  '红土地': 'red', '黑土地': 'black', '金土地': 'gold', '紫晶土地': 'purple',
+  '红土地': 'red', '黑土地': 'black', '金土地': 'gold', '紫晶土地': 'purple', '蓝晶土地': 'blue',
 };
-const upgradeColor: Record<UpgradeType, 'berry' | 'ink' | 'sun' | 'plum'> = {
-  '红土地': 'berry', '黑土地': 'ink', '金土地': 'sun', '紫晶土地': 'plum',
+const upgradeColor: Record<UpgradeType, 'berry' | 'ink' | 'sun' | 'plum' | 'sky'> = {
+  '红土地': 'berry', '黑土地': 'ink', '金土地': 'sun', '紫晶土地': 'plum', '蓝晶土地': 'sky',
 };
 const upgradeMeta: Record<UpgradeType, { lv: string; g: string }> = {
   '红土地': { lv: 'Lv 28-57', g: '20w-230w' },
   '黑土地': { lv: 'Lv 40-69', g: '60w-860w' },
   '金土地': { lv: 'Lv 58-87', g: '100w-1700w' },
   '紫晶土地': { lv: 'Lv 90-159', g: '5000w-5.1亿' },
+  '蓝晶土地': { lv: 'Lv 125-240', g: '1亿-38.2亿' },
 };
-const upgradeTypes: readonly UpgradeType[] = ['红土地', '黑土地', '金土地', '紫晶土地'];
+const upgradeTypes: readonly UpgradeType[] = ['红土地', '黑土地', '金土地', '紫晶土地', '蓝晶土地'];
 
 // 偷菜数量权重数据
 type StealEntry = { count: number; weight: number; percent: number };
@@ -68,7 +72,7 @@ function segWeightOf(from: number, to: number): number {
 
 // ── 地块当前等级（根据参考等级推算） ───────────────────────
 
-type LandTier = 'normal' | 'red' | 'black' | 'gold' | 'purple' | 'locked';
+type LandTier = 'normal' | 'red' | 'black' | 'gold' | 'purple' | 'blue' | 'locked';
 
 const TIER_LABEL: Record<LandTier, string> = {
   normal: '普通土地',
@@ -76,6 +80,7 @@ const TIER_LABEL: Record<LandTier, string> = {
   black: '黑土地',
   gold: '金土地',
   purple: '紫晶土地',
+  blue: '蓝晶土地',
   locked: '荒地',
 };
 
@@ -85,6 +90,7 @@ const TIER_IMAGE: Record<LandTier, string> = {
   black: 'land_valid3.png',
   gold: 'land_valid4.png',
   purple: 'land_valid5.png',
+  blue: 'land_valid6.png',
   locked: 'land_locked.png',
 };
 
@@ -100,6 +106,7 @@ const TIER_STYLE: Record<LandTier, TierStyle> = {
   black:  { bg: '#E5E7E8',        soft: '#9CA3AF',           deep: '#1F2937' },
   gold:   { bg: 'var(--sun-bg)',   soft: 'var(--sun-soft)',   deep: 'var(--sun-deep)' },
   purple: { bg: 'var(--plum-bg)',  soft: 'var(--plum-soft)',  deep: 'var(--plum-deep)' },
+  blue:   { bg: 'var(--sky-bg)',   soft: 'var(--sky-soft)',   deep: 'var(--sky-deep)' },
   locked: { bg: 'var(--sun-bg)',   soft: 'var(--sun-soft)',   deep: 'var(--sun-deep)' },
 };
 
@@ -107,12 +114,13 @@ function getPlotState(plot: any, level: number, upgrades: any[]): LandTier {
   if (!plot.initialUnlock && plot.unlockLevel > level) return 'locked';
   const pu = upgrades.find(u => u.plotId === plot.id);
   if (!pu) return 'normal';
-  // upgrades 数组顺序固定为：红 < 黑 < 金 < 紫晶（按等级递增）
+  // upgrades 数组顺序固定为：红 < 黑 < 金 < 紫晶 < 蓝晶（按等级递增）
   const typeToTier: Record<string, LandTier> = {
     '红土地': 'red',
     '黑土地': 'black',
     '金土地': 'gold',
     '紫晶土地': 'purple',
+    '蓝晶土地': 'blue',
   };
   let current: LandTier = 'normal';
   for (const u of pu.upgrades) {
@@ -133,7 +141,7 @@ export default function LandAtlasTab() {
         <span className="page-header-chip" style={{ background: 'var(--orange-bg)', color: 'var(--orange-deep)' }}>
           <MapIcon size={11} strokeWidth={2.5} /> 土地图鉴
         </span>
-        <h2 className="page-header-title">24 块地 · 5 种土壤</h2>
+        <h2 className="page-header-title">24 块地 · 6 种土壤</h2>
         <p className="page-header-subtitle">从开垦到升级的全套数据</p>
       </header>
 
@@ -217,10 +225,10 @@ export default function LandAtlasTab() {
             <div className="section-eyebrow">地块开垦顺序</div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-bold uppercase tracking-wide text-[var(--ink-mute)]">参考等级</span>
-              <input type="number" value={level} onChange={e => setLevel(Math.max(1, Math.min(200, Number(e.target.value) || 1)))}
+              <input type="number" value={level} onChange={e => setLevel(Math.max(1, Math.min(240, Number(e.target.value) || 1)))}
                 className="w-16 input-pop text-center"
                 style={{ padding: '0.4rem 0.5rem', fontSize: '0.9rem' }}
-                min={1} max={200} />
+                min={1} max={240} />
             </div>
           </div>
           <div className="sticker-lg p-4">

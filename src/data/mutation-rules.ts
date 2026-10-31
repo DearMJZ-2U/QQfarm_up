@@ -16,6 +16,8 @@ export const MUTATION_RULES: string[] = [
   // 2026-08 核补（来源：官方活动公告 + Global.MUTAN_TIPS/ZIJING_TIPS + Level 表）
   '雷雨天气下，珍品及以上品级的作物有概率发生闪电变异（基础概率18%，气象研究节点与「闪电感应」可提升）；闪电变异作物售价为普通作物的4倍，收获时可额外获得雷电徽章。',
   '晶辉变异仅在紫晶土地上出现：基础变异触发时约有16.7%概率呈变为晶辉形态；紫晶共鸣使紫晶土地上任意变异作物的经验+25%（紫晶土地本身变异概率+120%）。',
+  // 2026-10-31 蓝晶土地版本新增（来源：Global.MUTAN_TIPS1 第 5 条原文）
+  '在蓝晶土地上种植符合条件的作物时，有概率触发藏品变异，各系列综合概率可在【变异宝典-藏品】中查看；达到对应档位的保底次数时，必定触发藏品变异。各档位的保底进度独立累计，互不影响。触发藏品变异后，将从该作物已解锁的藏品中随机抽取一个款式。正常收获时额外获得 1 件藏品，且藏品不可被好友偷取。藏品变异可与常规变异同时生效，常规变异只影响原作物收益，不会增加藏品数量。',
 ];
 
 export interface MutationProbability {
@@ -24,6 +26,19 @@ export interface MutationProbability {
   rate: string;
   /** 变异发布序（= mutant_effect.id，越大越新），用于同品质内按发布新→旧排序 */
   releaseOrder?: number;
+}
+
+/** 藏品变异概率（仅蓝晶土地触发，2026-10-31 新增）—— 与常规变异按品质分档不同，它按作物时长/品质分 7 组 */
+export interface CollectionProbability {
+  seriesId: number;
+  seriesName: string;
+  groupName: string;
+  sourceRarity: number;
+  sourceRarityName: string;
+  rate: string;
+  raw: number;
+  guarantee: number;
+  poolId: number;
 }
 
 interface GeneratedProbability extends MutationProbability {
@@ -52,3 +67,8 @@ for (const p of MUTATION_PROBABILITIES) {
 export function getProbabilitiesFor(name: string): MutationProbability[] {
   return MUTATION_PROB_INDEX[name] || [];
 }
+
+// 藏品变异概率（蓝晶土地专属，来自 CollectionGroup.public_probability，单位 ‱）
+// 排序：系列 displayOrder → 组 displayOrder（4h→8h→12h→24h），提取脚本已按此顺序输出
+export const COLLECTION_PROBABILITIES: CollectionProbability[] =
+  ((mutationData as any).collectionProbabilities as CollectionProbability[] | undefined) ?? [];

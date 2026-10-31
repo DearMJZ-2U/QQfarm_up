@@ -390,6 +390,8 @@ export const LAND_BUFFS = {
   black: { time: 0.9, exp: 1.0, yield: 3.0 },
   gold: { time: 0.8, exp: 1.2, yield: 4.0 },
   purple: { time: 0.8, exp: 1.25, yield: 4.0 },
+  // 2026-10-31：蓝晶土地 —— 产出 +400%（yield 5.0）、时间 -20%、经验 +30%
+  blue:   { time: 0.8, exp: 1.3,  yield: 5.0 },
 };
 
 export const NO_FERT_PLANT_SPEED = 9;
@@ -403,13 +405,14 @@ export const NORMAL_FERT_PLANT_SPEED = 6;
 // 所以 Lv114 自动配：8 紫晶 + 16 金 = 24。
 export function calcBestLands(level: number, total: number) {
   const upgrades = (landsData as any).upgrades as Array<{ plotId: number; upgrades: Array<{ type: string; level: number }> }>;
-  const tierOrder: Array<{ key: 'purple' | 'gold' | 'black' | 'red'; type: string }> = [
+  const tierOrder: Array<{ key: 'blue' | 'purple' | 'gold' | 'black' | 'red'; type: string }> = [
+    { key: 'blue',   type: '蓝晶土地' },
     { key: 'purple', type: '紫晶土地' },
     { key: 'gold',   type: '金土地' },
     { key: 'black',  type: '黑土地' },
     { key: 'red',    type: '红土地' },
   ];
-  const counts = { normal: 0, red: 0, black: 0, gold: 0, purple: 0 };
+  const counts = { normal: 0, red: 0, black: 0, gold: 0, purple: 0, blue: 0 };
   const max = Math.min(total, 24);
   for (let i = 0; i < max; i++) {
     const plot = upgrades[i];
@@ -694,7 +697,7 @@ export function LevelRangeInput({
             onChange={e => onFromChange(e.target.value === '' ? '' : Number(e.target.value))}
             className="input-pop text-center"
             min={1}
-            max={200}
+            max={240}
             style={invalid ? { borderColor: 'var(--berry)' } : {}}
           />
         </div>
@@ -710,7 +713,7 @@ export function LevelRangeInput({
             onChange={e => onToChange(e.target.value === '' ? '' : Number(e.target.value))}
             className="input-pop text-center"
             min={1}
-            max={200}
+            max={240}
             style={invalid ? { borderColor: 'var(--berry)' } : {}}
           />
         </div>

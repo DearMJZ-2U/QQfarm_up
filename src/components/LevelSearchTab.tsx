@@ -5,9 +5,11 @@ import levelExpData from '../data/level_exp.json';
 import { EmptyState, StatTile } from './shared';
 
 export default function LevelSearchTab() {
+  // 等级上限从数据动态取（2026-10-31 起 200 → 240），避免每次抬上限都改死代码
+  const maxLevel = levelExpData.length;
   const [search, setSearch] = React.useState('');
   const [rangeStart, setRangeStart] = React.useState<number>(1);
-  const [rangeEnd, setRangeEnd] = React.useState<number>(200);
+  const [rangeEnd, setRangeEnd] = React.useState<number>(maxLevel);
 
   // 搜索：要求 2 位以上才匹配具体等级号，避免单字符误触滚动
   const filtered = levelExpData.filter(l => {
@@ -16,7 +18,6 @@ export default function LevelSearchTab() {
     return String(l.cumulativeExp).includes(search) || String(l.levelUpExp).includes(search);
   });
 
-  const maxLevel = 200;
   const maxCumulative = levelExpData[levelExpData.length - 1]?.cumulativeExp || 0;
   const avgExp = Math.round(maxCumulative / maxLevel);
 
@@ -26,6 +27,8 @@ export default function LevelSearchTab() {
     { label: '中高级',   range: [61, 100] as [number, number], emoji: '🌾', accent: 'sun'    as const },
     { label: '精英',     range: [101, 160] as [number, number], emoji: '⭐', accent: 'orange' as const },
     { label: '大师级',   range: [161, 200] as [number, number], emoji: '👑', accent: 'plum'   as const },
+    // 2026-10-31：蓝晶土地开放（Lv125 起可升），201-240 是新增的 40 级
+    { label: '蓝晶级',   range: [201, maxLevel] as [number, number], emoji: '💠', accent: 'sky' as const },
   ];
 
   const rangeInvalid = rangeStart > rangeEnd;
@@ -44,8 +47,8 @@ export default function LevelSearchTab() {
       {/* Hero */}
       <header className="page-header">
         <span className="page-header-chip"><BarChart3 size={11} strokeWidth={2.5} /> 等级查询</span>
-        <h2 className="page-header-title">Lv 1 → Lv 200</h2>
-        <p className="page-header-subtitle">完整 200 级经验表 · 累计与升级所需</p>
+        <h2 className="page-header-title">Lv 1 → Lv {maxLevel}</h2>
+        <p className="page-header-subtitle">完整 {maxLevel} 级经验表 · 累计与升级所需</p>
       </header>
 
       {/* Stats */}
@@ -74,12 +77,12 @@ export default function LevelSearchTab() {
           <input type="number" value={rangeStart}
             onChange={e => setRangeStart(Number(e.target.value) || 1)}
             className="w-20 input-pop text-center" style={{ padding: '0.4rem 0.5rem', fontSize: '0.85rem', borderColor: rangeInvalid ? 'var(--berry)' : undefined }}
-            min={1} max={200} />
+            min={1} max={maxLevel} />
           <span className="text-[var(--ink-mute)] font-bold">→</span>
           <input type="number" value={rangeEnd}
-            onChange={e => setRangeEnd(Number(e.target.value) || 200)}
+            onChange={e => setRangeEnd(Number(e.target.value) || maxLevel)}
             className="w-20 input-pop text-center" style={{ padding: '0.4rem 0.5rem', fontSize: '0.85rem', borderColor: rangeInvalid ? 'var(--berry)' : undefined }}
-            min={1} max={200} />
+            min={1} max={maxLevel} />
           <button
             onClick={() => { setSearch(''); const el = document.getElementById(`lv-${rangeStart}`); el?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}
             disabled={rangeInvalid}

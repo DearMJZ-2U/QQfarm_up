@@ -5,7 +5,7 @@ import mutationData from '../data/mutation_atlas.json';
 import bonusData from '../data/super_atlas_bonus.json';
 import bichonForms from '../data/bichon_forms.json';
 import { CropImage, GrowthPhases, RemoteImage, mutationIconUrls, goldenAtlasImageUrls, goldSeedIds, Portal, StatTile, PillTabGroup, EmptyState, publicUrl } from './shared';
-import { MUTATION_RULES, MUTATION_PROBABILITIES, getProbabilitiesFor } from '../data/mutation-rules';
+import { MUTATION_RULES, MUTATION_PROBABILITIES, COLLECTION_PROBABILITIES, getProbabilitiesFor } from '../data/mutation-rules';
 
 type BonusType = 'exp' | 'steal' | 'fert' | 'gold';
 
@@ -444,6 +444,50 @@ export default function MutationAtlasTab() {
               排序：品质由高到低（天工 &gt; 珍品 &gt; 稀有 &gt; 普通 &gt; 不分品质），同一品质内按变异发布新→旧（左侧序次，1 = 本档最新）。横条长度按该档最高概率归一化，只反映相对高低；数值来源为游戏 MutantPublicity 表（万分比换算）。
             </div>
           </div>
+
+          {/* ── 藏品变异概率（2026-10-31 蓝晶土地专属）──
+              与常规变异不同：按「系列 + 作物时长/品质」分 7 组，每组独立保底。
+              数据来源 CollectionGroup.public_probability（‱）与 display_guarantee。 */}
+          {COLLECTION_PROBABILITIES.length > 0 && (
+            <div className="sticker overflow-hidden">
+              <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2"
+                style={{ background: 'var(--plum-bg)', borderBottom: '1.5px solid var(--plum-soft)' }}>
+                <span className="text-base sm:text-lg">🏺</span>
+                <h3 className="font-display italic text-base sm:text-lg font-bold text-[var(--plum-deep)]">藏品变异概率</h3>
+                <span className="chip chip-plum ml-auto" style={{ fontSize: '0.65rem' }}>
+                  {COLLECTION_PROBABILITIES.length} 组 · 仅蓝晶土地
+                </span>
+              </div>
+              <div className="divide-y" style={{ borderColor: 'var(--line)' }}>
+                {COLLECTION_PROBABILITIES.map((c, i) => {
+                  const maxRate = Math.max(...COLLECTION_PROBABILITIES.map(x => x.raw), 1);
+                  const pct = (c.raw / maxRate) * 100;
+                  return (
+                    <div key={`${c.seriesId}-${c.poolId}-${i}`}
+                      className="px-3 py-2.5 sm:py-3 flex items-center gap-2.5 sm:gap-3 transition-colors hover:bg-[var(--surface-soft)]">
+                      <div className="w-16 sm:w-20 flex-shrink-0">
+                        <div className="font-bold text-xs sm:text-sm text-[var(--ink)] truncate">{c.seriesName}</div>
+                        <div className="text-[9px] sm:text-[10px] text-[var(--ink-mute)] truncate">{c.groupName}</div>
+                      </div>
+                      <div className="flex-1 min-w-0 h-2.5 sm:h-3 rounded-full overflow-hidden" style={{ background: 'var(--line)' }}>
+                        <div className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${Math.max(pct, 2)}%`, background: 'var(--plum)' }} />
+                      </div>
+                      <div className="w-14 sm:w-16 flex-shrink-0 text-right">
+                        <div className="font-mono tnum font-bold text-sm sm:text-base" style={{ color: 'var(--plum-deep)' }}>{c.rate}</div>
+                        <div className="text-[9px] text-[var(--ink-mute)]">保底 {c.guarantee} 次</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="px-4 sm:px-5 py-2.5 text-[10px] sm:text-[11px] text-[var(--ink-mute)] leading-relaxed"
+                style={{ background: 'var(--bg-2)', borderTop: '1.5px solid var(--line)' }}>
+                藏品变异只在<b>蓝晶土地</b>上触发，概率随作物时长升高（4h 1.17% → 24h 6.52%）；稀有/珍品/天工作物统一 3.33%。
+                各档保底独立累计（4h 120 次 / 8h 60 次 / 12h 40 次 / 24h 20 次 / 稀有以上 40 次），满次数必定触发。数值来源为游戏 CollectionGroup 表（万分比换算）。
+              </div>
+            </div>
+          )}
         </>
       )}
 

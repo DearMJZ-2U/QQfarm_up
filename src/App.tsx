@@ -16,6 +16,8 @@ import ItemsTab from './components/ItemsTab';
 import MutationAtlasTab from './components/MutationAtlasTab';
 import CostumeAtlasTab from './components/CostumeAtlasTab';
 import RanchAtlasTab from './components/RanchAtlasTab';
+import CollectionAtlasTab from './components/CollectionAtlasTab';
+import PedestalAtlasTab from './components/PedestalAtlasTab';
 import MilkteaTab from './components/MilkteaTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
@@ -30,9 +32,10 @@ import costumeData from './data/costume_atlas.json';
 import mutationData from './data/mutation_atlas.json';
 import ranchData from './data/ranch_atlas.json';
 import milkteaData from './data/milktea_atlas.json';
+import collectionData from './data/collection_atlas.json';
 
 type BottomTab = 'home' | 'calc' | 'atlas' | 'items' | 'tools';
-type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume' | 'ranch';
+type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume' | 'ranch' | 'collection' | 'pedestal';
 type ToolsSubTab = 'level' | 'land' | 'milktea';
 type ItemCategoryId = string;
 
@@ -59,6 +62,11 @@ const atlasSubTabCount = (id: AtlasSubTab): number => {
   if (id === 'lands') return (landsData as any).plots?.length || 0;
   if (id === 'costume') return (costumeData as any).categories?.reduce((s: number, c: any) => s + c.items.length, 0) || 0;
   if (id === 'ranch') return (ranchData as any).count || (ranchData as any).animals?.length || 0;
+  if (id === 'collection') return (collectionData as any).summary?.itemCount || 0;
+  if (id === 'pedestal') {
+    const c = collectionData as any;
+    return (c.pedestals?.length || 0) + (c.orphanPedestals?.length || 0);
+  }
   // mutation: 变异类型 + 黄金果实 + 装扮果实 + 活动果实
   const m = mutationData as any;
   const golden = m.goldenAtlas ? (m.goldenAtlas.goldenFruit?.length || 0) + (m.goldenAtlas.costumeFruit?.length || 0) + (m.goldenAtlas.eventFruit?.length || 0) : 0;
@@ -69,6 +77,9 @@ const atlasSubTabsDef: Array<{ id: AtlasSubTab; label: string; emoji: string; co
   { id: 'crops', label: '作物', emoji: '🌿', color: 'leaf' },
   { id: 'ranch', label: '牧场', emoji: '🐾', color: 'sun' },
   { id: 'costume', label: '装扮', emoji: '🏡', color: 'sky' },
+  // 2026-10-31 藏品系统：藏品本体 + 展台分两个独立页
+  { id: 'collection', label: '藏品', emoji: '🏺', color: 'plum' },
+  { id: 'pedestal', label: '展台', emoji: '🪴', color: 'sun' },
   { id: 'lands', label: '土地', emoji: '🏞️', color: 'orange' },
   { id: 'mutation', label: '变异', emoji: '🧬', color: 'berry' },
 ];
@@ -253,6 +264,10 @@ export default function App() {
   const navigateFromHome = (target: string) => {
     if (target === 'calc') { navigate('calc'); return; }
     if (target === 'atlas') { navigate('atlas', 'crops'); return; }
+    // 2026-10-31 修复：土地图鉴原来错走 'atlas'（→ 作物图鉴），改成独立 target
+    if (target === 'atlas_lands') { navigate('atlas', 'lands'); return; }
+    if (target === 'atlas_collection') { navigate('atlas', 'collection'); return; }
+    if (target === 'atlas_pedestal') { navigate('atlas', 'pedestal'); return; }
     if (target === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
     if (target === 'atlas_costume') { navigate('atlas', 'costume'); return; }
     if (target === 'atlas_ranch') { navigate('atlas', 'ranch'); return; }
@@ -298,6 +313,8 @@ export default function App() {
                     {atlasSubTab === 'mutation' && <MutationAtlasTab />}
                     {atlasSubTab === 'costume' && <CostumeAtlasTab />}
                     {atlasSubTab === 'ranch' && <RanchAtlasTab />}
+                    {atlasSubTab === 'collection' && <CollectionAtlasTab />}
+                    {atlasSubTab === 'pedestal' && <PedestalAtlasTab />}
                   </div>
                 </div>
               </div>

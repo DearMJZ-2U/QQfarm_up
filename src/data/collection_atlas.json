@@ -1,0 +1,1741 @@
+{
+  "exportedAt": "2026-10-31T14:58:08.025Z",
+  "series": [
+    {
+      "seriesId": 1001,
+      "name": "氧气精灵",
+      "rarity": 1,
+      "rarityName": "普通",
+      "desc": "种植28品及以上普通作物有概率得本系列",
+      "iconFile": "gui/texture/mutant/icon/collect_1_1.png",
+      "bigIconFile": "gui/texture/collect/collectIcon/icon_collect_1_1.png",
+      "bg": "gui/prefab/collect/collect_bg/collect_bg_02",
+      "isDisplay": false,
+      "displayOrder": 0,
+      "wishBonus": 10000,
+      "wishCooldown": 86400,
+      "groups": [
+        {
+          "groupName": "4小时·普通",
+          "sourceRarity": 1,
+          "sourceRarityName": "普通",
+          "poolId": 10001,
+          "probabilityRaw": 117,
+          "probabilityPct": "1.17%",
+          "guarantee": 120
+        },
+        {
+          "groupName": "8小时·普通",
+          "sourceRarity": 1,
+          "sourceRarityName": "普通",
+          "poolId": 10002,
+          "probabilityRaw": 230,
+          "probabilityPct": "2.30%",
+          "guarantee": 60
+        },
+        {
+          "groupName": "12小时·普通",
+          "sourceRarity": 1,
+          "sourceRarityName": "普通",
+          "poolId": 10003,
+          "probabilityRaw": 333,
+          "probabilityPct": "3.33%",
+          "guarantee": 40
+        },
+        {
+          "groupName": "24小时·普通",
+          "sourceRarity": 1,
+          "sourceRarityName": "普通",
+          "poolId": 10004,
+          "probabilityRaw": 652,
+          "probabilityPct": "6.52%",
+          "guarantee": 20
+        }
+      ],
+      "starLevels": [
+        {
+          "starLevel": 1,
+          "needItems": 1,
+          "gold": 0
+        },
+        {
+          "starLevel": 2,
+          "needItems": 2,
+          "gold": 2000000
+        },
+        {
+          "starLevel": 3,
+          "needItems": 4,
+          "gold": 4000000
+        },
+        {
+          "starLevel": 4,
+          "needItems": 8,
+          "gold": 8000000
+        },
+        {
+          "starLevel": 5,
+          "needItems": 16,
+          "gold": 16000000
+        }
+      ],
+      "items": [
+        {
+          "itemId": 710001,
+          "seriesId": 1001,
+          "name": "菇菇氧",
+          "desc": "喜欢穿梭林间、寻觅蘑菇的氧气小精灵，可收进珍藏室陈列展示。",
+          "rarity": 1,
+          "rarityName": "普通",
+          "rarityColor": "D2C5AC",
+          "iconFile": "gui/texture/collectIcon/icon_collect_1_1.png",
+          "localFile": "35_710001_菇菇氧.png",
+          "displayOrder": 1,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 400
+            },
+            {
+              "star": 2,
+              "score": 720
+            },
+            {
+              "star": 3,
+              "score": 1280
+            },
+            {
+              "star": 4,
+              "score": 2240
+            },
+            {
+              "star": 5,
+              "score": 3200
+            }
+          ]
+        },
+        {
+          "itemId": 710002,
+          "seriesId": 1001,
+          "name": "冒险氧",
+          "desc": "向往远方、酷爱山野冒险的氧气小精灵，可收进珍藏室陈列展示。",
+          "rarity": 1,
+          "rarityName": "普通",
+          "rarityColor": "D2C5AC",
+          "iconFile": "gui/texture/collectIcon/icon_collect_1_2.png",
+          "localFile": "35_710002_冒险氧.png",
+          "displayOrder": 2,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 400
+            },
+            {
+              "star": 2,
+              "score": 720
+            },
+            {
+              "star": 3,
+              "score": 1280
+            },
+            {
+              "star": 4,
+              "score": 2240
+            },
+            {
+              "star": 5,
+              "score": 3200
+            }
+          ]
+        },
+        {
+          "itemId": 710003,
+          "seriesId": 1001,
+          "name": "轻松氧",
+          "desc": "贪恋暖阳，贪睡慵懒的氧气小精灵，可收进珍藏室陈列展示。",
+          "rarity": 1,
+          "rarityName": "普通",
+          "rarityColor": "D2C5AC",
+          "iconFile": "gui/texture/collectIcon/icon_collect_1_3.png",
+          "localFile": "35_710003_轻松氧.png",
+          "displayOrder": 3,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 400
+            },
+            {
+              "star": 2,
+              "score": 720
+            },
+            {
+              "star": 3,
+              "score": 1280
+            },
+            {
+              "star": 4,
+              "score": 2240
+            },
+            {
+              "star": 5,
+              "score": 3200
+            }
+          ]
+        },
+        {
+          "itemId": 710004,
+          "seriesId": 1001,
+          "name": "阳光氧",
+          "desc": "偏爱晴空，追着阳光小憩的氧气小精灵，可收进珍藏室陈列展示。",
+          "rarity": 1,
+          "rarityName": "普通",
+          "rarityColor": "D2C5AC",
+          "iconFile": "gui/texture/collectIcon/icon_collect_1_4.png",
+          "localFile": "35_710004_阳光氧.png",
+          "displayOrder": 4,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 400
+            },
+            {
+              "star": 2,
+              "score": 720
+            },
+            {
+              "star": 3,
+              "score": 1280
+            },
+            {
+              "star": 4,
+              "score": 2240
+            },
+            {
+              "star": 5,
+              "score": 3200
+            }
+          ]
+        },
+        {
+          "itemId": 710005,
+          "seriesId": 1001,
+          "name": "元气氧",
+          "desc": "元气满满，精力充沛的氧气小精灵，可收进珍藏室陈列展示。",
+          "rarity": 1,
+          "rarityName": "普通",
+          "rarityColor": "D2C5AC",
+          "iconFile": "gui/texture/collectIcon/icon_collect_1_5.png",
+          "localFile": "35_710005_元气氧.png",
+          "displayOrder": 5,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 400
+            },
+            {
+              "star": 2,
+              "score": 720
+            },
+            {
+              "star": 3,
+              "score": 1280
+            },
+            {
+              "star": 4,
+              "score": 2240
+            },
+            {
+              "star": 5,
+              "score": 3200
+            }
+          ]
+        },
+        {
+          "itemId": 710006,
+          "seriesId": 1001,
+          "name": "屁屁氧",
+          "desc": "软乎乎圆滚滚的氧气小精灵屁屁氧，蹦蹦跳跳，好奇打量农场万物，可收进珍藏室陈列展示。",
+          "rarity": 1,
+          "rarityName": "普通",
+          "rarityColor": "D2C5AC",
+          "iconFile": "gui/texture/collectIcon/icon_collect_1_6.png",
+          "localFile": "35_710006_屁屁氧.png",
+          "displayOrder": 6,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 400
+            },
+            {
+              "star": 2,
+              "score": 720
+            },
+            {
+              "star": 3,
+              "score": 1280
+            },
+            {
+              "star": 4,
+              "score": 2240
+            },
+            {
+              "star": 5,
+              "score": 3200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seriesId": 2002,
+      "name": "果冻花园",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "desc": "",
+      "iconFile": "gui/texture/mutant/icon/collect_1_5.png",
+      "bigIconFile": "gui/texture/collect/collectIcon/icon_collect_1_5.png",
+      "bg": "gui/prefab/collect/collect_bg/collect_bg_03",
+      "isDisplay": true,
+      "displayOrder": 1,
+      "wishBonus": 10000,
+      "wishCooldown": 86400,
+      "groups": [],
+      "starLevels": [
+        {
+          "starLevel": 1,
+          "needItems": 1,
+          "gold": 0
+        },
+        {
+          "starLevel": 2,
+          "needItems": 2,
+          "gold": 3000000
+        },
+        {
+          "starLevel": 3,
+          "needItems": 4,
+          "gold": 6000000
+        },
+        {
+          "starLevel": 4,
+          "needItems": 8,
+          "gold": 12000000
+        },
+        {
+          "starLevel": 5,
+          "needItems": 16,
+          "gold": 24000000
+        }
+      ],
+      "items": [
+        {
+          "itemId": 700001,
+          "seriesId": 2002,
+          "name": "棉芽",
+          "desc": "顶着嫩芽白花的小狗果冻，可收进珍藏室陈列。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_5_1.png",
+          "localFile": "35_700001_棉芽.png",
+          "displayOrder": 1,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 700002,
+          "seriesId": 2002,
+          "name": "布丁",
+          "desc": "裹着奶油甜饰、爱打扮的布丁果冻，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_5_2.png",
+          "localFile": "35_700002_布丁.png",
+          "displayOrder": 2,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 700003,
+          "seriesId": 2002,
+          "name": "星露",
+          "desc": "缀着星光，总爱犯困打盹的果冻精灵，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_5_3.png",
+          "localFile": "35_700003_星露.png",
+          "displayOrder": 3,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 700004,
+          "seriesId": 2002,
+          "name": "夜莓",
+          "desc": "伴着夜色，又酷又安静的黑莓果冻小家伙，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_5_4.png",
+          "localFile": "35_700004_夜莓.png",
+          "displayOrder": 4,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 700005,
+          "seriesId": 2002,
+          "name": "桃米",
+          "desc": "粉扑扑，害羞爱笑的蜜桃果冻，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_5_5.png",
+          "localFile": "35_700005_桃米.png",
+          "displayOrder": 5,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 700006,
+          "seriesId": 2002,
+          "name": "青团",
+          "desc": "一身青绿，整日乐呵呵的青团果冻，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_5_6.png",
+          "localFile": "35_700006_青团.png",
+          "displayOrder": 6,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seriesId": 2001,
+      "name": "萌混过关",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "desc": "种植稀有作物有概率得本系列",
+      "iconFile": "gui/texture/mutant/icon/collect_1_2.png",
+      "bigIconFile": "gui/texture/collect/collectIcon/icon_collect_1_2.png",
+      "bg": "gui/prefab/collect/collect_bg/collect_bg_05",
+      "isDisplay": false,
+      "displayOrder": 2,
+      "wishBonus": 10000,
+      "wishCooldown": 86400,
+      "groups": [
+        {
+          "groupName": "稀有",
+          "sourceRarity": 2,
+          "sourceRarityName": "稀有",
+          "poolId": 10005,
+          "probabilityRaw": 333,
+          "probabilityPct": "3.33%",
+          "guarantee": 40
+        }
+      ],
+      "starLevels": [
+        {
+          "starLevel": 1,
+          "needItems": 1,
+          "gold": 0
+        },
+        {
+          "starLevel": 2,
+          "needItems": 2,
+          "gold": 3000000
+        },
+        {
+          "starLevel": 3,
+          "needItems": 4,
+          "gold": 6000000
+        },
+        {
+          "starLevel": 4,
+          "needItems": 8,
+          "gold": 12000000
+        },
+        {
+          "starLevel": 5,
+          "needItems": 16,
+          "gold": 24000000
+        }
+      ],
+      "items": [
+        {
+          "itemId": 720001,
+          "seriesId": 2001,
+          "name": "牛牛捏捏",
+          "desc": "戴着花环金饰，爱臭美打扮的田园小牛灵偶，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_2_1.png",
+          "localFile": "35_720001_牛牛捏捏.png",
+          "displayOrder": 1,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 720002,
+          "seriesId": 2001,
+          "name": "浣然一新",
+          "desc": "偷偷藏在木丛，馋嘴偷瞄瓜果的浣熊灵偶，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_2_2.png",
+          "localFile": "35_720002_浣然一新.png",
+          "displayOrder": 2,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 720003,
+          "seriesId": 2001,
+          "name": "羊装乖巧",
+          "desc": "挂着小摇铃，爱凑热闹的软绵小羊灵偶，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_2_3.png",
+          "localFile": "35_720003_羊装乖巧.png",
+          "displayOrder": 3,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 720004,
+          "seriesId": 2001,
+          "name": "鹿过看看",
+          "desc": "伸长脖颈，四处巡望田野的长颈鹿灵偶，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_2_4.png",
+          "localFile": "35_720004_鹿过看看.png",
+          "displayOrder": 4,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 720005,
+          "seriesId": 2001,
+          "name": "奇思妙象",
+          "desc": "长鼻轻扬，勤快汲水劳作的小象灵偶，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_2_5.png",
+          "localFile": "35_720005_奇思妙象.png",
+          "displayOrder": 5,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        },
+        {
+          "itemId": 720006,
+          "seriesId": 2001,
+          "name": "鸵鸵贴贴",
+          "desc": "脖颈柔粉、头顶嫩芽，披着草木羽衣，俏皮回眸的田园鸵鸟灵偶，可收进珍藏室陈列展示。",
+          "rarity": 2,
+          "rarityName": "稀有",
+          "rarityColor": "A8C1F4",
+          "iconFile": "gui/texture/collectIcon/icon_collect_2_6.png",
+          "localFile": "35_720006_鸵鸵贴贴.png",
+          "displayOrder": 6,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 600
+            },
+            {
+              "star": 2,
+              "score": 1080
+            },
+            {
+              "star": 3,
+              "score": 1920
+            },
+            {
+              "star": 4,
+              "score": 3360
+            },
+            {
+              "star": 5,
+              "score": 4800
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seriesId": 3001,
+      "name": "云途漫客",
+      "rarity": 3,
+      "rarityName": "珍品",
+      "desc": "种植珍品作物有概率得本系列",
+      "iconFile": "gui/texture/mutant/icon/collect_1_3.png",
+      "bigIconFile": "gui/texture/collect/collectIcon/icon_collect_1_3.png",
+      "bg": "gui/prefab/collect/collect_bg/collect_bg_04",
+      "isDisplay": false,
+      "displayOrder": 3,
+      "wishBonus": 10000,
+      "wishCooldown": 86400,
+      "groups": [
+        {
+          "groupName": "珍品",
+          "sourceRarity": 3,
+          "sourceRarityName": "珍品",
+          "poolId": 10006,
+          "probabilityRaw": 333,
+          "probabilityPct": "3.33%",
+          "guarantee": 40
+        }
+      ],
+      "starLevels": [
+        {
+          "starLevel": 1,
+          "needItems": 1,
+          "gold": 0
+        },
+        {
+          "starLevel": 2,
+          "needItems": 2,
+          "gold": 5000000
+        },
+        {
+          "starLevel": 3,
+          "needItems": 4,
+          "gold": 10000000
+        },
+        {
+          "starLevel": 4,
+          "needItems": 8,
+          "gold": 20000000
+        },
+        {
+          "starLevel": 5,
+          "needItems": 16,
+          "gold": 40000000
+        }
+      ],
+      "items": [
+        {
+          "itemId": 730001,
+          "seriesId": 3001,
+          "name": "风信灯",
+          "desc": "提着流光风灯，替清风捎话的漫游客，可收进珍藏室陈列展示。",
+          "rarity": 3,
+          "rarityName": "珍品",
+          "rarityColor": "B09DED",
+          "iconFile": "gui/texture/collectIcon/icon_collect_3_1.png",
+          "localFile": "35_730001_风信灯.png",
+          "displayOrder": 1,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 1000
+            },
+            {
+              "star": 2,
+              "score": 1800
+            },
+            {
+              "star": 3,
+              "score": 3200
+            },
+            {
+              "star": 4,
+              "score": 5600
+            },
+            {
+              "star": 5,
+              "score": 8000
+            }
+          ]
+        },
+        {
+          "itemId": 730002,
+          "seriesId": 3001,
+          "name": "青萍渡",
+          "desc": "乘着浮萍小舟，随波自在漂泊的漫游客，可收进珍藏室陈列展示。",
+          "rarity": 3,
+          "rarityName": "珍品",
+          "rarityColor": "B09DED",
+          "iconFile": "gui/texture/collectIcon/icon_collect_3_2.png",
+          "localFile": "35_730002_青萍渡.png",
+          "displayOrder": 2,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 1000
+            },
+            {
+              "star": 2,
+              "score": 1800
+            },
+            {
+              "star": 3,
+              "score": 3200
+            },
+            {
+              "star": 4,
+              "score": 5600
+            },
+            {
+              "star": 5,
+              "score": 8000
+            }
+          ]
+        },
+        {
+          "itemId": 730003,
+          "seriesId": 3001,
+          "name": "枕月舟",
+          "desc": "卧于月牙船舷，夜夜入梦的漫游客，可收进珍藏室陈列展示。",
+          "rarity": 3,
+          "rarityName": "珍品",
+          "rarityColor": "B09DED",
+          "iconFile": "gui/texture/collectIcon/icon_collect_3_3.png",
+          "localFile": "35_730003_枕月舟.png",
+          "displayOrder": 3,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 1000
+            },
+            {
+              "star": 2,
+              "score": 1800
+            },
+            {
+              "star": 3,
+              "score": 3200
+            },
+            {
+              "star": 4,
+              "score": 5600
+            },
+            {
+              "star": 5,
+              "score": 8000
+            }
+          ]
+        },
+        {
+          "itemId": 730004,
+          "seriesId": 3001,
+          "name": "橙花舆",
+          "desc": "乘着橙花小车，四处巡游采风的漫游客，可收进珍藏室陈列展示。",
+          "rarity": 3,
+          "rarityName": "珍品",
+          "rarityColor": "B09DED",
+          "iconFile": "gui/texture/collectIcon/icon_collect_3_4.png",
+          "localFile": "35_730004_橙花舆.png",
+          "displayOrder": 4,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 1000
+            },
+            {
+              "star": 2,
+              "score": 1800
+            },
+            {
+              "star": 3,
+              "score": 3200
+            },
+            {
+              "star": 4,
+              "score": 5600
+            },
+            {
+              "star": 5,
+              "score": 8000
+            }
+          ]
+        },
+        {
+          "itemId": 730005,
+          "seriesId": 3001,
+          "name": "莲铃悠",
+          "desc": "静立莲畔，静静等候一阵晚风的漫游客，可收进珍藏室陈列展示。",
+          "rarity": 3,
+          "rarityName": "珍品",
+          "rarityColor": "B09DED",
+          "iconFile": "gui/texture/collectIcon/icon_collect_3_5.png",
+          "localFile": "35_730005_莲铃悠.png",
+          "displayOrder": 5,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 1000
+            },
+            {
+              "star": 2,
+              "score": 1800
+            },
+            {
+              "star": 3,
+              "score": 3200
+            },
+            {
+              "star": 4,
+              "score": 5600
+            },
+            {
+              "star": 5,
+              "score": 8000
+            }
+          ]
+        },
+        {
+          "itemId": 730006,
+          "seriesId": 3001,
+          "name": "幸风摇",
+          "desc": "栖于四叶草上，捎来好运的漫游客，可收进珍藏室陈列展示。",
+          "rarity": 3,
+          "rarityName": "珍品",
+          "rarityColor": "B09DED",
+          "iconFile": "gui/texture/collectIcon/icon_collect_3_6.png",
+          "localFile": "35_730006_幸风摇.png",
+          "displayOrder": 6,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 1000
+            },
+            {
+              "star": 2,
+              "score": 1800
+            },
+            {
+              "star": 3,
+              "score": 3200
+            },
+            {
+              "star": 4,
+              "score": 5600
+            },
+            {
+              "star": 5,
+              "score": 8000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seriesId": 4001,
+      "name": "山野风灵",
+      "rarity": 4,
+      "rarityName": "天工",
+      "desc": "种植天工作物有概率得本系列",
+      "iconFile": "gui/texture/mutant/icon/collect_1_4.png",
+      "bigIconFile": "gui/texture/collect/collectIcon/icon_collect_1_4.png",
+      "bg": "gui/prefab/collect/collect_bg/collect_bg_01",
+      "isDisplay": false,
+      "displayOrder": 4,
+      "wishBonus": 10000,
+      "wishCooldown": 86400,
+      "groups": [
+        {
+          "groupName": "天工",
+          "sourceRarity": 4,
+          "sourceRarityName": "天工",
+          "poolId": 10007,
+          "probabilityRaw": 333,
+          "probabilityPct": "3.33%",
+          "guarantee": 40
+        }
+      ],
+      "starLevels": [
+        {
+          "starLevel": 1,
+          "needItems": 1,
+          "gold": 0
+        },
+        {
+          "starLevel": 2,
+          "needItems": 2,
+          "gold": 25000000
+        },
+        {
+          "starLevel": 3,
+          "needItems": 4,
+          "gold": 50000000
+        },
+        {
+          "starLevel": 4,
+          "needItems": 8,
+          "gold": 100000000
+        },
+        {
+          "starLevel": 5,
+          "needItems": 16,
+          "gold": 200000000
+        }
+      ],
+      "items": [
+        {
+          "itemId": 740001,
+          "seriesId": 4001,
+          "name": "清风叶语",
+          "desc": "穿梭林间，清爽爱闹的青叶风灵，可收进珍藏室陈列展示。",
+          "rarity": 4,
+          "rarityName": "天工",
+          "rarityColor": "D1A21E",
+          "iconFile": "gui/texture/collectIcon/icon_collect_4_1.png",
+          "localFile": "35_740001_清风叶语.png",
+          "displayOrder": 1,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 5000
+            },
+            {
+              "star": 2,
+              "score": 9000
+            },
+            {
+              "star": 3,
+              "score": 16000
+            },
+            {
+              "star": 4,
+              "score": 28000
+            },
+            {
+              "star": 5,
+              "score": 40000
+            }
+          ]
+        },
+        {
+          "itemId": 740002,
+          "seriesId": 4001,
+          "name": "晴葵逐光",
+          "desc": "追随着向阳花，不停奔赴暖阳的风灵，可收进珍藏室陈列展示。",
+          "rarity": 4,
+          "rarityName": "天工",
+          "rarityColor": "D1A21E",
+          "iconFile": "gui/texture/collectIcon/icon_collect_4_2.png",
+          "localFile": "35_740002_晴葵逐光.png",
+          "displayOrder": 2,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 5000
+            },
+            {
+              "star": 2,
+              "score": 9000
+            },
+            {
+              "star": 3,
+              "score": 16000
+            },
+            {
+              "star": 4,
+              "score": 28000
+            },
+            {
+              "star": 5,
+              "score": 40000
+            }
+          ]
+        },
+        {
+          "itemId": 740003,
+          "seriesId": 4001,
+          "name": "枫叶知秋",
+          "desc": "掠过红枫，最先感知秋意到来的风灵，可收进珍藏室陈列展示。",
+          "rarity": 4,
+          "rarityName": "天工",
+          "rarityColor": "D1A21E",
+          "iconFile": "gui/texture/collectIcon/icon_collect_4_3.png",
+          "localFile": "35_740003_枫叶知秋.png",
+          "displayOrder": 3,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 5000
+            },
+            {
+              "star": 2,
+              "score": 9000
+            },
+            {
+              "star": 3,
+              "score": 16000
+            },
+            {
+              "star": 4,
+              "score": 28000
+            },
+            {
+              "star": 5,
+              "score": 40000
+            }
+          ]
+        },
+        {
+          "itemId": 740004,
+          "seriesId": 4001,
+          "name": "樱舞春歌",
+          "desc": "樱瓣随身，逢春便随风起舞的风灵，可收进珍藏室陈列展示。",
+          "rarity": 4,
+          "rarityName": "天工",
+          "rarityColor": "D1A21E",
+          "iconFile": "gui/texture/collectIcon/icon_collect_4_4.png",
+          "localFile": "35_740004_樱舞春歌.png",
+          "displayOrder": 4,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 5000
+            },
+            {
+              "star": 2,
+              "score": 9000
+            },
+            {
+              "star": 3,
+              "score": 16000
+            },
+            {
+              "star": 4,
+              "score": 28000
+            },
+            {
+              "star": 5,
+              "score": 40000
+            }
+          ]
+        },
+        {
+          "itemId": 740005,
+          "seriesId": 4001,
+          "name": "荷塘清梦",
+          "desc": "流连荷塘，总在莲叶间打盹做梦的风灵，可收进珍藏室陈列展示。",
+          "rarity": 4,
+          "rarityName": "天工",
+          "rarityColor": "D1A21E",
+          "iconFile": "gui/texture/collectIcon/icon_collect_4_5.png",
+          "localFile": "35_740005_荷塘清梦.png",
+          "displayOrder": 5,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 5000
+            },
+            {
+              "star": 2,
+              "score": 9000
+            },
+            {
+              "star": 3,
+              "score": 16000
+            },
+            {
+              "star": 4,
+              "score": 28000
+            },
+            {
+              "star": 5,
+              "score": 40000
+            }
+          ]
+        },
+        {
+          "itemId": 740006,
+          "seriesId": 4001,
+          "name": "暖灯雪夜",
+          "desc": "守着一盏暖光，静看落雪的冬日风灵，可收进珍藏室陈列展示。",
+          "rarity": 4,
+          "rarityName": "天工",
+          "rarityColor": "D1A21E",
+          "iconFile": "gui/texture/collectIcon/icon_collect_4_6.png",
+          "localFile": "35_740006_暖灯雪夜.png",
+          "displayOrder": 6,
+          "starScores": [
+            {
+              "star": 1,
+              "score": 5000
+            },
+            {
+              "star": 2,
+              "score": 9000
+            },
+            {
+              "star": 3,
+              "score": 16000
+            },
+            {
+              "star": 4,
+              "score": 28000
+            },
+            {
+              "star": 5,
+              "score": 40000
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pedestals": [
+    {
+      "pedestalId": 610100,
+      "name": "默认",
+      "desc": "默认展台",
+      "rarity": 1,
+      "rarityName": "普通",
+      "isDefault": true,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_1.png",
+      "localFile": "34_610100_默认.png",
+      "spineRes": "spine/v2/collection_stand/putong/610100/610100",
+      "score": 0
+    },
+    {
+      "pedestalId": 610201,
+      "name": "旋苔石径",
+      "desc": "苔石螺旋，野花漫生的藏品展台；",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_2.png",
+      "localFile": "34_610201_旋苔石径.png",
+      "spineRes": "spine/v2/collection_stand/xiyou/610201/610201",
+      "score": 300
+    },
+    {
+      "pedestalId": 610202,
+      "name": "幸运四叶",
+      "desc": "四叶承露，满载好运的藏品展台；",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_3.png",
+      "localFile": "34_610202_幸运四叶.png",
+      "spineRes": "spine/v2/collection_stand/xiyou/610202/610202",
+      "score": 300
+    },
+    {
+      "pedestalId": 610203,
+      "name": "蜜酪甜台",
+      "desc": "蜜浆流转，甜意满满的藏品展台；",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_4.png",
+      "localFile": "34_610203_蜜酪甜台.png",
+      "spineRes": "spine/v2/collection_stand/xiyou/610203/610203",
+      "score": 300
+    },
+    {
+      "pedestalId": 610204,
+      "name": "花绣绒毯",
+      "desc": "花绣野餐毯，温柔雅致的藏品展台；",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_5.png",
+      "localFile": "34_610204_花绣绒毯.png",
+      "spineRes": "spine/v2/collection_stand/xiyou/610204/610204",
+      "score": 300
+    },
+    {
+      "pedestalId": 610301,
+      "name": "清荷水榭",
+      "desc": "荷风碧水，涟漪悠悠的藏品展台；",
+      "rarity": 3,
+      "rarityName": "珍品",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_8.png",
+      "localFile": "34_610301_清荷水榭.png",
+      "spineRes": "spine/v2/collection_stand/zhenpin/610301/610301",
+      "score": 1800
+    },
+    {
+      "pedestalId": 610302,
+      "name": "星砂浅滩",
+      "desc": "沙滩海岛，星贝散落的藏品展台；",
+      "rarity": 3,
+      "rarityName": "珍品",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_9.png",
+      "localFile": "34_610302_星砂浅滩.png",
+      "spineRes": "spine/v2/collection_stand/zhenpin/610302/610302",
+      "score": 1800
+    },
+    {
+      "pedestalId": 610303,
+      "name": "星絮云团",
+      "desc": "星云软台，轻盈梦幻的藏品展台；",
+      "rarity": 3,
+      "rarityName": "珍品",
+      "isDefault": false,
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_10.png",
+      "localFile": "34_610303_星絮云团.png",
+      "spineRes": "spine/v2/collection_stand/zhenpin/610303/610303",
+      "score": 1800
+    }
+  ],
+  "orphanPedestals": [
+    {
+      "pedestalId": 610205,
+      "name": "野趣红砖",
+      "desc": "红砖小台，野花生香的藏品展台；",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_6.png",
+      "localFile": "34_610205_野趣红砖.png",
+      "note": "有道具但展台表未配置（待活动放出）"
+    },
+    {
+      "pedestalId": 610206,
+      "name": "茸爪树墩",
+      "desc": "萌爪留印，树墩小卧榻的藏品展台；",
+      "rarity": 2,
+      "rarityName": "稀有",
+      "iconFile": "gui/texture/collectDisplayIcon/icon_collect_display_7.png",
+      "localFile": "34_610206_茸爪树墩.png",
+      "note": "有道具但展台表未配置（待活动放出）"
+    }
+  ],
+  "score": {
+    "starScores": [
+      {
+        "starLevel": 1,
+        "scores": [
+          400,
+          600,
+          1000,
+          5000
+        ]
+      },
+      {
+        "starLevel": 2,
+        "scores": [
+          720,
+          1080,
+          1800,
+          9000
+        ]
+      },
+      {
+        "starLevel": 3,
+        "scores": [
+          1280,
+          1920,
+          3200,
+          16000
+        ]
+      },
+      {
+        "starLevel": 4,
+        "scores": [
+          2240,
+          3360,
+          5600,
+          28000
+        ]
+      },
+      {
+        "starLevel": 5,
+        "scores": [
+          3200,
+          4800,
+          8000,
+          40000
+        ]
+      }
+    ],
+    "pedestalScore": [
+      0,
+      300,
+      1800,
+      6000
+    ],
+    "rewards": [
+      {
+        "level": 1,
+        "score": 400,
+        "rewards": null
+      },
+      {
+        "level": 2,
+        "score": 1000,
+        "rewards": null
+      },
+      {
+        "level": 3,
+        "score": 2000,
+        "rewards": null
+      },
+      {
+        "level": 4,
+        "score": 3100,
+        "rewards": null
+      },
+      {
+        "level": 5,
+        "score": 4300,
+        "rewards": null
+      },
+      {
+        "level": 6,
+        "score": 5800,
+        "rewards": null
+      },
+      {
+        "level": 7,
+        "score": 7800,
+        "rewards": null
+      },
+      {
+        "level": 8,
+        "score": 10500,
+        "rewards": null
+      },
+      {
+        "level": 9,
+        "score": 14200,
+        "rewards": null
+      },
+      {
+        "level": 10,
+        "score": 19300,
+        "rewards": null
+      },
+      {
+        "level": 11,
+        "score": 26100,
+        "rewards": null
+      },
+      {
+        "level": 12,
+        "score": 35100,
+        "rewards": null
+      },
+      {
+        "level": 13,
+        "score": 46700,
+        "rewards": null
+      },
+      {
+        "level": 14,
+        "score": 61500,
+        "rewards": null
+      },
+      {
+        "level": 15,
+        "score": 80100,
+        "rewards": null
+      },
+      {
+        "level": 16,
+        "score": 103100,
+        "rewards": "5013:1;5014:1"
+      },
+      {
+        "level": 17,
+        "score": 131100,
+        "rewards": null
+      },
+      {
+        "level": 18,
+        "score": 164900,
+        "rewards": null
+      },
+      {
+        "level": 19,
+        "score": 205200,
+        "rewards": null
+      },
+      {
+        "level": 20,
+        "score": 252900,
+        "rewards": null
+      },
+      {
+        "level": 21,
+        "score": 308800,
+        "rewards": null
+      },
+      {
+        "level": 22,
+        "score": 373800,
+        "rewards": null
+      }
+    ]
+  },
+  "buffs": [
+    {
+      "id": 10001,
+      "level": 1,
+      "attrId": "节省10%肥料",
+      "value": 100
+    },
+    {
+      "id": 10002,
+      "level": 2,
+      "attrId": "蓝晶土地藏品变异概率提升",
+      "value": 200
+    },
+    {
+      "id": 10003,
+      "level": 3,
+      "attrId": "蓝晶土地藏品额外产出概率提升",
+      "value": 100
+    },
+    {
+      "id": 10004,
+      "level": 4,
+      "attrId": "节省10%肥料",
+      "value": 150
+    },
+    {
+      "id": 10005,
+      "level": 5,
+      "attrId": "蓝晶土地藏品变异概率提升",
+      "value": 400
+    },
+    {
+      "id": 10006,
+      "level": 6,
+      "attrId": "蓝晶土地藏品额外产出概率提升",
+      "value": 150
+    },
+    {
+      "id": 10007,
+      "level": 7,
+      "attrId": "节省10%肥料",
+      "value": 200
+    },
+    {
+      "id": 10008,
+      "level": 8,
+      "attrId": "蓝晶土地藏品变异概率提升",
+      "value": 600
+    },
+    {
+      "id": 10009,
+      "level": 9,
+      "attrId": "蓝晶土地藏品额外产出概率提升",
+      "value": 200
+    },
+    {
+      "id": 10010,
+      "level": 10,
+      "attrId": "蓝晶土地经验提升",
+      "value": 100
+    },
+    {
+      "id": 10011,
+      "level": 11,
+      "attrId": "节省10%肥料",
+      "value": 250
+    },
+    {
+      "id": 10012,
+      "level": 12,
+      "attrId": "蓝晶土地藏品变异概率提升",
+      "value": 800
+    },
+    {
+      "id": 10013,
+      "level": 13,
+      "attrId": "蓝晶土地藏品额外产出概率提升",
+      "value": 250
+    },
+    {
+      "id": 10014,
+      "level": 14,
+      "attrId": "蓝晶土地经验提升",
+      "value": 150
+    },
+    {
+      "id": 10015,
+      "level": 15,
+      "attrId": "节省10%肥料",
+      "value": 300
+    },
+    {
+      "id": 10017,
+      "level": 17,
+      "attrId": "蓝晶土地藏品变异概率提升",
+      "value": 1000
+    },
+    {
+      "id": 10018,
+      "level": 18,
+      "attrId": "蓝晶土地藏品额外产出概率提升",
+      "value": 300
+    },
+    {
+      "id": 10019,
+      "level": 19,
+      "attrId": "蓝晶土地经验提升",
+      "value": 200
+    },
+    {
+      "id": 10020,
+      "level": 20,
+      "attrId": "节省10%肥料",
+      "value": 350
+    },
+    {
+      "id": 10021,
+      "level": 21,
+      "attrId": "蓝晶土地藏品变异概率提升",
+      "value": 1200
+    },
+    {
+      "id": 10022,
+      "level": 22,
+      "attrId": "蓝晶土地藏品额外产出概率提升",
+      "value": 350
+    }
+  ],
+  "rule": "{\n  \"uid\": \"ActivityRule\",\n  \"tips\": {\n    \"title\": \"玩法详情\",\n    \"txt\": [\n      {\n        \"img\": \"gui/texture/collect/bigImg/img_collect_rule/spriteFrame\",\n        \"height\": 1065\n      },\n      \"<b>【小贴士】</b><br/>\",\n      \"1、<b>藏品变异：</b>\",\n      \"仅蓝晶土地作物可触发藏品变异，藏品品质随作物品质而定。<br/>\",\n      \"2、<b>藏品展示：</b>\",\n      \"藏品激活后，可放置在场景中展示。<br/>\",\n      \"3、<b>藏品药水：</b>\",\n      \"催化剂作用于未成熟作物，立刻触发藏品变异；催化剂分 4 种品质，需和作物品质匹配才能使用。<br/>\"\n    ]\n  }\n}",
+  "summary": {
+    "seriesCount": 5,
+    "itemCount": 30,
+    "pedestalCount": 8,
+    "scoreLevels": 22,
+    "scoreMax": 373800,
+    "rarityNames": [
+      "普通",
+      "稀有",
+      "珍品",
+      "天工"
+    ]
+  }
+}

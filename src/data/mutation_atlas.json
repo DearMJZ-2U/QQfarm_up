@@ -1,6 +1,14 @@
 {
-  "exportedAt": "2026-10-14T15:30:06.285Z",
+  "exportedAt": "2026-10-31T14:58:08.025Z",
   "mutationTypes": [
+    {
+      "name": "藏品",
+      "icon": "extraRes/gui/texture/mutant/icon/naicha.png",
+      "effectType": "其他",
+      "effectValue": "",
+      "desc": "蓝晶土地上有概率出现",
+      "releaseOrder": 18
+    },
     {
       "name": "奶茶",
       "icon": "extraRes/gui/texture/mutant/icon/naicha.png",
@@ -442,6 +450,58 @@
       "desc": "卖给商人后，可以获得金豆豆。",
       "rarity": 4,
       "releaseOrder": 10440001
+    },
+    {
+      "name": "黄金·油茶",
+      "seedId": 20530,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 530,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_530_6.png",
+        "plant/model/v4/gold/Crop_530_Seed.png",
+        "plant/model/v4/gold/Crop_530_2.png",
+        "plant/model/v4/gold/Crop_530_3.png",
+        "plant/model/v4/gold/Crop_530_4.png",
+        "plant/model/v4/gold/Crop_530_5.png",
+        "plant/model/v4/gold/Crop_530_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330037
     },
     {
       "name": "黄金·天山红枫",
@@ -3617,6 +3677,58 @@
         "desc": "卖给商人后，可以获得金豆豆。",
         "rarity": 4,
         "releaseOrder": 10440001
+      },
+      {
+        "name": "黄金·油茶",
+        "seedId": 20530,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 530,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_530_6.png",
+          "plant/model/v4/gold/Crop_530_Seed.png",
+          "plant/model/v4/gold/Crop_530_2.png",
+          "plant/model/v4/gold/Crop_530_3.png",
+          "plant/model/v4/gold/Crop_530_4.png",
+          "plant/model/v4/gold/Crop_530_5.png",
+          "plant/model/v4/gold/Crop_530_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330037
       },
       {
         "name": "黄金·天山红枫",
@@ -7459,6 +7571,85 @@
       "order": 1003,
       "releaseOrder": 1,
       "raw": 320
+    }
+  ],
+  "collectionProbabilities": [
+    {
+      "seriesId": 1001,
+      "seriesName": "氧气精灵",
+      "groupName": "4小时·普通",
+      "sourceRarity": 1,
+      "sourceRarityName": "普通",
+      "rate": "1.17%",
+      "raw": 117,
+      "guarantee": 120,
+      "poolId": 10001
+    },
+    {
+      "seriesId": 1001,
+      "seriesName": "氧气精灵",
+      "groupName": "8小时·普通",
+      "sourceRarity": 1,
+      "sourceRarityName": "普通",
+      "rate": "2.30%",
+      "raw": 230,
+      "guarantee": 60,
+      "poolId": 10002
+    },
+    {
+      "seriesId": 1001,
+      "seriesName": "氧气精灵",
+      "groupName": "12小时·普通",
+      "sourceRarity": 1,
+      "sourceRarityName": "普通",
+      "rate": "3.33%",
+      "raw": 333,
+      "guarantee": 40,
+      "poolId": 10003
+    },
+    {
+      "seriesId": 1001,
+      "seriesName": "氧气精灵",
+      "groupName": "24小时·普通",
+      "sourceRarity": 1,
+      "sourceRarityName": "普通",
+      "rate": "6.52%",
+      "raw": 652,
+      "guarantee": 20,
+      "poolId": 10004
+    },
+    {
+      "seriesId": 2001,
+      "seriesName": "萌混过关",
+      "groupName": "稀有",
+      "sourceRarity": 2,
+      "sourceRarityName": "稀有",
+      "rate": "3.33%",
+      "raw": 333,
+      "guarantee": 40,
+      "poolId": 10005
+    },
+    {
+      "seriesId": 3001,
+      "seriesName": "云途漫客",
+      "groupName": "珍品",
+      "sourceRarity": 3,
+      "sourceRarityName": "珍品",
+      "rate": "3.33%",
+      "raw": 333,
+      "guarantee": 40,
+      "poolId": 10006
+    },
+    {
+      "seriesId": 4001,
+      "seriesName": "山野风灵",
+      "groupName": "天工",
+      "sourceRarity": 4,
+      "sourceRarityName": "天工",
+      "rate": "3.33%",
+      "raw": 333,
+      "guarantee": 40,
+      "poolId": 10007
     }
   ]
 }

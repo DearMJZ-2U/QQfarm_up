@@ -24,6 +24,8 @@ export default function CalculatorTab() {
   const [blackLands, setBlackLands] = useState<number | ''>(0);
   const [goldLands, setGoldLands] = useState<number | ''>(0);
   const [purpleLands, setPurpleLands] = useState<number | ''>(0);
+  // 2026-10-31：蓝晶土地（Lv125 起可升，产出 +400% / 经验 +30% / 变异 +125%）
+  const [blueLands, setBlueLands] = useState<number | ''>(0);
   const [smartFert, setSmartFert] = useState(true);
   const [idealMode, setIdealMode] = useState(false);
   const [secondSeasonFert, setSecondSeasonFert] = useState(true);
@@ -42,13 +44,14 @@ export default function CalculatorTab() {
     setBlackLands(best.black);
     setGoldLands(best.gold);
     setPurpleLands(best.purple);
+    setBlueLands(best.blue);
   }, [level, totalLands, idealMode]);
 
   const calculatedRows = useMemo(() => {
     const currentLevel = typeof level === 'number' ? level : 1;
     const curTotal = typeof totalLands === 'number' ? totalLands : 0;
 
-    let actualNormal: number, actualRed: number, actualBlack: number, actualGold: number, actualPurple: number;
+    let actualNormal: number, actualRed: number, actualBlack: number, actualGold: number, actualPurple: number, actualBlue: number;
     if (idealMode) {
       const best = calcBestLands(currentLevel, curTotal);
       actualNormal = best.normal;
@@ -56,19 +59,23 @@ export default function CalculatorTab() {
       actualBlack = best.black;
       actualGold = best.gold;
       actualPurple = best.purple;
+      actualBlue = best.blue;
     } else {
+      const cbl = typeof blueLands === 'number' ? blueLands : 0;
       const cp = typeof purpleLands === 'number' ? purpleLands : 0;
       const cg = typeof goldLands === 'number' ? goldLands : 0;
       const cb = typeof blackLands === 'number' ? blackLands : 0;
       const cr = typeof redLands === 'number' ? redLands : 0;
-      actualPurple = Math.min(cp, curTotal);
-      actualGold = Math.min(cg, curTotal - actualPurple);
-      actualBlack = Math.min(cb, curTotal - actualPurple - actualGold);
-      actualRed = Math.min(cr, curTotal - actualPurple - actualGold - actualBlack);
-      actualNormal = Math.max(0, curTotal - actualPurple - actualGold - actualBlack - actualRed);
+      // 品质越高越先占位：蓝晶 > 紫晶 > 金 > 黑 > 红
+      actualBlue = Math.min(cbl, curTotal);
+      actualPurple = Math.min(cp, curTotal - actualBlue);
+      actualGold = Math.min(cg, curTotal - actualBlue - actualPurple);
+      actualBlack = Math.min(cb, curTotal - actualBlue - actualPurple - actualGold);
+      actualRed = Math.min(cr, curTotal - actualBlue - actualPurple - actualGold - actualBlack);
+      actualNormal = Math.max(0, curTotal - actualBlue - actualPurple - actualGold - actualBlack - actualRed);
     }
 
-    const currentLands = actualNormal + actualRed + actualBlack + actualGold + actualPurple;
+    const currentLands = actualNormal + actualRed + actualBlack + actualGold + actualPurple + actualBlue;
     if (currentLands === 0) return [];
 
     const plantSecNoFert = idealMode ? 0 : currentLands / NO_FERT_PLANT_SPEED;
@@ -81,6 +88,7 @@ export default function CalculatorTab() {
       { count: actualBlack, buff: LAND_BUFFS.black },
       { count: actualGold, buff: LAND_BUFFS.gold },
       { count: actualPurple, buff: LAND_BUFFS.purple },
+      { count: actualBlue, buff: LAND_BUFFS.blue },
     ];
 
     const rows = [];
@@ -125,24 +133,24 @@ export default function CalculatorTab() {
       rows.push({ ...s, growTimeFert: totalGrowTimeFert, growTimeFertStr: seasons > 1 ? `${formatSec(totalGrowTimeFert)} (共${seasons}季)` : formatSec(totalGrowTimeFert), growTimeStr: totalGrowTimeStr, expPerHourNoFert, expPerHourFert, goldPerHourNoFert, goldPerHourFert, gainPercent });
     }
     return rows;
-  }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, smartFert, idealMode, secondSeasonFert, hideSpecial]);
+  }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, blueLands, smartFert, idealMode, secondSeasonFert, hideSpecial]);
 
   const sortedFert = [...calculatedRows].sort((a, b) => target === 'exp' ? b.expPerHourFert - a.expPerHourFert : b.goldPerHourFert - a.goldPerHourFert);
   const bestFert = sortedFert[0];
 
   const getRemaining = (type: string) => {
     const total = typeof totalLands === 'number' ? totalLands : 0;
-    const used = (typeof redLands === 'number' ? redLands : 0) + (typeof blackLands === 'number' ? blackLands : 0) + (typeof goldLands === 'number' ? goldLands : 0) + (typeof purpleLands === 'number' ? purpleLands : 0);
+    const used = (typeof redLands === 'number' ? redLands : 0) + (typeof blackLands === 'number' ? blackLands : 0) + (typeof goldLands === 'number' ? goldLands : 0) + (typeof purpleLands === 'number' ? purpleLands : 0) + (typeof blueLands === 'number' ? blueLands : 0);
     if (type === 'normal') return Math.max(0, total - used);
-    const vals: Record<string, number | ''> = { red: redLands, black: blackLands, gold: goldLands, purple: purpleLands };
+    const vals: Record<string, number | ''> = { red: redLands, black: blackLands, gold: goldLands, purple: purpleLands, blue: blueLands };
     return typeof vals[type] === 'number' ? vals[type] : 0;
   };
 
   const landInputs: Array<{
-    key: 'normal' | 'red' | 'black' | 'gold' | 'purple';
+    key: 'normal' | 'red' | 'black' | 'gold' | 'purple' | 'blue';
     label: string;
     sub: string;
-    accent: 'earth' | 'berry' | 'soil' | 'sun' | 'plum';
+    accent: 'earth' | 'berry' | 'soil' | 'sun' | 'plum' | 'sky';
     color: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink' | 'earth' | 'soil';
     readonly?: boolean;
   }> = [
@@ -151,6 +159,8 @@ export default function CalculatorTab() {
     { key: 'black',  label: '黑土地', sub: '产 +200% · 速 -10%',    accent: 'soil',  color: 'soil' },
     { key: 'gold',   label: '金土地', sub: '产 +300% · 速 -20% · 经 +20%', accent: 'sun', color: 'sun' },
     { key: 'purple', label: '紫晶土地', sub: '产 +300% · 速 -20% · 经 +25%', accent: 'plum', color: 'plum' },
+    // 2026-10-31 新增：蓝晶土地（enable_time 2026-11-02 10:00）
+    { key: 'blue',   label: '蓝晶土地', sub: '产 +400% · 速 -20% · 经 +30%', accent: 'sky',  color: 'sky' },
   ];
 
   const toggles = [
@@ -240,7 +250,7 @@ export default function CalculatorTab() {
             <input type="number" value={level}
               onChange={e => setLevel(e.target.value === '' ? '' : Number(e.target.value))}
               className="input-pop text-center"
-              min={1} max={200} />
+              min={1} max={240} />
           </div>
 
           {/* Total Lands */}
@@ -251,7 +261,7 @@ export default function CalculatorTab() {
             <input type="number" value={totalLands}
               onChange={e => setTotalLands(e.target.value === '' ? '' : Number(e.target.value))}
               className="input-pop text-center"
-              min={1} max={200} />
+              min={1} max={24} />
           </div>
 
           {/* Target */}
@@ -299,12 +309,12 @@ export default function CalculatorTab() {
             <div className="flex items-center justify-between mb-3 px-1">
               <div className="section-eyebrow">土地配置</div>
               <div className="text-[10px] font-mono text-[var(--ink-mute)] tnum">
-                已分配 {(typeof redLands === 'number' ? redLands : 0) + (typeof blackLands === 'number' ? blackLands : 0) + (typeof goldLands === 'number' ? goldLands : 0) + (typeof purpleLands === 'number' ? purpleLands : 0)} / {typeof totalLands === 'number' ? totalLands : 0}
+                已分配 {(typeof redLands === 'number' ? redLands : 0) + (typeof blackLands === 'number' ? blackLands : 0) + (typeof goldLands === 'number' ? goldLands : 0) + (typeof purpleLands === 'number' ? purpleLands : 0) + (typeof blueLands === 'number' ? blueLands : 0)} / {typeof totalLands === 'number' ? totalLands : 0}
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
               {landInputs.map(li => {
-                const value = li.key === 'red' ? redLands : li.key === 'black' ? blackLands : li.key === 'gold' ? goldLands : li.key === 'purple' ? purpleLands : 0;
+                const value = li.key === 'red' ? redLands : li.key === 'black' ? blackLands : li.key === 'gold' ? goldLands : li.key === 'purple' ? purpleLands : li.key === 'blue' ? blueLands : 0;
                 const tileBg = `var(--${li.color}-bg)`;
                 // 黑土地用更深的描边强化「厚重感」，与普通地（earth）拉开层次
                 const tileBorder = li.color === 'soil' ? 'var(--soil-deep)' : `var(--${li.color})`;
@@ -331,10 +341,10 @@ export default function CalculatorTab() {
                         onChange={e => {
                           const val = e.target.value === '' ? '' : Number(e.target.value);
                           const curTotal = typeof totalLands === 'number' ? totalLands : 0;
-                          const others = { red: redLands, black: blackLands, gold: goldLands, purple: purpleLands };
+                          const others = { red: redLands, black: blackLands, gold: goldLands, purple: purpleLands, blue: blueLands };
                           const otherSum = Object.entries(others).filter(([k]) => k !== li.key).reduce((a: number, [_, v]) => a + (typeof v === 'number' ? v : 0), 0);
                           const max = Math.max(0, curTotal - otherSum);
-                          const setter = li.key === 'red' ? setRedLands : li.key === 'black' ? setBlackLands : li.key === 'gold' ? setGoldLands : setPurpleLands;
+                          const setter = li.key === 'red' ? setRedLands : li.key === 'black' ? setBlackLands : li.key === 'gold' ? setGoldLands : li.key === 'purple' ? setPurpleLands : setBlueLands;
                           if (typeof val === 'number') (setter as any)(Math.min(val, max)); else (setter as any)('');
                         }} />
                     )}

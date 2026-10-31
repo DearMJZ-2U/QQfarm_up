@@ -1,16 +1,18 @@
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, ArrowRight, Calculator, Sprout, Map, Dna, Home as HomeIcon, Coins, Search, Wrench, FlaskConical, Image as ImageIcon, Dog, Bone, Ticket, Diamond, Star, Clock, Trophy, TrendingUp, Zap, BookOpen, ShoppingBag, Layers } from 'lucide-react';
+import { Sparkles, ArrowRight, Calculator, Sprout, Map, Dna, Home as HomeIcon, Coins, Search, Wrench, FlaskConical, Image as ImageIcon, Dog, Bone, Ticket, Diamond, Star, Clock, Trophy, TrendingUp, Zap, BookOpen, ShoppingBag, Layers, Gem, Box } from 'lucide-react';
 import seedsData from '../data/seeds.json';
 import itemsData from '../data/items.json';
 import mutationData from '../data/mutation_atlas.json';
 import landsData from '../data/lands_atlas.json';
 import costumeData from '../data/costume_atlas.json';
 import milkteaData from '../data/milktea_atlas.json';
+import levelExpData from '../data/level_exp.json';
+import collectionData from '../data/collection_atlas.json';
 import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls, StatTile, publicUrl } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
 
-type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_milktea' | 'items_gold') => void;
+type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_milktea' | 'items_gold') => void;
 
 interface Props {
   onNavigate: NavHandler;
@@ -164,6 +166,10 @@ export default function HomeTab({ onNavigate }: Props) {
       landTypes: (landsData as any).landTypes?.length || 0,
       costumes: costumeCount,
       costumeCats: (costumeData as any).categories?.length || 0,
+      // 2026-10-31 藏品系统
+      collectionItems: (collectionData as any).summary?.itemCount || 0,
+      collectionSeries: (collectionData as any).summary?.seriesCount || 0,
+      pedestals: ((collectionData as any).pedestals?.length || 0) + ((collectionData as any).orphanPedestals?.length || 0),
     };
   }, []);
 
@@ -291,7 +297,7 @@ export default function HomeTab({ onNavigate }: Props) {
               <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">账号等级</label>
               <input type="number" value={level}
                 onChange={e => setLevel(Number(e.target.value) || 1)}
-                className="input-pop text-center" min={1} max={200} style={{ padding: '0.55rem 0.6rem', fontSize: '0.95rem' }} />
+                className="input-pop text-center" min={1} max={240} style={{ padding: '0.55rem 0.6rem', fontSize: '0.95rem' }} />
             </div>
             <div>
               <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">土地总数</label>
@@ -386,7 +392,7 @@ export default function HomeTab({ onNavigate }: Props) {
       <section>
         <div className="section-eyebrow mb-2.5 sm:mb-3 flex items-center justify-between">
           <span>图鉴</span>
-          <span className="text-[10px] text-[var(--ink-mute)] tracking-wider">{stats.seeds + stats.goldFruits + stats.lands} 项</span>
+          <span className="text-[10px] text-[var(--ink-mute)] tracking-wider">{stats.seeds + stats.goldFruits + stats.lands + stats.collectionItems + stats.pedestals} 项</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
           <CategoryCard
@@ -402,8 +408,18 @@ export default function HomeTab({ onNavigate }: Props) {
           <CategoryCard
             emoji="🏞️" label="土地图鉴" desc={`${stats.landTypes} 种土壤 + ${stats.lands} 地块`} accent="orange"
             count={stats.lands}
-            onClick={() => onNavigate('atlas')}
+            onClick={() => onNavigate('atlas_lands')}
             icon={Map} />
+          <CategoryCard
+            emoji="🏺" label="藏品图鉴" desc={`${stats.collectionSeries} 系列 ${stats.collectionItems} 件`} accent="plum"
+            count={stats.collectionItems}
+            onClick={() => onNavigate('atlas_collection')}
+            icon={Gem} />
+          <CategoryCard
+            emoji="🪴" label="展台图鉴" desc={`${stats.pedestals} 个藏品展台`} accent="sun"
+            count={stats.pedestals}
+            onClick={() => onNavigate('atlas_pedestal')}
+            icon={Box} />
           <CategoryCard
             emoji="🧬" label="变异图鉴" desc={`${stats.mutations} 变异 + ${stats.goldFruits} 黄金果实`} accent="berry"
             count={stats.mutations + stats.goldFruits}
@@ -420,7 +436,7 @@ export default function HomeTab({ onNavigate }: Props) {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
           <CategoryCard
-            emoji="🌱" label="种子" desc="Lv 1 → 200 全覆盖" accent="leaf"
+            emoji="🌱" label="种子" desc={`Lv 1 → ${levelExpData.length} 全覆盖`} accent="leaf"
             count={stats.seeds}
             onClick={() => onNavigate('items_seed')} />
           <CategoryCard
@@ -463,7 +479,7 @@ export default function HomeTab({ onNavigate }: Props) {
             onClick={() => onNavigate('calc')}
             icon={CalcIcon} />
           <CategoryCard
-            emoji="📊" label="等级查询" desc="Lv 1-200 累计/升级经验表" accent="plum"
+            emoji="📊" label="等级查询" desc={`Lv 1-${levelExpData.length} 累计/升级经验表`} accent="plum"
             onClick={() => onNavigate('more_level')}
             icon={Search} />
           <CategoryCard
