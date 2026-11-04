@@ -3,9 +3,36 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Search, X, Sprout, Coins, Star, Package, Clock, Repeat } from 'lucide-react';
 import seedsData from '../data/seeds.json';
 import plantData from '../data/Plant.json';
+import itemsData from '../data/items.json';
+import releaseBatches from '../data/release_batches.json';
 import { CropImage, GrowthPhases, Portal, EmptyState, StatTile as StatTileBase, PillTabGroup } from './shared';
 
 const seedsList = Array.isArray(seedsData) ? seedsData : (seedsData.rows || []);
+
+// ── 图鉴作物分组规则（用户约定，勿改顺序）──────────────────────
+//   1 最新发布 → 2 天工(4) → 3 珍品(3) → 4 稀有(2) → 5 普通(1)
+//   「最新发布」取 release_batches.json 里 latest 批次的种子集合；
+//   每次游戏更新后跑 scripts/patch_release_batches.mjs 追加新批次即可自动置顶。
+//   同一组内：发布由新到旧 → 等级升序 → seedId 兜底，保证顺序稳定。
+const LATEST_IDS: Set<number> = new Set(
+  ((releaseBatches as any).batches || [])
+    .find((b: any) => b.date === (releaseBatches as any).latest)?.seedIds || []
+);
+const RELEASE_ORDER: Record<number, number> = {};
+for (const it of ((itemsData as any).categories || []).find((c: any) => c.name === '种子')?.items || []) {
+  RELEASE_ORDER[Number(it.id)] = Number(it.releaseOrder) || 0;
+}
+const GROUPS = [
+  { label: '最新发布', hint: '本次更新新增', color: 'leaf' },
+  { label: '天工', hint: '', color: 'sun' },
+  { label: '珍品', hint: '', color: 'plum' },
+  { label: '稀有', hint: '', color: 'sky' },
+  { label: '普通', hint: '', color: 'earth' },
+];
+function groupOf(s: any): number {
+  if (LATEST_IDS.has(Number(s.seedId))) return 0;
+  return 5 - (Number(s.rarity) || 1); // 4→1, 3→2, 2→3, 1→4
+}
 
 function getPhases(seedId: number): { name: string; sec: number }[] {
   const pd = plantData.find((p: any) => Number(p.seed_id) === seedId);
@@ -39,15 +66,19 @@ export default function CropAtlasTab() {
       return true;
     })
     .sort((a: any, b: any) => {
-      // 统一口径：品级降序（天工>珍品>稀有>普通）→ 同品级发布由新到旧 → 等级升序兜底
-      const ra = a.rarity || 1;
-      const rb = b.rarity || 1;
-      if (rb !== ra) return rb - ra;
-      const oa = (a as any).releaseOrder || 0;
-      const ob = (b as any).releaseOrder || 0;
+      // 分组优先：最新发布 → 天工 → 珍品 → 稀有 → 普通
+      const ga = groupOf(a), gb = groupOf(b);
+      if (ga !== gb) return ga - gb;
+      const oa = RELEASE_ORDER[Number(a.seedId)] || 0;
+      const ob = RELEASE_ORDER[Number(b.seedId)] || 0;
       if (ob !== oa) return ob - oa;
-      return (a.requiredLevel || 0) - (b.requiredLevel || 0);
+      const la = a.requiredLevel || 0, lb = b.requiredLevel || 0;
+      if (la !== lb) return la - lb;
+      return Number(a.seedId) - Number(b.seedId);
     });
+
+  const groupedRows = GROUPS.map((g, i) => ({ ...g, items: filtered.filter((s: any) => groupOf(s) === i) }))
+    .filter(g => g.items.length > 0);
 
   return (
     <div className="space-y-4 fade-in">
@@ -91,33 +122,46 @@ export default function CropAtlasTab() {
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-        {filtered.map((s: any, idx: number) => (
-          <motion.div key={s.seedId}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, delay: Math.min(idx * 0.01, 0.3) }}
-            onClick={() => setDetail(s)}
-            className="sticker sticker-press p-3 sm:p-4 cursor-pointer relative">
-            <div className="flex items-center justify-between mb-2 sm:mb-3">
-              <span className="chip chip-leaf" style={{ fontSize: '0.6rem' }}>Lv{s.requiredLevel}</span>
-              {s.seasons === 2 && <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>双季</span>}
-            </div>
-            <div className="flex items-center justify-center my-2 sm:my-3 h-24 sm:h-32">
-              <CropImage seedId={s.seedId} name={s.name} className="w-20 h-20 sm:w-32 sm:h-32" />
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{s.name}</div>
-              <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-1 flex items-center justify-center gap-1.5">
-                <span className="flex items-center gap-0.5"><Star size={9} className="text-[var(--plum)]" />{s.exp}</span>
-                <span className="text-[var(--line-strong)]">·</span>
-                <span className="flex items-center gap-0.5"><Coins size={9} className="text-[var(--sun-deep)]" />{s.price}</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      {/* Grouped Grid：最新发布 → 天工 → 珍品 → 稀有 → 普通 */}
+      {groupedRows.map((g, gi) => (
+        <section key={g.label} className="space-y-2.5">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: `var(--${g.color})` }} />
+            <span className="section-eyebrow">{g.label}</span>
+            <span className="chip chip-ink">{g.items.length}</span>
+            {g.hint && <span className="text-[10px] text-[var(--ink-mute)]">{g.hint}</span>}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {g.items.map((s: any, idx: number) => (
+              <motion.div key={s.seedId}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: Math.min(idx * 0.01, 0.3) }}
+                onClick={() => setDetail(s)}
+                className="sticker sticker-press p-3 sm:p-4 cursor-pointer relative">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <span className="chip chip-leaf" style={{ fontSize: '0.6rem' }}>Lv{s.requiredLevel}</span>
+                  <span className="flex items-center gap-1">
+                    {gi === 0 && <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>新</span>}
+                    {s.seasons === 2 && <span className="chip chip-berry" style={{ fontSize: '0.6rem' }}>双季</span>}
+                  </span>
+                </div>
+                <div className="flex items-center justify-center my-2 sm:my-3 h-24 sm:h-32">
+                  <CropImage seedId={s.seedId} name={s.name} className="w-20 h-20 sm:w-32 sm:h-32" />
+                </div>
+                <div className="text-center">
+                  <div className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{s.name}</div>
+                  <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-1 flex items-center justify-center gap-1.5">
+                    <span className="flex items-center gap-0.5"><Star size={9} className="text-[var(--plum)]" />{s.exp}</span>
+                    <span className="text-[var(--line-strong)]">·</span>
+                    <span className="flex items-center gap-0.5"><Coins size={9} className="text-[var(--sun-deep)]" />{s.price}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      ))}
 
       {filtered.length === 0 && (
         <EmptyState emoji="🔍" title="没找到符合条件的作物" hint="试试别的关键词或切换过滤器" />

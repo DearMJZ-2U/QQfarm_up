@@ -2,10 +2,26 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, X, Search, ZoomIn } from 'lucide-react';
 import itemsData from '../data/items.json';
+import releaseBatches from '../data/release_batches.json';
 import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade, StatTile, parseGrowPhasesStr } from './shared';
 import type { CategoryNavItem } from './shared';
 
 const categories = itemsData.categories;
+
+// ── 作物类道具（种子 / 超变果实）排序规则 —— 与作物图鉴一致，勿改顺序 ──
+//   1 最新发布 → 2 天工(4) → 3 珍品(3) → 4 稀有(2) → 5 普通(1)
+//   种子取 latest.seedIds，超变果实取 latest.goldFruitIds；
+//   每次游戏更新后跑 scripts/patch_release_batches.mjs 即可自动置顶，无需改前端。
+const BATCH: any = ((releaseBatches as any).batches || [])
+  .find((b: any) => b.date === (releaseBatches as any).latest) || {};
+const LATEST_SEED_IDS: Set<number> = new Set((BATCH.seedIds || []).map(Number));
+const LATEST_GOLD_IDS: Set<number> = new Set((BATCH.goldFruitIds || []).map(Number));
+const CROP_GROUPS = ['最新发布', '天工', '珍品', '稀有', '普通'];
+function cropGroupOf(it: any, isGolden: boolean): number {
+  const ids = isGolden ? LATEST_GOLD_IDS : LATEST_SEED_IDS;
+  if (ids.has(Number(it.id))) return 0;
+  return 5 - (Number(it.rarity) || 1); // 4→1, 3→2, 2→3, 1→4
+}
 
 const catAccent: Record<string, 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink'> = {
   '05': 'leaf',
@@ -282,18 +298,30 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
 
     let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
 
-    // 排序口径（所有有作物的分类统一）：
-    //   品级降序（天工>珍品>稀有>普通）→ 同品级内 releaseOrder 降序（发布由新到旧）→ 等级升序兜底
+    // 排序口径（种子 / 超变果实，与作物图鉴一致）：
+    //   最新发布 → 天工 → 珍品 → 稀有 → 普通；组内 releaseOrder 由新到旧 → 等级升序 → id 兜底
     if (isSeed || isGoldenFruit) {
       items = [...items].sort((a: any, b: any) => {
-        const ra = a.rarity || 1;
-        const rb = b.rarity || 1;
-        if (rb !== ra) return rb - ra;
-        const oa = a.releaseOrder || 0;
-        const ob = b.releaseOrder || 0;
+        const ga = cropGroupOf(a, isGoldenFruit), gb = cropGroupOf(b, isGoldenFruit);
+        if (ga !== gb) return ga - gb;
+        const oa = a.releaseOrder || 0, ob = b.releaseOrder || 0;
         if (ob !== oa) return ob - oa;
-        return (a.level || 0) - (b.level || 0);
+        const la = a.level || 0, lb = b.level || 0;
+        if (la !== lb) return la - lb;
+        return (a.id || 0) - (b.id || 0);
       });
+      // 插入分组标题行；搜索时名称为空会被过滤掉，自然不显示分组
+      const withHeaders: any[] = [];
+      let last = -2;
+      for (const it of items) {
+        const g = cropGroupOf(it, isGoldenFruit);
+        if (g >= 0 && g < CROP_GROUPS.length && g !== last) {
+          withHeaders.push({ id: `group_${g}`, kind: 'groupHeader', label: CROP_GROUPS[g], name: '', desc: '' });
+          last = g;
+        }
+        withHeaders.push(it);
+      }
+      items = withHeaders;
     } else {
       items = [...items].sort((a: any, b: any) => {
         const oa = a.releaseOrder || 0;
@@ -330,7 +358,7 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
     return out;
   }, [query]);
 
-  const visibleCount = visibleItems.length;
+  const visibleCount = visibleItems.filter((it: any) => (it as any).kind !== 'groupHeader').length;
 
   return (
     <div className="space-y-4 fade-in">
@@ -525,6 +553,14 @@ export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: st
               ) : visibleCount === 0 ? (
                 <EmptyState emoji="🫙" title="该分类暂无数据" />
               ) : visibleItems.map((item) => {
+                if ((item as any).kind === 'groupHeader') {
+                  return (
+                    <div key={item.id} className="flex items-center gap-2 px-1.5 pt-2.5 pb-1">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--leaf)' }} />
+                      <span className="section-eyebrow">{(item as any).label}</span>
+                    </div>
+                  );
+                }
                 if (isSeed) {
                   const seedPrice = item.sells ? parseInt(item.sells.split(':')[1]) || 0 : 0;
                   const grade = showGrade ? getGrade(item.rarity, item.rarityColor) : null;
