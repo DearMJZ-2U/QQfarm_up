@@ -361,6 +361,20 @@ export function parseGrowPhases(growPhases: string) {
 export const plantPhaseMap: Record<number, number> = {};
 export const plantLastPhaseMap: Record<number, number> = {};
 export const plantAllPhasesMap: Record<number, number[]> = {};
+
+/**
+ * 双季作物的第二季只走 grow_phases 的最后两个非零阶段。
+ *
+ * 配置事实（Plant.json @ delayRes dc19e，98 个 seasons=2 作物 100% 成立）：
+ *   两季作物的最后两段等长、且是所有阶段中最长的；单季作物各段等长。
+ *   例 梨   : 4800/4800/4800/7200/7200 → 第一季 28800s(8h)，第二季 7200+7200=14400s(4h)
+ *   例 鸡冠花: 17280 × 5（单季）        → 各段等长，无第二季
+ * 第一季 = 全部非零阶段之和（seeds.json 的 growTimeSec）；第二季 = 最后两段之和。
+ * 注意：最后一段「成熟:0」是终点标记，parseGrowPhases 已过滤，不属于生长时间。
+ */
+export const plantSeason2PhasesMap: Record<number, number[]> = {};
+export const plantSeason2SecMap: Record<number, number> = {};
+
 for (const p of plantData) {
   const seedId = Number(p.seed_id);
   if (seedId > 0 && !plantPhaseMap[seedId]) {
@@ -369,6 +383,9 @@ for (const p of plantData) {
       plantPhaseMap[seedId] = phases[0];
       plantLastPhaseMap[seedId] = phases[phases.length - 1];
       plantAllPhasesMap[seedId] = phases;
+      const season2 = phases.slice(-2);
+      plantSeason2PhasesMap[seedId] = season2;
+      plantSeason2SecMap[seedId] = season2.reduce((a, b) => a + b, 0);
     }
   }
 }

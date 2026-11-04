@@ -2,7 +2,12 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Trophy, Zap, Coins, Clock, TrendingUp, Wand2 } from 'lucide-react';
 import seedsData from '../data/seeds.json';
-import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, EmptyState, PillTabGroup, ToggleCard } from './shared';
+import fruitPricesData from '../data/fruit_prices.json';
+import { CropImage, plantAllPhasesMap, plantSeason2SecMap, plantSeason2PhasesMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, EmptyState, PillTabGroup, ToggleCard } from './shared';
+
+// 果实商人收购单价（金币），来自 scripts/patch_seed_revenue.mjs。
+// seeds.json 的 price 是「买种子的成本」，不能当收获所得用。
+const FRUIT_PRICES: Record<string, number> = (fruitPricesData as any).prices || {};
 
 function longestPhase(seedId: number): number {
   const phases = plantAllPhasesMap[seedId];
@@ -31,6 +36,8 @@ export default function CalculatorTab() {
   const [secondSeasonFert, setSecondSeasonFert] = useState(true);
   const [hideSpecial, setHideSpecial] = useState(false);
   const [target, setTarget] = useState<'exp' | 'gold'>('exp');
+  // 金币口径：扣掉买种子的成本 = 净收益；关掉 = 毛收益（种子为活动赠送/自留时适用）
+  const [countSeedCost, setCountSeedCost] = useState(true);
 
   // 按当前等级自动配置土地（红 Lv28+/黑 Lv40+/金 Lv58+/紫 Lv90+）
   // 仅在非理想模式下生效；用户仍可手动调整
@@ -102,19 +109,30 @@ export default function CalculatorTab() {
       const seedId = s.seedId;
       const growTimeSec = s.growTimeSec;
       const seasons = s.seasons || 1;
-      const lastPhaseSec = plantLastPhaseMap[seedId] || 0;
-
       const hasSeasons = seasons >= 2;
-      let reduceSecFirst = smartFert ? longestPhase(seedId) : (plantAllPhasesMap[seedId]?.[0] || 0);
-      let reduceSecSecond = 0;
-      if (hasSeasons && secondSeasonFert && smartFert) {
-        reduceSecSecond = longestPhase(seedId);
-      }
 
-      const totalGrowTimeSec = growTimeSec + (seasons - 1) * lastPhaseSec;
-      const totalGrowTimeFert = Math.max(1, growTimeSec - reduceSecFirst) + (seasons - 1) * Math.max(1, lastPhaseSec - reduceSecSecond);
-      const totalExp = s.exp * seasons;
-      const totalGold = s.price * seasons;
+      // 第一季 = 完整周期（growTimeSec = 全部非零阶段之和）。
+      // 第二季只走 grow_phases 的最后两个非零阶段（配置依据见 shared.tsx）。
+      const season2Sec = hasSeasons ? (plantSeason2SecMap[seedId] || 0) : 0;
+      const season2Phases = plantSeason2PhasesMap[seedId] || [0];
+
+      // 智能施肥：第一季跳过耗时最长的阶段；第二季只有两段，跳过其中较长的一段。
+      const reduceSecFirst = smartFert ? longestPhase(seedId) : (plantAllPhasesMap[seedId]?.[0] || 0);
+      const reduceSecSecond = (hasSeasons && secondSeasonFert && smartFert)
+        ? Math.max(...season2Phases)
+        : 0;
+
+      const totalGrowTimeSec = growTimeSec + (seasons - 1) * season2Sec;
+      const totalGrowTimeFert = Math.max(1, growTimeSec - reduceSecFirst)
+        + (seasons - 1) * Math.max(1, season2Sec - reduceSecSecond);
+      const totalExp = s.exp * seasons;              // 每季经验相同
+      // 金币：果实商人收购价 × 每季产量 × 季数；再按开关扣一次种子成本。
+      const fruitPrice = FRUIT_PRICES[String((s as any).fruitId)] || 0;
+      // 活动果实（奶茶季、红包等）不可售卖或非金币结算，其金币收益按 0 计，不能回退到种子价。
+      const revenuePerSeason = fruitPrice * ((s as any).fruitCount || 0);
+      const totalGoldGross = revenuePerSeason * seasons;   // 毛收入（未扣成本）
+      // 种子成本每块地每周期各扣一次，不能跟着土地的产出加成一起放大。
+      const seedCost = countSeedCost ? s.price : 0;
 
       let expPerHourNoFert = 0, expPerHourFert = 0, goldPerHourNoFert = 0, goldPerHourFert = 0;
       for (const { count, buff } of landCounts) {
@@ -125,15 +143,17 @@ export default function CalculatorTab() {
         const cycleFert = landGrowTimeFert + plantSecFert;
         expPerHourNoFert += (count * totalExp * buff.exp / cycleNoFert) * 3600;
         expPerHourFert += (count * totalExp * buff.exp / cycleFert) * 3600;
-        goldPerHourNoFert += (count * totalGold * buff.yield / cycleNoFert) * 3600;
-        goldPerHourFert += (count * totalGold * buff.yield / cycleFert) * 3600;
+        // 土地产出加成只作用于果实收入；种子成本按每块地原价扣一次。
+        const goldOnLand = Math.max(0, totalGoldGross * buff.yield - seedCost);
+        goldPerHourNoFert += (count * goldOnLand / cycleNoFert) * 3600;
+        goldPerHourFert += (count * goldOnLand / cycleFert) * 3600;
       }
       const gainPercent = expPerHourNoFert > 0 ? ((expPerHourFert - expPerHourNoFert) / expPerHourNoFert) * 100 : 0;
       const totalGrowTimeStr = seasons > 1 ? `${formatSec(totalGrowTimeSec)} (共${seasons}季)` : s.growTimeStr;
       rows.push({ ...s, growTimeFert: totalGrowTimeFert, growTimeFertStr: seasons > 1 ? `${formatSec(totalGrowTimeFert)} (共${seasons}季)` : formatSec(totalGrowTimeFert), growTimeStr: totalGrowTimeStr, expPerHourNoFert, expPerHourFert, goldPerHourNoFert, goldPerHourFert, gainPercent });
     }
     return rows;
-  }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, blueLands, smartFert, idealMode, secondSeasonFert, hideSpecial]);
+  }, [level, totalLands, redLands, blackLands, goldLands, purpleLands, blueLands, smartFert, idealMode, secondSeasonFert, hideSpecial, countSeedCost]);
 
   const sortedFert = [...calculatedRows].sort((a, b) => target === 'exp' ? b.expPerHourFert - a.expPerHourFert : b.goldPerHourFert - a.goldPerHourFert);
   const bestFert = sortedFert[0];
@@ -196,12 +216,12 @@ export default function CalculatorTab() {
       emoji: '🔄',
       label: '第二季施肥',
       hint: secondSeasonFert && smartFert && typeof level === 'number' && level >= 60
-        ? '第二季也跳过最长阶段施肥，进一步缩短双季循环'
+        ? '第二季共两阶段，跳过其中较长的一段'
         : typeof level === 'number' && level < 60
           ? '需 Lv60+ 解锁双季作物'
           : !smartFert
             ? '需先开启智能施肥'
-            : '第二季也跳过最长阶段',
+            : '第二季两阶段中跳过较长的一段',
       color: 'sky' as const,
     },
     {
@@ -215,6 +235,18 @@ export default function CalculatorTab() {
         ? '已只统计常规作物——活动结束后看这个更贴合实际'
         : '隐藏活动限定/无购买入口的作物（含普通~天工全品级），只看常驻常规作物',
       color: 'berry' as const,
+    },
+    {
+      id: 'countSeedCost',
+      checked: countSeedCost,
+      onChange: (v: boolean) => setCountSeedCost(v),
+      disabled: false,
+      emoji: '🪙',
+      label: '计入种子成本',
+      hint: countSeedCost
+        ? '金币=果实收入−种子钱（净收益）'
+        : '金币=果实收入（毛收益，适合活动送种子）',
+      color: 'orange' as const,
     },
   ];
 
@@ -283,7 +315,7 @@ export default function CalculatorTab() {
         </div>
 
         {/* Toggles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2.5">
           {toggles.map(t => (
             <ToggleCard
               key={t.id}
@@ -455,6 +487,11 @@ export default function CalculatorTab() {
                   {target === 'exp' ? '经验天梯榜' : '金币天梯榜'}
                 </span>
                 <span className="chip chip-ink">TOP 20</span>
+                {target === 'gold' && (
+                  <span className="chip" style={{ background: 'var(--sun-bg)', color: 'var(--sun-deep)' }}>
+                    {countSeedCost ? '净收益' : '毛收益'}
+                  </span>
+                )}
                 {hideSpecial && (
                   <span className="chip" style={{ background: 'var(--berry-bg)', color: 'var(--berry-deep)' }}>
                     已屏蔽特殊作物
@@ -479,7 +516,7 @@ export default function CalculatorTab() {
                     <th>作物</th>
                     <th className="text-center">等级</th>
                     <th className="text-center hidden sm:table-cell">周期</th>
-                    <th className="text-right">{target === 'exp' ? '经验/小时' : '金币/小时'}</th>
+                    <th className="text-right">{target === 'exp' ? '经验/小时' : (countSeedCost ? '净金币/小时' : '金币/小时')}</th>
                   </tr>
                 </thead>
                 <tbody>
