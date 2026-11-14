@@ -326,9 +326,13 @@ export default function App() {
             <ItemsTab initialCategoryId={itemsCatId} />
           </div>
         );
-      case 'tools':
+      case 'tools': {
+        // 牧场全览的 iframe 高度由页面自己上报（整页长滚动），底部留白与其它 tab 一致
+        const isRanch = toolsSubTab === 'ranch';
         return (
-          <div className="fade-in pb-28 container-app px-3 sm:px-4">
+          <div className={isRanch
+            ? 'fade-in pb-16 container-app px-3 sm:px-4'
+            : 'fade-in pb-28 container-app px-3 sm:px-4'}>
             <div className="flex gap-1 p-1.5 sticker-pop rounded-full mb-4">
               {([
                 { id: 'ranch', emoji: '🐄', label: '牧场全览' },
@@ -350,9 +354,10 @@ export default function App() {
             </div>
             {toolsSubTab === 'level' && <LevelSearchTab />}
             {toolsSubTab === 'land' && <LandUpgradeCalcTab />}
-            {toolsSubTab === 'ranch' && <RanchOverviewTab />}
+            {isRanch && <RanchOverviewTab />}
           </div>
         );
+      }
       default:
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4 pt-3 sm:pt-4">

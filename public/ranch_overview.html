@@ -1204,7 +1204,11 @@ const secs=[...document.querySelectorAll('section')];
 function go(id,scroll=true){
   btns.forEach(b=>b.classList.toggle('on',b.dataset.t===id));
   secs.forEach(s=>s.classList.toggle('on',s.id===id));
-  if(scroll)window.scrollTo({top:document.querySelector('.tabbar').offsetTop-2,behavior:'smooth'});
+  if(scroll){
+    window.scrollTo({top:0,behavior:'smooth'});
+    // 被 iframe 嵌在 QQfarm_up 里时，iframe 自身不滚动，得让父页面回到本页顶部
+    try{ parent.postMessage({type:'ranch-scroll-top'},'*'); }catch(e){}
+  }
 }
 btns.forEach(b=>b.onclick=()=>go(b.dataset.t));
 go('ov',false);
@@ -1250,6 +1254,25 @@ document.querySelectorAll('.acard').forEach(c=>{
 });
 sheet.querySelector('[data-close]').onclick=closeSheet;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+
+// 给嵌入方（QQfarm_up 的 React 页面）上报真实内容高度，让它把 iframe 撑到整页长度。
+// 注意：不能读 documentElement.scrollHeight —— iframe 一旦被撑高，body 会被拉满，
+// 高度就只增不减了。这里量 <main> 自身的底边，反映的是真实内容长度。
+const MAIN=document.querySelector('main');
+let lastH=0;
+function reportHeight(){
+  if(!MAIN)return;
+  const h=Math.ceil(MAIN.getBoundingClientRect().bottom)+48; // 48 = body 底部留白
+  if(Math.abs(h-lastH)<2)return;
+  lastH=h;
+  try{ parent.postMessage({type:'ranch-height',h},'*'); }catch(e){}
+}
+try{
+  new ResizeObserver(reportHeight).observe(MAIN);
+  window.addEventListener('load',reportHeight);
+  setTimeout(reportHeight,120);
+  setTimeout(reportHeight,600);
+}catch(e){}
 </script>
 </body>
 </html>
