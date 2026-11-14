@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, ArrowRight, Calculator, Sprout, Map, Dna, Home as HomeIcon, Coins, Search, Wrench, FlaskConical, Image as ImageIcon, Dog, Bone, Ticket, Diamond, Star, Clock, Trophy, TrendingUp, Zap, BookOpen, ShoppingBag, Layers, Gem, Box } from 'lucide-react';
+import { Sparkles, ArrowRight, Calculator, Sprout, Map, Dna, Home as HomeIcon, Search, Wrench, FlaskConical, Image as ImageIcon, Dog, Bone, Ticket, Diamond, Star, Clock, Trophy, TrendingUp, Zap, BookOpen, ShoppingBag, Layers, Gem, Box } from 'lucide-react';
 import seedsData from '../data/seeds.json';
 import itemsData from '../data/items.json';
 import mutationData from '../data/mutation_atlas.json';
 import landsData from '../data/lands_atlas.json';
 import costumeData from '../data/costume_atlas.json';
-import milkteaData from '../data/milktea_atlas.json';
+import ranchData from '../data/ranch_atlas.json';
 import levelExpData from '../data/level_exp.json';
 import collectionData from '../data/collection_atlas.json';
 import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls, StatTile, publicUrl } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
 
-type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_milktea' | 'items_gold') => void;
+type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_ranch' | 'items_gold') => void;
 
 interface Props {
   onNavigate: NavHandler;
@@ -234,42 +234,42 @@ export default function HomeTab({ onNavigate }: Props) {
         </div>
       </section>
 
-      {/* ── 奶茶店收益 · 置顶入口（S4 当前活动，首屏可见） ── */}
+      {/* ── 牧场全览 · 置顶入口（独立图文页，首屏可见） ── */}
       <motion.button
         whileTap={{ scale: 0.98 }}
-        onClick={() => onNavigate('more_milktea')}
+        onClick={() => onNavigate('more_ranch')}
         className="w-full text-left sticker sticker-press relative overflow-hidden group p-3.5 sm:p-4"
         style={{
-          background: 'linear-gradient(120deg, var(--orange-bg) 0%, var(--sun-bg) 55%, var(--orange-bg) 100%)',
-          border: '1.5px solid var(--orange)',
+          background: 'linear-gradient(120deg, var(--sun-bg) 0%, var(--leaf-bg) 58%, var(--sun-bg) 100%)',
+          border: '1.5px solid var(--sun)',
         }}
-        aria-label="奶茶店收益计算器">
+        aria-label="牧场全览">
         <div className="absolute -right-6 -top-8 w-28 h-28 rounded-full bg-white/25 pointer-events-none" />
         <div className="relative flex items-center gap-3 sm:gap-4">
           <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
             style={{ background: 'var(--surface)', boxShadow: 'var(--shadow-pop)' }}>
-            <RemoteImage urls={[publicUrl('item_images/milktea_9.png')]} name="奶茶店收益" size={48} className="sm:hidden" />
-            <RemoteImage urls={[publicUrl('item_images/milktea_9.png')]} name="奶茶店收益" size={56} className="hidden sm:block" />
+            <RemoteImage urls={[publicUrl('ranch_images/60012_4.png')]} name="牧场全览" size={48} className="sm:hidden" />
+            <RemoteImage urls={[publicUrl('ranch_images/60012_4.png')]} name="牧场全览" size={56} className="hidden sm:block" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 mb-0.5">
-              <span className="chip" style={{ background: 'var(--orange)', color: 'white', fontSize: '0.6rem', padding: '0.1rem 0.5rem' }}>
-                限时活动
+              <span className="chip" style={{ background: 'var(--sun)', color: 'white', fontSize: '0.6rem', padding: '0.1rem 0.5rem' }}>
+                新
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--orange-deep)' }}>
-                奶茶热销中
+              <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--sun-deep)' }}>
+                24 种动物 · 5 类建筑
               </span>
             </div>
             <div className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] leading-tight truncate">
-              奶茶店收益计算器
+              牧场全览图
             </div>
             <div className="text-[11px] text-[var(--ink-soft)] mt-0.5 truncate">
-              9 种奶茶价格 · 热卖值公式 · 收益对比
+              幼崽到整只 · 收益排行 · 建筑成本
             </div>
           </div>
           <div className="flex flex-col items-center gap-1 flex-shrink-0">
             <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform"
-              style={{ color: 'var(--orange-deep)' }} />
+              style={{ color: 'var(--sun-deep)' }} />
           </div>
         </div>
       </motion.button>
@@ -487,10 +487,10 @@ export default function HomeTab({ onNavigate }: Props) {
             onClick={() => onNavigate('more_land')}
             icon={TrendingUp} />
           <CategoryCard
-            emoji="🧋" label="奶茶店收益" desc="9 种奶茶价格 · 热卖值公式 · 员工特长/互动收益对比" accent="orange"
-            count={(milkteaData as any).recipes?.length}
-            onClick={() => onNavigate('more_milktea')}
-            icon={Coins} />
+            emoji="🐄" label="牧场全览" desc="24 种动物 · 每小时收益排行 · 建筑与田地成本" accent="sun"
+            count={(ranchData as any)?.animals?.length || 24}
+            onClick={() => onNavigate('more_ranch')}
+            icon={Dog} />
         </div>
       </section>
 
