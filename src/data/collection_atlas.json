@@ -1,12 +1,12 @@
 {
-  "exportedAt": "2026-10-31T14:58:08.025Z",
+  "exportedAt": "2026-11-15T18:10:01.815Z",
   "series": [
     {
       "seriesId": 1001,
       "name": "氧气精灵",
       "rarity": 1,
       "rarityName": "普通",
-      "desc": "种植28品及以上普通作物有概率得本系列",
+      "desc": "种植4品及以上普通作物有概率得本系列",
       "iconFile": "gui/texture/mutant/icon/collect_1_1.png",
       "bigIconFile": "gui/texture/collect/collectIcon/icon_collect_1_1.png",
       "bg": "gui/prefab/collect/collect_bg/collect_bg_02",

@@ -60,8 +60,34 @@
       "goldFruitNames": [
         "黄金·油茶"
       ]
+    },
+    {
+      "date": "2026-11-15",
+      "label": "11-15 更新",
+      "from": "cdncfg_b914b",
+      "to": "cdncfg_39eb8",
+      "count": 3,
+      "seedIds": [
+        20040,
+        26038,
+        26084
+      ],
+      "names": [
+        "牧草",
+        "款冬花",
+        "山茶花"
+      ],
+      "goldFruitCount": 2,
+      "goldFruitIds": [
+        1046038,
+        1046084
+      ],
+      "goldFruitNames": [
+        "黄金·款冬花",
+        "黄金·山茶花"
+      ]
     }
   ],
-  "latest": "2026-10-31",
-  "generatedAt": "2026-11-04T06:34:17.331Z"
+  "latest": "2026-11-15",
+  "generatedAt": "2026-11-15T18:11:39.888Z"
 }

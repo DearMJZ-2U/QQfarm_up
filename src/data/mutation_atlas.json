@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-10-31T14:58:08.025Z",
+  "exportedAt": "2026-11-15T18:10:01.815Z",
   "mutationTypes": [
     {
       "name": "藏品",
@@ -450,6 +450,110 @@
       "desc": "卖给商人后，可以获得金豆豆。",
       "rarity": 4,
       "releaseOrder": 10440001
+    },
+    {
+      "name": "黄金·山茶花",
+      "seedId": 26084,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 6084,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_6084_6.png",
+        "plant/model/v4/gold/Crop_6084_Seed.png",
+        "plant/model/v4/gold/Crop_6084_2.png",
+        "plant/model/v4/gold/Crop_6084_3.png",
+        "plant/model/v4/gold/Crop_6084_4.png",
+        "plant/model/v4/gold/Crop_6084_5.png",
+        "plant/model/v4/gold/Crop_6084_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330039
+    },
+    {
+      "name": "黄金·款冬花",
+      "seedId": 26038,
+      "exp": 1680,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 80,
+      "cropId": 6038,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_6038_6.png",
+        "plant/model/v4/gold/Crop_6038_Seed.png",
+        "plant/model/v4/gold/Crop_6038_2.png",
+        "plant/model/v4/gold/Crop_6038_3.png",
+        "plant/model/v4/gold/Crop_6038_4.png",
+        "plant/model/v4/gold/Crop_6038_5.png",
+        "plant/model/v4/gold/Crop_6038_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 3,
+      "releaseOrder": 10330038
     },
     {
       "name": "黄金·油茶",
@@ -3677,6 +3781,110 @@
         "desc": "卖给商人后，可以获得金豆豆。",
         "rarity": 4,
         "releaseOrder": 10440001
+      },
+      {
+        "name": "黄金·山茶花",
+        "seedId": 26084,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 6084,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_6084_6.png",
+          "plant/model/v4/gold/Crop_6084_Seed.png",
+          "plant/model/v4/gold/Crop_6084_2.png",
+          "plant/model/v4/gold/Crop_6084_3.png",
+          "plant/model/v4/gold/Crop_6084_4.png",
+          "plant/model/v4/gold/Crop_6084_5.png",
+          "plant/model/v4/gold/Crop_6084_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330039
+      },
+      {
+        "name": "黄金·款冬花",
+        "seedId": 26038,
+        "exp": 1680,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 80,
+        "cropId": 6038,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_6038_6.png",
+          "plant/model/v4/gold/Crop_6038_Seed.png",
+          "plant/model/v4/gold/Crop_6038_2.png",
+          "plant/model/v4/gold/Crop_6038_3.png",
+          "plant/model/v4/gold/Crop_6038_4.png",
+          "plant/model/v4/gold/Crop_6038_5.png",
+          "plant/model/v4/gold/Crop_6038_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 3,
+        "releaseOrder": 10330038
       },
       {
         "name": "黄金·油茶",

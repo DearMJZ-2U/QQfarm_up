@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-10-31T14:58:08.025Z",
+  "exportedAt": "2026-11-15T18:10:01.815Z",
   "activityId": 2026110101,
   "activityName": "奶茶热销中",
   "currency": {
@@ -832,6 +832,7 @@
       "全表 grep 29005 只命中 3 张来源表：MilkTeaStoreLevelConfig / Mall / GrowthFundTierConfig（ItemInfo、Plant 是定义表）。",
       "Task.json 438 条任务里 29005 出现 0 次；Guide / Active / AchieveCategory / ActivityWishSign* 也全都没有。",
       "→ 客户端配置里没有「任务系统送黄金芽种子」这回事。若游戏内确实有，只能是服务端下发、客户端表里查不到。",
+      "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
       "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
       "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
       "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",

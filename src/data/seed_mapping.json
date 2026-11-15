@@ -1,5 +1,11 @@
 [
   {
+    "cropNumber": 40,
+    "seedId": 20040,
+    "name": "牧草",
+    "fileName": "20040_牧草_Crop_40_Seed.png"
+  },
+  {
     "cropNumber": 2,
     "seedId": 20002,
     "name": "白萝卜",
@@ -1372,5 +1378,17 @@
     "seedId": 20530,
     "name": "油茶",
     "fileName": "20530_油茶_Crop_530_Seed.png"
+  },
+  {
+    "cropNumber": 6038,
+    "seedId": 26038,
+    "name": "款冬花",
+    "fileName": "26038_款冬花_Crop_6038_Seed.png"
+  },
+  {
+    "cropNumber": 6084,
+    "seedId": 26084,
+    "name": "山茶花",
+    "fileName": "26084_山茶花_Crop_6084_Seed.png"
   }
 ]
