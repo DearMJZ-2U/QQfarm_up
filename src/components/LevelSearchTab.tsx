@@ -5,7 +5,7 @@ import levelExpData from '../data/level_exp.json';
 import { EmptyState, StatTile } from './shared';
 
 export default function LevelSearchTab() {
-  // 等级上限从数据动态取（2026-10-31 起 200 → 240），避免每次抬上限都改死代码
+  // 等级上限从数据动态取（2026-10-31 起 200 → 240，2026-11-16 起 240 → 280），避免每次抬上限都改死代码
   const maxLevel = levelExpData.length;
   const [search, setSearch] = React.useState('');
   const [rangeStart, setRangeStart] = React.useState<number>(1);
@@ -27,7 +27,7 @@ export default function LevelSearchTab() {
     { label: '中高级',   range: [61, 100] as [number, number], emoji: '🌾', accent: 'sun'    as const },
     { label: '精英',     range: [101, 160] as [number, number], emoji: '⭐', accent: 'orange' as const },
     { label: '大师级',   range: [161, 200] as [number, number], emoji: '👑', accent: 'plum'   as const },
-    // 2026-10-31：蓝晶土地开放（Lv125 起可升），201-240 是新增的 40 级
+    // 2026-10-31：蓝晶土地开放（Lv125 起可升）；2026-11-16 起 201-280 是蓝晶段（原 201-240）
     { label: '蓝晶级',   range: [201, maxLevel] as [number, number], emoji: '💠', accent: 'sky' as const },
   ];
 

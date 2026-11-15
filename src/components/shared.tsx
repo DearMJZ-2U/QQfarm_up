@@ -714,7 +714,7 @@ export function LevelRangeInput({
             onChange={e => onFromChange(e.target.value === '' ? '' : Number(e.target.value))}
             className="input-pop text-center"
             min={1}
-            max={240}
+            max={280}
             style={invalid ? { borderColor: 'var(--berry)' } : {}}
           />
         </div>
@@ -730,7 +730,7 @@ export function LevelRangeInput({
             onChange={e => onToChange(e.target.value === '' ? '' : Number(e.target.value))}
             className="input-pop text-center"
             min={1}
-            max={240}
+            max={280}
             style={invalid ? { borderColor: 'var(--berry)' } : {}}
           />
         </div>

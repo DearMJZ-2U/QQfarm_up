@@ -282,7 +282,7 @@ export default function CalculatorTab() {
             <input type="number" value={level}
               onChange={e => setLevel(e.target.value === '' ? '' : Number(e.target.value))}
               className="input-pop text-center"
-              min={1} max={240} />
+              min={1} max={280} />
           </div>
 
           {/* Total Lands */}

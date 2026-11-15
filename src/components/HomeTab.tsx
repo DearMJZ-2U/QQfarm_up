@@ -12,6 +12,13 @@ import collectionData from '../data/collection_atlas.json';
 import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls, StatTile, publicUrl } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
 
+// 牧场「可养动物」= 牧场配置里的窝/棚主体（60001-60016、70001-70012）；
+// 65001+/75001+ 是「巨大化幼崽」道具条目，只进图鉴不算可养种类 —— 首页按可养口径显示，
+// 图鉴页仍显示 ranch_atlas 全量 56 条。
+const husbandryAnimals = ((((ranchData as any)?.animals) || []) as Array<{ id: number }>)
+  .filter((a) => a.id < 65000 || (a.id >= 70001 && a.id < 75000));
+const husbandryCount = husbandryAnimals.length || 28;
+
 type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_ranch' | 'items_gold') => void;
 
 interface Props {
@@ -257,7 +264,7 @@ export default function HomeTab({ onNavigate }: Props) {
                 新
               </span>
               <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--sun-deep)' }}>
-                24 种动物 · 5 类建筑
+                {husbandryCount} 种可养动物 · 5 类建筑
               </span>
             </div>
             <div className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] leading-tight truncate">
@@ -297,7 +304,7 @@ export default function HomeTab({ onNavigate }: Props) {
               <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">账号等级</label>
               <input type="number" value={level}
                 onChange={e => setLevel(Number(e.target.value) || 1)}
-                className="input-pop text-center" min={1} max={240} style={{ padding: '0.55rem 0.6rem', fontSize: '0.95rem' }} />
+                className="input-pop text-center" min={1} max={280} style={{ padding: '0.55rem 0.6rem', fontSize: '0.95rem' }} />
             </div>
             <div>
               <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">土地总数</label>
@@ -487,8 +494,8 @@ export default function HomeTab({ onNavigate }: Props) {
             onClick={() => onNavigate('more_land')}
             icon={TrendingUp} />
           <CategoryCard
-            emoji="🐄" label="牧场全览" desc="24 种动物 · 每小时收益排行 · 建筑与田地成本" accent="sun"
-            count={(ranchData as any)?.animals?.length || 24}
+            emoji="🐄" label="牧场全览" desc={`${husbandryCount} 种可养动物 · 每小时收益排行 · 建筑与田地成本`} accent="sun"
+            count={husbandryCount}
             onClick={() => onNavigate('more_ranch')}
             icon={Dog} />
         </div>
@@ -497,7 +504,7 @@ export default function HomeTab({ onNavigate }: Props) {
       {/* Footer hint */}
       <div className="text-center pt-2 pb-1">
         <div className="text-[10px] text-[var(--ink-mute)] tracking-wider">
-          📌 数据截至 2026-07 · 打开 <span className="font-bold text-[var(--ink-soft)]">侧边栏</span> 可快速跳转
+          📌 数据截至 2026-11-16（客户端包 v81）· 打开 <span className="font-bold text-[var(--ink-soft)]">侧边栏</span> 可快速跳转
         </div>
       </div>
     </div>

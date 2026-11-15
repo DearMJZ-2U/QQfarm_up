@@ -24,6 +24,11 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       allowedHosts: true,
+      // 原子写工具会先建 `.<file>.<pid>.<uuid>.tmpdir/` 再 rename；vite 去 watch 这个临时目录
+      // 会抛 EBUSY 把 dev server 直接打挂（本地多次复现），这里排除掉。
+      watch: {
+        ignored: ['**/.*.tmpdir/**', '**/*.tmp', '**/.*.tmpdir*'],
+      },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
