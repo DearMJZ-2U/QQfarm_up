@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Wrench, Github, Home as HomeIcon } from 'lucide-react';
-
-const GITHUB_REPO_URL = 'https://github.com/DearMJZ-2U/QQfarm_up';
+import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Wrench, Coffee, Home as HomeIcon } from 'lucide-react';
 
 // 加 QQ 群弹窗：开屏自动弹过就算「已提示」，避免每次刷新/跳转都糊在脸上
 const QQ_GROUP_SHOWN_KEY = 'qqfarm_qqgroup_shown';
@@ -22,6 +20,7 @@ import RanchOverviewTab from './components/RanchOverviewTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
 import QQGroupModal, { QQGroupIcon } from './components/QQGroupModal';
+import DonateModal from './components/DonateModal';
 import { CategoryNav, type CategoryNavItem } from './components/shared';
 
 // 动态数据：count 从 JSON 实时读取，不再硬编码
@@ -160,6 +159,7 @@ export default function App() {
   const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('ranch');
   const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
   const [qqGroupOpen, setQqGroupOpen] = useState(false);
+  const [donateOpen, setDonateOpen] = useState(false);
 
   const sidebarSections = useMemo(() => buildSidebarSections(), []);
 
@@ -485,15 +485,19 @@ export default function App() {
               </div>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
-              <a href={GITHUB_REPO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button onClick={() => setDonateOpen(true)}
                 className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
-                aria-label="GitHub 仓库"
-                title="GitHub 仓库">
-                <Github size={16} strokeWidth={2.5} className="text-[var(--ink-soft)] flex-shrink-0" />
-                <span className="text-[var(--ink-soft)] hidden sm:inline">GitHub</span>
-              </a>
+                aria-label="请作者喝杯咖啡吧"
+                title="请作者喝杯咖啡吧">
+                <span className="relative flex items-center justify-center w-4 h-4 flex-shrink-0" style={{ color: 'var(--orange-deep)' }}>
+                  {/* 光晕脉冲 + 杯子轻晃：让打赏入口更容易被注意到 */}
+                  <span className="donate-ping absolute inset-0 rounded-full pointer-events-none" aria-hidden="true" />
+                  <span className="donate-bob relative flex items-center justify-center" aria-hidden="true">
+                    <Coffee size={16} strokeWidth={2.5} />
+                  </span>
+                </span>
+                <span className="text-[var(--ink-soft)] hidden sm:inline">请作者喝咖啡</span>
+              </button>
               <button onClick={() => setQqGroupOpen(true)}
                 className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
                 aria-label="加 QQ 群"
@@ -565,6 +569,9 @@ export default function App() {
 
       {/* 加 QQ 群弹窗：开屏自动弹 + 顶栏图标手动打开 */}
       <QQGroupModal open={qqGroupOpen} onClose={closeQqGroup} />
+
+      {/* 请作者喝杯咖啡：顶栏入口 + 微信/支付宝二维码 */}
+      <DonateModal open={donateOpen} onClose={() => setDonateOpen(false)} />
     </div>
   );
 }

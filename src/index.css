@@ -816,6 +816,32 @@ body::after {
 .hover-wiggle:hover { animation: wiggle 0.4s ease; }
 .float-anim { animation: float 3s ease-in-out infinite; }
 
+/* 顶栏「请作者喝咖啡」：每 3.2s 一个「叮」——橙色光晕扩散 + 杯子晃两下，提示这里能点。
+   两段动画同周期，光晕先闪、杯子随后晃，中间留白，不至于一直在动。 */
+@keyframes donatePing {
+  0% { transform: scale(0.6); opacity: 0.5; }
+  30%, 100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes donateBrew {
+  0%, 8%, 41%, 100% { transform: rotate(0deg) scale(1); }
+  13% { transform: rotate(-14deg) scale(1.18); }
+  19% { transform: rotate(12deg) scale(1.15); }
+  26% { transform: rotate(-9deg) scale(1.09); }
+  33% { transform: rotate(5deg) scale(1.04); }
+}
+.donate-ping {
+  animation: donatePing 3.2s ease-out infinite;
+  background: var(--orange);
+}
+.donate-bob {
+  animation: donateBrew 3.2s ease-in-out infinite;
+  transform-origin: 50% 70%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .donate-bob { animation: none; }
+  .donate-ping { animation: none; opacity: 0; }
+}
+
 /* 闪光描边 */
 .shine-text {
   background: linear-gradient(90deg, var(--orange-deep) 0%, var(--sun) 30%, var(--leaf) 50%, var(--sun) 70%, var(--orange-deep) 100%);
