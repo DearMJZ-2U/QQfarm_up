@@ -51,7 +51,7 @@ function getSeedName(seedId: number): string {
 
 // ── 通用多级图片组件 ────────────────────────────────────
 
-function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = false, boxSize = false }: {
+function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = false, boxSize = false, eager = false }: {
   urls: string[];
   alt: string;
   size?: number;
@@ -59,6 +59,7 @@ function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = 
   rounded?: boolean;
   pixel?: boolean;
   boxSize?: boolean;
+  eager?: boolean;
 }) {
   const [idx, setIdx] = React.useState(0);
   const hasSize = (className === '' || boxSize) && size != null;
@@ -74,7 +75,8 @@ function MultiImage({ urls, alt, size, className = '', rounded = false, pixel = 
   return (
     <img src={urls[idx]} alt={alt}
       className={`object-contain shrink-0 ${rounded ? 'rounded-lg' : ''} ${pixel ? 'pixel-art' : ''} ${className}`}
-      loading="lazy"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
       style={sizeStyle}
       onError={() => setIdx(idx + 1)}
     />
@@ -214,15 +216,16 @@ export function GrowthPhases({ seedId, cropNum, gold = false, timings }: {
 
 // ── 通用装扮/道具/变异图片 ──────────────────────────────
 
-export function RemoteImage({ urls, name, size = 40, className = '', rounded = false, pixel = false }: {
+export function RemoteImage({ urls, name, size = 40, className = '', rounded = false, pixel = false, eager = false }: {
   urls: string[];
   name: string;
   size?: number;
   className?: string;
   rounded?: boolean;
   pixel?: boolean;
+  eager?: boolean;
 }) {
-  return <MultiImage urls={urls} alt={name} size={size} className={className} rounded={rounded} pixel={pixel} />;
+  return <MultiImage urls={urls} alt={name} size={size} className={className} rounded={rounded} pixel={pixel} eager={eager} />;
 }
 
 export function itemImageUrls(_iconFile: string, localFile?: string): string[] {

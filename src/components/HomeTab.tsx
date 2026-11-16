@@ -8,6 +8,7 @@ import landsData from '../data/lands_atlas.json';
 import costumeData from '../data/costume_atlas.json';
 import ranchData from '../data/ranch_atlas.json';
 import levelExpData from '../data/level_exp.json';
+import ranchCalcData from '../data/ranch_calc.json';
 import collectionData from '../data/collection_atlas.json';
 import { CropImage, plantAllPhasesMap, plantLastPhaseMap, formatSec, LAND_BUFFS, NO_FERT_PLANT_SPEED, NORMAL_FERT_PLANT_SPEED, calcBestLands, RemoteImage, goldenAtlasImageUrls, StatTile, publicUrl } from './shared';
 import { Calculator as CalcIcon, BookOpen as AtlasIcon, ShoppingBag as ItemsIcon } from 'lucide-react';
@@ -19,7 +20,7 @@ const husbandryAnimals = ((((ranchData as any)?.animals) || []) as Array<{ id: n
   .filter((a) => a.id < 65000 || (a.id >= 70001 && a.id < 75000));
 const husbandryCount = husbandryAnimals.length || 28;
 
-type NavHandler = (tab: 'calc' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_ranch' | 'items_gold') => void;
+type NavHandler = (tab: 'calc' | 'calc_farm' | 'calc_ranch' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_ranch' | 'items_gold') => void;
 
 interface Props {
   onNavigate: NavHandler;
@@ -121,34 +122,24 @@ function StatPill({ icon, label, value, accent }: { icon: React.ReactNode; label
   );
 }
 
-function CategoryCard({ emoji, label, desc, count, accent, onClick, icon: Icon }: {
-  emoji: string; label: string; desc: string; count?: number;
+/** 方块磁贴：图标在上、名称在中、数量在下，尺寸约 84px 见方，一行能排 4~6 个。 */
+function SquareTile({ emoji, label, count, accent, onClick, icon: Icon }: {
+  emoji: string; label: string; count?: number;
   accent: 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink';
   onClick: () => void; icon?: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
 }) {
   return (
     <motion.button
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="sticker sticker-press p-3 sm:p-4 text-left w-full group">
-      <div className="flex items-center gap-3 sm:gap-4">
-        <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-xl sm:text-2xl flex-shrink-0 transition-transform group-hover:-rotate-6 group-hover:scale-110"
-          style={{ background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }}>
-          <span>{emoji}</span>
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <span className="font-bold text-sm sm:text-base text-[var(--ink)] truncate">{label}</span>
-            {count !== undefined && (
-              <span className="font-mono tnum text-[10px] sm:text-[11px] font-bold text-[var(--ink-mute)] flex-shrink-0">
-                {count}
-              </span>
-            )}
-          </div>
-          <div className="text-[10px] sm:text-xs text-[var(--ink-mute)] mt-0.5 truncate">{desc}</div>
-        </div>
-        <ArrowRight size={14} className="text-[var(--ink-mute)] flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
+      className="sticker sticker-press aspect-square w-full p-1.5 flex flex-col items-center justify-center gap-1 text-center group">
+      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:-rotate-6 group-hover:scale-110"
+        style={{ background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }}>
+        {Icon ? <Icon size={16} strokeWidth={2.4} /> : <span className="text-base leading-none">{emoji}</span>}
       </div>
+      <div className="w-full truncate text-[10px] sm:text-[11px] font-bold text-[var(--ink)] leading-tight">{label}</div>
+      {/* 数量行固定占位，保证同一行里有没有数字的磁贴文字基线对齐 */}
+      <div className="h-[11px] font-mono tnum text-[9px] font-bold text-[var(--ink-mute)] leading-none">{count ?? ''}</div>
     </motion.button>
   );
 }
@@ -156,8 +147,25 @@ function CategoryCard({ emoji, label, desc, count, accent, onClick, icon: Icon }
 export default function HomeTab({ onNavigate }: Props) {
   const [level, setLevel] = React.useState<number>(70);
   const [lands, setLands] = React.useState<number>(24);
+  // 收益计算卡：农场 / 牧场 各占一半
+  const [calcMode, setCalcMode] = React.useState<'farm' | 'ranch'>('farm');
+  const [ranchLevel, setRanchLevel] = React.useState<number>(9);
+  const [cityLevel, setCityLevel] = React.useState<number>(1);
 
   const result = useMemo(() => runQuickCalc(level, lands), [level, lands]);
+
+  // 牧场速算：该等级能养的种类 + 最低幼崽价（只做容量级口径，收益留到牧场计算器）
+  const ranchQuick = useMemo(() => {
+    const lv = Math.max(1, Math.min(65, Number(ranchLevel) || 1));
+    const list = ranchCalcData.animals.filter(a => a.unlockLevel <= lv);
+    const cubPrices = list.map(a => a.cub.price).filter(p => typeof p === 'number');
+    return {
+      lv,
+      count: list.length,
+      minCub: cubPrices.length ? Math.min(...cubPrices) : 0,
+      buildings: Object.keys(ranchCalcData.buildings).length,
+    };
+  }, [ranchLevel]);
 
   // 统计（全部从 JSON 动态读取）
   const stats = useMemo(() => {
@@ -281,24 +289,54 @@ export default function HomeTab({ onNavigate }: Props) {
         </div>
       </motion.button>
 
+      {/* ── 牧场计算器 与 农场计算器 已并入下方「收益计算」卡（农场/牧场 各一半），此处不再重复入口 ── */}
+
       {/* QUICK CALCULATOR + TOP GOLD (PC: 2 columns, mobile: stacked) */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5">
         {/* Quick Calculator */}
         <section className="lg:col-span-3 sticker-lg p-4 sm:p-5 space-y-3 sm:space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center"
-                style={{ background: 'var(--leaf)', color: 'white', boxShadow: '0 2px 0 var(--leaf-deep)' }}>
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-colors"
+                style={{
+                  background: calcMode === 'farm' ? 'var(--leaf)' : 'var(--orange)',
+                  color: 'white',
+                  boxShadow: `0 2px 0 ${calcMode === 'farm' ? 'var(--leaf-deep)' : 'var(--orange-deep)'}`,
+                }}>
                 <Zap size={14} strokeWidth={2.5} />
               </div>
-              <h2 className="font-display italic text-lg sm:text-xl font-bold text-[var(--ink)]">快速计算</h2>
+              <h2 className="font-display italic text-lg sm:text-xl font-bold text-[var(--ink)]">收益计算</h2>
             </div>
-            <button onClick={() => onNavigate('calc')}
-              className="text-[10px] sm:text-xs font-bold text-[var(--leaf-deep)] flex items-center gap-1 hover:underline">
+            <button onClick={() => onNavigate(calcMode === 'farm' ? 'calc_farm' : 'calc_ranch')}
+              className="text-[10px] sm:text-xs font-bold flex items-center gap-1 hover:underline"
+              style={{ color: calcMode === 'farm' ? 'var(--leaf-deep)' : 'var(--orange-deep)' }}>
               完整计算 <ArrowRight size={12} strokeWidth={2.5} />
             </button>
           </div>
 
+          {/* 农场 / 牧场 各占一半：点了就切口径，不再另外放两个入口卡 */}
+          <div className="grid grid-cols-2 gap-1 p-1 rounded-full" style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
+            {([
+              { id: 'farm' as const, emoji: '🌾', label: '农场', accent: 'var(--leaf)', deep: 'var(--leaf-deep)' },
+              { id: 'ranch' as const, emoji: '🐄', label: '牧场', accent: 'var(--orange)', deep: 'var(--orange-deep)' },
+            ]).map(o => {
+              const on = calcMode === o.id;
+              return (
+                <button key={o.id} onClick={() => setCalcMode(o.id)} aria-pressed={on}
+                  className="rounded-full py-1.5 text-xs font-bold flex items-center justify-center gap-1 transition"
+                  style={{
+                    background: on ? o.accent : 'transparent',
+                    color: on ? '#fff' : 'var(--ink-soft)',
+                    boxShadow: on ? `0 2px 0 ${o.deep}` : 'none',
+                  }}>
+                  <span className="text-[11px] leading-none">{o.emoji}</span>{o.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {calcMode === 'farm' ? (
+          <>
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
             <div>
               <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">账号等级</label>
@@ -342,6 +380,52 @@ export default function HomeTab({ onNavigate }: Props) {
             <div className="rounded-2xl p-4 text-center text-xs text-[var(--ink-mute)]" style={{ background: 'var(--bg-2)' }}>
               请输入有效的等级和土地数
             </div>
+          )}
+          </>
+          ) : (
+          <>
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">牧场等级</label>
+              <input type="number" value={ranchLevel}
+                onChange={e => setRanchLevel(Number(e.target.value) || 1)}
+                className="input-pop text-center" min={1} max={65} style={{ padding: '0.55rem 0.6rem', fontSize: '0.95rem' }} />
+            </div>
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1">主城等级</label>
+              <input type="number" value={cityLevel}
+                onChange={e => setCityLevel(Number(e.target.value) || 1)}
+                className="input-pop text-center" min={1} max={65} style={{ padding: '0.55rem 0.6rem', fontSize: '0.95rem' }} />
+            </div>
+          </div>
+
+          {/* 可养容量 —— 口径与牧场计算器一致：unlockLevel ≤ 牧场等级 */}
+          <motion.div key={`ranch-${ranchQuick.lv}`}
+            initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl p-3 sm:p-4 flex items-center gap-3"
+            style={{ background: 'linear-gradient(135deg, var(--orange-bg) 0%, var(--sun-bg) 100%)', border: '1.5px solid var(--sun)' }}>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 bg-white/80">
+              <RemoteImage urls={[publicUrl('ranch_images/60012_4.png')]} name="牧场" size={56} className="sm:hidden" />
+              <RemoteImage urls={[publicUrl('ranch_images/60012_4.png')]} name="牧场" size={72} className="hidden sm:block" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--orange-deep)' }}>
+                Lv{ranchQuick.lv} 可养动物
+              </div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-mono tnum text-lg sm:text-2xl font-black" style={{ color: 'var(--orange-deep)' }}>{ranchQuick.count}</span>
+                <span className="font-display italic text-base sm:text-xl font-bold text-[var(--ink)]">种</span>
+              </div>
+              <div className="text-[10px] sm:text-[11px] text-[var(--ink-soft)] font-bold mt-0.5 truncate">
+                {ranchQuick.buildings} 类建筑 · 幼崽最低 {ranchQuick.minCub} 券
+              </div>
+            </div>
+            <div className="hidden sm:flex flex-col items-end gap-1 text-[10px] text-[var(--ink-mute)] font-bold">
+              <span>牧场满级 65</span>
+              <span>金券排行看计算器</span>
+            </div>
+          </motion.div>
+          </>
           )}
         </section>
 
@@ -401,37 +485,19 @@ export default function HomeTab({ onNavigate }: Props) {
           <span>图鉴</span>
           <span className="text-[10px] text-[var(--ink-mute)] tracking-wider">{stats.seeds + stats.goldFruits + stats.lands + stats.collectionItems + stats.pedestals} 项</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
-          <CategoryCard
-            emoji="🌿" label="作物图鉴" desc={`${stats.seeds} 种作物数据`} accent="leaf"
-            count={stats.seeds}
-            onClick={() => onNavigate('atlas')}
-            icon={Sprout} />
-          <CategoryCard
-            emoji="🏡" label="装扮图鉴" desc={`${stats.costumeCats} 大类 ${stats.costumes} 套`} accent="sky"
-            count={stats.costumes}
-            onClick={() => onNavigate('atlas_costume')}
-            icon={HomeIcon} />
-          <CategoryCard
-            emoji="🏞️" label="土地图鉴" desc={`${stats.landTypes} 种土壤 + ${stats.lands} 地块`} accent="orange"
-            count={stats.lands}
-            onClick={() => onNavigate('atlas_lands')}
-            icon={Map} />
-          <CategoryCard
-            emoji="🏺" label="藏品图鉴" desc={`${stats.collectionSeries} 系列 ${stats.collectionItems} 件`} accent="plum"
-            count={stats.collectionItems}
-            onClick={() => onNavigate('atlas_collection')}
-            icon={Gem} />
-          <CategoryCard
-            emoji="🪴" label="展台图鉴" desc={`${stats.pedestals} 个藏品展台`} accent="sun"
-            count={stats.pedestals}
-            onClick={() => onNavigate('atlas_pedestal')}
-            icon={Box} />
-          <CategoryCard
-            emoji="🧬" label="变异图鉴" desc={`${stats.mutations} 变异 + ${stats.goldFruits} 黄金果实`} accent="berry"
-            count={stats.mutations + stats.goldFruits}
-            onClick={() => onNavigate('atlas_mutation')}
-            icon={Dna} />
+        <div className="tile-grid">
+          <SquareTile emoji="🌿" label="作物图鉴" accent="leaf" count={stats.seeds}
+            onClick={() => onNavigate('atlas')} icon={Sprout} />
+          <SquareTile emoji="🏡" label="装扮图鉴" accent="sky" count={stats.costumes}
+            onClick={() => onNavigate('atlas_costume')} icon={HomeIcon} />
+          <SquareTile emoji="🏞️" label="土地图鉴" accent="orange" count={stats.lands}
+            onClick={() => onNavigate('atlas_lands')} icon={Map} />
+          <SquareTile emoji="🏺" label="藏品图鉴" accent="plum" count={stats.collectionItems}
+            onClick={() => onNavigate('atlas_collection')} icon={Gem} />
+          <SquareTile emoji="🪴" label="展台图鉴" accent="sun" count={stats.pedestals}
+            onClick={() => onNavigate('atlas_pedestal')} icon={Box} />
+          <SquareTile emoji="🧬" label="变异图鉴" accent="berry" count={stats.mutations + stats.goldFruits}
+            onClick={() => onNavigate('atlas_mutation')} icon={Dna} />
         </div>
       </section>
 
@@ -441,38 +507,22 @@ export default function HomeTab({ onNavigate }: Props) {
           <span>商店道具</span>
           <span className="text-[10px] text-[var(--ink-mute)] tracking-wider">{itemsData.categories.reduce((s, c) => s + c.items.length, 0)} 件</span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
-          <CategoryCard
-            emoji="🌱" label="种子" desc={`Lv 1 → ${levelExpData.length} 全覆盖`} accent="leaf"
-            count={stats.seeds}
+        <div className="tile-grid">
+          <SquareTile emoji="🌱" label="种子" accent="leaf" count={stats.seeds}
             onClick={() => onNavigate('items_seed')} />
-          <CategoryCard
-            emoji="✨" label="黄金果实" desc="超变 / 装扮 / 活动" accent="sun"
-            count={stats.goldFruits}
+          <SquareTile emoji="✨" label="黄金果实" accent="sun" count={stats.goldFruits}
             onClick={() => onNavigate('items_gold')} />
-          <CategoryCard
-            emoji="💰" label="货币与计数" desc={`${itemCount['02'] || 0} 件`} accent="sun"
-            count={itemCount['02'] || 0}
+          <SquareTile emoji="💰" label="货币与计数" accent="sun" count={itemCount['02'] || 0}
             onClick={() => onNavigate('items_gold')} />
-          <CategoryCard
-            emoji="🛠️" label="操作工具" desc={`${itemCount['04'] || 0} 件`} accent="sky"
-            count={itemCount['04'] || 0}
+          <SquareTile emoji="🛠️" label="操作工具" accent="sky" count={itemCount['04'] || 0}
             onClick={() => onNavigate('items_gold')} />
-          <CategoryCard
-            emoji="🧪" label="化肥道具" desc={`${itemCount['07'] || 0} 件`} accent="leaf"
-            count={itemCount['07'] || 0}
+          <SquareTile emoji="🧪" label="化肥道具" accent="leaf" count={itemCount['07'] || 0}
             onClick={() => onNavigate('items_gold')} />
-          <CategoryCard
-            emoji="🎨" label="头像框与装饰" desc={`${itemCount['10'] || 0} 件`} accent="plum"
-            count={itemCount['10'] || 0}
+          <SquareTile emoji="🎨" label="头像框与装饰" accent="plum" count={itemCount['10'] || 0}
             onClick={() => onNavigate('items_gold')} />
-          <CategoryCard
-            emoji="🐾" label="宠物与装扮" desc={`${itemCount['08'] || 0} 件`} accent="orange"
-            count={itemCount['08'] || 0}
+          <SquareTile emoji="🐾" label="宠物与装扮" accent="orange" count={itemCount['08'] || 0}
             onClick={() => onNavigate('items_gold')} />
-          <CategoryCard
-            emoji="🦴" label="狗粮" desc={`${itemCount['09'] || 0} 件`} accent="orange"
-            count={itemCount['09'] || 0}
+          <SquareTile emoji="🦴" label="狗粮" accent="orange" count={itemCount['09'] || 0}
             onClick={() => onNavigate('items_gold')} />
         </div>
       </section>
@@ -480,24 +530,15 @@ export default function HomeTab({ onNavigate }: Props) {
       {/* TOOLS — 工具 */}
       <section>
         <div className="section-eyebrow mb-2.5 sm:mb-3">工具</div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-          <CategoryCard
-            emoji="🧮" label="经验计算器" desc="智能施肥 · 土地自动配置 · 实时推荐" accent="leaf"
-            onClick={() => onNavigate('calc')}
-            icon={CalcIcon} />
-          <CategoryCard
-            emoji="📊" label="等级查询" desc={`Lv 1-${levelExpData.length} 累计/升级经验表`} accent="plum"
-            onClick={() => onNavigate('more_level')}
-            icon={Search} />
-          <CategoryCard
-            emoji="🟪" label="土地升级所需" desc="输入当前/目标等级 · 自动算经验/金币/金豆" accent="plum"
-            onClick={() => onNavigate('more_land')}
-            icon={TrendingUp} />
-          <CategoryCard
-            emoji="🐄" label="牧场全览" desc={`${husbandryCount} 种可养动物 · 每小时收益排行 · 建筑与田地成本`} accent="sun"
-            count={husbandryCount}
-            onClick={() => onNavigate('more_ranch')}
-            icon={Dog} />
+        <div className="tile-grid">
+          <SquareTile emoji="🧮" label="经验计算器" accent="leaf"
+            onClick={() => onNavigate('calc')} icon={CalcIcon} />
+          <SquareTile emoji="📊" label="等级查询" accent="plum"
+            onClick={() => onNavigate('more_level')} icon={Search} />
+          <SquareTile emoji="🟪" label="土地升级所需" accent="plum"
+            onClick={() => onNavigate('more_land')} icon={TrendingUp} />
+          <SquareTile emoji="🐄" label="牧场全览" accent="sun" count={husbandryCount}
+            onClick={() => onNavigate('more_ranch')} icon={Dog} />
         </div>
       </section>
 

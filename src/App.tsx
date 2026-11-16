@@ -5,7 +5,7 @@ import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Wrench, Coffee, 
 // 加 QQ 群弹窗：开屏自动弹过就算「已提示」，避免每次刷新/跳转都糊在脸上
 const QQ_GROUP_SHOWN_KEY = 'qqfarm_qqgroup_shown';
 
-import CalculatorTab from './components/CalculatorTab';
+import CalculatorHub, { type CalcMode } from './components/CalculatorHub';
 import LevelSearchTab from './components/LevelSearchTab';
 import LandUpgradeCalcTab from './components/LandUpgradeCalcTab';
 import LandAtlasTab from './components/LandAtlasTab';
@@ -157,6 +157,7 @@ export default function App() {
   });
   const [atlasSubTab, setAtlasSubTab] = useState<AtlasSubTab>('crops');
   const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('ranch');
+  const [calcMode, setCalcMode] = useState<CalcMode>('ranch');
   const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
   const [qqGroupOpen, setQqGroupOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
@@ -262,6 +263,8 @@ export default function App() {
   // 首页导航入口
   const navigateFromHome = (target: string) => {
     if (target === 'calc') { navigate('calc'); return; }
+    if (target === 'calc_farm') { setCalcMode('farm'); navigate('calc'); return; }
+    if (target === 'calc_ranch') { setCalcMode('ranch'); navigate('calc'); return; }
     if (target === 'atlas') { navigate('atlas', 'crops'); return; }
     // 2026-10-31 修复：土地图鉴原来错走 'atlas'（→ 作物图鉴），改成独立 target
     if (target === 'atlas_lands') { navigate('atlas', 'lands'); return; }
@@ -286,7 +289,7 @@ export default function App() {
           </div>
         );
       case 'calc':
-        return <CalculatorTab />;
+        return <CalculatorHub mode={calcMode} onModeChange={setCalcMode} />;
       case 'atlas':
         return (
           <div className="fade-in pb-28 container-app px-3 sm:px-4">

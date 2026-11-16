@@ -308,6 +308,21 @@ body::after {
   box-shadow: 0 1px 0 rgba(28, 42, 31, 0.10);
 }
 
+/* ──────────────────────────────────────────────────────────────
+   tile-grid — 首页图鉴 / 商店道具 / 工具的方块磁贴网格
+   - 按容器宽度自动铺 84px 起的方块：手机 4 列、平板 6 列、桌面更多列
+   - 用 auto-fill 让三个分区磁贴尺寸一致，不再出现「一行一张长条卡」
+   ────────────────────────────────────────────────────────────── */
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 0.5rem;
+}
+@media (min-width: 640px) {
+  .tile-grid { gap: 0.625rem; }
+}
+
 /* 强调色边框 */
 .sticker-leaf { border-color: var(--leaf); }
 .sticker-orange { border-color: var(--orange); }
@@ -423,6 +438,23 @@ body::after {
    `pl-9` / `pr-9`，左侧放大镜就会压在文字上（道具搜索框曾因此看不清）。 */
 .input-pop.has-icon { padding-left: 2.4rem; }
 .input-pop.has-clear { padding-right: 2.4rem; }
+
+/* 行内紧凑数字输入（罐头时长 / 罐头成本这类「一行挤多个字段」的位置）。
+   .input-pop 默认 width:100% + 1.1rem 字号，单独用会把整行撑开，这里用双类名压回小尺寸。 */
+.input-pop.input-mini {
+  width: 3.4rem;
+  padding: 0.15rem 0.3rem;
+  font-size: 10px;
+  line-height: 1.5;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+.input-mini::-webkit-outer-spin-button,
+.input-mini::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
 /* 浏览器原生 search 清除按钮画在右内边缘、会压住末尾文字，统一换成自绘按钮 */
 .input-pop::-webkit-search-cancel-button,
 .input-pop::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
