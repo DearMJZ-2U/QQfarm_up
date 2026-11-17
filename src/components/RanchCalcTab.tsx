@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Trophy, Zap, Coins, Clock, Leaf, Home, Wheat } from 'lucide-react';
+import { Sparkles, Trophy, Zap, Clock, Home } from 'lucide-react';
 import rawCalc from '../data/ranch_calc.json';
 import { RemoteImage, PillTabGroup, StatTile, EmptyState, publicUrl } from './shared';
 
@@ -11,8 +11,8 @@ import { RemoteImage, PillTabGroup, StatTile, EmptyState, publicUrl } from './sh
  *   周期 = 幼崽 + 成长 + 产出轮数 × 每轮时长（可被罐头压缩）
  *   收益 = 轮数 ×（主产物价 × 数量 + 副产物价 × 数量）×（1 + 建筑售价加成）
  *   经验 = 轮数 × 产出经验 + 收获经验（1 + 建筑经验加成）
- *   牧草 = ceil(周期 / 每份牧草可喂养秒数)，按「购买 / 自种 / 混合」计价
- *   净金券 = 收益 − 牧草成本(金券部分) − 幼崽价 − 罐头成本
+ *   牧草 = 周期 / 每份牧草可喂养秒数；固定按「农场草种」折算，成本自动计入（≈0）
+ *   净金券 = 收益 − 幼崽价 − 罐头成本（牧草走金币，不占金券）
  * ──────────────────────────────────────────────────────────── */
 
 interface Sells { cid: number; price: number }
@@ -52,7 +52,6 @@ const DATA = rawCalc as unknown as CalcData;
 const GRASS_SEED_PRICE = DATA.grass.crop.seedPrice || 10;   // 金币/包
 const GRASS_PER_PACK = DATA.grass.crop.yieldCount || 20;
 const GRASS_COIN_PER_UNIT = GRASS_SEED_PRICE / GRASS_PER_PACK;      // 0.5 金币/份
-const GRASS_SHOP_PRICE = DATA.grass.shop.price || 60;               // 金券/份
 const GRASS_SEC_PER_UNIT = DATA.grass.crop.growSec / GRASS_PER_PACK; // 30 地秒/份
 
 const fmt = (n: number, digits = 0) =>
@@ -121,6 +120,24 @@ function SeatBtn({ label, onClick, disabled }: { label: string; onClick: () => v
   );
 }
 
+/** 圆形步进按钮（尺寸可调：牧场等级用大号，建筑座数用小号） */
+function RoundStep({ label, onClick, disabled, ariaLabel, size = 28 }: {
+  label: string; onClick: () => void; disabled?: boolean; ariaLabel: string; size?: number;
+}) {
+  return (
+    <button type="button" onClick={onClick} disabled={disabled} aria-label={ariaLabel}
+      className="grid place-items-center rounded-full font-bold leading-none transition active:scale-95 disabled:opacity-30"
+      style={{
+        width: size, height: size, flexShrink: 0,
+        fontSize: Math.round(size * 0.52),
+        background: 'var(--surface)', border: '1.5px solid var(--line)', color: 'var(--ink)',
+        boxShadow: '0 1px 0 rgba(28,42,31,.06)',
+      }}>
+      {label}
+    </button>
+  );
+}
+
 function maxAllowedLevel(rows: FacilityRow[], ranchLevel: number) {
   let lv = 1;
   for (const r of rows) {
@@ -166,8 +183,6 @@ interface Ctx {
   ranchLevel: number;
   coopLevel: number;
   shedLevel: number;
-  grassMode: 'buy' | 'grow' | 'mix';
-  growShare: number;   // 0..100 自种比例
   normalHours: number;
   organicHours: number;
   organicCans: number; // 每轮有机罐头个数
@@ -183,7 +198,6 @@ interface Metrics {
   grassPerHour: number;
   revenue: number;
   expCycle: number;
-  couponCost: number;
   coinCost: number;
   netCycle: number;
   netPerHour: number;
@@ -210,12 +224,10 @@ function metricsOf(a: AnimalRow, ctx: Ctx): Metrics {
     a.maxCount * (a.main.price * a.main.count * (1 + priceBp / 10000) +
       a.by.price * a.by.count * (1 + byPriceBp / 10000));
   const expCycle = a.maxCount * a.produceExp * (1 + expBp / 10000) + a.harvestExp * (1 + expBp / 10000);
-  const buyShare = ctx.grassMode === 'buy' ? 1 : ctx.grassMode === 'grow' ? 0 : 1 - ctx.growShare / 100;
-  const growShare = 1 - buyShare;
-  const couponCost = grassPerCycle * GRASS_SHOP_PRICE * buyShare;
-  const coinCost = grassPerCycle * GRASS_COIN_PER_UNIT * growShare;
+  // 牧草固定按农场草种折算：成本走金币（0.5 金币/份），不占金券，也不进净金券
+  const coinCost = grassPerCycle * GRASS_COIN_PER_UNIT;
   const canCost = (ctx.normalHours > 0 ? ctx.normalPrice : 0) + (ctx.organicHours > 0 ? ctx.organicCans * ctx.organicPrice : 0);
-  const netCycle = revenue - couponCost - a.cub.price - canCost;
+  const netCycle = revenue - a.cub.price - canCost;
   const perHour = 3600 / cycleSec;
   return {
     a,
@@ -225,7 +237,6 @@ function metricsOf(a: AnimalRow, ctx: Ctx): Metrics {
     grassPerHour,
     revenue,
     expCycle,
-    couponCost,
     coinCost,
     netCycle,
     netPerHour: netCycle * perHour,
@@ -251,8 +262,6 @@ export default function RanchCalcTab() {
   const [coopLevel, setCoopLevel] = useState(2);
   const [shedLevel, setShedLevel] = useState(1);
   const [grassLevel, setGrassLevel] = useState(1);
-  const [grassMode, setGrassMode] = useState<'buy' | 'grow' | 'mix'>('grow');
-  const [growShare, setGrowShare] = useState(70);
   const [canOn, setCanOn] = useState(false);
   const [normalCanH, setNormalCanH] = useState<number | ''>(12);
   const [organicCanH, setOrganicCanH] = useState<number | ''>(4);
@@ -290,7 +299,7 @@ export default function RanchCalcTab() {
   const organicHours = canOn ? oCanH : 0;
 
   const ctx: Ctx = {
-    ranchLevel: lv, coopLevel: coopLv, shedLevel: shedLv, grassMode, growShare,
+    ranchLevel: lv, coopLevel: coopLv, shedLevel: shedLv,
     normalHours, organicHours, organicCans,
     normalPrice: typeof normalPrice === 'number' ? normalPrice : 0,
     organicPrice: typeof organicPrice === 'number' ? organicPrice : 0,
@@ -303,10 +312,10 @@ export default function RanchCalcTab() {
       .sort((x, y) => target === 'exp'
       ? (y.expPerHour - x.expPerHour) || (x.cycleSec - y.cycleSec)
       : (y.netPerHour - x.netPerHour) || (x.cycleSec - y.cycleSec)),
-    [lv, coopLv, shedLv, grassMode, growShare, normalHours, organicHours, organicCans, normalPrice, organicPrice, target],
+    [lv, coopLv, shedLv, normalHours, organicHours, organicCans, normalPrice, organicPrice, target],
   );
 
-  const allRows = useMemo(() => DATA.animals.map(a => metricsOf(a, ctx)), [coopLv, shedLv, grassMode, growShare, normalHours, organicHours, organicCans, normalPrice, organicPrice]);
+  const allRows = useMemo(() => DATA.animals.map(a => metricsOf(a, ctx)), [coopLv, shedLv, normalHours, organicHours, organicCans, normalPrice, organicPrice]);
   const byType = (t: '窝' | '棚') => allRows.filter(r => r.a.type === t && r.a.unlockLevel <= lv);
   const bestCouponCoop = [...byType('窝')].sort((x, y) => y.netPerHour - x.netPerHour)[0];
   const bestCouponShed = [...byType('棚')].sort((x, y) => y.netPerHour - x.netPerHour)[0];
@@ -325,8 +334,8 @@ export default function RanchCalcTab() {
 
   const moneyCouponPerHour = coopSlots * (bestCouponCoop?.netPerHour || 0) + shedSlots * (bestCouponShed?.netPerHour || 0);
   const expPerHourTotal = coopSlots * (bestExpCoop?.expPerHour || 0) + shedSlots * (bestExpShed?.expPerHour || 0);
-  const coinPerHourTotal = coopSlots * (bestCouponCoop?.coinCost || 0) / (bestCouponCoop?.cycleSec || 1) * 3600
-    + shedSlots * (bestCouponShed?.coinCost || 0) / (bestCouponShed?.cycleSec || 1) * 3600;
+  // 赚钱配置下的经验速率（和冲级配置不同，用来给「升级耗时」一个真实口径）
+  const expPerHourMoney = coopSlots * (bestCouponCoop?.expPerHour || 0) + shedSlots * (bestCouponShed?.expPerHour || 0);
   const grassPerDayTotal =
     coopSlots * (bestCouponCoop?.grassPerHour || 0) * 24 +
     shedSlots * (bestCouponShed?.grassPerHour || 0) * 24;
@@ -342,6 +351,7 @@ export default function RanchCalcTab() {
   const nextExp = DATA.levels.find(([l]) => l === lv + 1)?.[1];
   const needExp = nextExp !== undefined ? nextExp - curExp : null;
   const hoursToNext = needExp !== null && expPerHourTotal > 0 ? needExp / expPerHourTotal : null;
+  const hoursToNextMoney = needExp !== null && expPerHourMoney > 0 ? needExp / expPerHourMoney : null;
 
   const ranked = [...rows];
   const winnerCoupon = [...rows].sort((x, y) => (y.netPerHour - x.netPerHour) || (x.cycleSec - y.cycleSec))[0];
@@ -353,16 +363,8 @@ export default function RanchCalcTab() {
   ].filter(Boolean);
   const canLabel = canParts.length ? canParts.join(' + ') : '不使用罐头';
 
-  const grassLabel = grassMode === 'buy' ? '金券直购'
-    : grassMode === 'grow' ? '农场自种'
-      : '混合模式';
-
   const coopBp = bonusAt(DATA.bonuses.coop, coopLv).priceBp;
   const shedBp = bonusAt(DATA.bonuses.shed, shedLv).expBp;
-  const coopCaption = coopBp ? `窝 Lv${coopLv} 售价 +${coopBp / 100}%` : `窝 Lv${coopLv} 暂无加成（Lv5 起 +10%）`;
-  const shedCaption = shedBp ? `棚 Lv${shedLv} 经验 +${shedBp / 100}%` : `棚 Lv${shedLv} 暂无加成（Lv5 起 +10%）`;
-  const bonusCap = [coopBp ? coopCaption : '', shedBp ? shedCaption : ''].filter(Boolean).join(' · ')
-    || '窝/棚 Lv5 起才有加成（+10%~40%）';
 
   const facilityTiles: FacilityTile[] = [
     {
@@ -382,13 +384,6 @@ export default function RanchCalcTab() {
         ? (bonusAt(DATA.bonuses.shed, shedLv).expBp ? `经验 +${bonusAt(DATA.bonuses.shed, shedLv).expBp / 100}%` : '暂无加成（Lv5 起 +10%）')
         : '当前没有棚位',
       color: 'orange',
-    },
-    {
-      key: 'grass', name: '牧草机', emoji: '🌾', node: grassNode, level: grassLv, max: maxGrass,
-      set: setGrassLevel, rows: DATA.buildings.grass, count: 1,
-      note: grassDays ? `满栏日耗 ${fmt(grassPerDayTotal)} 份` : '满栏无消耗',
-      bonusText: grassDays ? `草仓可撑 ${fmt(grassDays, 1)} 天` : '不占草仓',
-      color: 'sun',
     },
   ];
 
@@ -411,44 +406,26 @@ export default function RanchCalcTab() {
 
       {/* CONFIG */}
       <motion.section initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 }}
-        className="sticker-lg p-5 sm:p-6 space-y-5">
-        <div className="flex items-start gap-3">
-          <div className="w-[116px] flex-shrink-0">
-            <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">牧场等级</label>
+        className="sticker-lg p-4 sm:p-5 space-y-4">
+        {/* 牧场等级：左标题 + 右 −/输入/+，一行到底，不再留半屏空白 */}
+        <div className="flex items-center gap-3">
+          <div className="min-w-0 flex-1 flex items-baseline gap-x-2 flex-wrap">
+            <span className="section-eyebrow">牧场等级</span>
+            <span className="text-[9px] text-[var(--ink-mute)] leading-tight">1 – 65 · 种植 25 级解锁</span>
+          </div>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <RoundStep label="−" ariaLabel="降低牧场等级" onClick={() => setRanchLevel(Math.max(1, lv - 1))} disabled={lv <= 1} />
             <input type="number" value={ranchLevel} min={1} max={65}
               onChange={e => setRanchLevel(e.target.value === '' ? '' : Number(e.target.value))}
-              className="input-pop text-center" />
-            <div className="text-[9px] text-[var(--ink-mute)] mt-1 text-center leading-tight">1 – 65 · 种植 25 级解锁</div>
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">牧草来源</label>
-            <div className="w-fit max-w-full">
-              <PillTabGroup
-                items={[{ id: 'buy', label: '买草' }, { id: 'grow', label: '自种' }, { id: 'mix', label: '混合' }]}
-                value={grassMode} onChange={id => setGrassMode(id as 'buy' | 'grow' | 'mix')}
-                accent="leaf" size="sm" />
-            </div>
-            {/* 当前口径 + 单价压成一行小字，省掉原来右侧单独一列 */}
-            <div className="mt-1 text-[9px] font-mono leading-[1.35] text-[var(--ink-mute)]">
-              <span className="text-[var(--ink-soft)] font-bold">{grassLabel}</span>
-              <span className="mx-1 opacity-50">·</span>
-              <span className="whitespace-nowrap"><Leaf size={8} strokeWidth={2.5} className="inline -mt-px text-[var(--leaf-deep)]" /> 店买 {GRASS_SHOP_PRICE} 券/份</span>
-              <span className="mx-1 opacity-50">·</span>
-              <span className="whitespace-nowrap">自种 {GRASS_COIN_PER_UNIT} 金币/份</span>
-            </div>
-            {grassMode === 'mix' && (
-              <div className="mt-1 flex items-center gap-1.5 text-[10px] font-mono text-[var(--ink-mute)]">
-                <span className="whitespace-nowrap">自种 {growShare}%</span>
-                <input type="range" min={0} max={100} step={5} value={growShare}
-                  onChange={e => setGrowShare(Number(e.target.value))}
-                  className="flex-1 min-w-[60px] accent-[var(--leaf-deep)]" />
-              </div>
-            )}
+              style={{ width: 76, paddingLeft: 0, paddingRight: 0 }}
+              className="input-pop text-center !py-1 !text-lg" />
+            <RoundStep label="+" ariaLabel="提高牧场等级" onClick={() => setRanchLevel(Math.min(65, lv + 1))} disabled={lv >= 65} />
           </div>
         </div>
 
-{/* 罐头 —— 两行紧凑数字输入：时长可填小数，不再按整点排按钮 */}
+        <div style={{ height: 1, background: 'var(--line)' }} />
+
+        {/* 罐头 —— 两行紧凑数字输入：时长可填小数，不再按整点排按钮 */}
         <div className="space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
             <div className="section-eyebrow">罐头加速</div>
@@ -504,7 +481,7 @@ export default function RanchCalcTab() {
 
       {/* 建筑 */}
       <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2.5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
           {facilityTiles.map(t => {
             const next = t.rows.find(r => r.level === t.level + 1);
             const gated = next ? (next.reqLevel !== null && next.reqLevel > lv) : false;
@@ -529,22 +506,17 @@ export default function RanchCalcTab() {
                     style={{ background: 'rgba(255,255,255,.7)', color: 'var(--ink)' }}>Lv{t.level}</span>
                 </div>
                 <div className="font-mono tnum text-lg font-bold text-[var(--ink)] leading-none mt-1.5">
-                  {t.key === 'grass' ? fmt(t.node.capacity || 0) : (t.node.capacity ?? t.count)}
-                  <span className="text-[9px] font-bold text-[var(--ink-soft)] ml-1">{t.key === 'grass' ? '份仓量' : '栏/座'}</span>
+                  {t.node.capacity ?? t.count}
+                  <span className="text-[9px] font-bold text-[var(--ink-soft)] ml-1">栏/座</span>
                 </div>
-                {/* 窝/棚：座数直接内联在卡里；牧草机只有一行说明 */}
-                {t.seats !== undefined && t.setSeats ? (
-                  <div className="flex items-center gap-1 mt-1">
-                    <SeatBtn label="−" onClick={() => t.setSeats!(Math.max(t.seatMin!, t.seats! - 1))} disabled={t.seats <= t.seatMin!} />
-                    <span className="font-mono text-[11px] font-bold text-[var(--ink)] tabular-nums">{t.seats} 座</span>
-                    <SeatBtn label="+" onClick={() => t.setSeats!(Math.min(t.seatMax!, t.seats! + 1))} disabled={t.seats >= t.seatMax!} />
-                    <span className="text-[9px] text-[var(--ink-soft)] truncate ml-0.5">
-                      × {t.node.capacity} = <b className="text-[var(--ink)]">{fmt(t.seats * (t.node.capacity || 0))}</b> 栏
-                    </span>
-                  </div>
-                ) : (
-                  <div className="text-[9px] text-[var(--ink-soft)] mt-1 leading-tight truncate">{t.note}</div>
-                )}
+                <div className="flex items-center gap-1 mt-1">
+                  <SeatBtn label="−" onClick={() => t.setSeats!(Math.max(t.seatMin!, t.seats! - 1))} disabled={t.seats! <= t.seatMin!} />
+                  <span className="font-mono text-[11px] font-bold text-[var(--ink)] tabular-nums">{t.seats} 座</span>
+                  <SeatBtn label="+" onClick={() => t.setSeats!(Math.min(t.seatMax!, t.seats! + 1))} disabled={t.seats! >= t.seatMax!} />
+                  <span className="text-[9px] text-[var(--ink-soft)] truncate ml-0.5">
+                    × {t.node.capacity} = <b className="text-[var(--ink)]">{fmt((t.seats || 0) * (t.node.capacity || 0))}</b> 栏
+                  </span>
+                </div>
                 <div className="text-[9px] text-[var(--leaf-deep)] font-bold mt-0.5 leading-tight truncate">{t.bonusText}</div>
                 <div className="flex items-center gap-1 mt-1.5">
                   <button className="btn btn-sm btn-ghost flex-1 !py-0.5 !text-[10px] !min-h-0"
@@ -556,11 +528,39 @@ export default function RanchCalcTab() {
               </div>
             );
           })}
-          {/* 第 4 格：口径小字，顶掉原来单独一行说明 */}
-          <div className="flex flex-col justify-center gap-0.5 px-0.5 py-1 text-[8.5px] leading-[1.5] text-[var(--ink-mute)]">
-            <div>栏位 = 座数 × 单座容量</div>
-            <div>升级门槛只看牧场等级</div>
-            <div className="text-[var(--leaf-deep)] font-bold">{bonusCap}</div>
+
+          {/* 牧草机：手机整行通栏、桌面占右半区 —— 仓量 / 日耗 / 可撑天数 一行读完，不再是半格碎字 */}
+          <div className="col-span-2 rounded-xl px-2.5 py-2 flex items-center gap-2.5"
+            style={{ background: 'var(--sun-bg)', border: '1.5px solid var(--sun)' }}>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <span className="text-[15px] leading-none">🌾</span>
+              <div>
+                <div className="flex items-center gap-1">
+                  <span className="text-[11px] font-bold text-[var(--ink)]">牧草机</span>
+                  <span className="chip !text-[9px] !px-1.5 !py-0"
+                    style={{ background: 'rgba(255,255,255,.7)', color: 'var(--ink)' }}>Lv{grassLv}</span>
+                </div>
+                <div className="font-mono tnum text-base font-bold text-[var(--ink)] leading-none mt-1">
+                  {fmt(grassNode.capacity || 0)}
+                  <span className="text-[9px] font-bold text-[var(--ink-soft)] ml-1">份仓量</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 min-w-0 text-[9px] leading-[1.6] text-[var(--ink-soft)]">
+              <div>满栏日耗 <b className="text-[var(--ink)]">{fmt(grassPerDayTotal)}</b> 份</div>
+              <div className="font-bold text-[var(--leaf-deep)]">{grassDays ? `草仓可撑 ${fmt(grassDays, 1)} 天` : '不占草仓'}</div>
+            </div>
+            <div className="flex flex-col items-end gap-1 flex-shrink-0">
+              <div className="flex items-center gap-1">
+                <button className="btn btn-sm btn-ghost !py-0.5 !px-2 !text-[10px] !min-h-0"
+                  onClick={() => setGrassLevel(Math.max(1, grassLv - 1))} disabled={grassLv <= 1}>降</button>
+                <button className="btn btn-sm btn-ghost !py-0.5 !px-2 !text-[10px] !min-h-0"
+                  onClick={() => setGrassLevel(Math.min(maxGrass, grassLv + 1))} disabled={grassLv >= maxGrass}>升</button>
+              </div>
+              <div className="text-[8.5px] text-[var(--ink-mute)] leading-tight whitespace-nowrap">
+                {grassLv >= maxGrass ? `已达上限 · Lv${lv}` : `可升 Lv${grassLv + 1}`}
+              </div>
+            </div>
           </div>
         </div>
       </motion.section>
@@ -581,7 +581,7 @@ export default function RanchCalcTab() {
             <>
               <StatTile label="金券 / 小时" value={`${fmt(moneyCouponPerHour)}`} hint={`${slots} 栏全养最优`} color="sun" />
               <StatTile label="金券 / 天" value={`${fmt(moneyCouponPerHour * 24)}`} hint="满栏 24 小时" color="orange" />
-              <StatTile label="金币成本 / 天" value={`${fmt(coinPerHourTotal * 24)}`} hint="自种牧草那部分" color="leaf" />
+              <StatTile label="升级耗时" value={hoursToNextMoney ? fmtSec(hoursToNextMoney * 3600) : '—'} hint="按赚钱配置跑" color="leaf" muted={!hoursToNextMoney} />
               <StatTile label="建筑回本" value={buildPayback ? `${fmt(buildPayback, 1)} 小时` : '—'} hint={`总投入 ${fmt(buildCost)} 券`} color="ink" muted={!buildPayback} />
             </>
           ) : (
@@ -695,11 +695,10 @@ export default function RanchCalcTab() {
                 accent={target === 'coupon' ? 'sun' : 'leaf'} size="sm" />
               <span className="chip chip-ink">Lv{lv} 可养 {ranked.length} 种</span>
               <span className="chip" style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>只显示前 10</span>
-              <span className="chip" style={{ background: 'var(--leaf-bg)', color: 'var(--leaf-deep)' }}>{grassLabel}</span>
               {canParts.length > 0 && <span className="chip" style={{ background: 'var(--berry-bg)', color: 'var(--berry-deep)' }}>{canLabel}</span>}
             </div>
             <span className="text-[10px] font-mono text-[var(--ink-mute)]">
-              按{target === 'exp' ? '经验/时' : '净金券/时'}降序 · 净收益 = 产物 − 牧草(券) − 幼崽 − 罐头
+              按{target === 'exp' ? '经验/时' : '净金券/时'}降序 · 净收益 = 产物 − 幼崽 − 罐头（牧草不计成本）
             </span>
           </div>
           <div className="overflow-x-auto">
@@ -799,7 +798,7 @@ export default function RanchCalcTab() {
             <p><b>周期</b> = 幼崽期 + 成长期 + 产出轮数 × 每轮时长；牧草按「一份草喂 X 秒」连续扣，周期内的份数是小数（可跨轮结转），所以短周期动物不会被整份草吃掉收益。</p>
             <p><b>收益</b> = 轮数 ×（主产物价 × 个数 + 副产物价 × 个数）×（1 + 建筑售价加成）；窝 Lv5/6/7/8 售价 +10/20/30/40%，棚 Lv5/6/7/8 经验 +10/20/30/40%。</p>
             <p><b>经验</b> = 轮数 × 产出经验 + 收获经验（同一个建筑加成），所以「经验王」多半出在棚。</p>
-            <p><b>牧草</b>：饲料店 {GRASS_SHOP_PRICE} 金券/份；自种一包 {GRASS_SEED_PRICE} 金币（{fmtSec(DATA.grass.crop.growSec)} 收 {GRASS_PER_PACK} 份），折 {GRASS_COIN_PER_UNIT} 金币/份，金券口径记 0。混合模式按自种比例拆两本账。每只动物每小时吃 3600 ÷（每份可喂秒数）份草。</p>
+            <p><b>牧草</b>：只有一种口径 —— <b>农场种草</b>，成本按 <b>0</b> 计（牧草只花金币、不花金券，量级可忽略，不影响任何排名）。每只动物每小时吃 3600 ÷（每份可喂秒数）份草。</p>
             <p><b>罐头</b>：普通罐头每只每轮 1 个，直接削掉最长阶段对应小时数；有机罐头按「每轮用量」逐个削最长阶段（单阶段保底 30 秒操作时间，整轮周期最多压到原始的一半，避免出现「罐头无限刷」的失真值）。两者都会缩短周期、减少牧草消耗，从而抬高每小时收益；单价填 0 表示按免费/库存充足算，显示的是理论上限。</p>
             <p><b>建筑</b>：牧场地图上只有窝 / 棚 / 牧草机三种建筑，座数直接在卡片里用 −/+ 调（窝 1–3 座、棚 0–3 座），栏位 = 座数 × 单座容量。窝/棚等级决定单座容量与加成，<b>升级门槛只看牧场等级（RANCH_LEVEL），与主城等级无关</b>（主城在游戏里不是地图建筑，也不参与本页计算）。改上面的牧场等级，经验王/金券王与排行榜会即时按该级重算。</p>
             <p><b>未纳入</b>：巨大化动物（产物结算为松果，不是金券）、偷菜/放蚊子/帮忙清理的社交收益、牧场订单与图鉴收集奖励。</p>
