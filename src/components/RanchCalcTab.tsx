@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Trophy, Zap, Coins, Clock, Leaf, Home, FlaskConical, Wheat } from 'lucide-react';
+import { Sparkles, Trophy, Zap, Coins, Clock, Leaf, Home, Wheat } from 'lucide-react';
 import rawCalc from '../data/ranch_calc.json';
 import { RemoteImage, PillTabGroup, StatTile, EmptyState, publicUrl } from './shared';
 
@@ -27,6 +27,14 @@ interface AnimalRow {
 }
 interface FacilityRow { id: number; level: number; capacity: number | null; cost: { currency: number; count: number }; secs: number; reqLevel: number | null; next: number | null }
 interface CityRow extends FacilityRow { open: number; quota: Record<string, number> }
+interface FacilityTile {
+  key: 'coop' | 'shed' | 'grass';
+  name: string; emoji: string; node: FacilityRow; level: number; max: number;
+  set: (v: number) => void; rows: FacilityRow[]; count: number;
+  // 座数（牧草机恒 1 座，没有这两个字段）
+  seats?: number; setSeats?: (v: number) => void; seatMin?: number; seatMax?: number;
+  note: string; bonusText: string; color: 'leaf' | 'orange' | 'sun';
+}
 interface CalcData {
   levels: Array<[number, number]>;
   animals: AnimalRow[];
@@ -101,6 +109,17 @@ function MiniNum({
 }
 
 const bonusAt = <T extends { level: number }>(rows: T[], lv: number): T => rows.find(r => r.level === lv) || rows[0];
+
+/** 座数步进按钮（建筑卡内联，18px 圆形，别做成块状按钮抢空间） */
+function SeatBtn({ label, onClick, disabled }: { label: string; onClick: () => void; disabled?: boolean }) {
+  return (
+    <button type="button" onClick={onClick} disabled={disabled} aria-label={label === '+' ? '增加座数' : '减少座数'}
+      className="w-[18px] h-[18px] flex-shrink-0 rounded-full grid place-items-center text-[12px] font-bold leading-none transition disabled:opacity-30 active:scale-95"
+      style={{ background: 'rgba(255,255,255,.85)', border: '1px solid rgba(0,0,0,.09)', color: 'var(--ink)' }}>
+      {label}
+    </button>
+  );
+}
 
 function maxAllowedLevel(rows: FacilityRow[], ranchLevel: number) {
   let lv = 1;
@@ -226,7 +245,9 @@ const RANKS = [
 
 export default function RanchCalcTab() {
   const [ranchLevel, setRanchLevel] = useState<number | ''>(9);
-  const [cityLevel, setCityLevel] = useState<number | ''>(1);
+  // 游戏里牧场地图只有窝/棚/牧草机三种建筑，没有主城与实验室实体 → 座数直接填，不再由主城等级推导
+  const [coopSeats, setCoopSeats] = useState<number | ''>(1);
+  const [shedSeats, setShedSeats] = useState<number | ''>(0);
   const [coopLevel, setCoopLevel] = useState(2);
   const [shedLevel, setShedLevel] = useState(1);
   const [grassLevel, setGrassLevel] = useState(1);
@@ -243,7 +264,6 @@ export default function RanchCalcTab() {
   const [showFormula, setShowFormula] = useState(false);
 
   const lv = typeof ranchLevel === 'number' ? Math.max(1, Math.min(65, ranchLevel)) : 1;
-  const cityLv = typeof cityLevel === 'number' ? Math.max(1, Math.min(12, cityLevel)) : 1;
 
   const maxCoop = useMemo(() => maxAllowedLevel(DATA.buildings.coop, lv), [lv]);
   const maxShed = useMemo(() => maxAllowedLevel(DATA.buildings.shed, lv), [lv]);
@@ -296,10 +316,9 @@ export default function RanchCalcTab() {
   const coopNode = DATA.buildings.coop.find(r => r.level === coopLv) || DATA.buildings.coop[0];
   const shedNode = DATA.buildings.shed.find(r => r.level === shedLv) || DATA.buildings.shed[0];
   const grassNode = DATA.buildings.grass.find(r => r.level === grassLv) || DATA.buildings.grass[0];
-  const cityNode = DATA.buildings.city.find(r => r.level === cityLv) || DATA.buildings.city[0];
-  const quota = cityNode?.quota || {};
-  const coopCount = quota.coop || 0;
-  const shedCount = quota.shed || 0;
+  // 座数由玩家自填：窝 1–3 座、棚 0–3 座（任务解锁后买，上限各 3 座）
+  const coopCount = typeof coopSeats === 'number' ? Math.max(1, Math.min(3, Math.round(coopSeats))) : 1;
+  const shedCount = typeof shedSeats === 'number' ? Math.max(0, Math.min(3, Math.round(shedSeats))) : 0;
   const coopSlots = coopCount * (coopNode.capacity || 0);
   const shedSlots = shedCount * (shedNode.capacity || 0);
   const slots = coopSlots + shedSlots;
@@ -316,8 +335,7 @@ export default function RanchCalcTab() {
   const buildCost =
     coopCount * cumulativeCost(DATA.buildings.coop, coopLv).cost +
     shedCount * cumulativeCost(DATA.buildings.shed, shedLv).cost +
-    cumulativeCost(DATA.buildings.grass, grassLv).cost +
-    cumulativeCost(DATA.buildings.city, cityLv).cost;
+    cumulativeCost(DATA.buildings.grass, grassLv).cost;
   const buildPayback = moneyCouponPerHour > 0 ? buildCost / moneyCouponPerHour : null;
 
   const curExp = DATA.levels.find(([l]) => l === lv)?.[1] ?? 0;
@@ -346,33 +364,33 @@ export default function RanchCalcTab() {
   const bonusCap = [coopBp ? coopCaption : '', shedBp ? shedCaption : ''].filter(Boolean).join(' · ')
     || '窝/棚 Lv5 起才有加成（+10%~40%）';
 
-  const facilityTiles = [
+  const facilityTiles: FacilityTile[] = [
     {
       key: 'coop', name: '窝', emoji: '🏠', node: coopNode, level: coopLv, max: maxCoop,
       set: setCoopLevel, rows: DATA.buildings.coop, count: coopCount,
-      note: `${coopCount} 座 × ${coopNode.capacity} 只 = ${coopSlots} 栏`,
+      seats: coopCount, setSeats: v => setCoopSeats(v), seatMin: 1, seatMax: 3,
+      note: '',
       bonusText: bonusAt(DATA.bonuses.coop, coopLv).priceBp ? `售价 +${bonusAt(DATA.bonuses.coop, coopLv).priceBp / 100}%` : '暂无加成（Lv5 起 +10%）',
-      color: 'leaf' as const,
+      color: 'leaf',
     },
     {
       key: 'shed', name: '棚', emoji: '🏚️', node: shedNode, level: shedLv, max: maxShed,
       set: setShedLevel, rows: DATA.buildings.shed, count: shedCount,
-      note: shedCount ? `${shedCount} 座 × ${shedNode.capacity} 只 = ${shedSlots} 栏` : '主城 Lv2 起解锁 1 座',
+      seats: shedCount, setSeats: v => setShedSeats(v), seatMin: 0, seatMax: 3,
+      note: '',
       bonusText: shedCount
         ? (bonusAt(DATA.bonuses.shed, shedLv).expBp ? `经验 +${bonusAt(DATA.bonuses.shed, shedLv).expBp / 100}%` : '暂无加成（Lv5 起 +10%）')
         : '当前没有棚位',
-      color: 'orange' as const,
+      color: 'orange',
     },
     {
       key: 'grass', name: '牧草机', emoji: '🌾', node: grassNode, level: grassLv, max: maxGrass,
-      set: setGrassLevel, rows: DATA.buildings.grass, count: quota.grass || 1,
+      set: setGrassLevel, rows: DATA.buildings.grass, count: 1,
       note: grassDays ? `满栏日耗 ${fmt(grassPerDayTotal)} 份` : '满栏无消耗',
       bonusText: grassDays ? `草仓可撑 ${fmt(grassDays, 1)} 天` : '不占草仓',
-      color: 'sun' as const,
+      color: 'sun',
     },
   ];
-
-  const labNode = DATA.buildings.lab.find(r => r.level === 1) || DATA.buildings.lab[0];
 
   return (
     <div className="container-app pb-24 px-3 sm:px-4 fade-in space-y-6">
@@ -394,53 +412,39 @@ export default function RanchCalcTab() {
       {/* CONFIG */}
       <motion.section initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 }}
         className="sticker-lg p-5 sm:p-6 space-y-5">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <div>
+        <div className="flex items-start gap-3">
+          <div className="w-[116px] flex-shrink-0">
             <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">牧场等级</label>
             <input type="number" value={ranchLevel} min={1} max={65}
               onChange={e => setRanchLevel(e.target.value === '' ? '' : Number(e.target.value))}
               className="input-pop text-center" />
-            <div className="text-[10px] text-[var(--ink-mute)] mt-1 text-center">1 – 65（种植 25 级解锁牧场）</div>
-          </div>
-          <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">主城等级</label>
-            <input type="number" value={cityLevel} min={1} max={12}
-              onChange={e => setCityLevel(e.target.value === '' ? '' : Number(e.target.value))}
-              className="input-pop text-center" />
-            <div className="text-[10px] text-[var(--ink-mute)] mt-1 text-center">决定窝/棚/草机的建造配额</div>
+            <div className="text-[9px] text-[var(--ink-mute)] mt-1 text-center leading-tight">1 – 65 · 种植 25 级解锁</div>
           </div>
 
-          <div className="col-span-2">
+          <div className="flex-1 min-w-0">
             <label className="block text-[10px] uppercase tracking-widest font-bold text-[var(--ink-mute)] mb-1.5">牧草来源</label>
-            <div className="flex items-center gap-2">
-              <div className="min-w-0">
-                <PillTabGroup
-                  items={[{ id: 'buy', label: '买草' }, { id: 'grow', label: '自种' }, { id: 'mix', label: '混合' }]}
-                  value={grassMode} onChange={id => setGrassMode(id as 'buy' | 'grow' | 'mix')}
-                  accent="leaf" size="sm" />
-              </div>
-              {/* 单价靠右贴着三个 pill，顶掉原来单独一行的「牧草 店买/自种」 */}
-              <div className="ml-auto flex-shrink-0 text-right text-[9px] font-mono leading-[1.35] text-[var(--ink-mute)]">
-                <div className="flex items-center justify-end gap-1">
-                  <Leaf size={9} strokeWidth={2.5} className="text-[var(--leaf-deep)]" />
-                  店买 {GRASS_SHOP_PRICE} 券/份
-                </div>
-                <div>自种 {GRASS_COIN_PER_UNIT} 金币/份</div>
-              </div>
+            <div className="w-fit max-w-full">
+              <PillTabGroup
+                items={[{ id: 'buy', label: '买草' }, { id: 'grow', label: '自种' }, { id: 'mix', label: '混合' }]}
+                value={grassMode} onChange={id => setGrassMode(id as 'buy' | 'grow' | 'mix')}
+                accent="leaf" size="sm" />
             </div>
-            {/* 当前口径（混合模式在这行多一个比例滑杆） */}
-            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-mono text-[var(--ink-mute)]">
-              <span>{grassLabel}</span>
-              {grassMode === 'mix' && (
-                <span className="flex items-center gap-2 flex-1 min-w-[200px]">
-                  <span className="whitespace-nowrap">自种 {growShare}%</span>
-                  <input type="range" min={0} max={100} step={5} value={growShare}
-                    onChange={e => setGrowShare(Number(e.target.value))}
-                    className="flex-1 min-w-[80px] accent-[var(--leaf-deep)]" />
-                  <span className="whitespace-nowrap">买 {fmt(GRASS_SHOP_PRICE * (1 - growShare / 100), 1)} 券 / 种 {fmt(GRASS_COIN_PER_UNIT * growShare / 100, 2)} 金币</span>
-                </span>
-              )}
+            {/* 当前口径 + 单价压成一行小字，省掉原来右侧单独一列 */}
+            <div className="mt-1 text-[9px] font-mono leading-[1.35] text-[var(--ink-mute)]">
+              <span className="text-[var(--ink-soft)] font-bold">{grassLabel}</span>
+              <span className="mx-1 opacity-50">·</span>
+              <span className="whitespace-nowrap"><Leaf size={8} strokeWidth={2.5} className="inline -mt-px text-[var(--leaf-deep)]" /> 店买 {GRASS_SHOP_PRICE} 券/份</span>
+              <span className="mx-1 opacity-50">·</span>
+              <span className="whitespace-nowrap">自种 {GRASS_COIN_PER_UNIT} 金币/份</span>
             </div>
+            {grassMode === 'mix' && (
+              <div className="mt-1 flex items-center gap-1.5 text-[10px] font-mono text-[var(--ink-mute)]">
+                <span className="whitespace-nowrap">自种 {growShare}%</span>
+                <input type="range" min={0} max={100} step={5} value={growShare}
+                  onChange={e => setGrowShare(Number(e.target.value))}
+                  className="flex-1 min-w-[60px] accent-[var(--leaf-deep)]" />
+              </div>
+            )}
           </div>
         </div>
 
@@ -504,8 +508,8 @@ export default function RanchCalcTab() {
           {facilityTiles.map(t => {
             const next = t.rows.find(r => r.level === t.level + 1);
             const gated = next ? (next.reqLevel !== null && next.reqLevel > lv) : false;
-            const hint = t.count === 0
-              ? '主城 Lv2 起才有棚位'
+            const hint = t.seats === 0
+              ? '点 + 加座数才有收益'
               : t.level >= t.max
                 ? `已达上限 · 牧场 Lv${lv}`
                 : !next
@@ -514,58 +518,50 @@ export default function RanchCalcTab() {
                     ? `需牧场 Lv${next.reqLevel}`
                     : `升 Lv${next.level} ${fmt(next.cost.count)}券`;
             return (
-              <div key={t.key} className="rounded-xl p-2 sm:p-3.5 flex flex-col"
+              <div key={t.key} className="rounded-xl p-2 flex flex-col"
                 style={{ background: `var(--${t.color}-bg)`, border: `1.5px solid var(--${t.color})` }}>
                 <div className="flex items-center justify-between gap-1">
                   <div className="flex items-center gap-1 min-w-0">
-                    <span className="text-[13px] sm:text-base leading-none">{t.emoji}</span>
-                    <span className="text-[11px] sm:text-xs font-bold text-[var(--ink)] truncate">{t.name}</span>
+                    <span className="text-[13px] leading-none">{t.emoji}</span>
+                    <span className="text-[11px] font-bold text-[var(--ink)] truncate">{t.name}</span>
                   </div>
                   <span className="chip flex-shrink-0 !text-[9px] !px-1.5 !py-0"
                     style={{ background: 'rgba(255,255,255,.7)', color: 'var(--ink)' }}>Lv{t.level}</span>
                 </div>
-                <div className="font-mono tnum text-lg sm:text-2xl font-bold text-[var(--ink)] leading-none mt-1.5">
+                <div className="font-mono tnum text-lg font-bold text-[var(--ink)] leading-none mt-1.5">
                   {t.key === 'grass' ? fmt(t.node.capacity || 0) : (t.node.capacity ?? t.count)}
-                  <span className="text-[9px] sm:text-[10px] font-bold text-[var(--ink-soft)] ml-1">{t.key === 'grass' ? '份仓量' : '栏/座'}</span>
+                  <span className="text-[9px] font-bold text-[var(--ink-soft)] ml-1">{t.key === 'grass' ? '份仓量' : '栏/座'}</span>
                 </div>
-                <div className="text-[9px] sm:text-[10px] text-[var(--ink-soft)] mt-1 leading-tight truncate">{t.note}</div>
-                <div className="text-[9px] sm:text-[10px] text-[var(--leaf-deep)] font-bold mt-0.5 leading-tight truncate">{t.bonusText}</div>
+                {/* 窝/棚：座数直接内联在卡里；牧草机只有一行说明 */}
+                {t.seats !== undefined && t.setSeats ? (
+                  <div className="flex items-center gap-1 mt-1">
+                    <SeatBtn label="−" onClick={() => t.setSeats!(Math.max(t.seatMin!, t.seats! - 1))} disabled={t.seats <= t.seatMin!} />
+                    <span className="font-mono text-[11px] font-bold text-[var(--ink)] tabular-nums">{t.seats} 座</span>
+                    <SeatBtn label="+" onClick={() => t.setSeats!(Math.min(t.seatMax!, t.seats! + 1))} disabled={t.seats >= t.seatMax!} />
+                    <span className="text-[9px] text-[var(--ink-soft)] truncate ml-0.5">
+                      × {t.node.capacity} = <b className="text-[var(--ink)]">{fmt(t.seats * (t.node.capacity || 0))}</b> 栏
+                    </span>
+                  </div>
+                ) : (
+                  <div className="text-[9px] text-[var(--ink-soft)] mt-1 leading-tight truncate">{t.note}</div>
+                )}
+                <div className="text-[9px] text-[var(--leaf-deep)] font-bold mt-0.5 leading-tight truncate">{t.bonusText}</div>
                 <div className="flex items-center gap-1 mt-1.5">
                   <button className="btn btn-sm btn-ghost flex-1 !py-0.5 !text-[10px] !min-h-0"
                     onClick={() => t.set(Math.max(1, t.level - 1))} disabled={t.level <= 1}>降</button>
                   <button className="btn btn-sm btn-ghost flex-1 !py-0.5 !text-[10px] !min-h-0"
                     onClick={() => t.set(Math.min(t.max, t.level + 1))} disabled={t.level >= t.max}>升</button>
                 </div>
-                <div className="text-[8.5px] sm:text-[9px] text-[var(--ink-mute)] mt-1 leading-tight truncate">{hint}</div>
+                <div className="text-[8.5px] text-[var(--ink-mute)] mt-1 leading-tight truncate">{hint}</div>
               </div>
             );
           })}
-          <div className="rounded-xl p-2 sm:p-3.5 flex flex-col" style={{ background: 'var(--bg-2)', border: '1.5px solid var(--line)' }}>
-            <div className="flex items-center justify-between gap-1">
-              <div className="flex items-center gap-1 min-w-0">
-                <FlaskConical size={13} strokeWidth={2.5} className="text-[var(--plum-deep)] flex-shrink-0" />
-                <span className="text-[11px] sm:text-xs font-bold text-[var(--ink)] truncate">实验室</span>
-              </div>
-              <span className="chip flex-shrink-0 !text-[9px] !px-1.5 !py-0"
-                style={{ background: 'var(--plum-bg)', color: 'var(--plum-deep)' }}>1 座</span>
-            </div>
-            <div className="font-mono tnum text-lg sm:text-2xl font-bold text-[var(--ink)] leading-none mt-1.5">
-              {labNode.slots}
-              <span className="text-[9px] sm:text-[10px] font-bold text-[var(--ink-soft)] ml-1">研究位</span>
-            </div>
-            <div className="text-[9px] sm:text-[10px] text-[var(--ink-soft)] mt-1 leading-tight truncate">
-              研究缩短 {labNode.reduceBp / 100}%（满级 20%）
-            </div>
-            <div className="text-[9px] sm:text-[10px] text-[var(--plum-deep)] font-bold mt-0.5 leading-tight truncate">
-              只影响研究，不影响动物产出
-            </div>
-            <div className="text-[8.5px] sm:text-[9px] text-[var(--ink-mute)] mt-1 leading-tight truncate">
-              恒有 1 座 · 不计入收益
-            </div>
+          {/* 第 4 格：口径小字，顶掉原来单独一行说明 */}
+          <div className="flex flex-col justify-center gap-0.5 px-0.5 py-1 text-[8.5px] leading-[1.5] text-[var(--ink-mute)]">
+            <div>栏位 = 座数 × 单座容量</div>
+            <div>升级门槛只看牧场等级</div>
+            <div className="text-[var(--leaf-deep)] font-bold">{bonusCap}</div>
           </div>
-        </div>
-        <div className="mt-2 px-1 text-[10px] text-[var(--ink-mute)] font-mono">
-          配额：窝 {coopCount} · 棚 {shedCount} · 草机 {quota.grass || 0} · 实验室 {quota.lab || 0}（主城 Lv{cityLv}）· {bonusCap}
         </div>
       </motion.section>
 
@@ -805,7 +801,7 @@ export default function RanchCalcTab() {
             <p><b>经验</b> = 轮数 × 产出经验 + 收获经验（同一个建筑加成），所以「经验王」多半出在棚。</p>
             <p><b>牧草</b>：饲料店 {GRASS_SHOP_PRICE} 金券/份；自种一包 {GRASS_SEED_PRICE} 金币（{fmtSec(DATA.grass.crop.growSec)} 收 {GRASS_PER_PACK} 份），折 {GRASS_COIN_PER_UNIT} 金币/份，金券口径记 0。混合模式按自种比例拆两本账。每只动物每小时吃 3600 ÷（每份可喂秒数）份草。</p>
             <p><b>罐头</b>：普通罐头每只每轮 1 个，直接削掉最长阶段对应小时数；有机罐头按「每轮用量」逐个削最长阶段（单阶段保底 30 秒操作时间，整轮周期最多压到原始的一半，避免出现「罐头无限刷」的失真值）。两者都会缩短周期、减少牧草消耗，从而抬高每小时收益；单价填 0 表示按免费/库存充足算，显示的是理论上限。</p>
-            <p><b>建筑</b>：主城等级决定窝/棚/草机的配额，窝/棚等级决定单座容量与加成；升级门槛是牧场等级（RANCH_LEVEL）。改上面的牧场等级，经验王/金券王与排行榜会即时按该级重算。</p>
+            <p><b>建筑</b>：牧场地图上只有窝 / 棚 / 牧草机三种建筑，座数直接在卡片里用 −/+ 调（窝 1–3 座、棚 0–3 座），栏位 = 座数 × 单座容量。窝/棚等级决定单座容量与加成，<b>升级门槛只看牧场等级（RANCH_LEVEL），与主城等级无关</b>（主城在游戏里不是地图建筑，也不参与本页计算）。改上面的牧场等级，经验王/金券王与排行榜会即时按该级重算。</p>
             <p><b>未纳入</b>：巨大化动物（产物结算为松果，不是金券）、偷菜/放蚊子/帮忙清理的社交收益、牧场订单与图鉴收集奖励。</p>
             <p className="text-[10px] text-[var(--ink-mute)]">
               数据快照：{new Date((rawCalc as any).generatedAt).toLocaleString('zh-CN')} · 动物 {DATA.animals.length} 种 · 牧场等级曲线 1–{DATA.levels.length}
