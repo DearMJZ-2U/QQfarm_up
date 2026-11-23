@@ -6,7 +6,7 @@ import ranchSheets from '../data/ranch_sheets.json';
 import { RemoteImage, EmptyState, PillTabGroup, Portal, StatTile, publicUrl } from './shared';
 
 // 牧场图鉴 —— 56 只牧场动物（ItemInfo type=105，官方 Illustrated「牧场图鉴」排序）
-// 2026-11-16（v81）：24 只基础动物 + 4 只新增小型（豪猪/龙猫/孔雀/貂）+ 28 只「巨大化幼崽」（65001-65016 窝 / 75001-75012 棚）
+// 2026-11-16：24 只基础动物 + 4 只新增小型（豪猪/龙猫/孔雀/貂）+ 28 只「巨大化幼崽」（65001-65016 窝 / 75001-75012 棚）
 // 数据来自 ranch_atlas.json（随数据快照生成）
 // 图片来自 animal bundle 的 texture/<动物id>_<1..4>（幼崽 → 成熟 4 个阶段）
 
@@ -39,7 +39,7 @@ const sheetOf = (id: number) => SHEETS[String(id)];
 // 顶部大字展示的三项（有就展示，没有就退回原面板）
 const HEADLINE_KEYS = ['每小时收益', '一轮收益', '回本时间'];
 
-// 巨大化幼崽（65001-65016 窝 / 75001-75012 棚）是 v81 新增的道具条目：
+// 巨大化幼崽（65001-65016 窝 / 75001-75012 棚）是新增的道具条目：
 // 官方 sort 缺省为 0，直接按 JSON 顺序会把 28 只巨大化幼崽顶在首位。
 // 展示时把「可养动物」放前面、巨大化幼崽归到最后一组，数据文件本身不改。
 const isGiant = (a: Animal) => (a.id >= 65000 && a.id < 66000) || (a.id >= 75000 && a.id < 76000);
