@@ -1,0 +1,985 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+/* ──────────────────────────────────────────────────────────────
+   字体加载：
+   - Bricolage Grotesque (Latin display + body, 有性格的几何无衬线)
+   - Smiley Sans 得意黑 (中文大标题，圆胖友好)
+   - Noto Sans SC (中文正文)
+   - JetBrains Mono (数字、表格)
+   ────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Smiley Sans';
+  src: url('https://cdn.jsdelivr.net/gh/atelier-anchor/smiley-sans@2.0.1/dist/SmileySans-Oblique.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 400 700;
+  font-style: normal;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   设计令牌 — 丰收节庆色板
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* 主背景：暖奶油纸 */
+  --bg: #FFF7E8;
+  --bg-2: #FFEFCC;
+  --bg-paper: #FFFBF0;
+
+  /* 表面层 */
+  --surface: #FFFFFF;
+  --surface-soft: #FBF3DC;
+  --surface-raised: #FFFFFF;
+
+  /* 文字 */
+  --ink: #1C2A1F;
+  --ink-soft: #4A5E4D;
+  --ink-mute: #87968A;
+
+  /* 描边 */
+  --line: rgba(28, 42, 31, 0.08);
+  --line-strong: rgba(28, 42, 31, 0.16);
+
+  /* 主色：叶绿 */
+  --leaf: #2D9D3D;
+  --leaf-deep: #1F7A2D;
+  --leaf-soft: #C8E6B5;
+  --leaf-bg: #E4F5D7;
+
+  /* 丰收橙 */
+  --orange: #FF8A3D;
+  --orange-deep: #E66D1F;
+  --orange-soft: #FFD9B8;
+  --orange-bg: #FFEBD5;
+
+  /* 太阳金 */
+  --sun: #FFCB45;
+  --sun-deep: #E5AE15;
+  --sun-soft: #FFE89A;
+  --sun-bg: #FFF5C7;
+
+  /* 浆果粉红 */
+  --berry: #E94B6A;
+  --berry-deep: #C92E4D;
+  --berry-soft: #FFC6CF;
+  --berry-bg: #FFE2E6;
+
+  /* 天空蓝 */
+  --sky: #4FB8E5;
+  --sky-deep: #2F94C2;
+  --sky-soft: #BFE5F5;
+  --sky-bg: #DBF1FA;
+
+  /* 紫晶 */
+  --plum: #8A4FFF;
+  --plum-deep: #6B2EE0;
+  --plum-soft: #D9C6FF;
+  --plum-bg: #EEE3FF;
+
+  /* 大地棕 */
+  --earth: #8B6E4F;
+  --earth-deep: #6B5236;
+  --earth-soft: #E6D5C0;
+  --earth-bg: #F5EBDA;
+
+  /* 黑土（黑土地专用：明显更深，与普通地拉开区分） */
+  --soil: #2E2620;
+  --soil-deep: #171310;
+  --soil-soft: #8C7F70;
+  --soil-bg: #D6C7B4;
+
+  /* sticker 阴影系统 */
+  --shadow-sticker: 0 2px 0 rgba(28, 42, 31, 0.10), 0 6px 16px -4px rgba(28, 42, 31, 0.14);
+  --shadow-sticker-lg: 0 4px 0 rgba(28, 42, 31, 0.10), 0 10px 24px -6px rgba(28, 42, 31, 0.18);
+  --shadow-pop: 0 1px 0 rgba(28, 42, 31, 0.12), 0 4px 12px -2px rgba(28, 42, 31, 0.10);
+  --shadow-glow-leaf: 0 0 0 4px rgba(45, 157, 61, 0.15), 0 4px 16px rgba(45, 157, 61, 0.30);
+  --shadow-glow-orange: 0 0 0 4px rgba(255, 138, 61, 0.15), 0 4px 16px rgba(255, 138, 61, 0.30);
+
+  /* 圆角 */
+  --r-sm: 10px;
+  --r: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* 字体栈 */
+  --font-display: 'Smiley Sans', 'Bricolage Grotesque', 'Noto Sans SC', system-ui, sans-serif;
+  --font-display-en: 'Bricolage Grotesque', 'Smiley Sans', 'Noto Sans SC', system-ui, sans-serif;
+  --font-body: 'Bricolage Grotesque', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Bricolage Grotesque', ui-monospace, monospace;
+}
+
+.dark {
+  --bg: #0B1610;
+  --bg-2: #131E16;
+  --bg-paper: #0F1A13;
+
+  --surface: #182520;
+  --surface-soft: #1F2D26;
+  --surface-raised: #243329;
+
+  --ink: #ECF4E2;
+  --ink-soft: #B4C2A8;
+  --ink-mute: #76876E;
+
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.14);
+
+  --leaf: #4DD66A;
+  --leaf-deep: #6FE988;
+  --leaf-soft: #2B5230;
+  --leaf-bg: #1A2C1F;
+
+  --orange: #FFA060;
+  --orange-deep: #FFB47D;
+  --orange-soft: #5C3A1F;
+  --orange-bg: #2A1F12;
+
+  --sun: #FFD970;
+  --sun-deep: #FFE48A;
+  --sun-soft: #5C4A1F;
+  --sun-bg: #2A2412;
+
+  --berry: #FF6B83;
+  --berry-deep: #FF8AA0;
+  --berry-soft: #5C2A35;
+  --berry-bg: #2A161B;
+
+  --sky: #6DC4E9;
+  --sky-deep: #8DD3F0;
+  --sky-soft: #1F3D4D;
+  --sky-bg: #131F26;
+
+  --plum: #A87BFF;
+  --plum-deep: #BD9AFF;
+  --plum-soft: #3D2A5C;
+  --plum-bg: #1F162A;
+
+  --earth: #B89272;
+  --earth-deep: #D4AE8A;
+  --earth-soft: #3A2F22;
+  --earth-bg: #241D15;
+
+  /* 黑土（黑土地专用：暗色模式下比普通地更深、更冷，区分度明显） */
+  --soil: #A89B8A;
+  --soil-deep: #E8DCCC;
+  --soil-soft: #241F1A;
+  --soil-bg: #120F0B;
+
+  --shadow-sticker: 0 2px 0 rgba(0, 0, 0, 0.40), 0 6px 16px -4px rgba(0, 0, 0, 0.50);
+  --shadow-sticker-lg: 0 4px 0 rgba(0, 0, 0, 0.40), 0 10px 24px -6px rgba(0, 0, 0, 0.55);
+  --shadow-pop: 0 1px 0 rgba(0, 0, 0, 0.35), 0 4px 12px -2px rgba(0, 0, 0, 0.35);
+  --shadow-glow-leaf: 0 0 0 4px rgba(77, 214, 106, 0.18), 0 4px 16px rgba(77, 214, 106, 0.35);
+  --shadow-glow-orange: 0 0 0 4px rgba(255, 160, 96, 0.18), 0 4px 16px rgba(255, 160, 96, 0.35);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   基础
+   ────────────────────────────────────────────────────────────── */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-feature-settings: 'cv11', 'ss01', 'ss03', 'tnum';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* 全局背景：温暖的渐变 + 装饰元素 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 203, 69, 0.18) 0%, transparent 38%),
+    radial-gradient(circle at 88% 8%, rgba(255, 138, 61, 0.14) 0%, transparent 42%),
+    radial-gradient(circle at 82% 92%, rgba(45, 157, 61, 0.14) 0%, transparent 42%),
+    radial-gradient(circle at 12% 88%, rgba(233, 75, 106, 0.10) 0%, transparent 38%);
+}
+
+.dark body::before {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 203, 69, 0.06) 0%, transparent 38%),
+    radial-gradient(circle at 88% 8%, rgba(255, 138, 61, 0.06) 0%, transparent 42%),
+    radial-gradient(circle at 82% 92%, rgba(77, 214, 106, 0.08) 0%, transparent 42%),
+    radial-gradient(circle at 12% 88%, rgba(168, 123, 255, 0.06) 0%, transparent 38%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.dark body::after {
+  opacity: 0.35;
+  mix-blend-mode: screen;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--leaf);
+  color: white;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: var(--r-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+
+/* ──────────────────────────────────────────────────────────────
+   排版工具类
+   ────────────────────────────────────────────────────────────── */
+
+.font-display { font-family: var(--font-display); font-style: italic; }
+.font-display-en { font-family: var(--font-display-en); }
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); font-feature-settings: 'tnum'; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ──────────────────────────────────────────────────────────────
+   sticker 系统 — 核心视觉语言
+   ────────────────────────────────────────────────────────────── */
+
+.sticker {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sticker);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sticker-lg {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-sticker-lg);
+}
+
+.sticker-soft {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+
+.sticker-pop {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-pop);
+}
+
+.sticker-press {
+  cursor: pointer;
+}
+.sticker-press:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sticker-lg);
+}
+.sticker-press:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgba(28, 42, 31, 0.10);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   tile-grid — 首页图鉴 / 商店道具 / 工具的方块磁贴网格
+   - 按容器宽度自动铺 84px 起的方块：手机 4 列、平板 6 列、桌面更多列
+   - 用 auto-fill 让三个分区磁贴尺寸一致，不再出现「一行一张长条卡」
+   ────────────────────────────────────────────────────────────── */
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 0.5rem;
+}
+@media (min-width: 640px) {
+  .tile-grid { gap: 0.625rem; }
+}
+
+/* 强调色边框 */
+.sticker-leaf { border-color: var(--leaf); }
+.sticker-orange { border-color: var(--orange); }
+.sticker-sun { border-color: var(--sun-deep); }
+.sticker-berry { border-color: var(--berry); }
+.sticker-sky { border-color: var(--sky); }
+.sticker-plum { border-color: var(--plum); }
+
+/* ──────────────────────────────────────────────────────────────
+   按钮系统
+   ────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.75rem;
+  gap: 0.3rem;
+}
+
+.btn-icon {
+  padding: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--r-pill);
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--leaf);
+  color: white;
+  box-shadow: 0 2px 0 var(--leaf-deep), 0 4px 12px rgba(45, 157, 61, 0.30);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 3px 0 var(--leaf-deep), 0 8px 20px rgba(45, 157, 61, 0.35); }
+.btn-primary:active { transform: translateY(1px); box-shadow: 0 0 0 var(--leaf-deep); }
+
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: var(--shadow-pop);
+}
+.btn-ghost:hover { background: var(--bg-2); }
+
+.btn-leaf    { background: var(--leaf);    color: white; box-shadow: 0 2px 0 var(--leaf-deep),    0 4px 12px rgba(45, 157, 61, 0.30); }
+.btn-orange  { background: var(--orange);  color: white; box-shadow: 0 2px 0 var(--orange-deep),  0 4px 12px rgba(255, 138, 61, 0.30); }
+.btn-sun     { background: var(--sun-deep); color: white; box-shadow: 0 2px 0 #b8860b,            0 4px 12px rgba(255, 203, 69, 0.35); }
+.btn-berry   { background: var(--berry);   color: white; box-shadow: 0 2px 0 var(--berry-deep),   0 4px 12px rgba(233, 75, 106, 0.30); }
+.btn-sky     { background: var(--sky);     color: white; box-shadow: 0 2px 0 var(--sky-deep),     0 4px 12px rgba(79, 184, 229, 0.30); }
+.btn-plum    { background: var(--plum);    color: white; box-shadow: 0 2px 0 var(--plum-deep),    0 4px 12px rgba(138, 79, 255, 0.30); }
+
+.btn-leaf:hover,
+.btn-orange:hover,
+.btn-sun:hover,
+.btn-berry:hover,
+.btn-sky:hover,
+.btn-plum:hover { transform: translateY(-1px); }
+.btn-leaf:active,
+.btn-orange:active,
+.btn-sun:active,
+.btn-berry:active,
+.btn-sky:active,
+.btn-plum:active { transform: translateY(1px); box-shadow: 0 0 0 transparent; }
+
+/* ──────────────────────────────────────────────────────────────
+   输入框
+   ────────────────────────────────────────────────────────────── */
+
+.input-pop {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  padding: 0.7rem 0.9rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink);
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-shadow: inset 0 1px 0 rgba(28, 42, 31, 0.04);
+}
+.input-pop:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 4px var(--leaf-bg), inset 0 1px 0 rgba(28, 42, 31, 0.04);
+}
+.input-pop::placeholder { color: var(--ink-mute); font-weight: 500; }
+
+/* 带前置 / 后置图标的输入框。
+   必须写成「未分层」规则：本项目用的是 Tailwind v4，工具类都在 @layer utilities 里，
+   而未分层样式一律优先于任何 @layer —— 所以 `.input-pop` 的 padding 简写会盖掉组件上的
+   `pl-9` / `pr-9`，左侧放大镜就会压在文字上（道具搜索框曾因此看不清）。 */
+.input-pop.has-icon { padding-left: 2.4rem; }
+.input-pop.has-clear { padding-right: 2.4rem; }
+
+/* 行内紧凑数字输入（罐头时长 / 罐头成本这类「一行挤多个字段」的位置）。
+   .input-pop 默认 width:100% + 1.1rem 字号，单独用会把整行撑开，这里用双类名压回小尺寸。 */
+.input-pop.input-mini {
+  width: 3.4rem;
+  padding: 0.15rem 0.3rem;
+  font-size: 10px;
+  line-height: 1.5;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+.input-mini::-webkit-outer-spin-button,
+.input-mini::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+/* 浏览器原生 search 清除按钮画在右内边缘、会压住末尾文字，统一换成自绘按钮 */
+.input-pop::-webkit-search-cancel-button,
+.input-pop::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+
+.input-line {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+}
+.input-line::placeholder { color: var(--ink-mute); }
+
+/* ──────────────────────────────────────────────────────────────
+   chip / badge
+   ────────────────────────────────────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--r-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.chip-leaf { background: var(--leaf-bg); color: var(--leaf-deep); }
+.chip-orange { background: var(--orange-bg); color: var(--orange-deep); }
+.chip-sun { background: var(--sun-bg); color: var(--sun-deep); }
+.chip-berry { background: var(--berry-bg); color: var(--berry-deep); }
+.chip-sky { background: var(--sky-bg); color: var(--sky-deep); }
+.chip-plum { background: var(--plum-bg); color: var(--plum-deep); }
+.chip-ink { background: var(--bg-2); color: var(--ink); }
+
+.dark .chip-leaf { background: var(--leaf-bg); color: var(--leaf-deep); }
+.dark .chip-orange { background: var(--orange-bg); color: var(--orange-deep); }
+.dark .chip-sun { background: var(--sun-bg); color: var(--sun-deep); }
+.dark .chip-berry { background: var(--berry-bg); color: var(--berry-deep); }
+.dark .chip-sky { background: var(--sky-bg); color: var(--sky-deep); }
+.dark .chip-plum { background: var(--plum-bg); color: var(--plum-deep); }
+
+/* ──────────────────────────────────────────────────────────────
+   pill-tab — 统一的 tab / 过滤器 pill 组
+   - 全部为 rounded-full（与全 app 一致）
+   - 单色调 (--accent)，active 状态用 --accent + --accent-deep shadow
+   ────────────────────────────────────────────────────────────── */
+
+.pill-tab-group {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  background: var(--bg-2);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pill-tab-group::-webkit-scrollbar { display: none; }
+
+.pill-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1.5px solid transparent;
+  user-select: none;
+}
+
+.pill-tab:hover:not(.pill-tab-active) {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.pill-tab-active {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: var(--shadow-pop);
+}
+
+/* pill-tab with an accent color (used in page-level tab toggle) */
+.pill-tab-accent.pill-tab-active {
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 2px 0 var(--accent-deep, var(--leaf-deep));
+  background: var(--accent, var(--leaf));
+}
+
+/* ──────────────────────────────────────────────────────────────
+   row-card — 统一的行卡片
+   - 默认不可点击
+   - row-card-press 加 hover lift 表明可点击
+   ────────────────────────────────────────────────────────────── */
+
+.row-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  text-align: left;
+  width: 100%;
+  color: var(--ink);
+  font-family: inherit;
+  cursor: default;
+}
+
+.row-card-press {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.row-card-press:hover {
+  background: var(--bg-2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-pop);
+}
+.row-card-press:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   stat-tile — 统一的小统计卡
+   - 取代 4 种 "rounded-2xl p-3 + bg + border" 的散乱实现
+   - stat-tile-{color} 5 种语义色
+   ────────────────────────────────────────────────────────────── */
+
+.stat-tile {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.stat-tile-leaf    { background: var(--leaf-bg);    border-color: var(--leaf);    }
+.stat-tile-orange  { background: var(--orange-bg);  border-color: var(--orange);  }
+.stat-tile-sun     { background: var(--sun-bg);     border-color: var(--sun-deep);}
+.stat-tile-berry   { background: var(--berry-bg);   border-color: var(--berry);   }
+.stat-tile-sky     { background: var(--sky-bg);     border-color: var(--sky);     }
+.stat-tile-plum    { background: var(--plum-bg);    border-color: var(--plum);    }
+.stat-tile-ink     { background: var(--bg-2);       border-color: var(--line-strong); }
+
+.stat-tile-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-family: var(--font-body);
+}
+
+.stat-tile-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.stat-tile-hint {
+  font-size: 0.7rem;
+  color: var(--ink-mute);
+  font-weight: 700;
+}
+
+.stat-tile-muted {
+  opacity: 0.45;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   empty-state — 统一的空状态
+   - 居中 + emoji + 主文本 + 副文本
+   ────────────────────────────────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  gap: 0.5rem;
+  color: var(--ink-mute);
+}
+
+.empty-state-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  opacity: 0.6;
+  margin-bottom: 0.25rem;
+}
+
+.empty-state-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.empty-state-hint {
+  font-size: 0.75rem;
+  color: var(--ink-mute);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   data-table — 统一的"假表"(div-grid)样式
+   - 真实 <table> 仍可用 .table-clean
+   - 优势：响应式断点更灵活
+   ────────────────────────────────────────────────────────────── */
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-body);
+}
+
+.data-table-header {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-2);
+  border-bottom: 1.5px solid var(--line);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-family: var(--font-body);
+}
+
+.data-table-row {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  transition: background 0.15s ease;
+}
+
+.data-table-row:last-child { border-bottom: none; }
+.data-table-row:hover { background: var(--surface-soft); }
+
+/* ──────────────────────────────────────────────────────────────
+   page-header — 统一的页面 Hero
+   - chip + h1 + subtitle
+   - 所有 6 个 tab 的 hero 统一用这个
+   ────────────────────────────────────────────────────────────── */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.page-header-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: var(--leaf-bg);
+  color: var(--leaf-deep);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.page-header-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.page-header-subtitle {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 36rem;
+}
+
+@media (min-width: 640px) {
+  .page-header { padding: 0.5rem 0; }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   layout tokens — 高度变量
+   - 让 sticky 元素不再 hardcode top-32 / bottom-24
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  --header-h: 64px;
+  --bottom-nav-h: 72px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --header-h: 56px;
+    --bottom-nav-h: 64px;
+  }
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 1.2rem;
+  height: 2px;
+  background: var(--leaf);
+  border-radius: 2px;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   动画
+   ────────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes shine {
+  0% { background-position: 0% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.fade-in { animation: fadeIn 0.35s ease both; }
+.scale-in { animation: scaleIn 0.25s ease both; }
+.slide-up { animation: slideUp 0.4s ease both; }
+
+.hover-wiggle:hover { animation: wiggle 0.4s ease; }
+.float-anim { animation: float 3s ease-in-out infinite; }
+
+/* 顶栏「请作者喝咖啡」：每 3.2s 一个「叮」——橙色光晕扩散 + 杯子晃两下，提示这里能点。
+   两段动画同周期，光晕先闪、杯子随后晃，中间留白，不至于一直在动。 */
+@keyframes donatePing {
+  0% { transform: scale(0.6); opacity: 0.5; }
+  30%, 100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes donateBrew {
+  0%, 8%, 41%, 100% { transform: rotate(0deg) scale(1); }
+  13% { transform: rotate(-14deg) scale(1.18); }
+  19% { transform: rotate(12deg) scale(1.15); }
+  26% { transform: rotate(-9deg) scale(1.09); }
+  33% { transform: rotate(5deg) scale(1.04); }
+}
+.donate-ping {
+  animation: donatePing 3.2s ease-out infinite;
+  background: var(--orange);
+}
+.donate-bob {
+  animation: donateBrew 3.2s ease-in-out infinite;
+  transform-origin: 50% 70%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .donate-bob { animation: none; }
+  .donate-ping { animation: none; opacity: 0; }
+}
+
+/* 闪光描边 */
+.shine-text {
+  background: linear-gradient(90deg, var(--orange-deep) 0%, var(--sun) 30%, var(--leaf) 50%, var(--sun) 70%, var(--orange-deep) 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 4s linear infinite;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   实用工具
+   ────────────────────────────────────────────────────────────── */
+
+.safe-area-pb { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* 小尺寸游戏图标的近邻像素渲染（防止放大后模糊/锯齿） */
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 桌面 ≥640 限制最大宽 */
+.container-app {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   sticker color tile（土地/分类等用）
+   ────────────────────────────────────────────────────────────── */
+
+.tile-leaf { background: linear-gradient(135deg, var(--leaf-bg) 0%, color-mix(in srgb, var(--leaf-bg) 70%, white) 100%); }
+.tile-orange { background: linear-gradient(135deg, var(--orange-bg) 0%, color-mix(in srgb, var(--orange-bg) 70%, white) 100%); }
+.tile-sun { background: linear-gradient(135deg, var(--sun-bg) 0%, color-mix(in srgb, var(--sun-bg) 70%, white) 100%); }
+.tile-berry { background: linear-gradient(135deg, var(--berry-bg) 0%, color-mix(in srgb, var(--berry-bg) 70%, white) 100%); }
+.tile-sky { background: linear-gradient(135deg, var(--sky-bg) 0%, color-mix(in srgb, var(--sky-bg) 70%, white) 100%); }
+.tile-plum { background: linear-gradient(135deg, var(--plum-bg) 0%, color-mix(in srgb, var(--plum-bg) 70%, white) 100%); }
+
+.dark .tile-leaf { background: linear-gradient(135deg, var(--leaf-bg) 0%, color-mix(in srgb, var(--leaf-bg) 60%, black) 100%); }
+.dark .tile-orange { background: linear-gradient(135deg, var(--orange-bg) 0%, color-mix(in srgb, var(--orange-bg) 60%, black) 100%); }
+.dark .tile-sun { background: linear-gradient(135deg, var(--sun-bg) 0%, color-mix(in srgb, var(--sun-bg) 60%, black) 100%); }
+.dark .tile-berry { background: linear-gradient(135deg, var(--berry-bg) 0%, color-mix(in srgb, var(--berry-bg) 60%, black) 100%); }
+.dark .tile-sky { background: linear-gradient(135deg, var(--sky-bg) 0%, color-mix(in srgb, var(--sky-bg) 60%, black) 100%); }
+.dark .tile-plum { background: linear-gradient(135deg, var(--plum-bg) 0%, color-mix(in srgb, var(--plum-bg) 60%, black) 100%); }
+
+/* ──────────────────────────────────────────────────────────────
+   表格
+   ────────────────────────────────────────────────────────────── */
+
+.table-clean {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-clean thead th {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1.5px solid var(--line);
+  background: var(--bg-2);
+}
+.table-clean tbody td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.table-clean tbody tr:hover td { background: var(--surface-soft); }
+
+/* 自定义复选框（农场风） */
+.farm-check {
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+.farm-check:checked {
+  background: var(--leaf);
+  border-color: var(--leaf-deep);
+}
+.farm-check:checked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.farm-check:disabled { opacity: 0.4; cursor: not-allowed; }

@@ -1,0 +1,794 @@
+import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ShoppingBag, X, Search, ZoomIn } from 'lucide-react';
+import itemsData from '../data/items.json';
+import releaseBatches from '../data/release_batches.json';
+import { CropImage, RemoteImage, itemImageUrls, atlasSeedImageUrl, goldSeedIds, Portal, RowCard, EmptyState, GrowthPhases, CategoryNav, getGrade, StatTile, parseGrowPhasesStr } from './shared';
+import type { CategoryNavItem } from './shared';
+
+const categories = itemsData.categories;
+
+// ── 作物类道具（种子 / 超变果实）排序规则 —— 与作物图鉴一致，勿改顺序 ──
+//   1 最新发布 → 2 天工(4) → 3 珍品(3) → 4 稀有(2) → 5 普通(1)
+//   种子取 latest.seedIds，超变果实取 latest.goldFruitIds；
+//   每次游戏更新后跑 scripts/patch_release_batches.mjs 即可自动置顶，无需改前端。
+const BATCH: any = ((releaseBatches as any).batches || [])
+  .find((b: any) => b.date === (releaseBatches as any).latest) || {};
+const LATEST_SEED_IDS: Set<number> = new Set((BATCH.seedIds || []).map(Number));
+const LATEST_GOLD_IDS: Set<number> = new Set((BATCH.goldFruitIds || []).map(Number));
+const CROP_GROUPS = ['最新发布', '天工', '珍品', '稀有', '普通'];
+function cropGroupOf(it: any, isGolden: boolean): number {
+  const ids = isGolden ? LATEST_GOLD_IDS : LATEST_SEED_IDS;
+  if (ids.has(Number(it.id))) return 0;
+  return 5 - (Number(it.rarity) || 1); // 4→1, 3→2, 2→3, 1→4
+}
+
+const catAccent: Record<string, 'leaf' | 'orange' | 'sun' | 'berry' | 'sky' | 'plum' | 'ink'> = {
+  '05': 'leaf',
+  '17': 'sun',
+  '02': 'orange',
+  '04': 'sky',
+  '07': 'leaf',
+  '10': 'plum',
+  '08': 'orange',
+  '09': 'berry',
+  '19': 'berry',
+  '32': 'sky',
+  '33': 'sun',
+  '01': 'ink',
+  '03': 'plum',
+  '15': 'plum',
+};
+
+interface GoldDetail {
+  name: string;
+  desc: string;
+  iconFile: string;
+  localFile?: string;
+  rarity?: number;
+  rarityColor?: string;
+  /** 以下来自 Plant 表（提取脚本写入 items.json），详情页据此渲染数据面板与阶段条。
+   *  ⚠️ openGold() 必须把这些字段一并传入 —— 曾漏传导致详情页数据/阶段条全部缺失 */
+  cropNumber?: number;
+  hasPhaseImages?: boolean;
+  exp?: number;
+  fruitCount?: number;
+  growTimeSec?: number;
+  growTimeStr?: string;
+  growPhases?: string;
+  seasons?: number;
+}
+
+// 占位/无意义条目过滤（id 列表）
+const HIDDEN_ITEM_IDS = new Set([2101, 2102, 2103]);
+
+// ── 奶茶店装修（cat 33）───────────────────────────────────────────
+// 36 件部件 = 5 套主题 × 7 个槽位（屋顶/门/窗/墙面/地板/桌椅/装饰）+ 人气装饰。
+// 槽位名与主题序号来自提取脚本写入的 item.decoration 字段（SkinPartCfg / SkinSlotTypeCfg）。
+const DECOR_SET_META = [
+  { name: '基础', emoji: '🏠' },
+  { name: '椰风', emoji: '🌴' },
+  { name: '森野', emoji: '🌿' },
+  { name: '可可', emoji: '🍫' },
+  { name: '蜜熊', emoji: '🧸' },
+];
+
+// 大图预览：装修部件原图是 500×500，卡片上只有 ~120px，看不清细节，点开看大图。
+// 支持 ←/→ 在全部部件间翻页、ESC / 点背景关闭。
+function DecorZoom({ items, index, onClose, onIndex }: {
+  items: any[]; index: number; onClose: () => void; onIndex: (i: number) => void;
+}) {
+  const item = items[index];
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') onIndex((index - 1 + items.length) % items.length);
+      if (e.key === 'ArrowRight') onIndex((index + 1) % items.length);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [index, items.length, onClose, onIndex]);
+  if (!item) return null;
+  return (
+    <Portal>
+      <motion.div
+        key="decor-zoom"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+        onClick={onClose}>
+        <div className="absolute inset-0 bg-[var(--ink)]/45 backdrop-blur-sm" />
+        <motion.div
+          key="decor-zoom-panel"
+          initial={{ scale: 0.92, y: 14 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.96, opacity: 0 }}
+          transition={{ type: 'spring', damping: 26, stiffness: 300 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-[640px] rounded-3xl p-4 sm:p-6 flex flex-col items-center gap-3"
+          style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+          <button onClick={onClose}
+            className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center z-10"
+            style={{ background: 'var(--bg-2)' }} aria-label="关闭">
+            <X size={18} className="text-[var(--ink-soft)]" />
+          </button>
+          <div className="w-full flex items-center justify-center rounded-2xl py-2"
+            style={{ background: 'var(--surface)' }}>
+            <RemoteImage urls={itemImageUrls(item.iconFile, item.localFile)} name={item.name}
+              className="w-[64vw] h-[64vw] max-w-[520px] max-h-[520px]" rounded />
+          </div>
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            <span className="font-display italic text-lg sm:text-xl font-bold text-[var(--ink)]">{item.name}</span>
+            {item.decoration?.setName && <span className="chip chip-sun">{item.decoration.setName}套</span>}
+            {item.decoration?.slotName && <span className="chip chip-ink">{item.decoration.slotName}</span>}
+          </div>
+          {items.length > 1 && (
+            <div className="flex items-center gap-3">
+              <button type="button" onClick={() => onIndex((index - 1 + items.length) % items.length)}
+                className="w-9 h-9 rounded-full flex items-center justify-center"
+                style={{ background: 'var(--bg-2)' }} aria-label="上一个">‹</button>
+              <span className="text-[11px] font-mono text-[var(--ink-mute)] tnum">{index + 1} / {items.length}</span>
+              <button type="button" onClick={() => onIndex((index + 1) % items.length)}
+                className="w-9 h-9 rounded-full flex items-center justify-center"
+                style={{ background: 'var(--bg-2)' }} aria-label="下一个">›</button>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </Portal>
+  );
+}
+
+function DecorView({ items }: { items: any[] }) {
+  const [zoomIndex, setZoomIndex] = React.useState(-1);
+  const ordered = React.useMemo(() => {
+    const groups = new Map<number, any[]>();
+    for (const it of items) {
+      const si = it.decoration?.setIndex ?? -1;
+      if (!groups.has(si)) groups.set(si, []);
+      groups.get(si)!.push(it);
+    }
+    return [...groups.keys()].sort((a, b) => a - b).map((si) => ({
+      si,
+      meta: DECOR_SET_META[si] || { name: '其它', emoji: '🎨' },
+      list: [...(groups.get(si) || [])].sort(
+        (a, b) => (a.decoration?.sortOrder || 0) - (b.decoration?.sortOrder || 0) || (a.id || 0) - (b.id || 0),
+      ),
+    }));
+  }, [items]);
+  // 全部部件按展示顺序拍平，供大图 ←/→ 跨套装翻页
+  const flat = React.useMemo(() => ordered.flatMap((g) => g.list), [ordered]);
+
+  return (
+    <>
+      <div className="p-3 sm:p-4 space-y-5">
+        {ordered.map(({ si, meta, list }) => (
+          <div key={si} className="space-y-2">
+            <div className="flex items-center gap-2 px-1">
+              <span className="text-base">{meta.emoji}</span>
+              <span className="font-bold text-sm text-[var(--ink)]">{meta.name}套</span>
+              <span className="chip chip-ink" style={{ fontSize: '0.65rem' }}>{list.length} 件</span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+              {list.map((it) => {
+                const canZoom = !!(it.localFile && it.iconFile);
+                return (
+                  <button
+                    key={it.id}
+                    type="button"
+                    onClick={() => canZoom && setZoomIndex(flat.indexOf(it))}
+                    className={`sticker p-2 flex flex-col gap-1.5 text-left group ${canZoom ? 'sticker-press cursor-zoom-in' : 'cursor-default'}`}>
+                    <div className="w-full aspect-square rounded-xl flex items-center justify-center overflow-hidden relative"
+                      style={{ background: 'var(--surface-soft)' }}>
+                      {canZoom
+                        ? <RemoteImage urls={itemImageUrls(it.iconFile, it.localFile)} name={it.name} className="w-[88%] h-[88%]" rounded />
+                        : <span className="text-[var(--ink-mute)] text-xs font-bold">空</span>}
+                      {canZoom && (
+                        <span className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ background: 'rgba(255,255,255,0.94)', boxShadow: '0 1px 4px rgba(0,0,0,.14)' }}>
+                          <ZoomIn size={13} className="text-[var(--ink-soft)]" />
+                        </span>
+                      )}
+                    </div>
+                    <div className="px-0.5">
+                      <div className="text-[11px] font-bold text-[var(--ink)] truncate" title={it.name}>{it.name}</div>
+                      {it.decoration?.slotName && (
+                        <div className="text-[9px] text-[var(--ink-mute)]">{it.decoration.slotName}</div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {zoomIndex >= 0 && zoomIndex < flat.length && (
+          <DecorZoom items={flat} index={zoomIndex} onClose={() => setZoomIndex(-1)} onIndex={setZoomIndex} />
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function categoryCount(c: any): number {
+  return (c.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id)).length;
+}
+
+export default function ItemsTab({ initialCategoryId }: { initialCategoryId?: string } = {}) {
+  const [catId, setCatId] = React.useState(initialCategoryId || '05');
+  const [goldDetail, setGoldDetail] = React.useState<GoldDetail | null>(null);
+  const [query, setQuery] = React.useState('');
+  // 活动玩法(32) 多级导航：玩法 → 子分类 → 内容
+  const [playMode, setPlayMode] = React.useState<'wish' | 'treasure'>('wish');
+  const [wishDirId, setWishDirId] = React.useState(1);
+  const [charmTypeId, setCharmTypeId] = React.useState('进攻类');
+
+  // 当父组件传入新的 initialCategoryId 时切换分类
+  React.useEffect(() => {
+    if (initialCategoryId && initialCategoryId !== catId) {
+      setCatId(initialCategoryId);
+    }
+  }, [initialCategoryId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const cat = categories.find(c => c.id === catId);
+  // 种子(05) 保持「品级优先」的作物图鉴习惯；其余分类统一按发布时间由新到旧。
+  const isSeed = catId === '05';
+  const isGoldenFruit = catId === '17';
+  const isPlay = catId === '32';
+  // 奶茶店装修（cat 33）：按 5 套主题 + 槽位分组展示，不走通用行卡片
+  const isDecor = catId === '33';
+  const showGrade = isSeed || isGoldenFruit;
+
+  const playItems = React.useMemo(() => (cat?.items || []) as any[], [cat]);
+  const wishDirs = React.useMemo(
+    () => playItems.filter((i) => i.kind === 'wishDir'),
+    [playItems],
+  );
+  const charmCats = React.useMemo(
+    () => playItems.filter((i) => i.kind === 'charmCat'),
+    [playItems],
+  );
+  const selectedWishDir = React.useMemo(
+    () => wishDirs.find((d) => d.chooseId === wishDirId) || wishDirs[0],
+    [wishDirs, wishDirId],
+  );
+  const selectedCharmCat = React.useMemo(
+    () => charmCats.find((c) => c.charmType === charmTypeId) || charmCats[0],
+    [charmCats, charmTypeId],
+  );
+  const wishTextRows = React.useMemo(() => {
+    if (!isPlay || playMode !== 'wish' || !selectedWishDir) return [];
+    const dirImg = selectedWishDir.localFile || 'img_wish_wishSign_select.png';
+    return (selectedWishDir.texts || []).map((t: any) => ({
+      id: 80000 + (selectedWishDir.chooseId || 0) * 100 + t.text_id,
+      name: `第 ${t.text_id} 签`,
+      desc: t.desc,
+      kind: 'wishText',
+      localFile: dirImg,
+      iconFile: '',
+      level: 0,
+      rarity: 3,
+      rarityColor: 'B09DED',
+      emoji: '',
+    }));
+  }, [isPlay, playMode, selectedWishDir]);
+  const charmRows = React.useMemo(() => {
+    if (!isPlay || playMode !== 'treasure') return [];
+    return playItems.filter((i) => i.kind === 'charm' && i.charmType === (selectedCharmCat?.charmType || charmTypeId));
+  }, [isPlay, playMode, playItems, selectedCharmCat, charmTypeId]);
+
+  // 给 CategoryNav 用的简化数据
+  const navItems: CategoryNavItem[] = React.useMemo(
+    () => categories.map(c => ({
+      id: c.id,
+      label: c.name,
+      emoji: c.icon,
+      count: categoryCount(c),
+      color: catAccent[c.id] || 'leaf',
+    })),
+    [],
+  );
+
+  const visibleItems = React.useMemo(() => {
+    // 活动玩法：按多级导航取叶子内容
+    if (isPlay) {
+      if (playMode === 'wish') return wishTextRows;
+      return charmRows;
+    }
+
+    let items = (cat?.items || []).filter((it: any) => !HIDDEN_ITEM_IDS.has(it.id));
+
+    // 排序口径（种子 / 超变果实，与作物图鉴一致）：
+    //   最新发布 → 天工 → 珍品 → 稀有 → 普通；组内 releaseOrder 由新到旧 → 等级升序 → id 兜底
+    if (isSeed || isGoldenFruit) {
+      items = [...items].sort((a: any, b: any) => {
+        const ga = cropGroupOf(a, isGoldenFruit), gb = cropGroupOf(b, isGoldenFruit);
+        if (ga !== gb) return ga - gb;
+        const oa = a.releaseOrder || 0, ob = b.releaseOrder || 0;
+        if (ob !== oa) return ob - oa;
+        const la = a.level || 0, lb = b.level || 0;
+        if (la !== lb) return la - lb;
+        return (a.id || 0) - (b.id || 0);
+      });
+      // 插入分组标题行；搜索时名称为空会被过滤掉，自然不显示分组
+      const withHeaders: any[] = [];
+      let last = -2;
+      for (const it of items) {
+        const g = cropGroupOf(it, isGoldenFruit);
+        if (g >= 0 && g < CROP_GROUPS.length && g !== last) {
+          withHeaders.push({ id: `group_${g}`, kind: 'groupHeader', label: CROP_GROUPS[g], name: '', desc: '' });
+          last = g;
+        }
+        withHeaders.push(it);
+      }
+      items = withHeaders;
+    } else {
+      items = [...items].sort((a: any, b: any) => {
+        const oa = a.releaseOrder || 0;
+        const ob = b.releaseOrder || 0;
+        if (ob !== oa) return ob - oa;
+        return (a.id || 0) - (b.id || 0);
+      });
+    }
+
+    // 搜索：命中则只留匹配项（并在下方展开跨分类命中，避免"明明有道具却找不到"）
+    const kw = query.trim().toLowerCase();
+    if (kw) {
+      const hit = (it: any) =>
+        String(it.name || '').toLowerCase().includes(kw) ||
+        String(it.desc || '').toLowerCase().includes(kw);
+      items = items.filter(hit);
+    }
+    return items;
+  }, [cat, isSeed, isGoldenFruit, isPlay, playMode, wishTextRows, charmRows, query]);
+
+  // 跨分类搜索结果：当前分类没有时，告诉用户它在哪个分类
+  const crossHits = React.useMemo(() => {
+    const kw = query.trim().toLowerCase();
+    if (!kw) return [];
+    const out: Array<{ catId: string; catName: string; catIcon: string; item: any }> = [];
+    for (const c of categories) {
+      for (const it of c.items || []) {
+        if (HIDDEN_ITEM_IDS.has(it.id)) continue;
+        if (String(it.name || '').toLowerCase().includes(kw)) {
+          out.push({ catId: c.id, catName: c.name, catIcon: c.icon, item: it });
+        }
+      }
+    }
+    return out;
+  }, [query]);
+
+  const visibleCount = visibleItems.filter((it: any) => (it as any).kind !== 'groupHeader').length;
+
+  return (
+    <div className="space-y-4 fade-in">
+      {/* Hero */}
+      <header className="page-header">
+        <span className="page-header-chip" style={{ background: 'var(--berry-bg)', color: 'var(--berry-deep)' }}>
+          <ShoppingBag size={11} strokeWidth={2.5} /> 道具目录
+        </span>
+        <h2 className="page-header-title">全部商店道具</h2>
+        <p className="page-header-subtitle">
+          {categories.length} 个分类 · {categories.reduce((s, c) => s + categoryCount(c), 0)} 件道具
+        </p>
+      </header>
+
+      {/* 搜索：跨分类按名称/描述查找，避免"道具明明收录了却在别的分类里找不到" */}
+      <div className="relative">
+        <input
+          type="search"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="搜索道具名称，如「挑战书」「头像框」…"
+          className="input-pop has-icon has-clear w-full"
+          aria-label="搜索道具"
+        />
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-mute)] pointer-events-none" />
+        {query && (
+          <button
+            type="button"
+            onClick={() => setQuery('')}
+            aria-label="清空搜索"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
+            style={{ background: 'var(--bg-2)', color: 'var(--ink-soft)' }}>
+            <X size={12} strokeWidth={3} />
+          </button>
+        )}
+      </div>
+
+      {/* 跨分类命中提示 */}
+      {query.trim() && crossHits.length > 0 && (
+        <div className="sticker p-3 sm:p-4 space-y-2">
+          <div className="section-eyebrow">
+            全库命中 {crossHits.length} 件（点击跳转到所在分类）
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {crossHits.slice(0, 24).map(h => (
+              <button
+                key={`${h.catId}-${h.item.id}`}
+                type="button"
+                onClick={() => setCatId(h.catId)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-colors"
+                style={{
+                  background: h.catId === catId ? 'var(--berry)' : 'var(--bg-2)',
+                  color: h.catId === catId ? 'white' : 'var(--ink-soft)',
+                }}>
+                <span>{h.catIcon}</span>
+                <span>{h.item.name}</span>
+                <span className="opacity-70 font-mono">{h.catName}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="lg:w-52 lg:flex-shrink-0">
+          <CategoryNav
+            items={navItems}
+            value={catId}
+            onChange={setCatId}
+          />
+        </div>
+
+        {/* Items List */}
+        <div className="flex-1 min-w-0">
+          <motion.div key={catId}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="sticker-lg overflow-hidden">
+
+            <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2"
+              style={{ background: 'var(--bg-2)', borderBottom: '1.5px solid var(--line)' }}>
+              <span className="text-lg sm:text-xl">{cat?.icon}</span>
+              <span className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)]">{cat?.name}</span>
+              {isPlay && (
+                <span className="chip chip-sky ml-1">
+                  {playMode === 'wish' ? `心愿签 · ${selectedWishDir?.name || ''}` : `宝藏护送 · ${selectedCharmCat?.charmType || ''}`}
+                </span>
+              )}
+              <span className="chip chip-ink ml-auto">{visibleCount} 件</span>
+            </div>
+
+            {/* 活动玩法：三级导航（图标用游戏原图，不用 emoji） */}
+            {isPlay && (
+              <div className="px-3 pt-3 pb-1 space-y-2" style={{ borderBottom: '1px solid var(--line)' }}>
+                <div className="section-eyebrow">玩法</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {(playItems.filter((i) => i.kind === 'mode') as any[]).map((m) => (
+                    <button
+                      key={m.modeId}
+                      type="button"
+                      onClick={() => setPlayMode(m.modeId as 'wish' | 'treasure')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+                      style={
+                        playMode === m.modeId
+                          ? { background: 'var(--sky)', color: 'white', boxShadow: '0 2px 0 var(--sky-deep)' }
+                          : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                      }
+                    >
+                      <RemoteImage
+                        urls={itemImageUrls(m.iconFile, m.localFile)}
+                        name={m.name}
+                        className="w-4 h-4"
+                        rounded
+                      />
+                      <span>{m.name}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="section-eyebrow pt-1">
+                  {playMode === 'wish' ? '选签方向' : '锦囊分类'}
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {playMode === 'wish'
+                    ? wishDirs.map((d) => (
+                        <button
+                          key={d.chooseId}
+                          type="button"
+                          onClick={() => setWishDirId(d.chooseId)}
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-all"
+                          style={
+                            wishDirId === d.chooseId
+                              ? { background: 'var(--plum)', color: 'white' }
+                              : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                          }
+                        >
+                          <RemoteImage
+                            urls={itemImageUrls(d.iconFile, d.localFile)}
+                            name={d.name}
+                            className="w-4 h-4"
+                            rounded
+                          />
+                          <span>{d.name}</span>
+                          <span className="opacity-70 font-mono">{d.textCount}</span>
+                        </button>
+                      ))
+                    : charmCats.map((c) => (
+                        <button
+                          key={c.charmType}
+                          type="button"
+                          onClick={() => setCharmTypeId(c.charmType)}
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-all"
+                          style={
+                            charmTypeId === c.charmType
+                              ? { background: 'var(--sun)', color: 'white' }
+                              : { background: 'var(--bg-2)', color: 'var(--ink-soft)' }
+                          }
+                        >
+                          <RemoteImage
+                            urls={itemImageUrls(c.iconFile, c.localFile)}
+                            name={c.charmType}
+                            className="w-4 h-4"
+                            rounded
+                          />
+                          <span>{c.charmType}</span>
+                        </button>
+                      ))}
+                </div>
+                {playMode === 'wish' && selectedWishDir && (
+                  <p className="text-[11px] text-[var(--ink-mute)] leading-snug">
+                    {selectedWishDir.desc?.split('\n')[0]}
+                  </p>
+                )}
+                {playMode === 'treasure' && selectedCharmCat && (
+                  <p className="text-[11px] text-[var(--ink-mute)] leading-snug">
+                    {selectedCharmCat.desc}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {isDecor ? (
+              visibleCount === 0 ? (
+                <div className="p-6"><EmptyState emoji="🫙" title="该分类暂无数据" /></div>
+              ) : (
+                <div className="max-h-[70vh] overflow-y-auto"><DecorView items={visibleItems} /></div>
+              )
+            ) : (
+            <div className="p-2.5 sm:p-3 space-y-1.5 sm:space-y-2 max-h-[70vh] overflow-y-auto">
+              {!cat ? (
+                <EmptyState emoji="🛒" title="数据整理中" />
+              ) : visibleCount === 0 ? (
+                <EmptyState emoji="🫙" title="该分类暂无数据" />
+              ) : visibleItems.map((item) => {
+                if ((item as any).kind === 'groupHeader') {
+                  return (
+                    <div key={item.id} className="flex items-center gap-2 px-1.5 pt-2.5 pb-1">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--leaf)' }} />
+                      <span className="section-eyebrow">{(item as any).label}</span>
+                    </div>
+                  );
+                }
+                if (isSeed) {
+                  const seedPrice = item.sells ? parseInt(item.sells.split(':')[1]) || 0 : 0;
+                  const grade = showGrade ? getGrade(item.rarity, item.rarityColor) : null;
+                  return (
+                    <RowCard key={item.id}>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'var(--leaf-bg)' }}>
+                        <CropImage seedId={item.id} name={item.name} className="w-14 h-14 sm:w-16 sm:h-16" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div
+                          className="text-sm sm:text-base font-bold truncate"
+                          style={grade ? { color: `#${grade.color}` } : undefined}
+                          title={grade ? `品级：${grade.name}` : undefined}>
+                          {item.name}
+                        </div>
+                        <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] font-mono mt-0.5 sm:mt-1">
+                          Lv{item.level} · 🌱 {item.exp}
+                          {item.seasons > 1 && <span className="ml-1.5 text-[var(--berry-deep)] font-bold">· {item.seasons}季</span>}
+                        </div>
+                      </div>
+                      <span className="font-mono tnum text-xs sm:text-sm font-bold text-[var(--sun-deep)] flex-shrink-0">
+                        💰 {seedPrice}
+                      </span>
+                    </RowCard>
+                  );
+                }
+
+                // 心愿签签文行（用当前方向的签面原画）
+                if ((item as any).kind === 'wishText' || (isPlay && playMode === 'wish')) {
+                  const wishImg = (item as any).localFile || selectedWishDir?.localFile || 'img_wish_wishSign_select.png';
+                  return (
+                    <RowCard key={item.id}>
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                        style={{ background: 'var(--plum-bg)' }}>
+                        <RemoteImage
+                          urls={itemImageUrls('', wishImg)}
+                          name={item.name}
+                          className="w-12 h-12 sm:w-14 sm:h-14"
+                          rounded
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm sm:text-base font-bold">{item.name}</div>
+                        <div className="text-[11px] sm:text-xs text-[var(--ink-soft)] mt-0.5">{item.desc}</div>
+                      </div>
+                    </RowCard>
+                  );
+                }
+
+                // 宝藏护送锦囊行（带图标）
+                if ((item as any).kind === 'charm' || (isPlay && playMode === 'treasure')) {
+                  const charmGrade = getGrade(item.rarity, item.rarityColor);
+                  return (
+                    <RowCard key={item.id}>
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'var(--sun-bg)' }}>
+                        <RemoteImage
+                          urls={itemImageUrls(item.iconFile, (item as any).localFile)}
+                          name={item.name}
+                          className="w-12 h-12 sm:w-14 sm:h-14"
+                          rounded
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div
+                          className="text-sm sm:text-base font-bold"
+                          style={{ color: `#${charmGrade.color}` }}
+                          title={`类型：${charmGrade.name}`}>
+                          {(item as any).emoji ? `${(item as any).emoji} ` : ''}
+                          {item.name}
+                        </div>
+                        {item.desc && (
+                          <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 line-clamp-2 whitespace-pre-line">
+                            {item.desc}
+                          </div>
+                        )}
+                      </div>
+                      {(item as any).charmType && (
+                        <span className="chip chip-sun flex-shrink-0">{(item as any).charmType}</span>
+                      )}
+                    </RowCard>
+                  );
+                }
+
+                const openGold = () => {
+                  if (isGoldenFruit) {
+                    setGoldDetail({
+                      name: item.name,
+                      desc: item.desc,
+                      iconFile: item.iconFile,
+                      localFile: (item as any).localFile,
+                      rarity: item.rarity,
+                      rarityColor: item.rarityColor,
+                      // 详情页数据面板与阶段条依赖这些字段，必须一并传入
+                      cropNumber: (item as any).cropNumber,
+                      hasPhaseImages: (item as any).hasPhaseImages,
+                      exp: item.exp,
+                      fruitCount: (item as any).fruitCount,
+                      growTimeSec: (item as any).growTimeSec,
+                      growTimeStr: (item as any).growTimeStr,
+                      growPhases: (item as any).growPhases,
+                      seasons: (item as any).seasons,
+                    });
+                  }
+                };
+
+                const grade = showGrade ? getGrade(item.rarity, item.rarityColor) : null;
+                const itemUrls = isGoldenFruit
+                  ? (() => { const u = atlasSeedImageUrl(item.name); return u ? [u] : itemImageUrls(item.iconFile, (item as any).localFile); })()
+                  : itemImageUrls(item.iconFile, (item as any).localFile);
+                return (
+                  <RowCard key={item.id} onClick={openGold}>
+                    <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: isGoldenFruit ? 'var(--sun-bg)' : 'var(--bg-2)' }}>
+                      <RemoteImage urls={itemUrls} name={item.name} className="w-14 h-14 sm:w-20 sm:h-20" rounded />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div
+                        className="text-sm sm:text-base font-bold"
+                        style={grade ? { color: `#${grade.color}` } : undefined}
+                        title={grade ? `品级：${grade.name}` : undefined}>
+                        {item.name}
+                      </div>
+                      {item.desc && <div className="text-[10px] sm:text-[11px] text-[var(--ink-mute)] mt-0.5 sm:mt-1 line-clamp-2">{item.desc}</div>}
+                    </div>
+                    {item.level > 0 && (
+                      <span className="chip chip-sky flex-shrink-0">Lv.{item.level}</span>
+                    )}
+                  </RowCard>
+                );
+              })}
+            </div>
+            )}
+          </motion.div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {goldDetail && (
+          <Portal>
+            <motion.div
+              key="gold-detail-overlay"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4"
+              onClick={() => setGoldDetail(null)}>
+              <div className="absolute inset-0 bg-[var(--ink)]/40 backdrop-blur-sm" />
+              <motion.div
+                key="gold-detail-panel"
+                initial={{ y: '100%', scale: 0.95 }}
+                animate={{ y: 0, scale: 1 }}
+                exit={{ y: '100%' }}
+                transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+            onClick={e => e.stopPropagation()}
+            className="relative w-full sm:max-w-4xl lg:max-w-5xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl"
+            style={{ background: 'var(--bg-paper)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+
+            <div className="sticky top-0 z-10 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between"
+              style={{ background: 'var(--bg-paper)', borderBottom: '1.5px solid var(--line)' }}>
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl flex items-center justify-center"
+                  style={{ background: 'var(--sun-bg)' }}>
+                  <RemoteImage urls={(() => { const u = atlasSeedImageUrl(goldDetail.name); return u ? [u] : itemImageUrls(goldDetail.iconFile, goldDetail.localFile); })()} name={goldDetail.name} className="w-16 h-16 sm:w-28 sm:h-28" rounded />
+                </div>
+                <div>
+                  {(() => {
+                    const g = showGrade ? getGrade(goldDetail.rarity, goldDetail.rarityColor) : null;
+                    return (
+                      <h3
+                        className="font-display italic text-lg sm:text-2xl font-bold leading-tight"
+                        style={g ? { color: `#${g.color}` } : undefined}
+                        title={g ? `品级：${g.name}` : undefined}>
+                        {goldDetail.name}
+                      </h3>
+                    );
+                  })()}
+                  <div className="text-[11px] sm:text-xs text-[var(--ink-mute)] mt-1 sm:mt-1.5 line-clamp-2 max-w-[14rem] sm:max-w-[18rem]">{goldDetail.desc}</div>
+                </div>
+              </div>
+              <button onClick={() => setGoldDetail(null)}
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: 'var(--bg-2)' }}
+                aria-label="关闭">
+                <X size={16} className="text-[var(--ink-soft)] sm:hidden" />
+                <X size={20} className="text-[var(--ink-soft)] hidden sm:block" />
+              </button>
+            </div>
+
+            {/* 详细作物数据（来自 Plant 表：经验 / 果实数量 / 成长时长 / 季数） */}
+            <div className="px-5 sm:px-6 pt-4 sm:pt-5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+                <StatTile label="经验" value={goldDetail.exp > 0 ? goldDetail.exp : '—'} color="plum" />
+                <StatTile label="果实" value={`${(goldDetail as any).fruitCount ?? 0} 个`} color="leaf" />
+                <StatTile label="成长时长" value={(goldDetail as any).growTimeStr || '—'} color="sun" />
+                <StatTile label="季数" value={`${(goldDetail as any).seasons || 1} 季`} color="sky" />
+              </div>
+            </div>
+
+            {(goldDetail as any).hasPhaseImages ? (() => {
+              const isGoldItem = goldDetail.name.startsWith('黄金·');
+              return (
+                <div className="p-5 sm:p-6">
+                  <div className="section-eyebrow mb-2">成长阶段{isGoldItem && ' · 黄金变异'}</div>
+                  <div className="sticker-soft p-3 sm:p-4">
+                    <GrowthPhases
+                      seedId={goldSeedIds[goldDetail.name]}
+                      cropNum={(goldDetail as any).cropNumber}
+                      gold={isGoldItem}
+                      timings={parseGrowPhasesStr((goldDetail as any).growPhases || '')}
+                    />
+                  </div>
+                </div>
+              );
+            })() : goldDetail.localFile && (
+              <div className="p-5 sm:p-6">
+                <div className="section-eyebrow mb-2">成长阶段</div>
+                <div className="sticker-soft p-3 sm:p-4">
+                  <div className="flex justify-center">
+                    <RemoteImage urls={(() => { const u = atlasSeedImageUrl(goldDetail.name); return u ? [u] : itemImageUrls(goldDetail.iconFile, goldDetail.localFile); })()} name={goldDetail.name} className="w-48 h-48 sm:w-56 sm:h-56" rounded />
+                  </div>
+                </div>
+              </div>
+            )}
+            </motion.div>
+          </motion.div>
+          </Portal>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

@@ -1,0 +1,2132 @@
+{
+ "generatedAt": "2026-11-16T06:29:32.427Z",
+ "source": "2026-11-16 数据快照",
+ "levels": [
+  [
+   1,
+   0
+  ],
+  [
+   2,
+   300
+  ],
+  [
+   3,
+   700
+  ],
+  [
+   4,
+   1300
+  ],
+  [
+   5,
+   2200
+  ],
+  [
+   6,
+   3300
+  ],
+  [
+   7,
+   5300
+  ],
+  [
+   8,
+   7500
+  ],
+  [
+   9,
+   10000
+  ],
+  [
+   10,
+   23800
+  ],
+  [
+   11,
+   37800
+  ],
+  [
+   12,
+   52000
+  ],
+  [
+   13,
+   66400
+  ],
+  [
+   14,
+   81000
+  ],
+  [
+   15,
+   95800
+  ],
+  [
+   16,
+   110800
+  ],
+  [
+   17,
+   126000
+  ],
+  [
+   18,
+   141400
+  ],
+  [
+   19,
+   157000
+  ],
+  [
+   20,
+   172800
+  ],
+  [
+   21,
+   188800
+  ],
+  [
+   22,
+   208200
+  ],
+  [
+   23,
+   228400
+  ],
+  [
+   24,
+   250100
+  ],
+  [
+   25,
+   272000
+  ],
+  [
+   26,
+   294000
+  ],
+  [
+   27,
+   316300
+  ],
+  [
+   28,
+   339100
+  ],
+  [
+   29,
+   362200
+  ],
+  [
+   30,
+   385600
+  ],
+  [
+   31,
+   409500
+  ],
+  [
+   32,
+   433700
+  ],
+  [
+   33,
+   466000
+  ],
+  [
+   34,
+   501000
+  ],
+  [
+   35,
+   539300
+  ],
+  [
+   36,
+   581700
+  ],
+  [
+   37,
+   629000
+  ],
+  [
+   38,
+   677700
+  ],
+  [
+   39,
+   743200
+  ],
+  [
+   40,
+   817700
+  ],
+  [
+   41,
+   894600
+  ],
+  [
+   42,
+   990100
+  ],
+  [
+   43,
+   1097500
+  ],
+  [
+   44,
+   1206400
+  ],
+  [
+   45,
+   1317700
+  ],
+  [
+   46,
+   1432500
+  ],
+  [
+   47,
+   1553600
+  ],
+  [
+   48,
+   1684000
+  ],
+  [
+   49,
+   1822200
+  ],
+  [
+   50,
+   1970500
+  ],
+  [
+   51,
+   2142300
+  ],
+  [
+   52,
+   2321500
+  ],
+  [
+   53,
+   2511800
+  ],
+  [
+   54,
+   2714500
+  ],
+  [
+   55,
+   2919000
+  ],
+  [
+   56,
+   3125200
+  ],
+  [
+   57,
+   3333300
+  ],
+  [
+   58,
+   3546400
+  ],
+  [
+   59,
+   3762300
+  ],
+  [
+   60,
+   3985200
+  ],
+  [
+   61,
+   4214300
+  ],
+  [
+   62,
+   4446800
+  ],
+  [
+   63,
+   4690900
+  ],
+  [
+   64,
+   4939400
+  ],
+  [
+   65,
+   5222000
+  ]
+ ],
+ "animals": [
+  {
+   "id": 60001,
+   "name": "鸡",
+   "type": "窝",
+   "unlockLevel": 1,
+   "infantSec": 4,
+   "growSec": 4,
+   "matureSec": 8,
+   "roundSec": 8,
+   "dropSec": 1,
+   "maxCount": 1,
+   "grassSec": 4800,
+   "produceExp": 0,
+   "harvestExp": 1,
+   "main": {
+    "id": 2060001,
+    "name": "鸡",
+    "price": 3,
+    "count": 1
+   },
+   "by": {
+    "id": 1060001,
+    "name": "鸡蛋",
+    "price": 1,
+    "count": 5
+   },
+   "cub": {
+    "id": 60001,
+    "name": "鸡",
+    "price": 2,
+    "currency": 1007
+   },
+   "image": "ranch_images/60001_4.png",
+   "images": [
+    "ranch_images/60001_1.png",
+    "ranch_images/60001_2.png",
+    "ranch_images/60001_3.png",
+    "ranch_images/60001_4.png"
+   ]
+  },
+  {
+   "id": 60002,
+   "name": "鸭",
+   "type": "窝",
+   "unlockLevel": 3,
+   "infantSec": 3600,
+   "growSec": 3600,
+   "matureSec": 7200,
+   "roundSec": 7200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 4800,
+   "produceExp": 180,
+   "harvestExp": 360,
+   "main": {
+    "id": 2060002,
+    "name": "鸭",
+    "price": 2160,
+    "count": 1
+   },
+   "by": {
+    "id": 1060002,
+    "name": "鸭蛋",
+    "price": 54,
+    "count": 30
+   },
+   "cub": {
+    "id": 60002,
+    "name": "鸭",
+    "price": 1080,
+    "currency": 1007
+   },
+   "image": "ranch_images/60002_4.png",
+   "images": [
+    "ranch_images/60002_1.png",
+    "ranch_images/60002_2.png",
+    "ranch_images/60002_3.png",
+    "ranch_images/60002_4.png"
+   ]
+  },
+  {
+   "id": 60003,
+   "name": "鹅",
+   "type": "窝",
+   "unlockLevel": 9,
+   "infantSec": 7200,
+   "growSec": 7200,
+   "matureSec": 14400,
+   "roundSec": 14400,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 4800,
+   "produceExp": 420,
+   "harvestExp": 840,
+   "main": {
+    "id": 2060003,
+    "name": "鹅",
+    "price": 5424,
+    "count": 1
+   },
+   "by": {
+    "id": 1060003,
+    "name": "鹅蛋",
+    "price": 135,
+    "count": 30
+   },
+   "cub": {
+    "id": 60003,
+    "name": "鹅",
+    "price": 2712,
+    "currency": 1007
+   },
+   "image": "ranch_images/60003_4.png",
+   "images": [
+    "ranch_images/60003_1.png",
+    "ranch_images/60003_2.png",
+    "ranch_images/60003_3.png",
+    "ranch_images/60003_4.png"
+   ]
+  },
+  {
+   "id": 60004,
+   "name": "兔子",
+   "type": "窝",
+   "unlockLevel": 11,
+   "infantSec": 10800,
+   "growSec": 10800,
+   "matureSec": 21600,
+   "roundSec": 21600,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 4800,
+   "produceExp": 630,
+   "harvestExp": 1260,
+   "main": {
+    "id": 2060004,
+    "name": "兔",
+    "price": 8136,
+    "count": 1
+   },
+   "by": {
+    "id": 1060004,
+    "name": "小兔崽",
+    "price": 203,
+    "count": 30
+   },
+   "cub": {
+    "id": 60004,
+    "name": "兔子",
+    "price": 4068,
+    "currency": 1007
+   },
+   "image": "ranch_images/60004_4.png",
+   "images": [
+    "ranch_images/60004_1.png",
+    "ranch_images/60004_2.png",
+    "ranch_images/60004_3.png",
+    "ranch_images/60004_4.png"
+   ]
+  },
+  {
+   "id": 60005,
+   "name": "火鸡",
+   "type": "窝",
+   "unlockLevel": 14,
+   "infantSec": 12000,
+   "growSec": 12000,
+   "matureSec": 24000,
+   "roundSec": 24000,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 3600,
+   "produceExp": 850,
+   "harvestExp": 1700,
+   "main": {
+    "id": 2060005,
+    "name": "火鸡",
+    "price": 11280,
+    "count": 1
+   },
+   "by": {
+    "id": 1060005,
+    "name": "火鸡蛋",
+    "price": 282,
+    "count": 30
+   },
+   "cub": {
+    "id": 60005,
+    "name": "火鸡",
+    "price": 5640,
+    "currency": 1007
+   },
+   "image": "ranch_images/60005_4.png",
+   "images": [
+    "ranch_images/60005_1.png",
+    "ranch_images/60005_2.png",
+    "ranch_images/60005_3.png",
+    "ranch_images/60005_4.png"
+   ]
+  },
+  {
+   "id": 60006,
+   "name": "天竺鼠",
+   "type": "窝",
+   "unlockLevel": 17,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 3600,
+   "produceExp": 1020,
+   "harvestExp": 2040,
+   "main": {
+    "id": 2060006,
+    "name": "天竺鼠",
+    "price": 13536,
+    "count": 1
+   },
+   "by": {
+    "id": 1060006,
+    "name": "天竺鼠崽",
+    "price": 338,
+    "count": 30
+   },
+   "cub": {
+    "id": 60006,
+    "name": "天竺鼠",
+    "price": 6768,
+    "currency": 1007
+   },
+   "image": "ranch_images/60006_4.png",
+   "images": [
+    "ranch_images/60006_1.png",
+    "ranch_images/60006_2.png",
+    "ranch_images/60006_3.png",
+    "ranch_images/60006_4.png"
+   ]
+  },
+  {
+   "id": 60007,
+   "name": "乌龟",
+   "type": "窝",
+   "unlockLevel": 25,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2880,
+   "produceExp": 1200,
+   "harvestExp": 2400,
+   "main": {
+    "id": 2060007,
+    "name": "乌龟",
+    "price": 16896,
+    "count": 1
+   },
+   "by": {
+    "id": 1060007,
+    "name": "小乌龟",
+    "price": 422,
+    "count": 30
+   },
+   "cub": {
+    "id": 60007,
+    "name": "乌龟",
+    "price": 8448,
+    "currency": 1007
+   },
+   "image": "ranch_images/60007_4.png",
+   "images": [
+    "ranch_images/60007_1.png",
+    "ranch_images/60007_2.png",
+    "ranch_images/60007_3.png",
+    "ranch_images/60007_4.png"
+   ]
+  },
+  {
+   "id": 60008,
+   "name": "松鼠",
+   "type": "窝",
+   "unlockLevel": 27,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2880,
+   "produceExp": 1800,
+   "harvestExp": 3600,
+   "main": {
+    "id": 2060008,
+    "name": "松鼠",
+    "price": 25344,
+    "count": 1
+   },
+   "by": {
+    "id": 1060008,
+    "name": "松鼠崽",
+    "price": 633,
+    "count": 30
+   },
+   "cub": {
+    "id": 60008,
+    "name": "松鼠",
+    "price": 12672,
+    "currency": 1007
+   },
+   "image": "ranch_images/60008_4.png",
+   "images": [
+    "ranch_images/60008_1.png",
+    "ranch_images/60008_2.png",
+    "ranch_images/60008_3.png",
+    "ranch_images/60008_4.png"
+   ]
+  },
+  {
+   "id": 60009,
+   "name": "刺猬",
+   "type": "窝",
+   "unlockLevel": 33,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2057,
+   "produceExp": 1440,
+   "harvestExp": 2880,
+   "main": {
+    "id": 2060009,
+    "name": "刺猬",
+    "price": 21120,
+    "count": 1
+   },
+   "by": {
+    "id": 1060009,
+    "name": "刺猬崽",
+    "price": 528,
+    "count": 30
+   },
+   "cub": {
+    "id": 60009,
+    "name": "刺猬",
+    "price": 10560,
+    "currency": 1007
+   },
+   "image": "ranch_images/60009_4.png",
+   "images": [
+    "ranch_images/60009_1.png",
+    "ranch_images/60009_2.png",
+    "ranch_images/60009_3.png",
+    "ranch_images/60009_4.png"
+   ]
+  },
+  {
+   "id": 60010,
+   "name": "鼹鼠",
+   "type": "窝",
+   "unlockLevel": 35,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2057,
+   "produceExp": 2160,
+   "harvestExp": 4320,
+   "main": {
+    "id": 2060010,
+    "name": "鼹鼠",
+    "price": 31680,
+    "count": 1
+   },
+   "by": {
+    "id": 1060010,
+    "name": "鼹鼠崽",
+    "price": 792,
+    "count": 30
+   },
+   "cub": {
+    "id": 60010,
+    "name": "鼹鼠",
+    "price": 15840,
+    "currency": 1007
+   },
+   "image": "ranch_images/60010_4.png",
+   "images": [
+    "ranch_images/60010_1.png",
+    "ranch_images/60010_2.png",
+    "ranch_images/60010_3.png",
+    "ranch_images/60010_4.png"
+   ]
+  },
+  {
+   "id": 60011,
+   "name": "考拉",
+   "type": "窝",
+   "unlockLevel": 41,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1800,
+   "produceExp": 1560,
+   "harvestExp": 3120,
+   "main": {
+    "id": 2060011,
+    "name": "考拉",
+    "price": 25344,
+    "count": 1
+   },
+   "by": {
+    "id": 1060011,
+    "name": "考拉崽",
+    "price": 633,
+    "count": 30
+   },
+   "cub": {
+    "id": 60011,
+    "name": "考拉",
+    "price": 12672,
+    "currency": 1007
+   },
+   "image": "ranch_images/60011_4.png",
+   "images": [
+    "ranch_images/60011_1.png",
+    "ranch_images/60011_2.png",
+    "ranch_images/60011_3.png",
+    "ranch_images/60011_4.png"
+   ]
+  },
+  {
+   "id": 60012,
+   "name": "狐狸",
+   "type": "窝",
+   "unlockLevel": 43,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1800,
+   "produceExp": 2340,
+   "harvestExp": 4680,
+   "main": {
+    "id": 2060012,
+    "name": "狐狸",
+    "price": 38016,
+    "count": 1
+   },
+   "by": {
+    "id": 1060012,
+    "name": "狐狸崽",
+    "price": 950,
+    "count": 30
+   },
+   "cub": {
+    "id": 60012,
+    "name": "狐狸",
+    "price": 19008,
+    "currency": 1007
+   },
+   "image": "ranch_images/60012_4.png",
+   "images": [
+    "ranch_images/60012_1.png",
+    "ranch_images/60012_2.png",
+    "ranch_images/60012_3.png",
+    "ranch_images/60012_4.png"
+   ]
+  },
+  {
+   "id": 70001,
+   "name": "羊",
+   "type": "棚",
+   "unlockLevel": 21,
+   "infantSec": 12000,
+   "growSec": 12000,
+   "matureSec": 24000,
+   "roundSec": 24000,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 3600,
+   "produceExp": 850,
+   "harvestExp": 1700,
+   "main": {
+    "id": 2070001,
+    "name": "羊",
+    "price": 11280,
+    "count": 1
+   },
+   "by": {
+    "id": 1070001,
+    "name": "羊毛",
+    "price": 282,
+    "count": 30
+   },
+   "cub": {
+    "id": 70001,
+    "name": "羊",
+    "price": 5640,
+    "currency": 1007
+   },
+   "image": "ranch_images/70001_4.png",
+   "images": [
+    "ranch_images/70001_1.png",
+    "ranch_images/70001_2.png",
+    "ranch_images/70001_3.png",
+    "ranch_images/70001_4.png"
+   ]
+  },
+  {
+   "id": 70002,
+   "name": "牛",
+   "type": "棚",
+   "unlockLevel": 23,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 3600,
+   "produceExp": 1530,
+   "harvestExp": 3060,
+   "main": {
+    "id": 2070002,
+    "name": "牛",
+    "price": 20304,
+    "count": 1
+   },
+   "by": {
+    "id": 1070002,
+    "name": "牛奶",
+    "price": 507,
+    "count": 30
+   },
+   "cub": {
+    "id": 70002,
+    "name": "牛",
+    "price": 10152,
+    "currency": 1007
+   },
+   "image": "ranch_images/70002_4.png",
+   "images": [
+    "ranch_images/70002_1.png",
+    "ranch_images/70002_2.png",
+    "ranch_images/70002_3.png",
+    "ranch_images/70002_4.png"
+   ]
+  },
+  {
+   "id": 70003,
+   "name": "驴",
+   "type": "棚",
+   "unlockLevel": 29,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2880,
+   "produceExp": 1200,
+   "harvestExp": 2400,
+   "main": {
+    "id": 2070003,
+    "name": "驴",
+    "price": 16896,
+    "count": 1
+   },
+   "by": {
+    "id": 1070003,
+    "name": "驴崽",
+    "price": 422,
+    "count": 30
+   },
+   "cub": {
+    "id": 70003,
+    "name": "驴",
+    "price": 8448,
+    "currency": 1007
+   },
+   "image": "ranch_images/70003_4.png",
+   "images": [
+    "ranch_images/70003_1.png",
+    "ranch_images/70003_2.png",
+    "ranch_images/70003_3.png",
+    "ranch_images/70003_4.png"
+   ]
+  },
+  {
+   "id": 70004,
+   "name": "迷你猪",
+   "type": "棚",
+   "unlockLevel": 31,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2880,
+   "produceExp": 1800,
+   "harvestExp": 3600,
+   "main": {
+    "id": 2070004,
+    "name": "迷你猪",
+    "price": 25344,
+    "count": 1
+   },
+   "by": {
+    "id": 1070004,
+    "name": "迷你猪崽",
+    "price": 633,
+    "count": 30
+   },
+   "cub": {
+    "id": 70004,
+    "name": "迷你猪",
+    "price": 12672,
+    "currency": 1007
+   },
+   "image": "ranch_images/70004_4.png",
+   "images": [
+    "ranch_images/70004_1.png",
+    "ranch_images/70004_2.png",
+    "ranch_images/70004_3.png",
+    "ranch_images/70004_4.png"
+   ]
+  },
+  {
+   "id": 70005,
+   "name": "马",
+   "type": "棚",
+   "unlockLevel": 37,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2057,
+   "produceExp": 1440,
+   "harvestExp": 2880,
+   "main": {
+    "id": 2070005,
+    "name": "马",
+    "price": 21120,
+    "count": 1
+   },
+   "by": {
+    "id": 1070005,
+    "name": "马奶",
+    "price": 528,
+    "count": 30
+   },
+   "cub": {
+    "id": 70005,
+    "name": "马",
+    "price": 10560,
+    "currency": 1007
+   },
+   "image": "ranch_images/70005_4.png",
+   "images": [
+    "ranch_images/70005_1.png",
+    "ranch_images/70005_2.png",
+    "ranch_images/70005_3.png",
+    "ranch_images/70005_4.png"
+   ]
+  },
+  {
+   "id": 70006,
+   "name": "水牛",
+   "type": "棚",
+   "unlockLevel": 39,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 2057,
+   "produceExp": 2160,
+   "harvestExp": 4320,
+   "main": {
+    "id": 2070006,
+    "name": "水牛",
+    "price": 31680,
+    "count": 1
+   },
+   "by": {
+    "id": 1070006,
+    "name": "水牛奶",
+    "price": 792,
+    "count": 30
+   },
+   "cub": {
+    "id": 70006,
+    "name": "水牛",
+    "price": 15840,
+    "currency": 1007
+   },
+   "image": "ranch_images/70006_4.png",
+   "images": [
+    "ranch_images/70006_1.png",
+    "ranch_images/70006_2.png",
+    "ranch_images/70006_3.png",
+    "ranch_images/70006_4.png"
+   ]
+  },
+  {
+   "id": 70007,
+   "name": "骆驼",
+   "type": "棚",
+   "unlockLevel": 45,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1800,
+   "produceExp": 1560,
+   "harvestExp": 3120,
+   "main": {
+    "id": 2070007,
+    "name": "骆驼",
+    "price": 25344,
+    "count": 1
+   },
+   "by": {
+    "id": 1070007,
+    "name": "骆驼奶",
+    "price": 633,
+    "count": 30
+   },
+   "cub": {
+    "id": 70007,
+    "name": "骆驼",
+    "price": 12672,
+    "currency": 1007
+   },
+   "image": "ranch_images/70007_4.png",
+   "images": [
+    "ranch_images/70007_1.png",
+    "ranch_images/70007_2.png",
+    "ranch_images/70007_3.png",
+    "ranch_images/70007_4.png"
+   ]
+  },
+  {
+   "id": 70008,
+   "name": "牦牛",
+   "type": "棚",
+   "unlockLevel": 47,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1800,
+   "produceExp": 2340,
+   "harvestExp": 4680,
+   "main": {
+    "id": 2070008,
+    "name": "牦牛",
+    "price": 38016,
+    "count": 1
+   },
+   "by": {
+    "id": 1070008,
+    "name": "牦牛毛",
+    "price": 950,
+    "count": 30
+   },
+   "cub": {
+    "id": 70008,
+    "name": "牦牛",
+    "price": 19008,
+    "currency": 1007
+   },
+   "image": "ranch_images/70008_4.png",
+   "images": [
+    "ranch_images/70008_1.png",
+    "ranch_images/70008_2.png",
+    "ranch_images/70008_3.png",
+    "ranch_images/70008_4.png"
+   ]
+  },
+  {
+   "id": 70009,
+   "name": "鸵鸟",
+   "type": "棚",
+   "unlockLevel": 53,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1440,
+   "produceExp": 1740,
+   "harvestExp": 3480,
+   "main": {
+    "id": 2070009,
+    "name": "鸵鸟",
+    "price": 30432,
+    "count": 1
+   },
+   "by": {
+    "id": 1070009,
+    "name": "鸵鸟崽",
+    "price": 760,
+    "count": 30
+   },
+   "cub": {
+    "id": 70009,
+    "name": "鸵鸟",
+    "price": 15216,
+    "currency": 1007
+   },
+   "image": "ranch_images/70009_4.png",
+   "images": [
+    "ranch_images/70009_1.png",
+    "ranch_images/70009_2.png",
+    "ranch_images/70009_3.png",
+    "ranch_images/70009_4.png"
+   ]
+  },
+  {
+   "id": 70010,
+   "name": "梅花鹿",
+   "type": "棚",
+   "unlockLevel": 55,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1440,
+   "produceExp": 2610,
+   "harvestExp": 5220,
+   "main": {
+    "id": 2070010,
+    "name": "梅花鹿",
+    "price": 45648,
+    "count": 1
+   },
+   "by": {
+    "id": 1070010,
+    "name": "梅花鹿崽",
+    "price": 1141,
+    "count": 30
+   },
+   "cub": {
+    "id": 70010,
+    "name": "梅花鹿",
+    "price": 22824,
+    "currency": 1007
+   },
+   "image": "ranch_images/70010_4.png",
+   "images": [
+    "ranch_images/70010_1.png",
+    "ranch_images/70010_2.png",
+    "ranch_images/70010_3.png",
+    "ranch_images/70010_4.png"
+   ]
+  },
+  {
+   "id": 70011,
+   "name": "浣熊",
+   "type": "棚",
+   "unlockLevel": 64,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1200,
+   "produceExp": 1920,
+   "harvestExp": 3840,
+   "main": {
+    "id": 2070011,
+    "name": "浣熊",
+    "price": 36480,
+    "count": 1
+   },
+   "by": {
+    "id": 1070011,
+    "name": "浣熊崽",
+    "price": 912,
+    "count": 30
+   },
+   "cub": {
+    "id": 70011,
+    "name": "浣熊",
+    "price": 18240,
+    "currency": 1007
+   },
+   "image": "ranch_images/70011_4.png",
+   "images": [
+    "ranch_images/70011_1.png",
+    "ranch_images/70011_2.png",
+    "ranch_images/70011_3.png",
+    "ranch_images/70011_4.png"
+   ]
+  },
+  {
+   "id": 70012,
+   "name": "羊驼",
+   "type": "棚",
+   "unlockLevel": 67,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1200,
+   "produceExp": 2880,
+   "harvestExp": 5760,
+   "main": {
+    "id": 2070012,
+    "name": "羊驼",
+    "price": 54720,
+    "count": 1
+   },
+   "by": {
+    "id": 1070012,
+    "name": "羊驼崽",
+    "price": 1368,
+    "count": 30
+   },
+   "cub": {
+    "id": 70012,
+    "name": "羊驼",
+    "price": 27360,
+    "currency": 1007
+   },
+   "image": "ranch_images/70012_4.png",
+   "images": [
+    "ranch_images/70012_1.png",
+    "ranch_images/70012_2.png",
+    "ranch_images/70012_3.png",
+    "ranch_images/70012_4.png"
+   ]
+  },
+  {
+   "id": 60013,
+   "name": "豪猪",
+   "type": "窝",
+   "unlockLevel": 49,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1440,
+   "produceExp": 1740,
+   "harvestExp": 3480,
+   "main": {
+    "id": 2060013,
+    "name": "豪猪",
+    "price": 30432,
+    "count": 1
+   },
+   "by": {
+    "id": 1060013,
+    "name": "豪猪崽",
+    "price": 760,
+    "count": 30
+   },
+   "cub": {
+    "id": 60013,
+    "name": "豪猪",
+    "price": 15216,
+    "currency": 1007
+   },
+   "image": "ranch_images/60013_4.png",
+   "images": [
+    "ranch_images/60013_1.png",
+    "ranch_images/60013_2.png",
+    "ranch_images/60013_3.png",
+    "ranch_images/60013_4.png"
+   ]
+  },
+  {
+   "id": 60014,
+   "name": "龙猫",
+   "type": "窝",
+   "unlockLevel": 51,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1440,
+   "produceExp": 2610,
+   "harvestExp": 5220,
+   "main": {
+    "id": 2060014,
+    "name": "龙猫",
+    "price": 45648,
+    "count": 1
+   },
+   "by": {
+    "id": 1060014,
+    "name": "龙猫崽",
+    "price": 1141,
+    "count": 30
+   },
+   "cub": {
+    "id": 60014,
+    "name": "龙猫",
+    "price": 22824,
+    "currency": 1007
+   },
+   "image": "ranch_images/60014_4.png",
+   "images": [
+    "ranch_images/60014_1.png",
+    "ranch_images/60014_2.png",
+    "ranch_images/60014_3.png",
+    "ranch_images/60014_4.png"
+   ]
+  },
+  {
+   "id": 60015,
+   "name": "孔雀",
+   "type": "窝",
+   "unlockLevel": 58,
+   "infantSec": 14400,
+   "growSec": 14400,
+   "matureSec": 28800,
+   "roundSec": 28800,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1200,
+   "produceExp": 1920,
+   "harvestExp": 3840,
+   "main": {
+    "id": 2060015,
+    "name": "孔雀",
+    "price": 36480,
+    "count": 1
+   },
+   "by": {
+    "id": 1060015,
+    "name": "孔雀毛",
+    "price": 912,
+    "count": 30
+   },
+   "cub": {
+    "id": 60015,
+    "name": "孔雀",
+    "price": 18240,
+    "currency": 1007
+   },
+   "image": "ranch_images/60015_4.png",
+   "images": [
+    "ranch_images/60015_1.png",
+    "ranch_images/60015_2.png",
+    "ranch_images/60015_3.png",
+    "ranch_images/60015_4.png"
+   ]
+  },
+  {
+   "id": 60016,
+   "name": "貂",
+   "type": "窝",
+   "unlockLevel": 61,
+   "infantSec": 21600,
+   "growSec": 21600,
+   "matureSec": 43200,
+   "roundSec": 43200,
+   "dropSec": 1,
+   "maxCount": 2,
+   "grassSec": 1200,
+   "produceExp": 2880,
+   "harvestExp": 5760,
+   "main": {
+    "id": 2060016,
+    "name": "貂",
+    "price": 54720,
+    "count": 1
+   },
+   "by": {
+    "id": 1060016,
+    "name": "貂崽",
+    "price": 1368,
+    "count": 30
+   },
+   "cub": {
+    "id": 60016,
+    "name": "貂",
+    "price": 27360,
+    "currency": 1007
+   },
+   "image": "ranch_images/60016_4.png",
+   "images": [
+    "ranch_images/60016_1.png",
+    "ranch_images/60016_2.png",
+    "ranch_images/60016_3.png",
+    "ranch_images/60016_4.png"
+   ]
+  }
+ ],
+ "buildings": {
+  "coop": [
+   {
+    "id": 6001001,
+    "level": 1,
+    "capacity": 3,
+    "cost": {
+     "currency": 0,
+     "count": 0
+    },
+    "secs": 0,
+    "reqLevel": null,
+    "next": 6001002
+   },
+   {
+    "id": 6001002,
+    "level": 2,
+    "capacity": 4,
+    "cost": {
+     "currency": 1007,
+     "count": 14000
+    },
+    "secs": 10,
+    "reqLevel": 8,
+    "next": 6001003
+   },
+   {
+    "id": 6001003,
+    "level": 3,
+    "capacity": 5,
+    "cost": {
+     "currency": 1007,
+     "count": 155000
+    },
+    "secs": 60,
+    "reqLevel": 16,
+    "next": 6001004
+   },
+   {
+    "id": 6001004,
+    "level": 4,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 349000
+    },
+    "secs": 300,
+    "reqLevel": 24,
+    "next": 6001005
+   },
+   {
+    "id": 6001005,
+    "level": 5,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 610000
+    },
+    "secs": 900,
+    "reqLevel": 32,
+    "next": 6001006
+   },
+   {
+    "id": 6001006,
+    "level": 6,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 2300000
+    },
+    "secs": 1800,
+    "reqLevel": 40,
+    "next": 6001007
+   },
+   {
+    "id": 6001007,
+    "level": 7,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 4000000
+    },
+    "secs": 21600,
+    "reqLevel": 48,
+    "next": 6001008
+   },
+   {
+    "id": 6001008,
+    "level": 8,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 8200000
+    },
+    "secs": 43200,
+    "reqLevel": 57,
+    "next": null
+   }
+  ],
+  "shed": [
+   {
+    "id": 6002001,
+    "level": 1,
+    "capacity": 3,
+    "cost": {
+     "currency": 0,
+     "count": 0
+    },
+    "secs": 0,
+    "reqLevel": null,
+    "next": 6002002
+   },
+   {
+    "id": 6002002,
+    "level": 2,
+    "capacity": 4,
+    "cost": {
+     "currency": 1007,
+     "count": 14000
+    },
+    "secs": 10,
+    "reqLevel": 25,
+    "next": 6002003
+   },
+   {
+    "id": 6002003,
+    "level": 3,
+    "capacity": 5,
+    "cost": {
+     "currency": 1007,
+     "count": 155000
+    },
+    "secs": 60,
+    "reqLevel": 28,
+    "next": 6002004
+   },
+   {
+    "id": 6002004,
+    "level": 4,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 349000
+    },
+    "secs": 300,
+    "reqLevel": 31,
+    "next": 6002005
+   },
+   {
+    "id": 6002005,
+    "level": 5,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 610000
+    },
+    "secs": 900,
+    "reqLevel": 36,
+    "next": 6002006
+   },
+   {
+    "id": 6002006,
+    "level": 6,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 2300000
+    },
+    "secs": 1800,
+    "reqLevel": 44,
+    "next": 6002007
+   },
+   {
+    "id": 6002007,
+    "level": 7,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 4000000
+    },
+    "secs": 21600,
+    "reqLevel": 52,
+    "next": 6002008
+   },
+   {
+    "id": 6002008,
+    "level": 8,
+    "capacity": 6,
+    "cost": {
+     "currency": 1007,
+     "count": 8200000
+    },
+    "secs": 43200,
+    "reqLevel": 63,
+    "next": null
+   }
+  ],
+  "grass": [
+   {
+    "id": 7001001,
+    "level": 1,
+    "capacity": 100,
+    "cost": {
+     "currency": 0,
+     "count": 0
+    },
+    "secs": 0,
+    "reqLevel": null,
+    "next": 7001002
+   },
+   {
+    "id": 7001002,
+    "level": 2,
+    "capacity": 150,
+    "cost": {
+     "currency": 1007,
+     "count": 6000
+    },
+    "secs": 4,
+    "reqLevel": 10,
+    "next": 7001003
+   },
+   {
+    "id": 7001003,
+    "level": 3,
+    "capacity": 560,
+    "cost": {
+     "currency": 1007,
+     "count": 62000
+    },
+    "secs": 25,
+    "reqLevel": 18,
+    "next": 7001004
+   },
+   {
+    "id": 7001004,
+    "level": 4,
+    "capacity": 1100,
+    "cost": {
+     "currency": 1007,
+     "count": 140000
+    },
+    "secs": 120,
+    "reqLevel": 26,
+    "next": 7001005
+   },
+   {
+    "id": 7001005,
+    "level": 5,
+    "capacity": 1800,
+    "cost": {
+     "currency": 1007,
+     "count": 245000
+    },
+    "secs": 360,
+    "reqLevel": 34,
+    "next": 7001006
+   },
+   {
+    "id": 7001006,
+    "level": 6,
+    "capacity": 2900,
+    "cost": {
+     "currency": 1007,
+     "count": 931000
+    },
+    "secs": 720,
+    "reqLevel": 42,
+    "next": 7001007
+   },
+   {
+    "id": 7001007,
+    "level": 7,
+    "capacity": 5200,
+    "cost": {
+     "currency": 1007,
+     "count": 1614000
+    },
+    "secs": 9000,
+    "reqLevel": 50,
+    "next": 7001008
+   },
+   {
+    "id": 7001008,
+    "level": 8,
+    "capacity": 8000,
+    "cost": {
+     "currency": 1007,
+     "count": 3299000
+    },
+    "secs": 18000,
+    "reqLevel": 60,
+    "next": null
+   }
+  ],
+  "city": [
+   {
+    "id": 1001001,
+    "level": 1,
+    "capacity": null,
+    "cost": {
+     "currency": 0,
+     "count": 0
+    },
+    "secs": 0,
+    "reqLevel": null,
+    "next": 1001002,
+    "open": 4,
+    "quota": {
+     "coop": 1,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001002,
+    "level": 2,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 11000
+    },
+    "secs": 20,
+    "reqLevel": null,
+    "next": 1001003,
+    "open": 6,
+    "quota": {
+     "coop": 1,
+     "shed": 1,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001003,
+    "level": 3,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 45000
+    },
+    "secs": 120,
+    "reqLevel": null,
+    "next": 1001004,
+    "open": 8,
+    "quota": {
+     "coop": 1,
+     "shed": 1,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001004,
+    "level": 4,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 140000
+    },
+    "secs": 600,
+    "reqLevel": null,
+    "next": 1001005,
+    "open": 10,
+    "quota": {
+     "coop": 1,
+     "shed": 1,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001005,
+    "level": 5,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 300000
+    },
+    "secs": 1800,
+    "reqLevel": null,
+    "next": 1001006,
+    "open": 12,
+    "quota": {
+     "coop": 2,
+     "shed": 1,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001006,
+    "level": 6,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 1100000
+    },
+    "secs": 3600,
+    "reqLevel": null,
+    "next": 1001007,
+    "open": 14,
+    "quota": {
+     "coop": 2,
+     "shed": 2,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001007,
+    "level": 7,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 3300000
+    },
+    "secs": 43200,
+    "reqLevel": null,
+    "next": 1001008,
+    "open": 16,
+    "quota": {
+     "coop": 2,
+     "shed": 2,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001008,
+    "level": 8,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 5500000
+    },
+    "secs": 86400,
+    "reqLevel": null,
+    "next": 1001009,
+    "open": 18,
+    "quota": {
+     "coop": 3,
+     "shed": 2,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001009,
+    "level": 9,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 27000000
+    },
+    "secs": 172800,
+    "reqLevel": null,
+    "next": 1001010,
+    "open": 20,
+    "quota": {
+     "coop": 3,
+     "shed": 3,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001010,
+    "level": 10,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 36000000
+    },
+    "secs": 259200,
+    "reqLevel": null,
+    "next": 1001011,
+    "open": 22,
+    "quota": {
+     "coop": 3,
+     "shed": 3,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001011,
+    "level": 11,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 39000000
+    },
+    "secs": 345600,
+    "reqLevel": null,
+    "next": 1001012,
+    "open": 24,
+    "quota": {
+     "coop": 3,
+     "shed": 3,
+     "grass": 1,
+     "lab": 1
+    }
+   },
+   {
+    "id": 1001012,
+    "level": 12,
+    "capacity": null,
+    "cost": {
+     "currency": 1007,
+     "count": 86000000
+    },
+    "secs": 432000,
+    "reqLevel": null,
+    "next": null,
+    "open": 25,
+    "quota": {
+     "coop": 3,
+     "shed": 3,
+     "grass": 1,
+     "lab": 1
+    }
+   }
+  ],
+  "lab": [
+   {
+    "level": 1,
+    "slots": 1,
+    "reduceBp": 0
+   },
+   {
+    "level": 2,
+    "slots": 1,
+    "reduceBp": 1000
+   },
+   {
+    "level": 3,
+    "slots": 2,
+    "reduceBp": 2000
+   }
+  ]
+ },
+ "bonuses": {
+  "coop": [
+   {
+    "level": 1,
+    "priceBp": 0,
+    "byPriceBp": 0
+   },
+   {
+    "level": 2,
+    "priceBp": 0,
+    "byPriceBp": 0
+   },
+   {
+    "level": 3,
+    "priceBp": 0,
+    "byPriceBp": 0
+   },
+   {
+    "level": 4,
+    "priceBp": 0,
+    "byPriceBp": 0
+   },
+   {
+    "level": 5,
+    "priceBp": 1000,
+    "byPriceBp": 1000
+   },
+   {
+    "level": 6,
+    "priceBp": 2000,
+    "byPriceBp": 2000
+   },
+   {
+    "level": 7,
+    "priceBp": 3000,
+    "byPriceBp": 3000
+   },
+   {
+    "level": 8,
+    "priceBp": 4000,
+    "byPriceBp": 4000
+   }
+  ],
+  "shed": [
+   {
+    "level": 1,
+    "expBp": 0,
+    "byExpBp": 0
+   },
+   {
+    "level": 2,
+    "expBp": 0,
+    "byExpBp": 0
+   },
+   {
+    "level": 3,
+    "expBp": 0,
+    "byExpBp": 0
+   },
+   {
+    "level": 4,
+    "expBp": 0,
+    "byExpBp": 0
+   },
+   {
+    "level": 5,
+    "expBp": 1000,
+    "byExpBp": 1000
+   },
+   {
+    "level": 6,
+    "expBp": 2000,
+    "byExpBp": 2000
+   },
+   {
+    "level": 7,
+    "expBp": 3000,
+    "byExpBp": 3000
+   },
+   {
+    "level": 8,
+    "expBp": 4000,
+    "byExpBp": 4000
+   }
+  ]
+ },
+ "grass": {
+  "item": {
+   "id": 7001,
+   "name": "牧草",
+   "desc": "动物的口粮，可以在农场种植，也可在饲料商店购买。牧草耗尽时，动物会暂停成长。",
+   "sells": {
+    "cid": 1001,
+    "price": 5
+   },
+   "level": 1
+  },
+  "shop": {
+   "price": 60,
+   "currency": 1007
+  },
+  "crop": {
+   "plantId": 1020040,
+   "seedId": 20040,
+   "name": "牧草",
+   "phases": [
+    {
+     "name": "种子",
+     "sec": 300
+    },
+    {
+     "name": "大叶子",
+     "sec": 300
+    },
+    {
+     "name": "成熟",
+     "sec": 0
+    }
+   ],
+   "growSec": 600,
+   "yieldCount": 20,
+   "exp": 10,
+   "seedPrice": 10,
+   "seedSells": {
+    "cid": 1001,
+    "price": 10
+   },
+   "itemName": "牧草"
+  }
+ },
+ "cans": {
+  "list": [
+   {
+    "id": 80021,
+    "feedType": "无机罐头",
+    "secs": 3600,
+    "name": "罐头(1小时)"
+   },
+   {
+    "id": 80022,
+    "feedType": "无机罐头",
+    "secs": 14400,
+    "name": "罐头(4小时)"
+   },
+   {
+    "id": 80023,
+    "feedType": "无机罐头",
+    "secs": 28800,
+    "name": "罐头(8小时)"
+   },
+   {
+    "id": 80024,
+    "feedType": "无机罐头",
+    "secs": 43200,
+    "name": "罐头(12小时)"
+   },
+   {
+    "id": 80031,
+    "feedType": "有机罐头",
+    "secs": 3600,
+    "name": "有机罐头(1小时)"
+   },
+   {
+    "id": 80032,
+    "feedType": "有机罐头",
+    "secs": 14400,
+    "name": "有机罐头(4小时)"
+   },
+   {
+    "id": 80033,
+    "feedType": "有机罐头",
+    "secs": 28800,
+    "name": "有机罐头(8小时)"
+   },
+   {
+    "id": 80034,
+    "feedType": "有机罐头",
+    "secs": 43200,
+    "name": "有机罐头(12小时)"
+   }
+  ],
+  "normal": {
+   "id": 7003,
+   "name": "无机罐头容器",
+   "desc": "罐头桶里的普通罐头时长。施肥时只扣除动物当前阶段的剩余生长时间，精确到秒；每只动物仅能使用一次普通罐头。可在商城购买。",
+   "sells": {
+    "cid": 0,
+    "price": 0
+   },
+   "level": null
+  },
+  "organic": {
+   "id": 7004,
+   "name": "有机罐头容器",
+   "desc": "罐头桶里的有机罐头时长。施肥时只扣除动物当前阶段的剩余生长时间，精确到秒；有机罐头不限使用次数。可在商城购买。",
+   "sells": {
+    "cid": 0,
+    "price": 0
+   },
+   "level": null
+  }
+ }
+}

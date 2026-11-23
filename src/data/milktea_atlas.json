@@ -1,0 +1,1073 @@
+{
+  "exportedAt": "2026-11-15T18:10:01.815Z",
+  "activityId": 2026110101,
+  "activityName": "奶茶热销中",
+  "currency": {
+    "id": 1041,
+    "name": "奶茶券",
+    "note": "活动代币，可兑换奖励；活动结束后可出售为金币"
+  },
+  "boostItem": {
+    "id": 1042,
+    "name": "宣传喇叭",
+    "note": "使用后立即获得 1 小时基础营业销量（不叠加员工特长和互动效果）"
+  },
+  "formula": {
+    "sales": "销量（杯/小时）= 热卖值 = 店铺等级基础热卖值 × (1 + Σ 员工热卖值特长 + 互动加成)",
+    "revenue": "奶茶券/小时 = 热卖值 × 单杯奶茶券单价 × (1 + 店铺高级定价% + 互动售价%)",
+    "note": "「销量 = 热卖值」与「招牌试饮 +20% 使 45 券 → 54 券」均由活动实测数据交叉验证；金币折算公式在服务端执行。"
+  },
+  "recipes": [
+    {
+      "id": 1,
+      "name": "普通奶茶",
+      "price": 3,
+      "priceCurrencyId": 1041,
+      "fruitId": 0,
+      "fruitName": "",
+      "fruitPerCup": 0,
+      "fruitGold": 0,
+      "fruitRarity": 1,
+      "fruitRarityColor": "",
+      "fruitRequiredLevel": 0,
+      "seedId": 0,
+      "seedName": "",
+      "seedGold": 0,
+      "growTimeSec": 0,
+      "fruitPerHarvest": 0,
+      "normalOutputCount": 0,
+      "coinFormula": [
+        0,
+        0,
+        0
+      ],
+      "unlockLevel": 1,
+      "drinkIcon": "milktea_1.png",
+      "desc": "普通奶茶，不限量供应，每杯售价奶茶券x3。"
+    },
+    {
+      "id": 2,
+      "name": "甜莓奶茶",
+      "price": 10,
+      "priceCurrencyId": 1041,
+      "fruitId": 40525,
+      "fruitName": "森野甜莓",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20525,
+      "seedName": "森野甜莓种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 1,
+      "drinkIcon": "milktea_2.png",
+      "desc": "消耗森野甜莓制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 3,
+      "name": "白桃乌龙",
+      "price": 11,
+      "priceCurrencyId": 1041,
+      "fruitId": 40526,
+      "fruitName": "森野白桃",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20526,
+      "seedName": "森野白桃种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 3,
+      "drinkIcon": "milktea_3.png",
+      "desc": "消耗森野白桃制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 4,
+      "name": "摇摇甜橙",
+      "price": 12,
+      "priceCurrencyId": 1041,
+      "fruitId": 40527,
+      "fruitName": "森野甜橙",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20527,
+      "seedName": "森野甜橙种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 5,
+      "drinkIcon": "milktea_4.png",
+      "desc": "消耗森野甜橙制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 5,
+      "name": "馥香红柚",
+      "price": 13,
+      "priceCurrencyId": 1041,
+      "fruitId": 40528,
+      "fruitName": "森野红柚",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20528,
+      "seedName": "森野红柚种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 7,
+      "drinkIcon": "milktea_5.png",
+      "desc": "消耗森野红柚制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 6,
+      "name": "厚乳可可",
+      "price": 14,
+      "priceCurrencyId": 1041,
+      "fruitId": 40021,
+      "fruitName": "森野可可豆",
+      "fruitPerCup": 1,
+      "fruitGold": 5000,
+      "fruitRarity": 2,
+      "fruitRarityColor": "A8C1F4",
+      "fruitRequiredLevel": 21,
+      "seedId": 20021,
+      "seedName": "森野可可豆种子",
+      "seedGold": 1000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1094,
+        2,
+        820
+      ],
+      "unlockLevel": 9,
+      "drinkIcon": "milktea_6.png",
+      "desc": "消耗森野可可豆制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 7,
+      "name": "柿柿如意",
+      "price": 15,
+      "priceCurrencyId": 1041,
+      "fruitId": 41435,
+      "fruitName": "森野柿子",
+      "fruitPerCup": 1,
+      "fruitGold": 10000,
+      "fruitRarity": 3,
+      "fruitRarityColor": "B09DED",
+      "fruitRequiredLevel": 41,
+      "seedId": 21435,
+      "seedName": "森野柿子种子",
+      "seedGold": 2000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1276,
+        2,
+        957
+      ],
+      "unlockLevel": 11,
+      "drinkIcon": "milktea_7.png",
+      "desc": "消耗森野柿子制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 8,
+      "name": "芭乐冰奶",
+      "price": 16,
+      "priceCurrencyId": 1041,
+      "fruitId": 40529,
+      "fruitName": "森野芭乐",
+      "fruitPerCup": 1,
+      "fruitGold": 10000,
+      "fruitRarity": 3,
+      "fruitRarityColor": "B09DED",
+      "fruitRequiredLevel": 41,
+      "seedId": 20529,
+      "seedName": "森野芭乐种子",
+      "seedGold": 2000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        1276,
+        2,
+        957
+      ],
+      "unlockLevel": 13,
+      "drinkIcon": "milktea_8.png",
+      "desc": "消耗森野芭乐制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    },
+    {
+      "id": 9,
+      "name": "金露云酪",
+      "price": 45,
+      "priceCurrencyId": 1041,
+      "fruitId": 49005,
+      "fruitName": "森野黄金芽",
+      "fruitPerCup": 1,
+      "fruitGold": 50000,
+      "fruitRarity": 4,
+      "fruitRarityColor": "D1A21E",
+      "fruitRequiredLevel": 200,
+      "seedId": 29005,
+      "seedName": "森野黄金芽种子",
+      "seedGold": 12000,
+      "growTimeSec": 43200,
+      "fruitPerHarvest": 10,
+      "normalOutputCount": 1,
+      "coinFormula": [
+        7296,
+        2,
+        5472
+      ],
+      "unlockLevel": 1,
+      "drinkIcon": "milktea_9.png",
+      "desc": "消耗森野黄金芽制作，每颗可制作1杯；带有售价倍率的果实，产量按相同倍率提升。"
+    }
+  ],
+  "storeLevels": [
+    {
+      "level": 1,
+      "revenueRequired": 0,
+      "basePopularity": 40,
+      "advancedPricePercent": 0,
+      "employeeSlots": 1,
+      "recipeIds": [
+        1,
+        2,
+        9
+      ]
+    },
+    {
+      "level": 2,
+      "revenueRequired": 14000,
+      "basePopularity": 45,
+      "advancedPricePercent": 0,
+      "employeeSlots": 1,
+      "recipeIds": [
+        1,
+        2,
+        9
+      ]
+    },
+    {
+      "level": 3,
+      "revenueRequired": 33000,
+      "basePopularity": 50,
+      "advancedPricePercent": 0,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "level": 4,
+      "revenueRequired": 53000,
+      "basePopularity": 55,
+      "advancedPricePercent": 500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "level": 5,
+      "revenueRequired": 75000,
+      "basePopularity": 60,
+      "advancedPricePercent": 1000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "level": 6,
+      "revenueRequired": 102000,
+      "basePopularity": 65,
+      "advancedPricePercent": 1500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "level": 7,
+      "revenueRequired": 157000,
+      "basePopularity": 70,
+      "advancedPricePercent": 2000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "level": 8,
+      "revenueRequired": 222000,
+      "basePopularity": 75,
+      "advancedPricePercent": 2000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "level": 9,
+      "revenueRequired": 291000,
+      "basePopularity": 80,
+      "advancedPricePercent": 2500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "level": 10,
+      "revenueRequired": 372000,
+      "basePopularity": 85,
+      "advancedPricePercent": 3000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "level": 11,
+      "revenueRequired": 457000,
+      "basePopularity": 90,
+      "advancedPricePercent": 3000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "level": 12,
+      "revenueRequired": 560000,
+      "basePopularity": 95,
+      "advancedPricePercent": 3500,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "level": 13,
+      "revenueRequired": 694000,
+      "basePopularity": 100,
+      "advancedPricePercent": 4000,
+      "employeeSlots": 2,
+      "recipeIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
+  "talents": [
+    {
+      "id": 9001,
+      "name": "金牌销售",
+      "type": 1,
+      "desc": "金币收入+10%"
+    },
+    {
+      "id": 9002,
+      "name": "金牌宣传",
+      "type": 2,
+      "desc": "热卖值+10%"
+    },
+    {
+      "id": 9003,
+      "name": "金牌服务",
+      "type": 3,
+      "desc": "每售出100杯奶茶，有10%概率获得宣传喇叭x1"
+    },
+    {
+      "id": 9004,
+      "name": "默默搬砖",
+      "type": 4,
+      "desc": "热卖值+5%"
+    }
+  ],
+  "hireDurations": [
+    {
+      "id": 1,
+      "sec": 14400,
+      "hours": 4,
+      "cost": 40,
+      "costCurrencyId": 1041,
+      "costPerHour": 10,
+      "minRemainSec": 600
+    },
+    {
+      "id": 2,
+      "sec": 43200,
+      "hours": 12,
+      "cost": 130,
+      "costCurrencyId": 1041,
+      "costPerHour": 10.83,
+      "minRemainSec": 14401
+    },
+    {
+      "id": 3,
+      "sec": 86400,
+      "hours": 24,
+      "cost": 270,
+      "costCurrencyId": 1041,
+      "costPerHour": 11.25,
+      "minRemainSec": 43201
+    }
+  ],
+  "interactions": [
+    {
+      "id": 1,
+      "name": "宣传推广",
+      "desc": "帮助老板立即卖出{0}杯奶茶，你将获得本班工资20%的奖金",
+      "winWord": "推广大成功！来的客人越来越多了！",
+      "loseWord": ""
+    },
+    {
+      "id": 2,
+      "name": "花式摇杯",
+      "desc": "老板未来3小时的奶茶券收益+10%，你将获得本班工资30%的奖金",
+      "winWord": "眼花缭乱！你的神奇手法惊呆顾客！",
+      "loseWord": ""
+    },
+    {
+      "id": 3,
+      "name": "招牌试饮",
+      "desc": "老板未来2小时的奶茶券收益+20%，你将随机获得{0}杯高级奶茶",
+      "winWord": "争先恐后！试饮奶茶爆炸好喝！",
+      "loseWord": ""
+    },
+    {
+      "id": 4,
+      "name": "划水摸鱼",
+      "desc": "有40%概率获得宣传喇叭x{0}，有60%概率工资减半",
+      "winWord": "悠然自得！没有人发现你在快乐！",
+      "loseWord": "不！快乐离你而去！"
+    },
+    {
+      "id": 5,
+      "name": "申请涨薪",
+      "desc": "有60%概率工资翻倍，有40%概率工资减半",
+      "winWord": "人生巅峰！薪资暴涨100%！",
+      "loseWord": "心痛！马内离你而去！"
+    }
+  ],
+  "tasteDrinkCount": [
+    {
+      "durationId": 1,
+      "count": 4
+    },
+    {
+      "durationId": 2,
+      "count": 12
+    },
+    {
+      "durationId": 3,
+      "count": 24
+    }
+  ],
+  "exchangeShop": {
+    "exportedAt": "2026-10-16",
+    "note": "价目为游戏内实录（2026-10-16）；装扮与种子单位均为奶茶券，宣传喇叭为钻石。若与游戏内不符以游戏内为准。",
+    "costumeTotal": 631000,
+    "costumes": [
+      {
+        "name": "缤纷奶茶围栏",
+        "price": 20000,
+        "unlockLevel": 0,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "桌椅套装",
+        "price": 30000,
+        "unlockLevel": 0,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "装饰套装",
+        "price": 30000,
+        "unlockLevel": 0,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "缤纷奶茶仓库",
+        "price": 40000,
+        "unlockLevel": 4,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "门套装",
+        "price": 37500,
+        "unlockLevel": 4,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "缤纷奶茶木牌",
+        "price": 40000,
+        "unlockLevel": 6,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "窗套装",
+        "price": 37500,
+        "unlockLevel": 6,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "缤纷奶茶栅栏",
+        "price": 20000,
+        "unlockLevel": 8,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "墙面套装",
+        "price": 45000,
+        "unlockLevel": 8,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "缤纷奶茶狗屋",
+        "price": 90000,
+        "unlockLevel": 10,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "地板套装",
+        "price": 45000,
+        "unlockLevel": 10,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "缤纷奶茶街道",
+        "price": 100000,
+        "unlockLevel": 12,
+        "limit": "永久 1/1"
+      },
+      {
+        "name": "屋顶套装",
+        "price": 96000,
+        "unlockLevel": 12,
+        "limit": "永久 1/1"
+      }
+    ],
+    "projection": {
+      "anchor": "实测标定（2026-10-16，大号）：13:16 营业额 26,696 → 15:01 27,556 → 15:33 27,816。两段独立区间算出边际速率 488~491 券/小时（稳定），而开服至今累计均值 980 券/小时是它的两倍 —— 开服头十几小时有一段爆发式收入（新手引导 / 开局送券 / 前 6 颗黄金芽集中出货），所以斜率只能用 490，不能线性外推 980。10-18 重算时叠加了每日任务：3 个任务一起 3,000 券/天 × 28 天 = 84,000 券，只进券余额、不进营业额。",
+      "scenarios": [
+        {
+          "label": "小号 + 雇 2 个金牌宣传",
+          "total": 1054797,
+          "note": "全拿还有富余"
+        },
+        {
+          "label": "大号（已买成长基金）",
+          "total": 859165,
+          "note": "全拿，只需买 10 颗种子"
+        },
+        {
+          "label": "小号 现状（含每日任务）",
+          "total": 840158,
+          "note": "全拿，余 1.7 万券"
+        },
+        {
+          "label": "参照：490 券/h 恒定不涨",
+          "total": 450891,
+          "note": "只够到 Lv9 档 30 万"
+        }
+      ],
+      "levelTimeline": [
+        {
+          "level": 4,
+          "day": 2.5
+        },
+        {
+          "level": 6,
+          "day": 5.5
+        },
+        {
+          "level": 8,
+          "day": 11.3
+        },
+        {
+          "level": 10,
+          "day": 17.3
+        },
+        {
+          "level": 12,
+          "day": 23.6
+        },
+        {
+          "level": 13,
+          "day": 27.6
+        }
+      ]
+    }
+  },
+  "seedVerdict": {
+    "seedName": "森野黄金芽种子",
+    "price": 8000,
+    "dailyLimit": 1,
+    "rows": [
+      {
+        "k": "心愿保底门票 ★",
+        "v": "这才是买它的真正理由：种满 60 颗保底拿 2 件变异装扮果实（详见「变异装扮 · 心愿保底」）"
+      },
+      {
+        "k": "每日限购",
+        "v": "1 颗 / 天 —— 买 24 颗就要买满 24 天。建议 10-19 就开买（最晚 10-21，再晚就凑不满 24 天），11-14 前必须种下。"
+      },
+      {
+        "k": "回券（10 杯金露云酪）",
+        "v": "450~650 券 · 回本率仅 5.6%~8%，纯回券角度巨亏"
+      },
+      {
+        "k": "金币产出",
+        "v": "10 杯 ≈ 47.5 万金币（配方折算口径，游戏内自动结算）"
+      },
+      {
+        "k": "对升级的影响",
+        "v": "无 —— 升级只认累计营业额（卖出额），花券不扣；种出奶茶卖出反而 +450~650 营业额"
+      }
+    ],
+    "conclusion": "要买，但按天买：10-19 起每天 1 颗，买到心愿满 60 或余额见底为止。理由不是回券（巨亏），而是它是 2 件变异装扮果实唯一的确定路径。每日任务能补上 8.4 万券，所以不氪金也买得起这 24 颗。"
+  },
+  "wishGuarantee": {
+    "source": "Global.MUTAN_TIPS1 / MUTAN_TIPS2",
+    "crop": "森野黄金芽（天工）",
+    "rule": [
+      "种植可触发装扮变异的天工作物时，会累计该作物对应变异的 1 点心愿值。",
+      "心愿进度首次达到指定心愿值后，将在符合条件的变异判定中触发对应变异。",
+      "进度满必然触发对应变异（仅生效一次），未满时概率触发对应变异。",
+      "若同一次种植同时达到多个变异的心愿进度，将优先触发更珍稀的变异效果；其余已达到进度的变异不会消失，会在后续继续种植该作物时继续生效。"
+    ],
+    "needPlantings": 60,
+    "targets": [
+      {
+        "name": "盆栽【金露云酪】",
+        "itemId": 204011,
+        "illustratedValue": 200,
+        "guarantee": 30,
+        "note": "种满 30 次触发"
+      },
+      {
+        "name": "【黄金·金露云酪】",
+        "itemId": 204012,
+        "illustratedValue": 400,
+        "guarantee": 60,
+        "note": "优先级更高，同次到点先出它"
+      }
+    ],
+    "why": "两条计数同步 +1（都来自种森野黄金芽）→ 第 30 次触发【金露云酪】；第 60 次两条同时到点，按「优先触发更珍稀」先给【黄金·金露云酪】，【金露云酪】顺延到下一次。所以种满 60 颗 = 两件一起保底到手（最坏 61 颗）。",
+    "naturalRate": [
+      {
+        "name": "奶茶（mutant 17）",
+        "prob": "770‱ = 7.7%",
+        "expect": "≈13 次",
+        "within30": "≈91%",
+        "within60": "≈99%"
+      },
+      {
+        "name": "黄金（mutant 5，稀有度 4）",
+        "prob": "926‱ = 9.26%",
+        "expect": "≈11 次",
+        "within30": "≈95%",
+        "within60": "≈99.7%"
+      }
+    ],
+    "naturalNote": "若【黄金·金露云酪】需要「奶茶形态 + 黄金形态」同时命中（≈0.71%/次），60 次内自然出率只有 ≈35% —— 这时 60 保底才是真正的主角。两种口径下结论一致：【金露云酪】多半会提前自然出，【黄金·金露云酪】基本只能靠 60 保底。"
+  },
+  "seedSources": {
+    "auditedAt": "2026-10-16",
+    "method": "按活动商店与掉落来源逐项核对（36 项免费 / 60 项需购）",
+    "freeTotal": 36,
+    "needTotal": 60,
+    "rows": [
+      {
+        "source": "奶茶点券礼包 ×3",
+        "where": "限时商店 · Mall 1061",
+        "content": "种子×1 + 有机化肥(1h)×2 + 化肥(1h)×2",
+        "cost": "25 点券",
+        "limit": "永久 3",
+        "seeds": 3,
+        "paid": false,
+        "zeroCost": true
+      },
+      {
+        "source": "奶茶分享礼包 ×1",
+        "where": "礼包商店 · Mall 1064",
+        "content": "种子×1",
+        "cost": "免费",
+        "limit": "永久 1",
+        "seeds": 1,
+        "paid": false,
+        "zeroCost": true
+      },
+      {
+        "source": "店铺升级奖励",
+        "where": "MilkTeaStoreLevelConfig",
+        "content": "Lv2-9 各 2 颗、Lv10-11 各 3 颗、Lv12-13 各 5 颗",
+        "cost": "免费",
+        "limit": "每级 1 次",
+        "seeds": 32,
+        "paid": false,
+        "zeroCost": true
+      },
+      {
+        "source": "奶茶店成长基金",
+        "where": "GrowthFundTierConfig",
+        "content": "第 1/3/5/7/9/11/13 档各 ×2（另送点券 288/188/388、喇叭 ×5、铭牌、蜜熊小屋礼包）",
+        "cost": "360 钻石",
+        "limit": "13 档",
+        "seeds": 14,
+        "paid": true,
+        "zeroCost": false
+      },
+      {
+        "source": "兑换商店 · 黄金芽种子",
+        "where": "服务端（客户端无表，价目为游戏内实录）",
+        "content": "种子×1",
+        "cost": "8,000 券",
+        "limit": "每日 1",
+        "seeds": 29,
+        "paid": false,
+        "zeroCost": false
+      }
+    ],
+    "findings": [
+      "全表 grep 29005 只命中 3 张来源表：MilkTeaStoreLevelConfig / Mall / GrowthFundTierConfig（ItemInfo、Plant 是定义表）。",
+      "Task.json 438 条任务里 29005 出现 0 次；Guide / Active / AchieveCategory / ActivityWishSign* 也全都没有。",
+      "→ 客户端配置里没有「任务系统送黄金芽种子」这回事。若游戏内确实有，只能是服务端下发、客户端表里查不到。",
+      "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
+      "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
+      "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
+      "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。",
+      "Task.json 没有 rewards 字段，但每日任务实测给 3,000 券/天 —— 任务是送「奶茶券」，不是送种子，所以免费种子上限仍是 36 颗。"
+    ],
+    "note": "「点券」(id 1002) 是农场免费货币，不是「钻石」(id 1004，充值货币) —— 3 个点券礼包共 75 点券，纯白嫖。成长基金 360 钻石经实测确认，属氪金项：360 钻 ≈ 112,000 券（1 钻 ≈ 311 券）。"
+  },
+  "dailyTask": {
+    "verifiedAt": "2026-10-18",
+    "dailyCoupons": 3000,
+    "totalDays": 28,
+    "totalCoupons": 84000,
+    "window": "10-18 → 11-14（营业期结束，共 28 天）",
+    "tasks": [
+      {
+        "name": "每日登录游戏",
+        "effort": "打开就完成",
+        "note": "登录即领，零操作"
+      },
+      {
+        "name": "采摘 1 次果实",
+        "effort": "顺手就做",
+        "note": "收一块地就算"
+      },
+      {
+        "name": "在 1 个好友农场互动 1 次",
+        "effort": "顺手就做",
+        "note": "去好友家点一次"
+      }
+    ],
+    "equivalents": [
+      {
+        "k": "折合每小时",
+        "v": "125 券 / 小时 —— 相当于把热卖值永久抬高 25.5%（雇 2 个「金牌宣传」才 +20%，还要付工资）"
+      },
+      {
+        "k": "折合种子",
+        "v": "10.5 颗黄金芽种子（8,000 券 / 颗）"
+      },
+      {
+        "k": "折合装扮",
+        "v": "13 件装扮总价 631,000 券的 13.3%"
+      },
+      {
+        "k": "折合工时",
+        "v": "3 个任务加起来每天不到 1 分钟"
+      }
+    ],
+    "why": "它是「白给」的：不花券、不花钻石、不占员工位、不消耗库存，也不看热卖值和店铺等级 —— 只要每天上线做完 3 个任务，3,000 券就固定到账。",
+    "pitfall": "只进「券余额」，不进「累计营业额」。所以它不推动店铺升级 —— 等级时间表（Lv13 约第 27.6 天）一颗都不会提前。别指望靠它冲等级。",
+    "tolerance": {
+      "missable": 5,
+      "note": "小号零员工口径下余额余 17,158 券 ≈ 5 天任务；漏 6 天开始掉出全拿区间（余额 822,158 < 需求 823,000）。"
+    },
+    "sensitivity": [
+      {
+        "daily": 3000,
+        "total": 84000,
+        "left": 17158,
+        "plantings": 60,
+        "ok": true,
+        "note": "按实测口径"
+      },
+      {
+        "daily": 2700,
+        "total": 75600,
+        "left": 8758,
+        "plantings": 60,
+        "ok": true,
+        "note": "打 9 折也够"
+      },
+      {
+        "daily": 2400,
+        "total": 67200,
+        "left": 358,
+        "plantings": 60,
+        "ok": true,
+        "note": "临界线"
+      },
+      {
+        "daily": 2100,
+        "total": 58800,
+        "left": -8042,
+        "plantings": 58,
+        "ok": false,
+        "note": "差 2 颗种子"
+      },
+      {
+        "daily": 1500,
+        "total": 42000,
+        "left": -24842,
+        "plantings": 56,
+        "ok": false,
+        "note": "差 4 颗种子"
+      },
+      {
+        "daily": 0,
+        "total": 0,
+        "left": -66842,
+        "plantings": 51,
+        "ok": false,
+        "note": "这就是 v3 的口径"
+      }
+    ],
+    "evidence": "Task.json 共 438 条任务，其中「每日任务」21 条 = 3 个任务 × 7 天轮换（每日登录游戏 / 采摘 1 次果实 / 在 1 个好友农场进行互动），和「三个任务一起 3,000 券」的实测口径完全对得上。任务表只有 id / task_type / desc / condition / total_progress / group / is_show_text 七个字段，没有 rewards —— 奖励由服务端下发，所以客户端配置里查不到这 3,000 券，只能以游戏内实测为准。"
+  },
+  "accountProjection": {
+    "measuredAt": "2026-10-16",
+    "taskIncludedAt": "2026-10-18",
+    "ratePoints": [
+      {
+        "account": "大号",
+        "time": "13:16",
+        "revenue": 26696,
+        "rate": "累计均值 ≈980 券/h"
+      },
+      {
+        "account": "大号",
+        "time": "15:01",
+        "revenue": 27556,
+        "rate": "边际 ≈491 券/h（+860 / 1.75h）"
+      },
+      {
+        "account": "大号",
+        "time": "15:33",
+        "revenue": 27816,
+        "rate": "边际 ≈488 券/h（+260 / 0.53h）"
+      }
+    ],
+    "rateNote": "两段独立区间都落在 488~491 → 490 券/h 是稳定值，不是噪声。累计均值 980 是它的两倍，说明开服头十几小时有约 1.3 万券的爆发式收入。小号与大号同为 Lv2，起点低 6,110 券（大号多 2 颗基金种子 + 更早开跑）。",
+    "model": "券/小时 ∝ base_popularity × (1 + 高级定价%)（MilkTeaStoreLevelConfig）；Lv2 基准 45，Lv13 = 100 × 1.4 = 140（3.11×）。起点 10-16 15:33 → 终点 11-14 24:00，共 704 小时。每日任务 3,000 券/天按 10-18 起 28 天 = 84,000 券单独叠加，不计入累计营业额。",
+    "costNote": "「可用余额」= 累计营业额 + 每日任务券；「买完装扮后剩」= 可用余额 − 631,000（13 件装扮）− 雇员工资（270 券/天/人 × 704h）；剩余 ÷ 8,000 = 还能买的种子颗数，免费固定 36 颗。",
+    "rows": [
+      {
+        "account": "小号（不氪金）",
+        "scenario": "现状 · 无员工 / 无互动 · 含每日任务",
+        "revenue": 756158,
+        "taskCoupons": 84000,
+        "balance": 840158,
+        "afterCost": 209158,
+        "finalLeft": 17158,
+        "seedsBuyable": 26,
+        "plantings": 60,
+        "result": "装扮 ✅ ｜【金露云酪】✅ ｜【黄金·金露云酪】✅",
+        "ok": true,
+        "highlight": true
+      },
+      {
+        "account": "小号（不氪金）",
+        "scenario": "雇 1 个「金牌宣传」（热卖值 +10%）",
+        "revenue": 863474,
+        "taskCoupons": 84000,
+        "balance": 947474,
+        "afterCost": 308554,
+        "finalLeft": 116554,
+        "seedsBuyable": 38,
+        "plantings": 60,
+        "result": "全拿 ✅（工资 7,920 券已扣）",
+        "ok": true
+      },
+      {
+        "account": "小号（不氪金）",
+        "scenario": "雇 2 个「金牌宣传」（热卖值 +20%）",
+        "revenue": 970797,
+        "taskCoupons": 84000,
+        "balance": 1054797,
+        "afterCost": 407957,
+        "finalLeft": 215957,
+        "seedsBuyable": 50,
+        "plantings": 60,
+        "result": "全拿 + 富余 ✅（工资 15,840 券已扣）",
+        "ok": true
+      },
+      {
+        "account": "大号（已买基金）",
+        "scenario": "现状 · 只需买 10 颗种子",
+        "revenue": 775165,
+        "taskCoupons": 84000,
+        "balance": 859165,
+        "afterCost": 228165,
+        "finalLeft": 148165,
+        "seedsBuyable": 28,
+        "plantings": 60,
+        "result": "全拿 ✅",
+        "ok": true
+      },
+      {
+        "account": "对照",
+        "scenario": "完全不做每日任务（= v3 口径）",
+        "revenue": 756158,
+        "taskCoupons": 0,
+        "balance": 756158,
+        "afterCost": 125158,
+        "finalLeft": -66842,
+        "seedsBuyable": 15,
+        "plantings": 51,
+        "result": "装扮 ✅ ｜【金露云酪】✅ ｜【黄金·金露云酪】❌",
+        "ok": false
+      },
+      {
+        "account": "参照",
+        "scenario": "490 券/h 恒定不涨",
+        "revenue": 366891,
+        "taskCoupons": 84000,
+        "balance": 450891,
+        "afterCost": 0,
+        "finalLeft": -631000,
+        "seedsBuyable": 0,
+        "plantings": 36,
+        "result": "只够到 Lv9 档（30 万）",
+        "ok": false
+      }
+    ],
+    "thresholds": [
+      {
+        "label": "全拿 · 0 员工（含每日任务）",
+        "rate": 482,
+        "note": "实测 490，已过线 ✅（余量约 1.7%）"
+      },
+      {
+        "label": "全拿 · 雇 2 个员工（含工资）",
+        "rate": 489,
+        "note": "实测 490，刚过线（余量约 0.2%）"
+      },
+      {
+        "label": "只要 13 件装扮",
+        "rate": 388,
+        "note": "轻松达成"
+      },
+      {
+        "label": "只要【金露云酪】（种 30 次）",
+        "rate": 0,
+        "note": "免费 36 颗就够，无需额外投入"
+      }
+    ],
+    "conclusion": "把每日任务算进来之后，不氪金的小号「什么都不做」也能全拿：13 件装扮 + 2 件变异装扮果实，种满 60/60，最后还余 17,158 券。大号同样全拿，余 14.8 万。v3 那句「差 6%、必须雇 2 个金牌宣传」不再成立 —— 那 6% 就是这 3,000 券/天填上的。"
+  }
+}
