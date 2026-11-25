@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-11-15T18:10:01.815Z",
+  "exportedAt": "2026-11-25T00:40:28.771Z",
   "mutationTypes": [
     {
       "name": "藏品",
@@ -2114,6 +2114,58 @@
       "desc": "卖给商人后，可以获得金豆豆。",
       "rarity": 3,
       "releaseOrder": 10330001
+    },
+    {
+      "name": "黄金·红薯",
+      "seedId": 20307,
+      "exp": 1440,
+      "fruit": 10,
+      "price": 0,
+      "prob": 10,
+      "points": 40,
+      "cropId": 307,
+      "phaseImages": [
+        "plant/model/v4/gold/Crop_307_6.png",
+        "plant/model/v4/gold/Crop_307_Seed.png",
+        "plant/model/v4/gold/Crop_307_2.png",
+        "plant/model/v4/gold/Crop_307_3.png",
+        "plant/model/v4/gold/Crop_307_4.png",
+        "plant/model/v4/gold/Crop_307_5.png",
+        "plant/model/v4/gold/Crop_307_6.png"
+      ],
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "growPhases": [
+        {
+          "name": "种子",
+          "sec": 8640
+        },
+        {
+          "name": "发芽",
+          "sec": 8640
+        },
+        {
+          "name": "小叶子",
+          "sec": 8640
+        },
+        {
+          "name": "大叶子",
+          "sec": 8640
+        },
+        {
+          "name": "初熟",
+          "sec": 8640
+        },
+        {
+          "name": "成熟",
+          "sec": 0
+        }
+      ],
+      "seasons": 1,
+      "hasRenderPhases": false,
+      "desc": "卖给商人后，可以获得金豆豆。",
+      "rarity": 2,
+      "releaseOrder": 10220037
     },
     {
       "name": "黄金·森野可可豆",
@@ -5445,6 +5497,58 @@
         "desc": "卖给商人后，可以获得金豆豆。",
         "rarity": 3,
         "releaseOrder": 10330001
+      },
+      {
+        "name": "黄金·红薯",
+        "seedId": 20307,
+        "exp": 1440,
+        "fruit": 10,
+        "price": 0,
+        "prob": 10,
+        "points": 40,
+        "cropId": 307,
+        "phaseImages": [
+          "plant/model/v4/gold/Crop_307_6.png",
+          "plant/model/v4/gold/Crop_307_Seed.png",
+          "plant/model/v4/gold/Crop_307_2.png",
+          "plant/model/v4/gold/Crop_307_3.png",
+          "plant/model/v4/gold/Crop_307_4.png",
+          "plant/model/v4/gold/Crop_307_5.png",
+          "plant/model/v4/gold/Crop_307_6.png"
+        ],
+        "growTimeSec": 43200,
+        "growTimeStr": "12小时",
+        "growPhases": [
+          {
+            "name": "种子",
+            "sec": 8640
+          },
+          {
+            "name": "发芽",
+            "sec": 8640
+          },
+          {
+            "name": "小叶子",
+            "sec": 8640
+          },
+          {
+            "name": "大叶子",
+            "sec": 8640
+          },
+          {
+            "name": "初熟",
+            "sec": 8640
+          },
+          {
+            "name": "成熟",
+            "sec": 0
+          }
+        ],
+        "seasons": 1,
+        "hasRenderPhases": false,
+        "desc": "卖给商人后，可以获得金豆豆。",
+        "rarity": 2,
+        "releaseOrder": 10220037
       },
       {
         "name": "黄金·森野可可豆",

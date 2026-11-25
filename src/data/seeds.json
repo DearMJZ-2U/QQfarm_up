@@ -1,6 +1,6 @@
 {
-  "exportedAt": "2026-11-15T18:10:01.815Z",
-  "count": 232,
+  "exportedAt": "2026-11-25T00:40:28.771Z",
+  "count": 233,
   "rows": [
     {
       "seedId": 29004,
@@ -1119,6 +1119,32 @@
       "seasons": 2,
       "fruitId": 40249,
       "fruitCount": 24
+    },
+    {
+      "seedId": 20307,
+      "goodsId": 0,
+      "plantId": 1020307,
+      "name": "红薯",
+      "requiredLevel": 1,
+      "price": 0,
+      "rarity": 2,
+      "rarityColor": "A8C1F4",
+      "isSpecial": true,
+      "specialReason": "活动限定",
+      "activityId": 2026111708,
+      "jumpEntry": "以薯换福",
+      "unlocked": false,
+      "limitCount": 0,
+      "boughtNum": 0,
+      "exp": 1440,
+      "expPerCycle": 1441,
+      "growTimeSec": 43200,
+      "growTimeStr": "12小时",
+      "expPerHour": 120,
+      "expPerGold": 0,
+      "seasons": 1,
+      "fruitId": 40307,
+      "fruitCount": 48
     },
     {
       "seedId": 20184,

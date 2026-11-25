@@ -82,8 +82,26 @@
         "黄金·款冬花",
         "黄金·山茶花"
       ]
+    },
+    {
+      "date": "2026-11-25",
+      "label": "11-25 更新",
+      "count": 1,
+      "seedIds": [
+        20307
+      ],
+      "names": [
+        "红薯"
+      ],
+      "goldFruitCount": 1,
+      "goldFruitIds": [
+        1040307
+      ],
+      "goldFruitNames": [
+        "黄金·红薯"
+      ]
     }
   ],
-  "latest": "2026-11-15",
-  "generatedAt": "2026-11-23T03:58:24.334Z"
+  "latest": "2026-11-25",
+  "generatedAt": "2026-11-25T00:41:15.846Z"
 }

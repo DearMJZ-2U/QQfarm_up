@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-11-15T18:10:01.815Z",
+  "exportedAt": "2026-11-25T00:40:28.771Z",
   "categories": [
     {
       "name": "小屋",
@@ -302,6 +302,12 @@
           "tag": "活动",
           "desc": "黄金·金露云酪",
           "img": "extraRes/gui/texture/skinDetail/img_skin_tower_6_1.png"
+        },
+        {
+          "name": "七彩花弦",
+          "tag": "活动",
+          "desc": "七彩花弦",
+          "img": "extraRes/gui/texture/skinDetail/img_skin_tower_7.png"
         }
       ]
     },
