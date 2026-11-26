@@ -2,8 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sun, Moon, Menu, X, Calculator, BookOpen, ShoppingBag, Wrench, Coffee, Home as HomeIcon } from 'lucide-react';
 
-// 加 QQ 群弹窗：开屏自动弹过就算「已提示」，避免每次刷新/跳转都糊在脸上
-const QQ_GROUP_SHOWN_KEY = 'qqfarm_qqgroup_shown';
+// 加微信群弹窗：开屏自动弹过就算「已提示」，避免每次刷新/跳转都糊在脸上
+// key 从 qqgroup 换成 wechatgroup：老用户也会再看到一次，用来公告「社群从 QQ 群迁到微信群」
+const WECHAT_GROUP_SHOWN_KEY = 'qqfarm_wechatgroup_shown';
 
 import CalculatorHub, { type CalcMode } from './components/CalculatorHub';
 import LevelSearchTab from './components/LevelSearchTab';
@@ -19,7 +20,7 @@ import PedestalAtlasTab from './components/PedestalAtlasTab';
 import RanchOverviewTab from './components/RanchOverviewTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
-import QQGroupModal, { QQGroupIcon } from './components/QQGroupModal';
+import WeChatGroupModal, { WeChatGroupIcon } from './components/WeChatGroupModal';
 import DonateModal from './components/DonateModal';
 import { CategoryNav, type CategoryNavItem } from './components/shared';
 
@@ -159,7 +160,7 @@ export default function App() {
   const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('ranch');
   const [calcMode, setCalcMode] = useState<CalcMode>('ranch');
   const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
-  const [qqGroupOpen, setQqGroupOpen] = useState(false);
+  const [wechatGroupOpen, setWechatGroupOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
 
   const sidebarSections = useMemo(() => buildSidebarSections(), []);
@@ -185,16 +186,16 @@ export default function App() {
     localStorage.setItem('qqfarm_theme', next);
   };
 
-  // 开屏自动弹「加 QQ 群」：整个浏览器只弹一次（用户点「我懂了」后才记已提示）
+  // 开屏自动弹「加微信群」：整个浏览器只弹一次（用户点「我知道了」后才记已提示）
   React.useEffect(() => {
-    if (localStorage.getItem(QQ_GROUP_SHOWN_KEY)) return;
-    const t = window.setTimeout(() => setQqGroupOpen(true), 600);
+    if (localStorage.getItem(WECHAT_GROUP_SHOWN_KEY)) return;
+    const t = window.setTimeout(() => setWechatGroupOpen(true), 600);
     return () => window.clearTimeout(t);
   }, []);
 
-  const closeQqGroup = () => {
-    setQqGroupOpen(false);
-    try { localStorage.setItem(QQ_GROUP_SHOWN_KEY, '1'); } catch { /* 隐私模式写不进去就算了 */ }
+  const closeWechatGroup = () => {
+    setWechatGroupOpen(false);
+    try { localStorage.setItem(WECHAT_GROUP_SHOWN_KEY, '1'); } catch { /* 隐私模式写不进去就算了 */ }
   };
 
   // 统一导航入口：写入浏览器历史 + 切换 tab + 滚到顶部
@@ -501,12 +502,12 @@ export default function App() {
                 </span>
                 <span className="text-[var(--ink-soft)] hidden sm:inline">请作者喝咖啡</span>
               </button>
-              <button onClick={() => setQqGroupOpen(true)}
+              <button onClick={() => setWechatGroupOpen(true)}
                 className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
-                aria-label="加 QQ 群"
-                title="加 QQ 群">
-                <QQGroupIcon size={16} className="flex-shrink-0" style={{ color: 'var(--sky-deep)' }} />
-                <span className="text-[var(--ink-soft)] hidden sm:inline">加QQ群</span>
+                aria-label="加微信群"
+                title="加微信群">
+                <WeChatGroupIcon size={16} className="flex-shrink-0" style={{ color: 'var(--wechat)' }} />
+                <span className="text-[var(--ink-soft)] hidden sm:inline">加微信群</span>
               </button>
               <button onClick={toggleTheme}
                 className="flex items-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full hover:bg-[var(--bg-2)] transition-colors text-xs font-bold whitespace-nowrap"
@@ -570,8 +571,8 @@ export default function App() {
       {/* Back to top — PC only */}
       <BackToTop />
 
-      {/* 加 QQ 群弹窗：开屏自动弹 + 顶栏图标手动打开 */}
-      <QQGroupModal open={qqGroupOpen} onClose={closeQqGroup} />
+      {/* 加微信群弹窗：开屏自动弹 + 顶栏图标手动打开 */}
+      <WeChatGroupModal open={wechatGroupOpen} onClose={closeWechatGroup} />
 
       {/* 请作者喝杯咖啡：顶栏入口 + 微信/支付宝二维码 */}
       <DonateModal open={donateOpen} onClose={() => setDonateOpen(false)} />

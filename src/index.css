@@ -49,6 +49,9 @@
   --leaf-soft: #C8E6B5;
   --leaf-bg: #E4F5D7;
 
+  /* 微信绿：只给「加微信群」入口用 */
+  --wechat: #07C160;
+
   /* 丰收橙 */
   --orange: #FF8A3D;
   --orange-deep: #E66D1F;
@@ -132,6 +135,8 @@
   --leaf-deep: #6FE988;
   --leaf-soft: #2B5230;
   --leaf-bg: #1A2C1F;
+
+  --wechat: #3EE07F;
 
   --orange: #FFA060;
   --orange-deep: #FFB47D;
