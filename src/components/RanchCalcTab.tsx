@@ -31,8 +31,7 @@ interface FacilityTile {
   key: 'coop' | 'shed' | 'grass';
   name: string; emoji: string; node: FacilityRow; level: number; max: number;
   set: (v: number) => void; rows: FacilityRow[]; count: number;
-  // 座数（牧草机恒 1 座，没有这两个字段）
-  seats?: number; setSeats?: (v: number) => void; seatMin?: number; seatMax?: number;
+  locked?: boolean; // 棚：牧场等级不够，整卡置灰
   note: string; bonusText: string; color: 'leaf' | 'orange' | 'sun';
 }
 interface CalcData {
@@ -109,18 +108,12 @@ function MiniNum({
 
 const bonusAt = <T extends { level: number }>(rows: T[], lv: number): T => rows.find(r => r.level === lv) || rows[0];
 
-/** 座数步进按钮（建筑卡内联，18px 圆形，别做成块状按钮抢空间） */
-function SeatBtn({ label, onClick, disabled }: { label: string; onClick: () => void; disabled?: boolean }) {
-  return (
-    <button type="button" onClick={onClick} disabled={disabled} aria-label={label === '+' ? '增加座数' : '减少座数'}
-      className="w-[18px] h-[18px] flex-shrink-0 rounded-full grid place-items-center text-[12px] font-bold leading-none transition disabled:opacity-30 active:scale-95"
-      style={{ background: 'rgba(255,255,255,.85)', border: '1px solid rgba(0,0,0,.09)', color: 'var(--ink)' }}>
-      {label}
-    </button>
-  );
-}
+/** 牧场等级默认值：25（牧场入口的种植门槛级，绝大多数玩家的实际位置） */
+const DEFAULT_RANCH_LEVEL = 25;
+/** 棚解锁：首个棚动物（羊 70001）的解锁等级，配置为 21；未达标时整卡置灰、不计栏位 */
+const SHED_UNLOCK = DATA.animals.filter(a => a.type === '棚').reduce((m, a) => Math.min(m, a.unlockLevel), 99);
 
-/** 圆形步进按钮（尺寸可调：牧场等级用大号，建筑座数用小号） */
+/** 圆形步进按钮（尺寸可调：牧场等级用大号，建筑层级用小号） */
 function RoundStep({ label, onClick, disabled, ariaLabel, size = 28 }: {
   label: string; onClick: () => void; disabled?: boolean; ariaLabel: string; size?: number;
 }) {
@@ -255,13 +248,11 @@ const RANKS = [
 ];
 
 export default function RanchCalcTab() {
-  const [ranchLevel, setRanchLevel] = useState<number | ''>(9);
-  // 游戏里牧场地图只有窝/棚/牧草机三种建筑，没有主城与实验室实体 → 座数直接填，不再由主城等级推导
-  const [coopSeats, setCoopSeats] = useState<number | ''>(1);
-  const [shedSeats, setShedSeats] = useState<number | ''>(0);
-  const [coopLevel, setCoopLevel] = useState(2);
-  const [shedLevel, setShedLevel] = useState(1);
-  const [grassLevel, setGrassLevel] = useState(1);
+  const [ranchLevel, setRanchLevel] = useState<number | ''>(DEFAULT_RANCH_LEVEL);
+  // 游戏里牧场地图只有窝 / 棚 / 牧草机三种建筑，且窝、棚各只有 1 座 → 栏数完全由建筑等级决定
+  const [coopLevel, setCoopLevel] = useState(() => maxAllowedLevel(DATA.buildings.coop, DEFAULT_RANCH_LEVEL));
+  const [shedLevel, setShedLevel] = useState(() => maxAllowedLevel(DATA.buildings.shed, DEFAULT_RANCH_LEVEL));
+  const [grassLevel, setGrassLevel] = useState(() => maxAllowedLevel(DATA.buildings.grass, DEFAULT_RANCH_LEVEL));
   const [canOn, setCanOn] = useState(false);
   const [normalCanH, setNormalCanH] = useState<number | ''>(12);
   const [organicCanH, setOrganicCanH] = useState<number | ''>(4);
@@ -277,16 +268,21 @@ export default function RanchCalcTab() {
   const maxCoop = useMemo(() => maxAllowedLevel(DATA.buildings.coop, lv), [lv]);
   const maxShed = useMemo(() => maxAllowedLevel(DATA.buildings.shed, lv), [lv]);
   const maxGrass = useMemo(() => maxAllowedLevel(DATA.buildings.grass, lv), [lv]);
-  // 牧场等级降下来后，建筑等级不能高于该级可达上限（避免「降」按钮点了没反应）
+
+  // 改牧场等级 → 窝 / 棚 / 牧草机自动跳到该级对应的最高级（栏数随之跳变）。
+  // 玩家仍可自己降 / 升（受该级上限约束），再改一次等级就重新对齐。
   useEffect(() => {
-    if (coopLevel > maxCoop) setCoopLevel(maxCoop);
-  }, [coopLevel, maxCoop]);
-  useEffect(() => {
-    if (shedLevel > maxShed) setShedLevel(maxShed);
-  }, [shedLevel, maxShed]);
-  useEffect(() => {
-    if (grassLevel > maxGrass) setGrassLevel(maxGrass);
-  }, [grassLevel, maxGrass]);
+    setCoopLevel(maxCoop);
+    setShedLevel(maxShed);
+    setGrassLevel(maxGrass);
+  }, [lv, maxCoop, maxShed, maxGrass]);
+
+  const autoSynced = coopLevel === maxCoop && shedLevel === maxShed && grassLevel === maxGrass;
+  const restoreAuto = () => {
+    setCoopLevel(maxCoop);
+    setShedLevel(maxShed);
+    setGrassLevel(maxGrass);
+  };
 
   const coopLv = Math.min(coopLevel, maxCoop);
   const shedLv = Math.min(shedLevel, maxShed);
@@ -325,9 +321,10 @@ export default function RanchCalcTab() {
   const coopNode = DATA.buildings.coop.find(r => r.level === coopLv) || DATA.buildings.coop[0];
   const shedNode = DATA.buildings.shed.find(r => r.level === shedLv) || DATA.buildings.shed[0];
   const grassNode = DATA.buildings.grass.find(r => r.level === grassLv) || DATA.buildings.grass[0];
-  // 座数由玩家自填：窝 1–3 座、棚 0–3 座（任务解锁后买，上限各 3 座）
-  const coopCount = typeof coopSeats === 'number' ? Math.max(1, Math.min(3, Math.round(coopSeats))) : 1;
-  const shedCount = typeof shedSeats === 'number' ? Math.max(0, Math.min(3, Math.round(shedSeats))) : 0;
+  // 窝 / 棚各只有 1 座；棚要牧场 Lv21（首个棚动物「羊」）才解锁，未达标时置灰且不计栏位
+  const shedUnlocked = lv >= SHED_UNLOCK;
+  const coopCount = 1;
+  const shedCount = shedUnlocked ? 1 : 0;
   const coopSlots = coopCount * (coopNode.capacity || 0);
   const shedSlots = shedCount * (shedNode.capacity || 0);
   const slots = coopSlots + shedSlots;
@@ -370,19 +367,16 @@ export default function RanchCalcTab() {
     {
       key: 'coop', name: '窝', emoji: '🏠', node: coopNode, level: coopLv, max: maxCoop,
       set: setCoopLevel, rows: DATA.buildings.coop, count: coopCount,
-      seats: coopCount, setSeats: v => setCoopSeats(v), seatMin: 1, seatMax: 3,
       note: '',
-      bonusText: bonusAt(DATA.bonuses.coop, coopLv).priceBp ? `售价 +${bonusAt(DATA.bonuses.coop, coopLv).priceBp / 100}%` : '暂无加成（Lv5 起 +10%）',
+      bonusText: bonusAt(DATA.bonuses.coop, coopLv).priceBp ? `售价 +${bonusAt(DATA.bonuses.coop, coopLv).priceBp / 100}%` : `Lv5 起 +10%（需牧场 Lv32）`,
       color: 'leaf',
     },
     {
       key: 'shed', name: '棚', emoji: '🏚️', node: shedNode, level: shedLv, max: maxShed,
       set: setShedLevel, rows: DATA.buildings.shed, count: shedCount,
-      seats: shedCount, setSeats: v => setShedSeats(v), seatMin: 0, seatMax: 3,
+      locked: !shedUnlocked,
       note: '',
-      bonusText: shedCount
-        ? (bonusAt(DATA.bonuses.shed, shedLv).expBp ? `经验 +${bonusAt(DATA.bonuses.shed, shedLv).expBp / 100}%` : '暂无加成（Lv5 起 +10%）')
-        : '当前没有棚位',
+      bonusText: !shedUnlocked ? '不计入栏位' : (bonusAt(DATA.bonuses.shed, shedLv).expBp ? `经验 +${bonusAt(DATA.bonuses.shed, shedLv).expBp / 100}%` : `Lv5 起 +10%（需牧场 Lv36）`),
       color: 'orange',
     },
   ];
@@ -411,7 +405,7 @@ export default function RanchCalcTab() {
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1 flex items-baseline gap-x-2 flex-wrap">
             <span className="section-eyebrow">牧场等级</span>
-            <span className="text-[9px] text-[var(--ink-mute)] leading-tight">1 – 65 · 种植 25 级解锁</span>
+            <span className="text-[9px] text-[var(--ink-mute)] leading-tight">1 – 65 · 默认 25 级</span>
           </div>
           <div className="flex items-center gap-1.5 flex-shrink-0">
             <RoundStep label="−" ariaLabel="降低牧场等级" onClick={() => setRanchLevel(Math.max(1, lv - 1))} disabled={lv <= 1} />
@@ -481,12 +475,23 @@ export default function RanchCalcTab() {
 
       {/* 建筑 */}
       <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}>
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="section-eyebrow">建筑 · 随牧场等级自动匹配</div>
+          {!autoSynced && (
+            <button type="button" onClick={restoreAuto}
+              className="chip flex-shrink-0 !text-[9px] !px-2 !py-0.5"
+              style={{ background: 'var(--leaf-bg)', color: 'var(--leaf-deep)', border: '1px solid var(--leaf)' }}>
+              恢复自动
+            </button>
+          )}
+        </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
           {facilityTiles.map(t => {
+            const locked = !!t.locked;
             const next = t.rows.find(r => r.level === t.level + 1);
             const gated = next ? (next.reqLevel !== null && next.reqLevel > lv) : false;
-            const hint = t.seats === 0
-              ? '点 + 加座数才有收益'
+            const hint = locked
+              ? `牧场 Lv${SHED_UNLOCK} 解锁`
               : t.level >= t.max
                 ? `已达上限 · 牧场 Lv${lv}`
                 : !next
@@ -496,33 +501,35 @@ export default function RanchCalcTab() {
                     : `升 Lv${next.level} ${fmt(next.cost.count)}券`;
             return (
               <div key={t.key} className="rounded-xl p-2 flex flex-col"
-                style={{ background: `var(--${t.color}-bg)`, border: `1.5px solid var(--${t.color})` }}>
+                style={{
+                  background: locked ? 'rgba(135,150,138,.14)' : `var(--${t.color}-bg)`,
+                  border: `1.5px solid ${locked ? 'var(--line-strong)' : `var(--${t.color})`}`,
+                  opacity: locked ? 0.72 : 1,
+                }}>
                 <div className="flex items-center justify-between gap-1">
                   <div className="flex items-center gap-1 min-w-0">
-                    <span className="text-[13px] leading-none">{t.emoji}</span>
-                    <span className="text-[11px] font-bold text-[var(--ink)] truncate">{t.name}</span>
+                    <span className="text-[13px] leading-none" style={{ filter: locked ? 'grayscale(1)' : undefined }}>{t.emoji}</span>
+                    <span className="text-[11px] font-bold truncate" style={{ color: locked ? 'var(--ink-mute)' : 'var(--ink)' }}>{t.name}</span>
                   </div>
                   <span className="chip flex-shrink-0 !text-[9px] !px-1.5 !py-0"
-                    style={{ background: 'rgba(255,255,255,.7)', color: 'var(--ink)' }}>Lv{t.level}</span>
-                </div>
-                <div className="font-mono tnum text-lg font-bold text-[var(--ink)] leading-none mt-1.5">
-                  {t.node.capacity ?? t.count}
-                  <span className="text-[9px] font-bold text-[var(--ink-soft)] ml-1">栏/座</span>
-                </div>
-                <div className="flex items-center gap-1 mt-1">
-                  <SeatBtn label="−" onClick={() => t.setSeats!(Math.max(t.seatMin!, t.seats! - 1))} disabled={t.seats! <= t.seatMin!} />
-                  <span className="font-mono text-[11px] font-bold text-[var(--ink)] tabular-nums">{t.seats} 座</span>
-                  <SeatBtn label="+" onClick={() => t.setSeats!(Math.min(t.seatMax!, t.seats! + 1))} disabled={t.seats! >= t.seatMax!} />
-                  <span className="text-[9px] text-[var(--ink-soft)] truncate ml-0.5">
-                    × {t.node.capacity} = <b className="text-[var(--ink)]">{fmt((t.seats || 0) * (t.node.capacity || 0))}</b> 栏
+                    style={{ background: 'rgba(255,255,255,.7)', color: locked ? 'var(--ink-mute)' : 'var(--ink)' }}>
+                    {locked ? '未解锁' : `Lv${t.level}`}
                   </span>
                 </div>
-                <div className="text-[9px] text-[var(--leaf-deep)] font-bold mt-0.5 leading-tight truncate">{t.bonusText}</div>
+                <div className="font-mono tnum text-lg font-bold leading-none mt-1.5"
+                  style={{ color: locked ? 'var(--ink-mute)' : 'var(--ink)' }}>
+                  {locked ? '—' : <>{t.node.capacity ?? t.count}<span className="text-[9px] font-bold text-[var(--ink-soft)] ml-1">栏</span></>}
+                </div>
+                <div className="text-[9px] text-[var(--ink-soft)] mt-1 leading-tight truncate">
+                  {locked ? '牧场等级不足' : `1 座 × ${t.node.capacity} 栏`}
+                </div>
+                <div className="text-[9px] font-bold mt-0.5 leading-tight truncate"
+                  style={{ color: locked ? 'var(--ink-mute)' : 'var(--leaf-deep)' }}>{t.bonusText}</div>
                 <div className="flex items-center gap-1 mt-1.5">
                   <button className="btn btn-sm btn-ghost flex-1 !py-0.5 !text-[10px] !min-h-0"
-                    onClick={() => t.set(Math.max(1, t.level - 1))} disabled={t.level <= 1}>降</button>
+                    onClick={() => t.set(Math.max(1, t.level - 1))} disabled={locked || t.level <= 1}>降</button>
                   <button className="btn btn-sm btn-ghost flex-1 !py-0.5 !text-[10px] !min-h-0"
-                    onClick={() => t.set(Math.min(t.max, t.level + 1))} disabled={t.level >= t.max}>升</button>
+                    onClick={() => t.set(Math.min(t.max, t.level + 1))} disabled={locked || t.level >= t.max}>升</button>
                 </div>
                 <div className="text-[8.5px] text-[var(--ink-mute)] mt-1 leading-tight truncate">{hint}</div>
               </div>
@@ -558,7 +565,7 @@ export default function RanchCalcTab() {
                   onClick={() => setGrassLevel(Math.min(maxGrass, grassLv + 1))} disabled={grassLv >= maxGrass}>升</button>
               </div>
               <div className="text-[8.5px] text-[var(--ink-mute)] leading-tight whitespace-nowrap">
-                {grassLv >= maxGrass ? `已达上限 · Lv${lv}` : `可升 Lv${grassLv + 1}`}
+                {grassLv >= maxGrass ? `已达上限 · 牧场 Lv${lv}` : `可升 Lv${grassLv + 1}`}
               </div>
             </div>
           </div>
@@ -800,7 +807,7 @@ export default function RanchCalcTab() {
             <p><b>经验</b> = 轮数 × 产出经验 + 收获经验（同一个建筑加成），所以「经验王」多半出在棚。</p>
             <p><b>牧草</b>：只有一种口径 —— <b>农场种草</b>，成本按 <b>0</b> 计（牧草只花金币、不花金券，量级可忽略，不影响任何排名）。每只动物每小时吃 3600 ÷（每份可喂秒数）份草。</p>
             <p><b>罐头</b>：普通罐头每只每轮 1 个，直接削掉最长阶段对应小时数；有机罐头按「每轮用量」逐个削最长阶段（单阶段保底 30 秒操作时间，整轮周期最多压到原始的一半，避免出现「罐头无限刷」的失真值）。两者都会缩短周期、减少牧草消耗，从而抬高每小时收益；单价填 0 表示按免费/库存充足算，显示的是理论上限。</p>
-            <p><b>建筑</b>：牧场地图上只有窝 / 棚 / 牧草机三种建筑，座数直接在卡片里用 −/+ 调（窝 1–3 座、棚 0–3 座），栏位 = 座数 × 单座容量。窝/棚等级决定单座容量与加成，<b>升级门槛只看牧场等级（RANCH_LEVEL），与主城等级无关</b>（主城在游戏里不是地图建筑，也不参与本页计算）。改上面的牧场等级，经验王/金券王与排行榜会即时按该级重算。</p>
+            <p><b>建筑</b>：牧场地图上只有窝 / 棚 / 牧草机三种建筑，窝、棚<b>各 1 座</b>，栏位 = 单座容量。建筑等级默认<b>按牧场等级自动匹配到该级可升的最高级</b>（栏数随之跳变，Lv25 = 窝 Lv4 / 6 栏、棚 Lv2 / 4 栏、牧草机 Lv3 / 560 份），仍可手动降 / 升，改牧场等级后会重新对齐（也可点「恢复自动」）。<b>棚需牧场 Lv21（首个棚动物「羊」）才解锁</b>，未达标时整卡置灰且不计栏位；升级门槛只看牧场等级（RANCH_LEVEL），与主城等级无关。</p>
             <p><b>未纳入</b>：巨大化动物（产物结算为松果，不是金券）、偷菜/放蚊子/帮忙清理的社交收益、牧场订单与图鉴收集奖励。</p>
             <p className="text-[10px] text-[var(--ink-mute)]">
               数据快照：{new Date((rawCalc as any).generatedAt).toLocaleString('zh-CN')} · 动物 {DATA.animals.length} 种 · 牧场等级曲线 1–{DATA.levels.length}
