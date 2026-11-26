@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
 
-export default function BackToTop() {
+export default function BackToTop({ hidden = false }: { hidden?: boolean } = {}) {
   const [show, setShow] = React.useState(false);
 
   React.useEffect(() => {
@@ -18,7 +18,7 @@ export default function BackToTop() {
 
   return (
     <AnimatePresence>
-      {show && (
+      {show && !hidden && (
         <motion.button
           key="back-to-top"
           initial={{ opacity: 0, scale: 0.8, y: 10 }}

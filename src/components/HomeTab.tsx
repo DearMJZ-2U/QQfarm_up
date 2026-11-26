@@ -20,7 +20,7 @@ const husbandryAnimals = ((((ranchData as any)?.animals) || []) as Array<{ id: n
   .filter((a) => a.id < 65000 || (a.id >= 70001 && a.id < 75000));
 const husbandryCount = husbandryAnimals.length || 28;
 
-type NavHandler = (tab: 'calc' | 'calc_farm' | 'calc_ranch' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_ranch' | 'items_gold') => void;
+type NavHandler = (tab: 'calc' | 'calc_farm' | 'calc_ranch' | 'atlas' | 'atlas_lands' | 'atlas_collection' | 'atlas_pedestal' | 'atlas_mutation' | 'atlas_costume' | 'items_seed' | 'more_level' | 'more_land' | 'more_ranch' | 'more_shudi' | 'items_gold') => void;
 
 interface Props {
   onNavigate: NavHandler;
@@ -154,6 +154,12 @@ export default function HomeTab({ onNavigate }: Props) {
 
   const result = useMemo(() => runQuickCalc(level, lands), [level, lands]);
 
+  // 「以薯换福」活动还剩几天（12/10 00:00 结束）；活动结束入口自动消失
+  const shudiLeft = (() => {
+    const ms = Date.parse('2026-12-10T00:00:00+08:00') - Date.now();
+    return ms > 0 ? Math.floor(ms / 86400000) : 0;
+  })();
+
   // 牧场速算：该等级能养的种类 + 最低幼崽价（只做容量级口径，收益留到牧场计算器）
   const ranchQuick = useMemo(() => {
     const lv = Math.max(1, Math.min(65, Number(ranchLevel) || 1));
@@ -248,6 +254,47 @@ export default function HomeTab({ onNavigate }: Props) {
           </div>
         </div>
       </section>
+
+      {/* ── 蜜薯价格计算器 · 活动期限时入口 ── */}
+      {shudiLeft > 0 && (
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          onClick={() => onNavigate('more_shudi')}
+          className="w-full text-left sticker sticker-press relative overflow-hidden group p-3.5 sm:p-4"
+          style={{
+            background: 'linear-gradient(120deg, var(--orange-bg) 0%, var(--berry-bg) 58%, var(--orange-bg) 100%)',
+            border: '1.5px solid var(--orange)',
+          }}
+          aria-label="蜜薯价格计算器">
+          <div className="absolute -right-6 -top-8 w-28 h-28 rounded-full bg-white/25 pointer-events-none" />
+          <div className="relative flex items-center gap-3 sm:gap-4">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center flex-shrink-0 text-3xl sm:text-4xl"
+              style={{ background: 'var(--surface)', boxShadow: 'var(--shadow-pop)' }}>
+              🍠
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <span className="chip" style={{ background: 'var(--orange)', color: 'white', fontSize: '0.6rem', padding: '0.1rem 0.5rem' }}>
+                  活动
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--orange-deep)' }}>
+                  以薯换福 · 还剩 {shudiLeft} 天
+                </span>
+              </div>
+              <div className="font-display italic text-base sm:text-lg font-bold text-[var(--ink)] leading-tight truncate">
+                蜜薯价格计算器
+              </div>
+              <div className="text-[11px] text-[var(--ink-soft)] mt-0.5 truncate">
+                定好想换什么 · 反推每天要卖到多少钱
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-1 flex-shrink-0">
+              <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform"
+                style={{ color: 'var(--orange-deep)' }} />
+            </div>
+          </div>
+        </motion.button>
+      )}
 
       {/* ── 牧场全览 · 置顶入口（独立图文页，首屏可见） ── */}
       <motion.button

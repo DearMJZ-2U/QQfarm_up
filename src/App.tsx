@@ -18,6 +18,7 @@ import RanchAtlasTab from './components/RanchAtlasTab';
 import CollectionAtlasTab from './components/CollectionAtlasTab';
 import PedestalAtlasTab from './components/PedestalAtlasTab';
 import RanchOverviewTab from './components/RanchOverviewTab';
+import ShudiCalcTab, { type ShudiQuote } from './components/ShudiCalcTab';
 import HomeTab from './components/HomeTab';
 import BackToTop from './components/BackToTop';
 import WeChatGroupModal, { WeChatGroupIcon } from './components/WeChatGroupModal';
@@ -35,7 +36,7 @@ import collectionData from './data/collection_atlas.json';
 
 type BottomTab = 'home' | 'calc' | 'atlas' | 'items' | 'tools';
 type AtlasSubTab = 'crops' | 'lands' | 'mutation' | 'costume' | 'ranch' | 'collection' | 'pedestal';
-type ToolsSubTab = 'level' | 'land' | 'ranch';
+type ToolsSubTab = 'shudi' | 'level' | 'land' | 'ranch';
 type ItemCategoryId = string;
 
 interface TabDef {
@@ -47,6 +48,13 @@ interface TabDef {
 }
 
 // 底栏 5 个 tab：首页 / 计算器 / 图鉴 / 道具 / 工具
+// 蜜薯结论条的配色（与计算器内部一致）
+const QUOTE_CHIP: Record<string, { bg: string; fg: string }> = {
+  good: { bg: 'var(--leaf-bg)', fg: 'var(--leaf-deep)' },
+  warn: { bg: 'var(--sun-bg)', fg: 'var(--sun-deep)' },
+  bad: { bg: 'var(--berry-bg)', fg: 'var(--berry-deep)' },
+};
+
 const bottomTabs: TabDef[] = [
   { id: 'home', Icon: HomeIcon, label: '首页', color: 'leaf', emoji: '🏠' },
   { id: 'calc', Icon: Calculator, label: '计算器', color: 'leaf', emoji: '🧮' },
@@ -112,6 +120,7 @@ function buildSidebarSections(): { title?: string; items: SidebarItem[] }[] {
       items: [
         { icon: '🏠', label: '首页', id: 'home', color: 'leaf' },
         { icon: '🧮', label: '经验计算器', id: 'calc', color: 'leaf' },
+        { icon: '🍠', label: '蜜薯计算器', id: 'tools_shudi', color: 'orange' },
         { icon: '🐄', label: '牧场全览', id: 'tools_ranch', color: 'sun' },
         { icon: '📊', label: '等级查询', id: 'tools_level', color: 'plum' },
         { icon: '🟪', label: '土地升级所需', id: 'tools_land', color: 'plum' },
@@ -157,9 +166,10 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
   const [atlasSubTab, setAtlasSubTab] = useState<AtlasSubTab>('crops');
-  const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('ranch');
+  const [toolsSubTab, setToolsSubTab] = useState<ToolsSubTab>('shudi');
   const [calcMode, setCalcMode] = useState<CalcMode>('ranch');
   const [itemsCatId, setItemsCatId] = useState<ItemCategoryId>('05');
+  const [shudiQuote, setShudiQuote] = useState<ShudiQuote | null>(null);
   const [wechatGroupOpen, setWechatGroupOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
 
@@ -248,6 +258,7 @@ export default function App() {
     if (id === 'tools_level') { navigate('tools', 'level'); return; }
     if (id === 'tools_land') { navigate('tools', 'land'); return; }
     if (id === 'tools_ranch') { navigate('tools', 'ranch'); return; }
+    if (id === 'tools_shudi') { navigate('tools', 'shudi'); return; }
     if (id === 'crops') { navigate('atlas', 'crops'); return; }
     if (id === 'lands') { navigate('atlas', 'lands'); return; }
     if (id === 'atlas_mutation') { navigate('atlas', 'mutation'); return; }
@@ -279,7 +290,16 @@ export default function App() {
     if (target === 'more_level') { navigate('tools', 'level'); return; }
     if (target === 'more_land') { navigate('tools', 'land'); return; }
     if (target === 'more_ranch') { navigate('tools', 'ranch'); return; }
+    if (target === 'more_shudi') { navigate('tools', 'shudi'); return; }
   };
+
+  // 点底部结论条 → 滚回计算器顶部（结论卡就在 hero 下方）
+  const jumpToShudi = React.useCallback(() => {
+    const el = document.querySelector('iframe[title="蜜薯价格计算器"]');
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }, []);
 
   const renderContent = () => {
     switch (bottomTab) {
@@ -331,23 +351,25 @@ export default function App() {
           </div>
         );
       case 'tools': {
-        // 牧场全览的 iframe 高度由页面自己上报（整页长滚动），底部留白与其它 tab 一致
+        // 牧场全览 / 蜜薯计算器 都是整页 iframe，高度由页面自己上报（整页长滚动）
         const isRanch = toolsSubTab === 'ranch';
+        const isFullPage = toolsSubTab === 'shudi' || isRanch;
+        // 蜜薯计算器底部有常驻悬浮条（74px 起），留白要再加一档
+        const padCls = toolsSubTab === 'shudi' ? 'pb-32' : isFullPage ? 'pb-16' : 'pb-28';
         return (
-          <div className={isRanch
-            ? 'fade-in pb-16 container-app px-3 sm:px-4'
-            : 'fade-in pb-28 container-app px-3 sm:px-4'}>
+          <div className={`fade-in ${padCls} container-app px-3 sm:px-4`}>
             <div className="flex gap-1 p-1.5 sticker-pop rounded-full mb-4">
               {([
+                { id: 'shudi', emoji: '🍠', label: '蜜薯计算器' },
                 { id: 'ranch', emoji: '🐄', label: '牧场全览' },
                 { id: 'level', emoji: '📊', label: '等级查询' },
-                { id: 'land', emoji: '🟪', label: '土地升级所需' },
+                { id: 'land', emoji: '🟪', label: '土地升级' },
               ] as Array<{ id: ToolsSubTab; emoji: string; label: string }>).map((t) => {
                 const active = toolsSubTab === t.id;
-                const accent = t.id === 'ranch' ? 'sun' : 'plum';
+                const accent = t.id === 'shudi' ? 'orange' : t.id === 'ranch' ? 'sun' : 'plum';
                 return (
                   <button key={t.id} onClick={() => navigate('tools', t.id)}
-                    className="flex-1 flex items-center justify-center gap-1 py-2 rounded-full font-bold text-[11px] sm:text-xs transition-all whitespace-nowrap"
+                    className="flex-1 flex items-center justify-center gap-1 py-2 rounded-full font-bold text-[10.5px] sm:text-xs transition-all whitespace-nowrap"
                     style={active
                       ? { background: `var(--${accent})`, color: 'white', boxShadow: `0 2px 0 var(--${accent}-deep)` }
                       : { color: 'var(--ink-soft)' }}>
@@ -358,6 +380,7 @@ export default function App() {
             </div>
             {toolsSubTab === 'level' && <LevelSearchTab />}
             {toolsSubTab === 'land' && <LandUpgradeCalcTab />}
+            {toolsSubTab === 'shudi' && <ShudiCalcTab onQuote={setShudiQuote} />}
             {isRanch && <RanchOverviewTab />}
           </div>
         );
@@ -535,11 +558,35 @@ export default function App() {
         </div>
       </div>
 
-      {/* Bottom Navigation — 圆胖 sticker 风 */}
+      {/* Bottom Navigation — 圆胖 sticker 风；蜜薯 tab 时结论条直接长在导航条上方，同一张卡 */}
       <div className="fixed bottom-0 left-0 right-0 z-30 px-3 sm:px-4 pb-3 safe-area-pb pointer-events-none">
         <div className="container-app pointer-events-auto">
-          <div className="flex items-center gap-1.5 p-1.5 rounded-full"
+          <div className={shudiQuote ? 'overflow-hidden rounded-[24px]' : 'rounded-full'}
             style={{ background: 'var(--surface)', border: '1.5px solid var(--line)', boxShadow: 'var(--shadow-sticker-lg)' }}>
+            {shudiQuote && (
+              <button
+                onClick={jumpToShudi}
+                className="w-full flex items-center gap-3 px-4 pt-2.5 pb-2 text-left transition-colors hover:bg-[var(--bg-2)]"
+                style={{ borderBottom: '1px solid var(--line)' }}
+                aria-label="查看蜜薯计算结论">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[9.5px] font-bold leading-none" style={{ color: 'var(--ink-mute)' }}>
+                    每天均价至少要卖到
+                  </div>
+                  <div className="text-[15px] font-black tnum leading-tight mt-0.5 truncate" style={{ color: 'var(--ink)' }}>
+                    {shudiQuote.text}
+                  </div>
+                </div>
+                <span className="flex-shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full"
+                  style={{
+                    background: (QUOTE_CHIP[shudiQuote.level] || QUOTE_CHIP.warn).bg,
+                    color: (QUOTE_CHIP[shudiQuote.level] || QUOTE_CHIP.warn).fg,
+                  }}>
+                  {shudiQuote.tag}
+                </span>
+              </button>
+            )}
+            <div className="flex items-center gap-1.5 p-1.5">
             {bottomTabs.map(tab => {
               const active = bottomTab === tab.id;
               const Icon = tab.Icon;
@@ -564,12 +611,14 @@ export default function App() {
                 </motion.button>
               );
             })}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Back to top — PC only */}
-      <BackToTop />
+      {/* 蜜薯计算器底部有常驻悬浮条，回到顶部按钮让位 */}
+      <BackToTop hidden={bottomTab === 'tools' && toolsSubTab === 'shudi'} />
 
       {/* 加微信群弹窗：开屏自动弹 + 顶栏图标手动打开 */}
       <WeChatGroupModal open={wechatGroupOpen} onClose={closeWechatGroup} />
